@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="principle-badge">
         <div className="principle-dot" />
         <span className="principle-badge-text">
-          We don't make AI feel <em>human</em> — we make AI feel like it's talking to a <em>human</em>.
+          We don't make AI feel <em>human</em>. We make AI feel like it's talking to a <em>human</em>.
         </span>
         <div className="principle-dot" />
       </div>
@@ -30,7 +30,7 @@ export default function Hero() {
       </div>
 
       <p className="hero-body">
-        Every system you interact with already knows you — your voice, your face, your words, your emotions, your history.<br />
+        Every system you interact with already knows you: your voice, your face, your words, your emotions, your history.<br />
         <strong>Multimodal in DNA. Persistent in memory. You, understood in full.</strong>
       </p>
 

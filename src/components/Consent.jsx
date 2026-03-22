@@ -17,12 +17,12 @@ export default function Consent() {
           <h2>Every system knows you.<br /><em>You decide</em> who.</h2>
           <div className="consent-text">
             <p>
-              xysq remembers everything — but shares nothing without your explicit permission.{' '}
+              We remember everything, but share nothing without your explicit permission.{' '}
               <strong>Consent is not a setting. It is the foundation.</strong> You hold the power to decide
               which services see which parts of your story. You can grant, revoke, and control at any time.
             </p>
             <p>
-              This is the future of AI as it should be —{' '}
+              This is the future of AI as it should be:{' '}
               <strong className="cyan">powerful for systems, sovereign for you.</strong>
             </p>
           </div>

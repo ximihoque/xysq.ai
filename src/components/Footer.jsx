@@ -10,7 +10,7 @@ export default function Footer() {
         <a href="#">Contact</a>
         <a href="#">Careers</a>
       </div>
-      <div className="fc">© 2026 xysq.ai — Seen. Heard. Felt. Remembered.</div>
+      <div className="fc">© 2026 xysq.ai · Seen. Heard. Felt. Remembered.</div>
     </footer>
   )
 }

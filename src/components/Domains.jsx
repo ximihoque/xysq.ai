@@ -22,7 +22,7 @@ export default function Domains() {
         <span className="stag reveal">Where xysq Lives</span>
         <h2 className="reveal">Every domain.<br /><em>One</em> you.</h2>
         <p className="domains-body reveal">
-          In every domain, xysq already knows you — seen, heard, and felt — carrying your full story so you
+          In every domain, we already know you. Seen, heard, and felt. Carrying your full story so you
           never have to start over.
         </p>
         <div className="dw reveal">

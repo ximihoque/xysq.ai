@@ -11,14 +11,14 @@ export default function Problem() {
             <p>
               Every day, you re-introduce yourself to systems that should already know you. You explain your
               situation to support agents who cannot hear the stress in your voice. You type feelings that should
-              be felt. You start from zero — <strong>again and again.</strong>
+              be felt. You start from zero. <strong>Again and again.</strong>
             </p>
             <p>
-              <strong>xysq.ai ends this.</strong> A persistent, context-aware layer that sees you, hears you, and
-              feels what you're going through — so every system understands not just your words, but{' '}
+              <strong>We end this.</strong> A persistent, context-aware layer that sees you, hears you, and
+              feels what you're going through, so every system understands not just your words, but{' '}
               <strong>who you are.</strong>
             </p>
-            <div className="consent-badge">🔒 &nbsp; Your data. Your rules. Consent first — always.</div>
+            <div className="consent-badge">🔒 &nbsp; Your data. Your rules. Consent first. Always.</div>
           </div>
 
           <div className="vis-box reveal">
