@@ -35,6 +35,13 @@
   transform: scaleX(1);
 }
 
+.pc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
 .pn {
   font-family: 'Playfair Display', serif;
   font-size: 4.5rem;
@@ -42,7 +49,7 @@
   font-style: italic;
   color: rgba(0, 229, 200, 0.08);
   line-height: 1;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .pc h3 {
@@ -60,11 +67,19 @@
   color: var(--silver);
 }
 
-.pi {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
+.pillar-icon {
+  /* fixed height so all three icons are the same height regardless of viewBox ratio */
+  height: 44px;
+  width: auto;
+  color: var(--cyan);
   display: block;
-  filter: drop-shadow(0 0 8px var(--cyan));
+  filter: drop-shadow(0 0 6px rgba(0, 229, 200, 0.35));
+  transition: filter 0.4s;
+  flex-shrink: 0;
+}
+
+.pc:hover .pillar-icon {
+  filter: drop-shadow(0 0 14px rgba(0, 229, 200, 0.7));
 }
 
 .pc-tag {

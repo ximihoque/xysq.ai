@@ -136,7 +136,11 @@ h1 .ln3 {
 }
 
 .shf-icon {
-  font-size: 0.85rem;
+  height: 11px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .hero-body {

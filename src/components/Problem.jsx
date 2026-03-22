@@ -1,4 +1,5 @@
 import '../styles/problem.css'
+import { IconLock } from './Icons'
 
 export default function Problem() {
   return (
@@ -18,7 +19,7 @@ export default function Problem() {
               feels what you're going through, so every system understands not just your words, but{' '}
               <strong>who you are.</strong>
             </p>
-            <div className="consent-badge">🔒 &nbsp; Your data. Your rules. Consent first. Always.</div>
+            <div className="consent-badge"><IconLock className="consent-lock" /> Your data. Your rules. Consent first. Always.</div>
           </div>
 
           <div className="vis-box reveal">
@@ -26,9 +27,9 @@ export default function Problem() {
             <div className="orb o2"><div className="od" /></div>
             <div className="orb o3"><div className="od" /></div>
             <div className="cn"><span>xysq<br />.ai</span></div>
-            <div className="nl" style={{ top: '12%', left: '60%' }}>Seen 👁</div>
-            <div className="nl" style={{ top: '24%', left: '72%' }}>Heard 👂</div>
-            <div className="nl" style={{ top: '68%', left: '66%' }}>Felt ❤️</div>
+            <div className="nl" style={{ top: '12%', left: '60%' }}>Seen</div>
+            <div className="nl" style={{ top: '24%', left: '72%' }}>Heard</div>
+            <div className="nl" style={{ top: '68%', left: '66%' }}>Felt</div>
             <div className="nl" style={{ top: '76%', left: '20%' }}>Memory</div>
             <div className="nl" style={{ top: '16%', left: '12%' }}>Identity</div>
             <div className="nl" style={{ top: '44%', left: '1%' }}>History</div>

@@ -1,4 +1,5 @@
 import '../styles/hero.css'
+import { IconEye, IconWave, IconPulse, IconInfinity } from './Icons'
 
 export default function Hero() {
   return (
@@ -23,10 +24,10 @@ export default function Hero() {
       </h1>
 
       <div className="shf-row">
-        <div className="shf-item active"><span className="shf-icon">👁</span> Seen</div>
-        <div className="shf-item active"><span className="shf-icon">👂</span> Heard</div>
-        <div className="shf-item active"><span className="shf-icon">❤️</span> Felt</div>
-        <div className="shf-item inactive"><span className="shf-icon">♾</span> Always</div>
+        <div className="shf-item active"><IconEye className="shf-icon" /> Seen</div>
+        <div className="shf-item active"><IconWave className="shf-icon" /> Heard</div>
+        <div className="shf-item active"><IconPulse className="shf-icon" /> Felt</div>
+        <div className="shf-item inactive"><IconInfinity className="shf-icon" /> Always</div>
       </div>
 
       <p className="hero-body">

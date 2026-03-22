@@ -1,4 +1,5 @@
 import '../styles/multimodal.css'
+import { IconEye, IconWave, IconPulse } from './Icons'
 
 export default function Multimodal() {
   return (
@@ -24,19 +25,19 @@ export default function Multimodal() {
 
         <div className="mm-cards">
           <div className="mm-card reveal">
-            <div className="mm-sense">👁</div>
+            <IconEye className="mm-sense" />
             <h4>Seen</h4>
             <p>Visual context: your expressions, your environment, your non-verbal cues. We see the whole picture, not just the typed word.</p>
             <span className="mm-badge">Vision · Facial Cues · Context</span>
           </div>
           <div className="mm-card reveal" style={{ transitionDelay: '0.12s' }}>
-            <div className="mm-sense">👂</div>
+            <IconWave className="mm-sense" />
             <h4>Heard</h4>
             <p>Your voice carries emotion, urgency, exhaustion, and joy. We listen to what's between the words: the tone, the pace, the pause.</p>
             <span className="mm-badge">Voice · Tone · Emotion Detection</span>
           </div>
           <div className="mm-card reveal" style={{ transitionDelay: '0.24s' }}>
-            <div className="mm-sense">❤️</div>
+            <IconPulse className="mm-sense" />
             <h4>Felt</h4>
             <p>Understanding your emotional state in real time, not just processing your request, but genuinely sensing what you're going through and responding accordingly.</p>
             <span className="mm-badge">Emotional AI · Sentiment · Empathy</span>
