@@ -1,0 +1,107 @@
+#wl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.wll h2 {
+  margin-bottom: 20px;
+}
+
+.wll p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--silver);
+  margin-bottom: 44px;
+}
+
+.ig {
+  display: flex;
+  border: 1px solid rgba(0, 229, 200, 0.35);
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.ig:focus-within {
+  border-color: var(--cyan);
+}
+
+.ig input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 17px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--paper);
+  letter-spacing: 0.06em;
+}
+
+.ig input::placeholder {
+  color: var(--muted);
+}
+
+.ig button {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--cyan);
+  color: var(--bg);
+  border: none;
+  padding: 17px 28px;
+  cursor: none;
+  transition: opacity 0.2s;
+}
+
+.ig button:hover {
+  opacity: 0.85;
+}
+
+.ok {
+  display: none;
+  margin-top: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--cyan);
+}
+
+.wrs {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.wrs-s {
+  border-left: 2px solid var(--cyan);
+  padding-left: 28px;
+}
+
+.wsn {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.8rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--paper);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.wsn em {
+  color: var(--cyan);
+  font-style: normal;
+}
+
+.wsl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--silver);
+}

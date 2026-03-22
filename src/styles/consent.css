@@ -1,0 +1,124 @@
+#consent {
+  padding: 100px 56px;
+  background: linear-gradient(135deg, var(--bg) 0%, rgba(6, 12, 20, 0.8) 100%);
+}
+
+.consent-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.consent-text p {
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.9;
+  color: var(--silver);
+  margin-top: 24px;
+}
+
+.consent-text p strong {
+  color: var(--paper);
+}
+
+.consent-text p strong.cyan {
+  color: var(--cyan);
+}
+
+.consent-vis {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+}
+
+.consent-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid rgba(0, 229, 200, 0.1);
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.consent-row:hover {
+  border-color: rgba(0, 229, 200, 0.3);
+  background: var(--cyan-dim);
+}
+
+.consent-toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--cyan);
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+
+.consent-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.consent-toggle.off {
+  background: var(--muted);
+}
+
+.consent-toggle.off::after {
+  right: auto;
+  left: 3px;
+}
+
+.consent-row-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  flex: 1;
+}
+
+.consent-row-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.consent-row.off .consent-row-label {
+  color: var(--muted);
+}
+
+.consent-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.consent-footer-note {
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  text-align: right;
+}
