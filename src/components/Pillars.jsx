@@ -56,6 +56,29 @@ function IconMemory() {
   )
 }
 
+/* ── Pillar 04: The Personality Layer
+   Three horizontal sliders — representing tunable, user-owned response controls ── */
+function IconPersonality() {
+  return (
+    <svg className="pillar-icon" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      {/* Track 1 */}
+      <line x1="6" y1="14" x2="74" y2="14" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.3" strokeLinecap="round" />
+      <circle cx="52" cy="14" r="5" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="52" cy="14" r="2" fill="currentColor" fillOpacity="0.7" />
+
+      {/* Track 2 */}
+      <line x1="6" y1="30" x2="74" y2="30" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.3" strokeLinecap="round" />
+      <circle cx="28" cy="30" r="5" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="28" cy="30" r="2" fill="currentColor" fillOpacity="0.7" />
+
+      {/* Track 3 */}
+      <line x1="6" y1="46" x2="74" y2="46" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.3" strokeLinecap="round" />
+      <circle cx="62" cy="46" r="5" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="62" cy="46" r="2" fill="currentColor" fillOpacity="0.7" />
+    </svg>
+  )
+}
+
 /* ── Pillar 03: One Universal Agent
    Hub-and-spoke — one centre node connected to six domain nodes on an orbit ring ── */
 function IconUniversal() {
@@ -96,8 +119,8 @@ export default function Pillars() {
     <section className="sect" id="pillars" style={{ background: 'var(--bg2)' }}>
       <div className="sect-inner">
         <span className="stag reveal">Core Architecture</span>
-        <h2 className="reveal">Three pillars.<br /><em>One</em> you.</h2>
-        <div className="pg">
+        <h2 className="reveal">Four pillars.<br /><em>One</em> you.</h2>
+        <div className="pg pg-2x2">
           <div className="pc reveal">
             <div className="pc-header">
               <div className="pn">01</div>
@@ -136,6 +159,20 @@ export default function Pillars() {
               ask, because we already know you. Seen, heard, and felt, across every domain.
             </p>
             <span className="pc-tag">Universal · Proactive · You First</span>
+          </div>
+          <div className="pc reveal" style={{ transitionDelay: '0.36s' }}>
+            <div className="pc-header">
+              <div className="pn">04</div>
+              <IconPersonality />
+            </div>
+            <h3>The Personality Layer</h3>
+            <p>
+              The platform provides the processed context — who you are, what you're experiencing.
+              Users and businesses define how agents respond to it. You set your preferences.
+              A business configures their agent's tone, escalation, and behaviour. The what is ours.
+              The how is yours.
+            </p>
+            <span className="pc-tag">User-Owned · Business-Configured · Yours</span>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import Marquee from './components/Marquee'
 import Problem from './components/Problem'
 import Multimodal from './components/Multimodal'
 import Pillars from './components/Pillars'
+import Platform from './components/Platform'
 import Domains from './components/Domains'
 import HowItWorks from './components/HowItWorks'
 import Consent from './components/Consent'
@@ -33,6 +34,7 @@ export default function App() {
       <Problem />
       <Multimodal />
       <Pillars />
+      <Platform />
       <Domains />
       <HowItWorks />
       <Consent />

@@ -1,0 +1,6 @@
+Platform OS will capture everything about you and all your interactions with any AI agent which you talk to on any platform from customer support to malls. etc. Timestamped events. raw data capture for continuous training (short term, and long term, personality development)
+Our platform will provide a native chat experience as well with connectors. but focus on chatting only. and talking about what you have experienced. just like littlebird.AI
+For a business or a customer to use our platform, they can bring their agents and use our platform to enrich their experiences.
+Identity layer for agents to recognise you or a fellow agent. 
+This platform can be used to build a personality for an agent also.
+Multimodal first. 
