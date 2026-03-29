@@ -167,7 +167,7 @@ export default function Pillars() {
             </div>
             <h3>The Personality Layer</h3>
             <p>
-              The platform provides the processed context — who you are, what you're experiencing.
+              The platform provides the processed context: who you are, what you're experiencing.
               Users and businesses define how agents respond to it. You set your preferences.
               A business configures their agent's tone, escalation, and behaviour. The what is ours.
               The how is yours.

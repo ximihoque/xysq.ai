@@ -24,25 +24,6 @@ function IconOS() {
   )
 }
 
-function IconBuilders() {
-  return (
-    <svg className="pf-icon" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Platform base line */}
-      <line x1="8" y1="48" x2="72" y2="48" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.3" strokeLinecap="round" />
-      {/* Three agents plugging in */}
-      <rect x="14" y="28" width="14" height="20" rx="2" stroke="currentColor" strokeWidth="1.2" />
-      <line x1="21" y1="28" x2="21" y2="20" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" strokeLinecap="round" />
-      <rect x="33" y="20" width="14" height="28" rx="2" stroke="currentColor" strokeWidth="1.2" />
-      <line x1="40" y1="20" x2="40" y2="12" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" strokeLinecap="round" />
-      <rect x="52" y="32" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.7" />
-      <line x1="59" y1="32" x2="59" y2="24" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" strokeLinecap="round" />
-      {/* Connection dots on platform */}
-      <circle cx="21" cy="48" r="2.5" fill="currentColor" fillOpacity="0.6" />
-      <circle cx="40" cy="48" r="2.5" fill="currentColor" fillOpacity="0.8" />
-      <circle cx="59" cy="48" r="2.5" fill="currentColor" fillOpacity="0.4" />
-    </svg>
-  )
-}
 
 function IconTwin() {
   return (
@@ -72,12 +53,12 @@ export default function Platform() {
         <span className="stag reveal">The Platform</span>
         <h2 className="reveal">Not an app.<br /><em>The layer underneath.</em></h2>
         <p className="pf-intro reveal">
-          An operating system for context. It defines how inputs — voice, vision, text, behaviour — are
-          ingested, stored, and ranked. Downstream, any LLM or VLM builds on top of it.
+          An operating system for context. It defines how inputs are ingested, stored, and ranked:
+          voice, vision, text, behaviour. Downstream, any LLM or VLM builds on top of it.
           The models get better context. You get a world that already knows you.
         </p>
 
-        <div className="pf-grid">
+        <div className="pf-grid pf-grid-2">
           <div className="pf-card reveal">
             <IconOS />
             <h3>The Context OS</h3>
@@ -90,22 +71,11 @@ export default function Platform() {
             <span className="pf-tag">Proactive Injection · Pull API · Real-Time</span>
           </div>
 
-          <div className="pf-card reveal" style={{ transitionDelay: '0.12s' }}>
-            <IconBuilders />
-            <h3>Built for Builders</h3>
-            <p>
-              Businesses bring their own agents and plug directly into the platform. No rebuilding,
-              no retraining. Instant enrichment — your agents finally know who they're talking to.
-              Every customer interaction starts with full context, not a blank slate.
-            </p>
-            <span className="pf-tag">Bring Your Agents · Plug In · Enrich</span>
-          </div>
-
-          <div className="pf-card reveal" style={{ transitionDelay: '0.24s' }}>
+          <div className="pf-card reveal" style={{ transitionDelay: '0.14s' }}>
             <IconTwin />
             <h3>Your Digital Twin</h3>
             <p>
-              A consensual, living portrait of you — continuously updated from every interaction,
+              A consensual, living portrait of you. Continuously updated from every interaction,
               every modality, across every platform you allow. When an AI talks to you, it
               doesn't start from zero. Verified agents see who you are. Everyone else sees nothing.
             </p>

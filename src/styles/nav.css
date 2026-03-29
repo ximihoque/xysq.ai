@@ -17,6 +17,7 @@ nav {
   font-size: 1.15rem;
   letter-spacing: 0.04em;
   color: var(--paper);
+  text-decoration: none;
 }
 
 .logo span {
@@ -41,6 +42,10 @@ nav {
 
 .nav-links a:hover {
   color: var(--cyan);
+}
+
+.nav-active {
+  color: var(--cyan) !important;
 }
 
 .nav-cta {

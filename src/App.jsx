@@ -1,20 +1,21 @@
 import { useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Cursor from './components/Cursor'
 import Particles from './components/Particles'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import Marquee from './components/Marquee'
 import Problem from './components/Problem'
-import Multimodal from './components/Multimodal'
 import Pillars from './components/Pillars'
 import Platform from './components/Platform'
-import Domains from './components/Domains'
-import HowItWorks from './components/HowItWorks'
+import ForYou from './components/ForYou'
+import ForBusiness from './components/ForBusiness'
 import Consent from './components/Consent'
 import Waitlist from './components/Waitlist'
 import Footer from './components/Footer'
+import ExperiencePage from './pages/ExperiencePage'
 
-export default function App() {
+function HomePage() {
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in') }),
@@ -32,14 +33,22 @@ export default function App() {
       <Hero />
       <Marquee />
       <Problem />
-      <Multimodal />
       <Pillars />
       <Platform />
-      <Domains />
-      <HowItWorks />
+      <ForYou />
+      <ForBusiness />
       <Consent />
       <Waitlist />
       <Footer />
     </>
+  )
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/experience" element={<ExperiencePage />} />
+    </Routes>
   )
 }

@@ -1,0 +1,245 @@
+/* ── Experience Page Hero ── */
+.exp-hero {
+  min-height: 52vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 130px 56px 80px;
+  position: relative;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--line);
+}
+
+.exp-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 229, 200, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 200, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+.exp-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 6vw, 6.5rem);
+  font-weight: 900;
+  color: var(--paper);
+  line-height: 1.1;
+  margin: 16px 0 0;
+  max-width: 860px;
+}
+
+.exp-hero p {
+  margin-top: 24px;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--silver);
+  max-width: 600px;
+}
+
+/* ── Identity Layer ── */
+.identity-sect {
+  background: var(--bg2);
+}
+
+.identity-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  margin-top: 64px;
+}
+
+.identity-card {
+  background: var(--bg2);
+  padding: 60px 52px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+
+.identity-card.named {
+  background: #060d15;
+}
+
+.identity-card.named::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--cyan), transparent);
+}
+
+.identity-card:hover {
+  background: #07101b;
+}
+
+.identity-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.identity-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.identity-card p {
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: var(--silver);
+}
+
+.identity-tag {
+  display: inline-block;
+  margin-top: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border: 1px solid rgba(0, 229, 200, 0.2);
+  padding: 5px 12px;
+}
+
+/* ── Experience Tiers ── */
+.tier-sect {
+  border-top: 1px solid var(--line);
+}
+
+.tier-sect:nth-child(odd) {
+  background: var(--bg1);
+}
+
+.tier-sect:nth-child(even) {
+  background: var(--bg2);
+}
+
+.tier-body {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.tier-col h4 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 20px;
+}
+
+.tier-col p {
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: var(--silver);
+}
+
+.tier-divider {
+  width: 1px;
+  background: var(--line);
+  align-self: stretch;
+}
+
+.tier-combined {
+  margin-top: 52px;
+  padding: 40px 48px;
+  border: 1px solid rgba(0, 229, 200, 0.12);
+  background: rgba(0, 229, 200, 0.03);
+}
+
+.tier-combined-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.tier-combined p {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: var(--silver);
+}
+
+.tier-tag {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border: 1px solid rgba(0, 229, 200, 0.2);
+  padding: 4px 10px;
+}
+
+/* ── Back Nav on Experience Page ── */
+.exp-back {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--silver);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s, gap 0.3s;
+  margin-bottom: 24px;
+}
+
+.exp-back::before {
+  content: '←';
+}
+
+.exp-back:hover {
+  color: var(--cyan);
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .exp-hero {
+    padding: 100px 24px 60px;
+  }
+
+  .identity-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .identity-card {
+    padding: 40px 24px;
+  }
+
+  .tier-body {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .tier-divider {
+    display: none;
+  }
+
+  .tier-combined {
+    padding: 32px 24px;
+  }
+}
