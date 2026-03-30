@@ -12,15 +12,19 @@ export default function Waitlist() {
     if (!v || !v.includes('@')) return
     setError(false)
 
-    const body = new URLSearchParams({ 'form-name': 'waitlist', email: v }).toString()
-
     try {
-      const res = await fetch('/', {
+      const res = await fetch('https://api.staticforms.xyz/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accessKey: 'sf_940da8576d9fbecf6bcceb7a',
+          email: v,
+          subject: 'New Waitlist Signup',
+          replyTo: v,
+        }),
       })
-      if (!res.ok) throw new Error('submission failed')
+      const data = await res.json()
+      if (!data.success) throw new Error('submission failed')
       setEmail('')
       setShowOk(true)
       clearTimeout(timerRef.current)
