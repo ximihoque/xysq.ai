@@ -45,7 +45,7 @@
   color: var(--muted);
 }
 
-.ig button {
+.wl-btn {
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
   font-size: 0.75rem;
@@ -57,10 +57,26 @@
   padding: 17px 28px;
   cursor: none;
   transition: opacity 0.2s;
+  margin-top: 12px;
+  width: 100%;
 }
 
-.ig button:hover {
+.wl-btn:hover:not(:disabled) {
   opacity: 0.85;
+}
+
+.wl-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ig-li {
+  margin-top: 10px;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.ig-li:focus-within {
+  border-color: rgba(0, 229, 200, 0.5);
 }
 
 .ok {

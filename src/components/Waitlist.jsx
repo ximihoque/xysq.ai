@@ -3,13 +3,15 @@ import '../styles/waitlist.css'
 
 export default function Waitlist() {
   const [email, setEmail] = useState('')
+  const [linkedin, setLinkedin] = useState('')
   const [showOk, setShowOk] = useState(false)
   const [error, setError] = useState(false)
   const timerRef = useRef(null)
 
   const joinList = async () => {
     const v = email.trim()
-    if (!v || !v.includes('@')) return
+    const li = linkedin.trim()
+    if (!v || !v.includes('@') || !li) return
     setError(false)
 
     try {
@@ -21,11 +23,13 @@ export default function Waitlist() {
           email: v,
           subject: 'New Waitlist Signup',
           replyTo: v,
+          message: `LinkedIn: ${li}`,
         }),
       })
       const data = await res.json()
       if (!data.success) throw new Error('submission failed')
       setEmail('')
+      setLinkedin('')
       setShowOk(true)
       clearTimeout(timerRef.current)
       timerRef.current = setTimeout(() => setShowOk(false), 5000)
@@ -56,8 +60,21 @@ export default function Waitlist() {
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={onKeyDown}
             />
-            <button onClick={joinList}>Join</button>
           </div>
+          <div className="ig ig-li">
+            <input
+              type="url"
+              placeholder="linkedin.com/in/yourprofile"
+              value={linkedin}
+              onChange={(e) => setLinkedin(e.target.value)}
+              onKeyDown={onKeyDown}
+            />
+          </div>
+          <button
+            className="wl-btn"
+            onClick={joinList}
+            disabled={!email.trim().includes('@') || !linkedin.trim()}
+          >Join</button>
           {showOk && <p className="ok" style={{ display: 'block' }}>✦ You're on the list. We'll be in touch.</p>}
           {error && <p className="ok" style={{ display: 'block', color: 'var(--amber)' }}>Something went wrong. Please try again.</p>}
         </div>
