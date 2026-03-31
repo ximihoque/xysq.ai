@@ -23,6 +23,7 @@ export default function Waitlist() {
           email: v,
           subject: 'New Waitlist Signup',
           replyTo: v,
+          cc: 'yashds47@gmail.com',
           message: `LinkedIn: ${li}`,
         }),
       })
