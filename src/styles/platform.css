@@ -44,7 +44,7 @@
 }
 
 .pf-card:hover {
-  background: #07101a;
+  background: var(--surface2);
 }
 
 .pf-card:hover::after {

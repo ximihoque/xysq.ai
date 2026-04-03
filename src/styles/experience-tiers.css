@@ -61,7 +61,7 @@
 }
 
 .identity-card.named {
-  background: #060d15;
+  background: var(--surface2);
 }
 
 .identity-card.named::before {
@@ -75,7 +75,7 @@
 }
 
 .identity-card:hover {
-  background: #07101b;
+  background: var(--surface);
 }
 
 .identity-label {

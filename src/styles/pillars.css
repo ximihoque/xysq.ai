@@ -32,7 +32,7 @@
 }
 
 .pc:hover {
-  background: #080f18;
+  background: var(--surface);
 }
 
 .pc:hover::after {
@@ -51,7 +51,7 @@
   font-size: 4.5rem;
   font-weight: 900;
   font-style: italic;
-  color: rgba(0, 229, 200, 0.08);
+  color: var(--card-num);
   line-height: 1;
   margin-bottom: 0;
 }

@@ -29,7 +29,7 @@
   border-color: var(--cyan);
 }
 
-.ig input {
+.ig input, .ig textarea {
   flex: 1;
   background: transparent;
   border: none;
@@ -39,6 +39,11 @@
   font-size: 0.78rem;
   color: var(--paper);
   letter-spacing: 0.06em;
+}
+
+.ig textarea {
+  resize: none;
+  min-height: 100px;
 }
 
 .ig input::placeholder {
@@ -70,12 +75,12 @@
   cursor: not-allowed;
 }
 
-.ig-li {
+.ig-li, .ig-next, .ig-query {
   margin-top: 10px;
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-.ig-li:focus-within {
+.ig-li:focus-within, .ig-next:focus-within, .ig-query:focus-within {
   border-color: rgba(0, 229, 200, 0.5);
 }
 

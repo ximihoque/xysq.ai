@@ -6,7 +6,7 @@
   align-items: center;
   text-align: center;
   position: relative;
-  padding: 120px 32px 80px;
+  padding: calc(var(--sect-pad) + 40px) var(--side-pad) var(--sect-pad);
   overflow: hidden;
 }
 
@@ -93,7 +93,7 @@ h1 .ln2 {
 
 h1 .ln3 {
   display: block;
-  font-size: 0.55em;
+  font-size: clamp(0.45em, 4vw, 0.55em);
   font-weight: 400;
   letter-spacing: 0.01em;
   color: var(--silver);
@@ -136,7 +136,7 @@ h1 .ln3 {
 }
 
 .shf-icon {
-  height: 11px;
+  height: clamp(9px, 2vw, 11px);
   width: auto;
   display: inline-block;
   vertical-align: middle;

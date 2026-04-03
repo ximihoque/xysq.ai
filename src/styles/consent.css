@@ -1,6 +1,6 @@
 #consent {
   padding: 100px 56px;
-  background: linear-gradient(135deg, var(--bg) 0%, rgba(6, 12, 20, 0.8) 100%);
+  background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
 }
 
 .consent-inner {

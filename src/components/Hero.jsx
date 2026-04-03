@@ -36,7 +36,7 @@ export default function Hero() {
       </p>
 
       <div className="hero-btns">
-        <a href="#wl-sect" className="btn-main">Request Early Access</a>
+        <a href="https://app.xysq.ai" className="btn-main">Sign Up</a>
         <a href="#problem" className="btn-out">Discover the Vision</a>
       </div>
 

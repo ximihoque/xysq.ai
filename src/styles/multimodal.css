@@ -32,7 +32,7 @@
 }
 
 .mm-card:hover {
-  background: #080f18;
+  background: var(--surface);
 }
 
 .mm-card::after {

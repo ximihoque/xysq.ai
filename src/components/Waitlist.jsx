@@ -2,16 +2,21 @@ import { useState, useRef } from 'react'
 import '../styles/waitlist.css'
 
 export default function Waitlist() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [linkedin, setLinkedin] = useState('')
+  const [query, setQuery] = useState('')
   const [showOk, setShowOk] = useState(false)
   const [error, setError] = useState(false)
   const timerRef = useRef(null)
 
   const joinList = async () => {
-    const v = email.trim()
-    const li = linkedin.trim()
-    if (!v || !v.includes('@') || !li) return
+    const vEmail = email.trim()
+    const vName = name.trim()
+    const vLi = linkedin.trim()
+    const vQuery = query.trim()
+    
+    if (!vEmail || !vEmail.includes('@') || !vName || !vLi) return
     setError(false)
 
     try {
@@ -20,17 +25,20 @@ export default function Waitlist() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           accessKey: 'sf_940da8576d9fbecf6bcceb7a',
-          email: v,
-          subject: 'New Waitlist Signup',
-          replyTo: v,
+          name: vName,
+          email: vEmail,
+          subject: 'New Inquiry - xysq.ai',
+          replyTo: vEmail,
           cc: 'yashds47@gmail.com',
-          message: `LinkedIn: ${li}`,
+          message: `Name: ${vName}\nLinkedIn: ${vLi}\nQuery: ${vQuery || 'None'}\nEmail: ${vEmail}`,
         }),
       })
       const data = await res.json()
       if (!data.success) throw new Error('submission failed')
+      setName('')
       setEmail('')
       setLinkedin('')
+      setQuery('')
       setShowOk(true)
       clearTimeout(timerRef.current)
       timerRef.current = setTimeout(() => setShowOk(false), 5000)
@@ -40,28 +48,38 @@ export default function Waitlist() {
   }
 
   const onKeyDown = (e) => {
-    if (e.key === 'Enter') joinList()
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') joinList()
   }
 
   return (
     <section className="sect" id="wl-sect">
       <div id="wl">
         <div className="wll reveal">
-          <span className="stag">Early Access</span>
-          <h2>Be the first to<br /><em>be remembered.</em></h2>
+          <h2>Talk to us<br /><em>directly.</em></h2>
           <p>
-            We're onboarding early partners and individuals who believe the future of AI is personal,
-            persistent, proactive and always on your terms. Join the waitlist and help shape what's next.
+            We're partnering with forward-thinking teams. Tell us about your project or how you want to use xysq.
           </p>
-          <div className="ig">
+          
+          <div className="ig ig-first">
+            <input
+              type="text"
+              placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={onKeyDown}
+            />
+          </div>
+
+          <div className="ig ig-next">
             <input
               type="email"
-              placeholder="your@email.com"
+              placeholder="company@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={onKeyDown}
             />
           </div>
+
           <div className="ig ig-li">
             <input
               type="url"
@@ -71,12 +89,22 @@ export default function Waitlist() {
               onKeyDown={onKeyDown}
             />
           </div>
+
+          <div className="ig ig-query">
+            <textarea
+              placeholder="How can we help? (Optional)"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              rows={4}
+            />
+          </div>
+
           <button
             className="wl-btn"
             onClick={joinList}
-            disabled={!email.trim().includes('@') || !linkedin.trim()}
-          >Join</button>
-          {showOk && <p className="ok" style={{ display: 'block' }}>✦ You're on the list. We'll be in touch.</p>}
+            disabled={!email.trim().includes('@') || !name.trim() || !linkedin.trim()}
+          >Submit Request</button>
+          {showOk && <p className="ok" style={{ display: 'block' }}>✦ Request sent. We'll be in touch shortly.</p>}
           {error && <p className="ok" style={{ display: 'block', color: 'var(--amber)' }}>Something went wrong. Please try again.</p>}
         </div>
 

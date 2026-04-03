@@ -1,82 +1,137 @@
 @media (max-width: 900px) {
-  nav {
-    padding: 20px 24px;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .sect {
-    padding: 80px 24px;
-  }
-
-  #multimodal {
-    padding: 80px 24px;
-  }
-
-  #consent {
-    padding: 80px 24px;
-  }
-
-  .split,
-  .mm-head,
-  .consent-inner {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .vis-box {
-    height: 280px;
-  }
-
-  .o3 {
-    width: 270px;
-    height: 270px;
-  }
-
-  .o2 {
-    width: 200px;
-    height: 200px;
-  }
-
-  .o1 {
-    width: 120px;
-    height: 120px;
-  }
-
-  .pg,
-  .mm-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .steps {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-
-  .steps::before {
-    display: none;
-  }
-
-  #wl {
-    grid-template-columns: 1fr;
-    gap: 56px;
-  }
-
-  footer {
-    flex-direction: column;
-    text-align: center;
+  /* Hero section adjustments */
+  #hero {
+    min-height: 100vh;
+    padding: calc(var(--sect-pad) + 60px) var(--side-pad) var(--sect-pad);
   }
 
   .shf-row {
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
+    flex-direction: row; /* Keep row but wrap if needed */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .shf-item {
+    padding: 6px 12px;
+    font-size: 0.6rem;
   }
 
   .shf-item:not(:last-child) {
-    border-right: 1px solid rgba(0, 229, 200, 0.18);
-    border-bottom: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 229, 200, 0.18);
+  }
+  
+  /* Layout stacking */
+  .split,
+  .pg,
+  .pf-grid,
+  .mm-cards,
+  .consent-inner {
+    grid-template-columns: 1fr !important;
+    gap: 40px;
+  }
+
+  /* Problem section visual */
+  .vis-box {
+    height: 300px;
+    margin-top: 40px;
+    transform: scale(0.9);
+  }
+
+  .o3 { width: 260px; height: 260px; }
+  .o2 { width: 180px; height: 180px; }
+  .o1 { width: 100px; height: 100px; }
+
+  .nl {
+    font-size: 0.5rem !important;
+  }
+
+  /* Pillars */
+  .pc {
+    padding: 32px;
+  }
+
+  /* Platform */
+  .pf-card {
+    padding: 32px;
+  }
+
+  .pf-intro {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+
+  /* Consent */
+  .consent-vis {
+    padding: 24px;
+    margin-top: 40px;
+  }
+
+  .consent-row {
+    padding: 16px 0;
+  }
+
+  /* Waitlist */
+  #wl {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    padding: 40px 24px;
+  }
+
+  .wl-form {
+    flex-direction: column;
+  }
+
+  /* Footer */
+  footer {
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+    padding: 40px var(--side-pad);
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  /* Cursor hide on mobile */
+  .cursor-dot, .cursor-outline {
+    display: none !important;
+  }
+  
+  body {
+    cursor: auto !important;
+  }
+}
+
+@media (max-width: 600px) {
+  h2 {
+    font-size: 2.8rem;
+  }
+
+  .sect {
+    padding: 60px var(--side-pad);
+  }
+
+  .shf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .shf-item {
+    justify-content: center;
+    border: 1px solid rgba(0, 229, 200, 0.18) !important;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-main, .btn-out {
+    width: 100%;
+    text-align: center;
   }
 }

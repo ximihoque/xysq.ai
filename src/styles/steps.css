@@ -17,7 +17,7 @@
 }
 
 .step-card:hover {
-  background: #080f18;
+  background: var(--surface);
 }
 
 /* cyan sweep line on hover — matches pillar/multimodal card style */
@@ -73,7 +73,7 @@
 }
 
 .step-card:hover .step-img-overlay {
-  background: linear-gradient(to top, #080f18 0%, transparent 100%);
+  background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
 }
 
 /* step number badge — top-left of image */
@@ -85,7 +85,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.2em;
   color: var(--cyan);
-  background: rgba(2, 4, 8, 0.75);
+  background: var(--overlay);
   border: 1px solid rgba(0, 229, 200, 0.35);
   padding: 5px 10px;
   backdrop-filter: blur(4px);
