@@ -5,7 +5,7 @@ export default function Footer() {
     <footer>
       <div className="fl">xysq<span>.ai</span></div>
       <div className="fls">
-        <a href="#">Privacy</a>
+        <a href="/privacy">Privacy</a>
         <a href="#">Terms</a>
         <a href="#">Contact</a>
         <a href="#">Careers</a>

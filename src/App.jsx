@@ -14,6 +14,7 @@ import Consent from './components/Consent'
 import Waitlist from './components/Waitlist'
 import Footer from './components/Footer'
 import ExperiencePage from './pages/ExperiencePage'
+import PrivacyPage from './pages/PrivacyPage'
 
 function HomePage() {
   useEffect(() => {
@@ -49,6 +50,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/experience" element={<ExperiencePage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
     </Routes>
   )
 }

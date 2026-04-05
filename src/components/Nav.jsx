@@ -58,8 +58,11 @@ export default function Nav() {
   return (
     <nav className={isMenuOpen ? 'menu-open' : ''}>
       <Link to="/" className="logo" onClick={() => setIsMenuOpen(false)}>xysq<span>.ai</span></Link>
-      
-        <a href={APP_URL} className="nav-signin">Sign In / Up</a>
+
+      <div className={`nav-links${isMenuOpen ? ' open' : ''}`}>
+        <a href="https://docs.xysq.ai" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Docs</a>
+        <a href={APP_URL} className="nav-signin" onClick={() => setIsMenuOpen(false)}>Sign In / Up</a>
+      </div>
 
       <div className="nav-btns">
         <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
