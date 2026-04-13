@@ -71,7 +71,7 @@ export default function Nav() {
       />
 
       <Link to="/" className="logo" onClick={() => setIsMenuOpen(false)}>
-        <svg className="logo-lychee" viewBox="25 22 150 205" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className="logo-lychee" viewBox="25 22 150 205" width="22" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="100" cy="140" r="76" fill="#ff6b7a"/>
           <circle cx="100" cy="64"  r="10"  fill="#ff6b7a"/><circle cx="83"  cy="67"  r="9.5" fill="#ff6b7a"/>
           <circle cx="67"  cy="75"  r="9"   fill="#ff6b7a"/><circle cx="53"  cy="88"  r="9"   fill="#ff6b7a"/>

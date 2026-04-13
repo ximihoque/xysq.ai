@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
@@ -63,6 +64,11 @@ const DOMAINS = [
 export default function VisionPage() {
   return (
     <PageTransition>
+      <SEO
+        title="The Vision"
+        path="/vision"
+        description="xysq's long-term vision: multimodal AI that sees, hears, and feels you. Lifelong memory, one universal agent, proactive intelligence across every domain."
+      />
       <NeuralBackground />
       <Nav />
 

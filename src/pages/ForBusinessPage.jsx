@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
@@ -117,6 +118,19 @@ function staggerFadeUp(delay = 0) {
 export default function ForBusinessPage() {
   return (
     <>
+      <SEO
+        title="For Business"
+        path="/for-business"
+        description="Memory is the real bottleneck in enterprise AI. xysq gives your agents persistent, shared institutional memory — reducing hallucinations, token costs, and context loss across teams."
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: 'xysq for Business',
+          url: 'https://xysq.ai/for-business',
+          description: 'Persistent institutional memory layer for AI agents. Capture, surface, and synthesize context across your entire organisation.',
+          brand: { '@type': 'Brand', name: 'xysq' },
+        }}
+      />
       <Nav />
       <PageTransition>
         <NeuralBackground />
