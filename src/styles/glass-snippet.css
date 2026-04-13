@@ -72,7 +72,7 @@
 .tk-keyword { color: #c792ea; }
 .tk-builtin { color: var(--cyan); }
 .tk-fn      { color: #82aaff; }
-.tk-string  { color: #c3e88d; }
+.tk-string  { color: #e8847a; }
 .tk-comment { color: var(--muted); font-style: italic; }
 .tk-number  { color: #f78c6c; }
 .tk-punct   { color: #89ddff; }

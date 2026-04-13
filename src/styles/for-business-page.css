@@ -68,23 +68,21 @@
 
 .fb-cta-btn {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--bg);
   background: var(--cyan);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 14px 32px;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: box-shadow 0.3s;
 }
 
 .fb-cta-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-2px);
+  box-shadow: 0 0 40px var(--cyan-glow);
 }
 
 .fb-cta-btn--outline {

@@ -1,6 +1,6 @@
 .timeline-arc {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1400px;
   margin: 56px auto 0;
   overflow: visible;
 }
@@ -9,6 +9,26 @@
   width: 100%;
   height: auto;
   overflow: visible;
+}
+
+/* Light mode: darken only the arc lines/dots group, not the logos */
+[data-theme="light"] .arc-lines-group {
+  filter: brightness(0.35) saturate(2);
+}
+
+/* Dark background pill for logos that are white/dark on transparent (Cursor, ChatGPT) */
+/* Always shown — dark in dark mode, dark in light mode, logo stays readable */
+.logo-dark-bg {
+  opacity: 0.9;
+}
+
+/* "ONE IDENTITY" label — cyan in dark mode, lychee pink in light mode */
+.arc-identity-label {
+  fill: rgba(0, 229, 200, 0.9);
+}
+
+[data-theme="light"] .arc-identity-label {
+  fill: #c0392b;
 }
 
 @media (max-width: 700px) {

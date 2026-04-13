@@ -11,14 +11,14 @@ const layers = [
   {
     id: 'xysq',
     label: 'xysq layer',
-    items: ['Identity', 'Memory', 'Context Engine', 'API / SDK'],
+    items: ['Identity', 'Memory Vault', 'Knowledge Base', 'Context Engine'],
     color: 'var(--cyan)',
     highlight: true,
   },
   {
     id: 'data',
     label: 'DATA & CONSENT',
-    items: ['Business Knowledge', 'User Consent Controls', 'Memory Vaults'],
+    items: ['Business Knowledge', 'User Consent Controls', 'Raw Interaction Data'],
     color: 'var(--silver)',
   },
 ]

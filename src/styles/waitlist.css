@@ -18,15 +18,71 @@
   margin-bottom: 44px;
 }
 
+.ig-wrap {
+  margin-top: 10px;
+}
+
+.ig-wrap:first-of-type {
+  margin-top: 0;
+}
+
 .ig {
+  position: relative;
   display: flex;
+  flex-direction: column;
   border: 1px solid rgba(0, 229, 200, 0.35);
   overflow: hidden;
   transition: border-color 0.3s;
+  background: transparent;
 }
 
 .ig:focus-within {
   border-color: var(--cyan);
+}
+
+.ig--error {
+  border-color: #e8847a !important;
+}
+
+/* Floating label */
+.ig-label {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  transition: top 0.18s ease, font-size 0.18s ease, color 0.18s ease;
+}
+
+.ig--textarea .ig-label {
+  top: 20px;
+  transform: none;
+}
+
+/* Float up when filled or focused */
+.ig--filled .ig-label,
+.ig:focus-within .ig-label {
+  top: 8px;
+  transform: none;
+  font-size: 0.58rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+}
+
+.ig--textarea.ig--filled .ig-label,
+.ig--textarea:focus-within .ig-label {
+  top: 6px;
+  font-size: 0.58rem;
+  color: var(--cyan);
+}
+
+.ig--error .ig-label,
+.ig--error:focus-within .ig-label {
+  color: #e8847a;
 }
 
 .ig input, .ig textarea {
@@ -34,7 +90,7 @@
   background: transparent;
   border: none;
   outline: none;
-  padding: 17px 22px;
+  padding: 24px 22px 8px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
   color: var(--paper);
@@ -44,10 +100,23 @@
 .ig textarea {
   resize: none;
   min-height: 100px;
+  padding-top: 22px;
 }
 
-.ig input::placeholder {
-  color: var(--muted);
+.ig input::placeholder,
+.ig textarea::placeholder {
+  color: transparent;
+}
+
+/* Error message below field */
+.ig-error {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: #e8847a;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  padding-left: 2px;
 }
 
 .wl-btn {
@@ -60,7 +129,7 @@
   color: var(--bg);
   border: none;
   padding: 17px 28px;
-  cursor: none;
+  cursor: pointer;
   transition: opacity 0.2s;
   margin-top: 12px;
   width: 100%;
@@ -75,13 +144,28 @@
   cursor: not-allowed;
 }
 
-.ig-li, .ig-next, .ig-query {
-  margin-top: 10px;
-  border-color: rgba(255, 255, 255, 0.12);
+/* Spinner inside button */
+.wl-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-.ig-li:focus-within, .ig-next:focus-within, .ig-query:focus-within {
-  border-color: rgba(0, 229, 200, 0.5);
+.wl-spinner span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bg);
+  animation: wl-bounce 0.9s ease-in-out infinite;
+}
+
+.wl-spinner span:nth-child(2) { animation-delay: 0.15s; }
+.wl-spinner span:nth-child(3) { animation-delay: 0.30s; }
+
+@keyframes wl-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%           { transform: scale(1);   opacity: 1;   }
 }
 
 .ok {

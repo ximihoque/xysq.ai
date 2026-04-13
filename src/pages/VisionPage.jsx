@@ -200,9 +200,6 @@ export default function VisionPage() {
           {`"People will change.\nTeams will evolve.\nOrganizations will grow.\n\nIdentity should persist through all of it."`}
         </motion.blockquote>
 
-        <motion.p className="vision-attr" {...stagger(1)}>
-          — Yash Desai, xysq.ai
-        </motion.p>
 
         <motion.p className="vision-longview-body" {...stagger(2)}>
           xysq is building the layer that carries not just individuals — but teams and entire

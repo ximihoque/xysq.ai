@@ -2,12 +2,12 @@ import { motion } from 'framer-motion'
 import '../styles/works-everywhere.css'
 
 const agents = [
-  { name: 'Claude',        logo: '/logos/claude.svg',         darkBg: false },
-  { name: 'Cursor',        logo: '/logos/cursor.svg',         darkBg: true  },
-  { name: 'Windsurf',      logo: '/logos/windsurf.svg',       darkBg: true  },
-  { name: 'Zed',           logo: '/logos/zed.svg',            darkBg: false },
-  { name: 'Continue.dev',  logo: '/logos/continue.png',       darkBg: false },
-  { name: 'Claude Desktop',logo: '/logos/claude-desktop.svg', darkBg: false },
+  { name: 'Claude',       logo: '/logos/claude.svg',    darkBg: false },
+  { name: 'Cursor',       logo: '/logos/cursor.svg',    darkBg: true  },
+  { name: 'ChatGPT',      logo: '/logos/chatgpt.svg',   darkBg: true  },
+  { name: 'Windsurf',     logo: '/logos/windsurf.svg',  darkBg: true  },
+  { name: 'Zed',          logo: '/logos/zed.svg',       darkBg: false },
+  { name: 'Continue.dev', logo: '/logos/continue.png',  darkBg: false },
 ]
 
 const container = {
@@ -35,32 +35,38 @@ export default function WorksEverywhere() {
           <h2>One memory layer.<br /><em>Every</em> agent you already use.</h2>
         </motion.div>
 
-        <motion.div
-          className="we-grid"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          {agents.map((agent) => (
-            <motion.div key={agent.name} className="we-badge" variants={item}>
-              <div className={`we-logo-wrap${agent.darkBg ? ' we-logo-wrap--dark' : ''}`}>
-                <img src={agent.logo} alt={agent.name} className="we-badge-logo" />
-              </div>
-              <span className="we-badge-name">{agent.name}</span>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="we-layout">
+          {/* Left: 2×3 badge grid */}
+          <motion.div
+            className="we-grid"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-80px' }}
+          >
+            {agents.map((agent) => (
+              <motion.div key={agent.name} className="we-badge" variants={item}>
+                <div className={`we-logo-wrap${agent.darkBg ? ' we-logo-wrap--dark' : ''}`}>
+                  <img src={agent.logo} alt={agent.name} className="we-badge-logo" />
+                </div>
+                <span className="we-badge-name">{agent.name}</span>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        <motion.p
-          className="we-tags"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 }}
-        >
-          MCP · SSE transport · OAuth · API Key
-        </motion.p>
+          {/* Right: big "+ many more" panel */}
+          <motion.div
+            className="we-more-panel"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.35 }}
+          >
+            <span className="we-more-symbol">+</span>
+            <span className="we-more-label">& many more</span>
+            <span className="we-more-sub">MCP · SSE · OAuth · API Key</span>
+          </motion.div>
+        </div>
 
         <motion.p
           className="we-oneliner"

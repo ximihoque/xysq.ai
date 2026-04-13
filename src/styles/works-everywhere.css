@@ -1,10 +1,16 @@
+.we-layout {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+
 .we-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  max-width: 680px;
-  margin: 0 auto 32px;
-  text-align: center;
+  flex: 1;
 }
 
 .we-badge {
@@ -32,6 +38,10 @@
   padding: 8px;
 }
 
+[data-theme="light"] .we-logo-wrap--dark {
+  background: #111827;
+}
+
 .we-badge-logo {
   width: 32px;
   height: 32px;
@@ -46,13 +56,45 @@
   letter-spacing: 0.05em;
 }
 
-.we-tags {
+/* Right panel: big "& many more" */
+.we-more-panel {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 2px dashed rgba(0, 229, 200, 0.35);
+  border-radius: 16px;
+  background: rgba(0, 229, 200, 0.04);
+  padding: 32px 24px;
+}
+
+.we-more-symbol {
+  font-family: 'Outfit', sans-serif;
+  font-size: 4rem;
+  font-weight: 300;
+  color: var(--cyan);
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.we-more-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.we-more-sub {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   color: var(--muted);
   text-align: center;
-  margin-bottom: 16px;
   text-transform: uppercase;
 }
 
@@ -60,10 +102,19 @@
   font-size: 0.9rem;
   color: var(--silver);
   text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+  .we-layout {
+    flex-direction: column;
+  }
   .we-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .we-more-panel {
+    width: 100%;
+    padding: 24px;
   }
 }
