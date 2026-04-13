@@ -1,0 +1,59 @@
+.tl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.tl-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 36px 32px;
+  transition: border-color 0.2s;
+}
+
+.tl-card:hover {
+  border-color: rgba(0, 229, 200, 0.35);
+}
+
+.tl-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.tl-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 12px;
+}
+
+.tl-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .tl-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-theme="light"] .tl-card {
+  background: #ffffff;
+  border-color: rgba(0,122,107,0.2);
+  box-shadow: 0 2px 16px rgba(0,122,107,0.07);
+}
+
+[data-theme="light"] .tl-card:hover {
+  border-color: rgba(0,122,107,0.4);
+}

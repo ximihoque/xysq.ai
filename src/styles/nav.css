@@ -12,21 +12,41 @@ nav {
   transition: background 0.3s, transform 0.3s;
 }
 
+.nav-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: var(--nav-bg);
+  pointer-events: none;
+}
+
 nav.menu-open {
   background: var(--nav-bg);
 }
 
 .logo {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
-  color: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 9px;
   text-decoration: none;
   z-index: 501;
 }
 
-.logo span {
+.logo-lychee {
+  flex-shrink: 0;
+}
+
+.logo-wordmark {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+}
+
+.logo-wordmark span {
   color: var(--cyan);
 }
 

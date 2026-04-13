@@ -3,13 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>xysq.ai — Seen. Heard. Felt. Remembered.</title>
+
+    <!-- Primary meta — overridden per-page by react-helmet-async -->
+    <title>xysq.ai — One presence, across time.</title>
+    <meta name="description" content="xysq is a persistent memory layer for AI agents. One identity, one context, across every tool — Claude, Cursor, ChatGPT and more. Connect in minutes." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://xysq.ai/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="xysq.ai" />
+    <meta property="og:url" content="https://xysq.ai/" />
+    <meta property="og:title" content="xysq.ai — One presence, across time." />
+    <meta property="og:description" content="xysq is a persistent memory layer for AI agents. One identity, one context, across every tool — Claude, Cursor, ChatGPT and more." />
+    <meta property="og:image" content="https://xysq.ai/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="xysq.ai — Persistent memory layer for AI agents" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@xysqai" />
+    <meta name="twitter:title" content="xysq.ai — One presence, across time." />
+    <meta name="twitter:description" content="Persistent memory layer for AI agents. One identity across Claude, Cursor, ChatGPT and more." />
+    <meta name="twitter:image" content="https://xysq.ai/og-image.png" />
+
+    <!-- Schema.org: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "xysq",
+      "url": "https://xysq.ai",
+      "logo": "https://xysq.ai/logo.svg",
+      "description": "Persistent memory layer for AI agents. One identity, one context, across every tool.",
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Schema.org: WebSite (enables sitelinks searchbox) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "xysq.ai",
+      "url": "https://xysq.ai"
+    }
+    </script>
+
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Theme: set before render to avoid flash -->
     <script>
       (function() {
         var t = localStorage.getItem('theme') || 'dark';
@@ -18,7 +72,7 @@
     </script>
   </head>
   <body>
-<div id="root"></div>
+    <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

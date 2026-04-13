@@ -1,0 +1,378 @@
+/* ── ContextFlow — scenario timeline ── */
+
+.cf-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.cf-section {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.cf-section p {
+  font-size: 1rem;
+  color: var(--silver);
+  margin-top: 14px;
+}
+
+/* ── Spine (center vertical line) ── */
+.cf-track {
+  position: relative;
+  padding: 0 0 48px;
+}
+
+.cf-spine-wrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  pointer-events: none;
+}
+
+.cf-spine {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 229, 200, 0.25) 6%,
+    rgba(0, 229, 200, 0.25) 94%,
+    transparent 100%
+  );
+  transform-origin: top;
+}
+
+/* ── Moment row ── */
+.cf-moment {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr;
+  align-items: start;
+  gap: 0;
+  margin-bottom: 56px;
+}
+
+.cf-moment--left .cf-card         { grid-column: 1; grid-row: 1; }
+.cf-moment--left .cf-xysq-stack   { grid-column: 3; grid-row: 1; }
+.cf-moment--right .cf-card        { grid-column: 3; grid-row: 1; }
+.cf-moment--right .cf-xysq-stack  { grid-column: 1; grid-row: 1; }
+.cf-spine-dot                     { grid-column: 2; grid-row: 1; }
+
+/* ── Spine dot ── */
+.cf-spine-dot {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 28px;
+  z-index: 2;
+}
+
+.cf-spine-dot-ring {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cyan-glow);
+  background: var(--bg);
+  box-shadow: 0 0 12px var(--cyan-dim);
+}
+
+.cf-spine-dot-core {
+  position: absolute;
+  top: 33px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+}
+
+/* ── Chat card ── */
+.cf-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.18), inset 0 1px 0 var(--cyan-dim);
+  text-align: left;
+}
+
+.cf-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cf-card-tool {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cf-tool-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+.cf-tool-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--paper);
+}
+
+.cf-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── Chat bubbles ── */
+.cf-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cf-bubble {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  padding: 10px 14px;
+  border-radius: 10px;
+  max-width: 94%;
+}
+
+.cf-bubble--user {
+  background: var(--cyan-dim);
+  border: 1px solid var(--line);
+  color: var(--paper);
+  align-self: flex-end;
+  border-bottom-right-radius: 3px;
+}
+
+.cf-bubble--ai {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  color: var(--silver);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+}
+
+/* ── xysq memory event ── */
+.cf-xysq-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  align-self: start;
+  width: 100%;
+}
+
+.cf-moment--left .cf-xysq-stack {
+  padding-left: 16px;
+}
+
+.cf-moment--right .cf-xysq-stack {
+  padding-right: 16px;
+}
+
+.cf-xysq {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), inset 0 1px 0 var(--cyan-dim);
+}
+
+.cf-xysq--left  { }
+.cf-xysq--right { }
+
+.cf-xysq-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cf-xysq-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--cyan);
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.cf-xysq-action {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.cf-xysq-action--captured    { color: var(--cyan);   background: rgba(0,229,200,0.1); }
+.cf-xysq-action--surfaced    { color: #82aaff;       background: rgba(130,170,255,0.1); }
+.cf-xysq-action--synthesized { color: #f5a623;       background: rgba(245,166,35,0.1); }
+
+.cf-xysq-note {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  color: var(--silver);
+  line-height: 1.55;
+  margin: 0 0 10px;
+}
+
+.cf-xysq-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-start;
+}
+
+.cf-xysq-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--silver);
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Multi-agent panel ── */
+.cf-card--event {
+  background: var(--surface);
+  border-color: var(--cyan-glow);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.18), inset 0 1px 0 var(--cyan-dim);
+}
+
+.cf-multi-agent {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.cf-ma-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cf-ma-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--cyan);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.cf-ma-live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: #4ade80;
+  letter-spacing: 0.12em;
+}
+
+.cf-ma-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: maPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes maPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(74, 222, 128, 0); }
+}
+
+.cf-ma-agents {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cf-ma-agent {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.cf-ma-agent-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.cf-ma-logo {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.cf-ma-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--silver);
+  letter-spacing: 0.06em;
+  flex: 1;
+}
+
+.cf-ma-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: maPulse 1.6s ease-in-out infinite;
+}
+
+.cf-ma-update {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── Mobile ── */
+@media (max-width: 760px) {
+  .cf-moment {
+    grid-template-columns: 20px 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+
+  .cf-spine-wrap { left: 20px; transform: none; }
+
+  .cf-moment--left .cf-card,
+  .cf-moment--right .cf-card  { grid-column: 2; grid-row: 1; }
+  .cf-moment--left .cf-xysq,
+  .cf-moment--right .cf-xysq { grid-column: 2; grid-row: 2; }
+  .cf-spine-dot               { grid-column: 1; grid-row: 1; }
+
+  .cf-xysq--left,
+  .cf-xysq--right { margin: 0; }
+}

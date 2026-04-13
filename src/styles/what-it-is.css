@@ -1,0 +1,46 @@
+.wit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.wit-left {
+  max-width: 440px;
+}
+
+.wit-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.wit-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  line-height: 1.4;
+  color: var(--paper);
+  margin-bottom: 16px;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.wit-body {
+  font-size: 0.95rem;
+  color: var(--silver);
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .wit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wit-left {
+    max-width: 100%;
+  }
+}
