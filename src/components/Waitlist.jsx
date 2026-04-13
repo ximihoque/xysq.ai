@@ -3,6 +3,7 @@ import '../styles/waitlist.css'
 
 export default function Waitlist() {
   const [name, setName] = useState('')
+  const [company, setCompany] = useState('')
   const [email, setEmail] = useState('')
   const [linkedin, setLinkedin] = useState('')
   const [query, setQuery] = useState('')
@@ -16,6 +17,7 @@ export default function Waitlist() {
     const vLi = linkedin.trim()
     const vQuery = query.trim()
     
+    const vCompany = company.trim()
     if (!vEmail || !vEmail.includes('@') || !vName || !vLi) return
     setError(false)
 
@@ -30,12 +32,13 @@ export default function Waitlist() {
           subject: 'New Inquiry - xysq.ai',
           replyTo: vEmail,
           cc: 'yashds47@gmail.com',
-          message: `Name: ${vName}\nLinkedIn: ${vLi}\nQuery: ${vQuery || 'None'}\nEmail: ${vEmail}`,
+          message: `Name: ${vName}\nCompany: ${vCompany || 'N/A'}\nLinkedIn: ${vLi}\nQuery: ${vQuery || 'None'}\nEmail: ${vEmail}`,
         }),
       })
       const data = await res.json()
       if (!data.success) throw new Error('submission failed')
       setName('')
+      setCompany('')
       setEmail('')
       setLinkedin('')
       setQuery('')
@@ -54,7 +57,7 @@ export default function Waitlist() {
   return (
     <section className="sect" id="wl-sect">
       <div id="wl">
-        <div className="wll reveal">
+        <div className="wll">
           <h2>Talk to us<br /><em>directly.</em></h2>
           <p>
             We're partnering with forward-thinking teams. Tell us about your project or how you want to use xysq.
@@ -66,6 +69,16 @@ export default function Waitlist() {
               placeholder="Your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onKeyDown={onKeyDown}
+            />
+          </div>
+
+          <div className="ig ig-next">
+            <input
+              type="text"
+              placeholder="Company Name (Optional)"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
               onKeyDown={onKeyDown}
             />
           </div>
@@ -108,7 +121,7 @@ export default function Waitlist() {
           {error && <p className="ok" style={{ display: 'block', color: 'var(--amber)' }}>Something went wrong. Please try again.</p>}
         </div>
 
-        <div className="wrs reveal">
+        <div className="wrs">
           <div className="wrs-s">
             <div className="wsn">0<em>×</em></div>
             <div className="wsl">Times you'll repeat yourself again</div>

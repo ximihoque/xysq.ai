@@ -1,0 +1,22 @@
+.timeline-arc {
+  width: 100%;
+  max-width: 1080px;
+  margin: 56px auto 0;
+  overflow: visible;
+}
+
+.timeline-arc svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+@media (max-width: 700px) {
+  .timeline-arc {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .timeline-arc svg {
+    min-width: 560px;
+  }
+}

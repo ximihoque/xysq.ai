@@ -1,63 +1,68 @@
-import '../styles/steps.css'
+import { motion } from 'framer-motion';
+import GlassSnippet from './GlassSnippet';
+import '../styles/steps.css';
 
-const steps = [
-  {
-    num: '01',
-    title: 'You Are Seen',
-    body: 'We read your visual cues, expressions, and context, understanding what no text alone could ever tell us. Your identity and presence, fully recognised.',
-    tag: 'Visual · Multimodal',
-    img: '/assets/seen.jpeg',
-    delay: '0s',
-  },
-  {
-    num: '02',
-    title: 'You Are Heard',
-    body: 'Every word, every tone, every pause, captured and understood. We listen to the emotion behind your voice, not just the content of your message.',
-    tag: 'Voice · Tone · Language',
-    img: '/assets/heard.jpeg',
-    delay: '0.1s',
-  },
-  {
-    num: '03',
-    title: 'You Are Felt',
-    body: 'Your emotional state, your urgency, your wellbeing, sensed in real time. We respond to how you feel, not just what you say.',
-    tag: 'Emotion · Empathy · Sentiment',
-    img: '/assets/felt.jpeg',
-    delay: '0.2s',
-  },
-  {
-    num: '04',
-    title: 'You Come First',
-    body: 'Proactive, justified action taken before you ask. We anticipate your needs because we already know you, seen, heard, and felt across your entire history.',
-    tag: 'Proactive · Memory · Action',
-    img: '/assets/remembered.jpeg',
-    delay: '0.3s',
-  },
-]
+const CAPTURE_CODE = `memory_capture(
+    "User prefers TypeScript strict mode. "
+    "Hates unnecessary abstractions.",
+    tags=["preference", "coding"]
+)`;
+
+const SURFACE_CODE = `memory_surface(
+    "how does this user like to structure code?",
+    budget="low"
+)
+# → "Strict TypeScript. No unnecessary abstractions.
+#    Prefers explicit over implicit."`;
+
+const SYNTHESIZE_CODE = `memory_synthesize(
+    "What are this user's active projects "
+    "and current focus?"
+)
+# → "Currently building xysq.ai — a memory layer
+#    for AI agents. Focus: MCP server, teams."`;
 
 export default function HowItWorks() {
   return (
-    <section className="sect howitworks-sect" style={{ background: 'var(--bg2)' }}>
+    <section className="sect">
       <div className="sect-inner">
-        <span className="stag reveal">The Experience</span>
-        <h2 className="reveal">How we know you.<br /><em>Completely.</em></h2>
-        <div className="steps-grid">
-          {steps.map((s) => (
-            <div className="step-card reveal" key={s.title} style={{ transitionDelay: s.delay }}>
-              <div className="step-img-wrap">
-                <img src={s.img} alt={s.title} />
-                <div className="step-img-overlay" />
-                <span className="step-num">{s.num}</span>
-              </div>
-              <div className="step-content">
-                <h4>{s.title}</h4>
-                <p>{s.body}</p>
-                <span className="step-tag">{s.tag}</span>
-              </div>
-            </div>
-          ))}
+        <motion.span
+          className="stag"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0 }}
+        >
+          How It Works
+        </motion.span>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+        >
+          Observe. Retain. Recall. <em>Everywhere.</em>
+        </motion.h2>
+
+        <div className="hiw-grid">
+          <GlassSnippet
+            code={CAPTURE_CODE}
+            label="Agents capture what matters. Decisions, preferences, corrections."
+            delay={0}
+          />
+          <GlassSnippet
+            code={SURFACE_CODE}
+            label="Any agent. Any session. Instant context."
+            delay={0.15}
+          />
+          <GlassSnippet
+            code={SYNTHESIZE_CODE}
+            label="Not just retrieval — synthesis. The agent reasons over everything you've built."
+            delay={0.3}
+          />
         </div>
       </div>
     </section>
-  )
+  );
 }

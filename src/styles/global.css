@@ -38,9 +38,9 @@
 
 [data-theme="light"] {
   --bg: #f4f7fb;
-  --bg2: #e6ecf4;
-  --surface: #dce5f0;
-  --surface2: #d4dde9;
+  --bg2: #e8eef6;
+  --surface: #ffffff;
+  --surface2: #dce5f0;
   --nav-bg: rgba(244, 247, 251, 0.95);
   --overlay: rgba(244, 247, 251, 0.75);
   --cyan: #007a6b;
@@ -50,9 +50,13 @@
   --paper: #0d1520;
   --muted: #4a5d6e;
   --silver: #5a6e80;
-  --line: rgba(0, 122, 107, 0.18);
+  --line: rgba(0, 100, 90, 0.15);
   --amber: #c87d10;
   --card-num: rgba(0, 122, 107, 0.18);
+  /* Lychee brand pink — carried from ui/ */
+  --lychee: #ff6b7a;
+  --lychee-dim: rgba(255, 107, 122, 0.12);
+  --lychee-glow: rgba(255, 107, 122, 0.3);
 }
 
 html {
@@ -65,14 +69,6 @@ body {
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
-  cursor: none;
-}
-
-#particles {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
 }
 
 /* ── Shared section ── */
@@ -112,8 +108,8 @@ h2 em {
 
 /* ── Scroll reveal ── */
 .reveal {
-  opacity: 0;
-  transform: translateY(40px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.85s ease, transform 0.85s ease;
 }
 
@@ -151,4 +147,29 @@ h2 em {
 @keyframes cnp {
   0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,200,.3), 0 0 30px rgba(0,229,200,.1); }
   50%       { box-shadow: 0 0 0 22px rgba(0,229,200,0), 0 0 60px rgba(0,229,200,.22); }
+}
+
+/* ── Light mode lychee accents ── */
+[data-theme="light"] .stag {
+  color: var(--lychee);
+}
+
+[data-theme="light"] h2 em {
+  color: var(--lychee);
+}
+
+[data-theme="light"] .nav-active {
+  color: var(--lychee) !important;
+}
+
+[data-theme="light"] .nav-links a:hover {
+  color: var(--lychee);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

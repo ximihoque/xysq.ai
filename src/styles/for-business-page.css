@@ -1,0 +1,433 @@
+/* ── ForBusinessPage ─────────────────────────────────────── */
+
+.for-business-page {
+  min-height: 100vh;
+}
+
+/* ── Hero ── */
+.fb-hero-sect {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.fb-hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 160px;
+  padding-bottom: var(--sect-pad);
+}
+
+.fb-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  margin-top: 0;
+  max-width: 900px;
+}
+
+.fb-hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--silver);
+  max-width: 600px;
+  margin-top: 24px;
+  margin-bottom: 40px;
+  line-height: 1.65;
+}
+
+/* ── Pain chips ── */
+.fb-pain-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.fb-pain-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+/* ── Hero CTAs ── */
+.fb-hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.fb-cta-btn {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--cyan);
+  border: none;
+  border-radius: 6px;
+  padding: 14px 32px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fb-cta-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.fb-cta-btn--outline {
+  background: transparent;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+}
+
+.fb-cta-btn--outline:hover {
+  background: var(--cyan-dim);
+}
+
+.fb-cta-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--silver);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.fb-cta-link:hover {
+  color: var(--cyan);
+}
+
+/* ── Section 2: Verticals ── */
+.fb-verticals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.fb-vertical-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cyan);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: border-color 0.25s ease;
+}
+
+.fb-vertical-headline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 12px;
+}
+
+.fb-vertical-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.fb-unifying-line {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: var(--paper);
+  text-align: center;
+  margin-top: 48px;
+  line-height: 1.4;
+}
+
+/* ── Section 3: Why It Breaks ── */
+.fb-breaks-inner {
+  max-width: 800px;
+}
+
+.fb-breaks-prose {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fb-breaks-prose p {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--silver);
+  line-height: 1.75;
+}
+
+.fb-breaks-prose strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.fb-consequence-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.fb-consequence-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  padding: 7px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
+.fb-chip--up {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+  border-color: rgba(248, 113, 113, 0.2);
+}
+
+.fb-chip--down {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.2);
+}
+
+/* ── Section 4: The Fix ── */
+.fb-fix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.fb-fix-card {
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid var(--line);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.fb-fix-card:hover {
+  transform: translateY(-4px);
+}
+
+.fb-fix-card--capture {
+  background: rgba(0, 229, 200, 0.06);
+  border-color: rgba(0, 229, 200, 0.18);
+}
+
+.fb-fix-card--surface {
+  background: rgba(130, 170, 255, 0.07);
+  border-color: rgba(130, 170, 255, 0.2);
+}
+
+.fb-fix-card--synthesize {
+  background: rgba(245, 166, 35, 0.07);
+  border-color: rgba(245, 166, 35, 0.2);
+}
+
+.fb-fix-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.fb-fix-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.fb-fix-oneliner {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ── Section 5: Architecture ── */
+.fb-arch-wrap {
+  margin-top: 48px;
+}
+
+.fb-snippet-wrap {
+  margin-top: 40px;
+  max-width: 760px;
+}
+
+/* ── Section 6: Metrics ── */
+.fb-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.fb-metric-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top-width: 2px;
+  border-radius: 16px;
+  padding: 32px 24px;
+  transition: transform 0.2s ease;
+}
+
+.fb-metric-card:hover {
+  transform: translateY(-4px);
+}
+
+.fb-metric-card--relevance {
+  border-top-color: var(--cyan);
+}
+
+.fb-metric-card--tokens {
+  border-top-color: #82aaff;
+}
+
+.fb-metric-card--hallucinations {
+  border-top-color: #f5a623;
+}
+
+.fb-metric-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.fb-metric-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.fb-metric-provocation {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ── Section 7: CTA Split ── */
+.fb-cta-split {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.fb-cta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fb-cta-col-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.fb-cta-col-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  color: var(--silver);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.fb-cta-divider {
+  background: var(--line);
+  width: 1px;
+  height: 120px;
+  align-self: center;
+}
+
+/* ── Light mode overrides ── */
+[data-theme="light"] .fb-vertical-card {
+  background: #ffffff;
+  border-color: rgba(0, 122, 107, 0.15);
+  border-left-color: var(--cyan);
+}
+
+[data-theme="light"] .fb-fix-card--capture {
+  background: rgba(0, 180, 160, 0.07);
+  border-color: rgba(0, 150, 130, 0.25);
+}
+
+[data-theme="light"] .fb-fix-card--surface {
+  background: rgba(100, 130, 255, 0.07);
+  border-color: rgba(100, 130, 220, 0.25);
+}
+
+[data-theme="light"] .fb-fix-card--synthesize {
+  background: rgba(200, 130, 20, 0.07);
+  border-color: rgba(180, 110, 20, 0.25);
+}
+
+[data-theme="light"] .fb-metric-card {
+  background: #ffffff;
+  border-color: rgba(0, 100, 90, 0.12);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .fb-hero h1 {
+    font-size: clamp(2.4rem, 8vw, 3.5rem);
+  }
+
+  .fb-verticals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fb-fix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fb-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fb-cta-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .fb-cta-divider {
+    display: none;
+  }
+
+  .fb-pain-grid {
+    gap: 8px;
+  }
+}
