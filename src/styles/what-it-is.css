@@ -38,9 +38,11 @@
 @media (max-width: 900px) {
   .wit-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
 
   .wit-left {
     max-width: 100%;
+    width: 100%;
   }
 }

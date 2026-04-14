@@ -2,6 +2,7 @@
 
 .cf-wrap {
   max-width: 960px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -357,22 +358,131 @@
   margin: 0;
 }
 
-/* ── Mobile ── */
-@media (max-width: 760px) {
+/* ── Small tablets / large phones (481–768px) — keep two-column but tighter ── */
+@media (max-width: 768px) and (min-width: 481px) {
   .cf-moment {
-    grid-template-columns: 20px 1fr;
-    grid-template-rows: auto auto;
-    gap: 12px;
+    grid-template-columns: 1fr 28px 1fr;
+    margin-bottom: 40px;
   }
 
-  .cf-spine-wrap { left: 20px; transform: none; }
+  .cf-card {
+    padding: 16px 18px;
+  }
 
-  .cf-moment--left .cf-card,
-  .cf-moment--right .cf-card  { grid-column: 2; grid-row: 1; }
-  .cf-moment--left .cf-xysq,
-  .cf-moment--right .cf-xysq { grid-column: 2; grid-row: 2; }
-  .cf-spine-dot               { grid-column: 1; grid-row: 1; }
+  .cf-bubble {
+    font-size: 0.78rem;
+  }
 
-  .cf-xysq--left,
-  .cf-xysq--right { margin: 0; }
+  .cf-xysq {
+    padding: 14px 16px;
+  }
+
+  .cf-xysq-note {
+    font-size: 0.75rem;
+  }
+
+  .cf-moment--left .cf-xysq-stack {
+    padding-left: 8px;
+  }
+
+  .cf-moment--right .cf-xysq-stack {
+    padding-right: 8px;
+  }
+
+  .cf-section {
+    margin-bottom: 48px;
+  }
+}
+
+/* ── Phone only (≤480px) ── */
+@media (max-width: 480px) {
+  .cf-wrap {
+    overflow-x: hidden;
+  }
+
+  /* Hide the vertical spine line — use left-rail instead */
+  .cf-spine-wrap {
+    left: 20px;
+    transform: none;
+  }
+
+  /* Single column: full width, no spine gutter */
+  .cf-moment {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-bottom: 32px;
+    padding-left: 36px;
+    position: relative;
+  }
+
+  /* Hide the grid-based spine dot, use a pseudo left rail dot instead */
+  .cf-spine-dot {
+    display: none !important;
+  }
+
+  /* Dot on the left rail via pseudo-element on cf-moment */
+  .cf-moment::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--cyan);
+    background: var(--bg);
+    box-shadow: 0 0 14px var(--cyan-glow), 0 0 4px var(--cyan-dim);
+    z-index: 2;
+  }
+
+  /* Inner core dot */
+  .cf-moment::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 31px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    z-index: 3;
+  }
+
+  /* Cards fill full width */
+  .cf-card {
+    padding: 16px;
+    min-width: 0;
+    word-break: break-word;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* xysq stack below card */
+  .cf-xysq-stack {
+    margin-top: 10px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100%;
+  }
+
+  .cf-bubble {
+    font-size: 0.78rem;
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .cf-xysq {
+    padding: 12px 14px;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  .cf-xysq-note {
+    font-size: 0.75rem;
+  }
+
+  .cf-card-header {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 }

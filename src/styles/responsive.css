@@ -1,87 +1,10 @@
+/* ================================================================
+   RESPONSIVE — xysq.ai
+   Breakpoints: 900px (tablet), 600px (mobile), 400px (small mobile)
+   ================================================================ */
+
+/* ── 900px: tablet & below ─────────────────────────────────── */
 @media (max-width: 900px) {
-  /* Hero section adjustments */
-  #hero {
-    min-height: 100vh;
-    padding: calc(var(--sect-pad) + 60px) var(--side-pad) var(--sect-pad);
-  }
-
-  .shf-row {
-    flex-direction: row; /* Keep row but wrap if needed */
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0;
-  }
-
-  .shf-item {
-    padding: 6px 12px;
-    font-size: 0.6rem;
-  }
-
-  .shf-item:not(:last-child) {
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 229, 200, 0.18);
-  }
-  
-  /* Layout stacking */
-  .split,
-  .pg,
-  .pf-grid,
-  .mm-cards,
-  .consent-inner {
-    grid-template-columns: 1fr !important;
-    gap: 40px;
-  }
-
-  /* Problem section visual */
-  .vis-box {
-    height: 300px;
-    margin-top: 40px;
-    transform: scale(0.9);
-  }
-
-  .o3 { width: 260px; height: 260px; }
-  .o2 { width: 180px; height: 180px; }
-  .o1 { width: 100px; height: 100px; }
-
-  .nl {
-    font-size: 0.5rem !important;
-  }
-
-  /* Pillars */
-  .pc {
-    padding: 32px;
-  }
-
-  /* Platform */
-  .pf-card {
-    padding: 32px;
-  }
-
-  .pf-intro {
-    font-size: 1.1rem;
-    margin-bottom: 40px;
-  }
-
-  /* Consent */
-  .consent-vis {
-    padding: 24px;
-    margin-top: 40px;
-  }
-
-  .consent-row {
-    padding: 16px 0;
-  }
-
-  /* Waitlist */
-  #wl {
-    grid-template-columns: 1fr !important;
-    text-align: center;
-    padding: 40px 24px;
-  }
-
-  .wl-form {
-    flex-direction: column;
-  }
 
   /* Footer */
   footer {
@@ -95,43 +18,253 @@
     justify-content: center;
   }
 
-  /* Cursor hide on mobile */
-  .cursor-dot, .cursor-outline {
-    display: none !important;
+  /* Waitlist 2-col → 1-col */
+  #wl {
+    grid-template-columns: 1fr !important;
+    gap: 56px;
   }
-  
-  body {
-    cursor: auto !important;
+
+  /* For-business hero padding */
+  .fb-hero {
+    padding-top: 120px;
   }
 }
 
+/* ── 600px: mobile ─────────────────────────────────────────── */
 @media (max-width: 600px) {
+
+  /* ── Global ── */
   h2 {
-    font-size: 2.8rem;
+    font-size: clamp(2rem, 8vw, 2.8rem);
   }
 
   .sect {
-    padding: 60px var(--side-pad);
+    padding: 72px var(--side-pad);
   }
 
-  .shf-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-  }
-
-  .shf-item {
-    justify-content: center;
-    border: 1px solid rgba(0, 229, 200, 0.18) !important;
+  /* ── Hero ── */
+  #hero {
+    padding-top: 100px;
+    padding-bottom: 64px;
   }
 
   .hero-btns {
     flex-direction: column;
-    width: 100%;
+    align-items: stretch;
   }
 
-  .btn-main, .btn-out {
+  .btn-main,
+  .btn-out {
     width: 100%;
     text-align: center;
+  }
+
+  /* ── Timeline arc — horizontally scrollable ── */
+  .timeline-arc {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: calc(-1 * var(--side-pad));
+    margin-right: calc(-1 * var(--side-pad));
+    padding: 0 var(--side-pad);
+  }
+
+  .timeline-arc svg {
+    min-width: 900px;
+  }
+
+  /* ── WhatItIs — stack ── */
+  .wit-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .wit-left {
+    max-width: 100%;
+  }
+
+  /* ── HowItWorks — single col ── */
+  .hiw-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  /* ── ThreeLayers — single col ── */
+  .tl-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .tl-card {
+    padding: 28px 24px;
+  }
+
+  /* ── PatternRecognition — single col ── */
+  .pr-panels {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  /* ── WorksEverywhere ── */
+  .we-layout {
+    flex-direction: column;
+  }
+
+  .we-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .we-more-panel {
+    width: 100%;
+    padding: 24px;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .we-more-symbol {
+    font-size: 2.4rem;
+  }
+
+  /* ── CTA Strip — single col ── */
+  .cs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-divider {
+    display: none;
+  }
+
+  .cs-col {
+    padding: 48px 24px;
+  }
+
+  /* ── Waitlist ── */
+  #wl {
+    grid-template-columns: 1fr !important;
+    gap: 48px;
+  }
+
+  .wll p {
+    margin-bottom: 28px;
+  }
+
+  .wrs {
+    gap: 32px;
+  }
+
+  /* ── ForBusiness ── */
+  .fb-hero {
+    padding-top: 100px;
+    min-height: auto;
+  }
+
+  .fb-hero h1 {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+  }
+
+  .fb-verticals-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .fb-fix-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .fb-metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .fb-cta-split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .fb-cta-divider {
+    display: none;
+  }
+
+  .fb-pain-item {
+    white-space: normal;
+  }
+
+  /* ── Architecture Diagram ── */
+  .arch-diagram {
+    max-width: 100%;
+  }
+
+  .arch-layer {
+    padding: 20px 18px;
+  }
+
+  .arch-layer-items {
+    gap: 8px;
+  }
+
+  .arch-item {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  /* ── Vision Page ── */
+  .vision-hero {
+    padding-top: 100px;
+    min-height: auto;
+  }
+
+  .vision-h1 {
+    font-size: clamp(3rem, 12vw, 5rem);
+  }
+
+  .vision-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .vision-pillar-card {
+    padding: 28px 24px;
+  }
+
+  .vision-domains {
+    gap: 8px;
+  }
+
+  .vision-domain {
+    font-size: 0.78rem;
+    padding: 8px 14px;
+  }
+
+  /* ── Glass snippet — prevent overflow ── */
+  .glass-snippet {
+    padding: 24px 20px;
+  }
+
+  .glass-snippet pre {
+    font-size: 0.72rem;
+  }
+}
+
+/* ── 400px: small mobile ───────────────────────────────────── */
+@media (max-width: 400px) {
+
+  .we-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fb-hero h1 {
+    font-size: clamp(1.9rem, 10vw, 2.4rem);
+  }
+
+  .vision-h1 {
+    font-size: clamp(2.6rem, 13vw, 3.5rem);
+  }
+
+  .arch-item {
+    font-size: 0.7rem;
+    padding: 5px 10px;
   }
 }
