@@ -123,6 +123,10 @@
   opacity: 0.9;
 }
 
+[data-theme="light"] .cf-tool-logo--white {
+  filter: invert(1);
+}
+
 .cf-tool-name {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
@@ -333,6 +337,7 @@
   object-fit: contain;
   opacity: 0.8;
 }
+
 
 .cf-ma-name {
   font-family: 'JetBrains Mono', monospace;

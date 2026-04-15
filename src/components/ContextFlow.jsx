@@ -15,6 +15,7 @@ const moments = [
     tool: 'ChatGPT',
     toolColor: null,
     logo: '/logos/chatgpt.svg',
+    whiteLogo: true,
     messages: [
       { from: 'user', text: "p99 spiked to 4.2s. Nothing deployed. What's happening?" },
       { from: 'ai',   text: "Your OpenAI embedding calls went from 80ms to 340ms overnight — they're synchronous in your hot path. Move them async and serve cached embeddings." },
@@ -56,6 +57,7 @@ const moments = [
     tool: 'Cursor',
     toolColor: null,
     logo: '/logos/cursor.svg',
+    whiteLogo: true,
     messages: [
       { from: 'user', text: "Build it." },
       { from: 'ai',   text: "On it — live → cache → weekly fallback, circuit breaker wired. Adding /internal/embedding-health so your agents can monitor state." },
@@ -237,7 +239,7 @@ function ChatCard({ moment, index }) {
         >
           <div className="cf-card-header">
             <div className="cf-card-tool">
-              <img src={moment.logo} alt={moment.tool} className="cf-tool-logo" />
+              <img src={moment.logo} alt={moment.tool} className={`cf-tool-logo${moment.whiteLogo ? ' cf-tool-logo--white' : ''}`} />
               <span className="cf-tool-name" style={moment.toolColor ? { color: moment.toolColor } : undefined}>{moment.tool}</span>
             </div>
             <span className="cf-time">{moment.time}</span>
@@ -259,7 +261,7 @@ function ChatCard({ moment, index }) {
         >
           <div className="cf-card-header">
             <div className="cf-card-tool">
-              <img src={moment.logo} alt={moment.tool} className="cf-tool-logo" />
+              <img src={moment.logo} alt={moment.tool} className={`cf-tool-logo${moment.whiteLogo ? ' cf-tool-logo--white' : ''}`} />
               <span className="cf-tool-name" style={moment.toolColor ? { color: moment.toolColor } : undefined}>{moment.tool}</span>
             </div>
             <span className="cf-time">{moment.time}</span>
