@@ -18,27 +18,93 @@ const painItems = [
   'Token waste on re-establishing state',
 ]
 
-// ── Vertical pain cards — Section 2 ───────────────────────
-const verticals = [
+// ── Persona icons (Lucide, inlined) ───────────────────────
+const PERSONA_ICONS = {
+  wrench: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+    </svg>
+  ),
+  code: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m18 16 4-4-4-4" />
+      <path d="m6 8-4 4 4 4" />
+      <path d="m14.5 4-5 16" />
+    </svg>
+  ),
+  package: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+      <path d="M12 22V12" />
+      <path d="m3.3 7 8.7 5 8.7-5" />
+      <path d="m7.5 4.27 9 5.15" />
+    </svg>
+  ),
+  megaphone: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m3 11 18-5v12L3 14v-3z" />
+      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+    </svg>
+  ),
+  users: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+  scale: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+      <path d="M7 21h10" />
+      <path d="M12 3v18" />
+      <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+    </svg>
+  ),
+}
+
+// ── Persona cards — Section 2 ─────────────────────────────
+const buildersPersonas = [
   {
     id: 'builders',
     headline: 'AI Builders',
     body: "You're stuffing context into every prompt. Token costs balloon. Recall degrades. You're duct-taping memory yourself.",
+    icon: 'wrench',
   },
+  {
+    id: 'development',
+    headline: 'Development',
+    body: "Every new engineer ramps from zero. Every AI code assistant forgets the conventions, the gotchas, the \u201Cwhy we did it this way\u201D from last sprint. Documentation is a tax your team pays every time it writes, reads, or fails to find it.",
+    icon: 'code',
+  },
+  {
+    id: 'product',
+    headline: 'Product',
+    body: "Your product team ships features agents don't know exist. Users ask about yesterday's release; the agent answers with last quarter's docs.",
+    icon: 'package',
+  },
+]
+
+const operatorsPersonas = [
   {
     id: 'marketing',
     headline: 'Marketing',
     body: "Your agents don't know your brand voice, past campaigns, or what already flopped. Every brief starts cold.",
-  },
-  {
-    id: 'support',
-    headline: 'Customer Support',
-    body: "Agent picks up a ticket. Has no idea what happened last week, last month, or with the last three agents who touched this customer.",
+    icon: 'megaphone',
   },
   {
     id: 'hr',
     headline: 'HR & Onboarding',
     body: "New hire asks the same questions. Agent gives the same generic answers. Everything your team knows lives in someone's head.",
+    icon: 'users',
+  },
+  {
+    id: 'legal',
+    headline: 'Legal',
+    body: "Contracts, clauses, policies, precedents \u2014 all scattered across redlines, emails, and someone's desktop. Your agent can't cite what it can't see.",
+    icon: 'scale',
   },
 ]
 
@@ -225,8 +291,11 @@ export default function ForBusinessPage() {
                 Your AI has no<br /><em>institutional memory.</em>
               </motion.h2>
 
+              <motion.p className="fb-verticals-row-label" {...fadeUp}>
+                Builders & Creators
+              </motion.p>
               <div className="fb-verticals-grid">
-                {verticals.map((v, i) => (
+                {buildersPersonas.map((v, i) => (
                   <motion.div
                     key={v.id}
                     className="fb-vertical-card"
@@ -235,6 +304,27 @@ export default function ForBusinessPage() {
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.1 }}
                   >
+                    <span className="fb-vertical-icon">{PERSONA_ICONS[v.icon]}</span>
+                    <p className="fb-vertical-headline">{v.headline}</p>
+                    <p className="fb-vertical-body">{v.body}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p className="fb-verticals-row-label fb-verticals-row-label--second" {...fadeUp}>
+                Operators
+              </motion.p>
+              <div className="fb-verticals-grid">
+                {operatorsPersonas.map((v, i) => (
+                  <motion.div
+                    key={v.id}
+                    className="fb-vertical-card"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.1 }}
+                  >
+                    <span className="fb-vertical-icon">{PERSONA_ICONS[v.icon]}</span>
                     <p className="fb-vertical-headline">{v.headline}</p>
                     <p className="fb-vertical-body">{v.body}</p>
                   </motion.div>
