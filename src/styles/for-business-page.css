@@ -398,6 +398,95 @@
   border-color: rgba(0, 100, 90, 0.12);
 }
 
+/* ── Section: Scattered by Design ── */
+.fb-scattered-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.fb-scattered-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.fb-scattered-card:hover {
+  transform: translateY(-4px);
+}
+
+.fb-scattered-card--fragmentation {
+  background: rgba(130, 170, 255, 0.05);
+  border-color: rgba(130, 170, 255, 0.18);
+}
+
+.fb-scattered-card--tax {
+  background: rgba(245, 166, 35, 0.05);
+  border-color: rgba(245, 166, 35, 0.18);
+}
+
+.fb-scattered-card--sprawl {
+  background: rgba(0, 229, 200, 0.05);
+  border-color: rgba(0, 229, 200, 0.18);
+}
+
+.fb-scattered-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 12px;
+  line-height: 1.2;
+  font-style: italic;
+}
+
+.fb-scattered-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.fb-scattered-stat {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--paper);
+  line-height: 1;
+  margin-top: auto;
+  padding-top: 24px;
+  letter-spacing: -0.02em;
+}
+
+.fb-scattered-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.fb-scattered-logo-wrap {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.fb-scattered-closer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 40px;
+}
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .fb-hero h1 {
@@ -409,6 +498,10 @@
   }
 
   .fb-fix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fb-scattered-grid {
     grid-template-columns: 1fr;
   }
 
