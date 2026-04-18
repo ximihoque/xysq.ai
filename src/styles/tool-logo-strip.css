@@ -1,0 +1,31 @@
+/* ── ToolLogoStrip ───────────────────────────────────────── */
+
+.tool-logo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+  color: var(--muted);
+}
+
+.tool-logo-strip__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tool-logo-strip__item:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.tool-logo-strip__item svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
