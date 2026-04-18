@@ -217,13 +217,13 @@ export default function ForBusinessPage() {
       <SEO
         title="For Business"
         path="/for-business"
-        description="Memory is the real bottleneck in enterprise AI. xysq gives your agents persistent, shared institutional memory — reducing hallucinations, token costs, and context loss across teams."
+        description="Your team's knowledge lives across Slack, Notion, Jira, Google Drive, Linear, Salesforce. xysq gives AI agents persistent memory across every tool — for development, product, marketing, HR, and legal teams."
         schema={{
           '@context': 'https://schema.org',
           '@type': 'Product',
           name: 'xysq for Business',
           url: 'https://xysq.ai/for-business',
-          description: 'Persistent institutional memory layer for AI agents. Capture, surface, and synthesize context across your entire organisation.',
+          description: 'Persistent institutional memory layer for AI agents. Connects knowledge across Slack, Notion, Jira, Google Drive and more — for development, product, marketing, HR, and legal teams.',
           brand: { '@type': 'Brand', name: 'xysq' },
         }}
       />
@@ -305,7 +305,7 @@ export default function ForBusinessPage() {
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.1 }}
                   >
                     <span className="fb-vertical-icon">{PERSONA_ICONS[v.icon]}</span>
-                    <p className="fb-vertical-headline">{v.headline}</p>
+                    <h3 className="fb-vertical-headline">{v.headline}</h3>
                     <p className="fb-vertical-body">{v.body}</p>
                   </motion.div>
                 ))}
@@ -325,7 +325,7 @@ export default function ForBusinessPage() {
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.1 }}
                   >
                     <span className="fb-vertical-icon">{PERSONA_ICONS[v.icon]}</span>
-                    <p className="fb-vertical-headline">{v.headline}</p>
+                    <h3 className="fb-vertical-headline">{v.headline}</h3>
                     <p className="fb-vertical-body">{v.body}</p>
                   </motion.div>
                 ))}
@@ -358,7 +358,7 @@ export default function ForBusinessPage() {
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.12 }}
                   >
-                    <p className="fb-scattered-headline">{card.headline}</p>
+                    <h3 className="fb-scattered-headline">{card.headline}</h3>
                     <p className="fb-scattered-body">{card.body}</p>
                     {card.variant === 'logos' && (
                       <div className="fb-scattered-logo-wrap">
@@ -428,7 +428,7 @@ export default function ForBusinessPage() {
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.12 }}
                   >
-                    <p className="fb-fix-headline">{card.headline}</p>
+                    <h3 className="fb-fix-headline">{card.headline}</h3>
                     <p className="fb-fix-body">{card.body}</p>
                   </motion.div>
                 ))}
@@ -490,7 +490,7 @@ export default function ForBusinessPage() {
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.12 }}
                   >
-                    <p className="fb-metric-headline">{card.headline}</p>
+                    <h3 className="fb-metric-headline">{card.headline}</h3>
                     <p className="fb-metric-body">{card.body}</p>
                   </motion.div>
                 ))}

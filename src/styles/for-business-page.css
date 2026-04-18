@@ -166,6 +166,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--cyan);
+  margin-top: 0;
   margin-bottom: 12px;
 }
 
@@ -278,6 +279,7 @@
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--paper);
+  margin-top: 0;
   margin-bottom: 12px;
   line-height: 1.2;
 }
@@ -347,6 +349,7 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--paper);
+  margin-top: 0;
   margin-bottom: 12px;
   line-height: 1.25;
 }
@@ -475,6 +478,7 @@
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--paper);
+  margin-top: 0;
   margin-bottom: 12px;
   line-height: 1.2;
   font-style: italic;

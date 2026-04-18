@@ -43,13 +43,17 @@ const DEFAULT_TOOLS = ['slack', 'notion', 'jira', 'googledrive', 'linear', 'sale
 export default function ToolLogoStrip({ tools = DEFAULT_TOOLS }) {
   return (
     <div className="tool-logo-strip" aria-label="Tools where knowledge lives">
-      {tools.map((t) => (
-        <span key={t} className="tool-logo-strip__item" title={LABELS[t] || t}>
-          <svg viewBox="0 0 24 24" role="img" aria-label={LABELS[t] || t} xmlns="http://www.w3.org/2000/svg">
-            {ICONS[t]}
-          </svg>
-        </span>
-      ))}
+      {tools.map((t) => {
+        const label = LABELS[t] || t
+        return (
+          <span key={t} className="tool-logo-strip__item" title={label}>
+            <svg viewBox="0 0 24 24" role="img" aria-label={label} xmlns="http://www.w3.org/2000/svg">
+              <title>{label}</title>
+              {ICONS[t]}
+            </svg>
+          </span>
+        )
+      })}
     </div>
   )
 }
