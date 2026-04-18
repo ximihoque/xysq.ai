@@ -7,6 +7,7 @@ import GlassSnippet from '../components/GlassSnippet'
 import ArchitectureDiagram from '../components/ArchitectureDiagram'
 import NeuralBackground from '../components/NeuralBackground'
 import Waitlist from '../components/Waitlist'
+import ToolLogoStrip from '../components/ToolLogoStrip'
 import '../styles/for-business-page.css'
 
 // ── Pain chips — Hero ──────────────────────────────────────
@@ -60,6 +61,35 @@ const fixCards = [
     headline: 'Synthesize',
     body: 'Memory that evolves. Patterns emerge. Preferences sharpen. The longer it runs, the smarter your agents get — without retraining.',
     cls: 'fb-fix-card--synthesize',
+  },
+]
+
+// ── Scattered by Design cards — NEW section ──────────────
+const scatteredCards = [
+  {
+    id: 'fragmentation',
+    headline: 'Knowledge, fragmented.',
+    body: 'Scattered across Slack threads, Notion pages, Jira tickets, GDrive folders, Linear issues, Salesforce records. No single agent sees across them.',
+    cls: 'fb-scattered-card--fragmentation',
+    variant: 'logos',
+  },
+  {
+    id: 'tax',
+    headline: 'The hidden tax.',
+    body: 'Employees lose 2+ hours a day hopping between tools to reconstruct context. Your agents inherit the same blindness — and the same tax.',
+    cls: 'fb-scattered-card--tax',
+    variant: 'stat',
+    stat: '2+ hrs',
+    statLabel: 'per day, per employee',
+  },
+  {
+    id: 'sprawl',
+    headline: 'Sprawl compounds.',
+    body: 'The average company runs 130+ SaaS apps. Each one is another silo. Memory should span them, not duplicate them.',
+    cls: 'fb-scattered-card--sprawl',
+    variant: 'stat',
+    stat: '130+',
+    statLabel: 'SaaS apps, per company',
   },
 ]
 
@@ -213,6 +243,50 @@ export default function ForBusinessPage() {
 
               <motion.p className="fb-unifying-line" {...staggerFadeUp(0.5)}>
                 The model isn't the problem. <em>Memory is.</em>
+              </motion.p>
+            </div>
+          </section>
+
+          {/* ── Section: Scattered by Design ── NEW */}
+          <section className="sect">
+            <div className="sect-inner">
+              <motion.span className="stag" {...fadeUp}>
+                Scattered by Design
+              </motion.span>
+              <motion.h2 {...staggerFadeUp(0.1)}>
+                Your knowledge lives everywhere —<br />
+                <em>except where your agents can reach it.</em>
+              </motion.h2>
+
+              <div className="fb-scattered-grid">
+                {scatteredCards.map((card, i) => (
+                  <motion.div
+                    key={card.id}
+                    className={`fb-scattered-card ${card.cls}`}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 + i * 0.12 }}
+                  >
+                    <p className="fb-scattered-headline">{card.headline}</p>
+                    <p className="fb-scattered-body">{card.body}</p>
+                    {card.variant === 'logos' && (
+                      <div className="fb-scattered-logo-wrap">
+                        <ToolLogoStrip />
+                      </div>
+                    )}
+                    {card.variant === 'stat' && (
+                      <div>
+                        <div className="fb-scattered-stat">{card.stat}</div>
+                        <div className="fb-scattered-stat-label">{card.statLabel}</div>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p className="fb-scattered-closer" {...staggerFadeUp(0.5)}>
+                {"// it's not just your AI that forgets. your tools never knew in the first place."}
               </motion.p>
             </div>
           </section>
