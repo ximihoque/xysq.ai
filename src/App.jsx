@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import HomePage from './pages/HomePage'
@@ -7,6 +8,16 @@ import PrivacyPage from './pages/PrivacyPage'
 
 export default function App() {
   const location = useLocation()
+
+  useEffect(() => {
+    if (typeof window.gtag !== 'function') return
+    window.gtag('event', 'page_view', {
+      page_path: location.pathname + location.search,
+      page_location: window.location.href,
+      page_title: document.title,
+    })
+  }, [location.pathname, location.search])
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
