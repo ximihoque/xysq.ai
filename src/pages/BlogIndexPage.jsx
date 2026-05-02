@@ -29,6 +29,7 @@ export default function BlogIndexPage() {
         description="Notes from the team building xysq — a consent-first memory layer for AI agents."
         path="/blog"
         schema={schema}
+        extraLinks={[{ rel: 'alternate', type: 'application/rss+xml', title: 'xysq blog', href: '/blog/rss.xml' }]}
       />
       <Nav />
       <main className="blog-index">

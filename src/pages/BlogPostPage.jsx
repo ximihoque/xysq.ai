@@ -58,6 +58,7 @@ export default function BlogPostPage() {
         path={`/blog/${post.slug}`}
         image={ogImage}
         schema={schema}
+        extraLinks={[{ rel: 'alternate', type: 'application/rss+xml', title: 'xysq blog', href: '/blog/rss.xml' }]}
       />
       <Nav />
       <main className="blog-post">
