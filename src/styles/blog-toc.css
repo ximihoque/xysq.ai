@@ -22,9 +22,12 @@
 }
 
 .blog-toc__item {
-  padding: 4px 0 4px 12px;
+  padding: 6px 0 6px 12px;
   margin-left: -1px;
   border-left: 2px solid transparent;
+  line-height: 1.45;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .blog-toc__item--h3 { padding-left: 24px; }
