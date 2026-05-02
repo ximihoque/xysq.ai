@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage'
 import ForBusinessPage from './pages/ForBusinessPage'
 import VisionPage from './pages/VisionPage'
 import PrivacyPage from './pages/PrivacyPage'
+import BlogIndexPage from './pages/BlogIndexPage'
+import BlogPostPage from './pages/BlogPostPage'
 
 export default function App() {
   const location = useLocation()
@@ -25,6 +27,8 @@ export default function App() {
         <Route path="/for-business" element={<ForBusinessPage />} />
         <Route path="/vision" element={<VisionPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/blog" element={<BlogIndexPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
       </Routes>
     </AnimatePresence>
   )
