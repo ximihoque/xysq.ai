@@ -1,1 +1,155 @@
-/* Real styles arrive in Task 13. */
+.blog-post__body h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 56px 0 20px;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+.blog-post__body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 40px 0 16px;
+}
+
+.blog-post__body p {
+  margin-bottom: 24px;
+}
+
+.blog-post__body a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.blog-post__body a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.blog-post__body strong { font-weight: 600; color: var(--paper); }
+.blog-post__body em { font-style: italic; }
+
+.blog-post__body ul,
+.blog-post__body ol {
+  margin: 0 0 24px 24px;
+}
+
+.blog-post__body li {
+  margin-bottom: 8px;
+}
+
+.blog-post__body blockquote {
+  margin: 32px 0;
+  padding: 4px 0 4px 24px;
+  border-left: 3px solid var(--cyan);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--paper);
+}
+
+.blog-post__body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92em;
+  background: var(--cyan-dim);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.blog-post__body pre {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 28px 0;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.blog-post__body pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+.blog-post__body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 15px;
+}
+
+.blog-post__body th,
+.blog-post__body td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.blog-post__body th {
+  font-weight: 600;
+  color: var(--paper);
+  background: var(--cyan-dim);
+}
+
+/* Heading anchor links injected by rehype-autolink-headings */
+.blog-post__body .heading-anchor {
+  margin-left: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.blog-post__body h2:hover .heading-anchor,
+.blog-post__body h3:hover .heading-anchor,
+.blog-post__body h2 .heading-anchor:focus,
+.blog-post__body h3 .heading-anchor:focus {
+  opacity: 1;
+}
+
+/* Callouts */
+.callout {
+  margin: 28px 0;
+  padding: 16px 20px;
+  border-radius: 8px;
+  border-left: 3px solid var(--cyan);
+  background: var(--cyan-dim);
+}
+
+.callout--warn {
+  border-left-color: var(--amber);
+  background: rgba(245, 166, 35, 0.08);
+}
+
+.callout--note {
+  border-left-color: var(--silver);
+  background: rgba(136, 153, 170, 0.08);
+}
+
+.callout__body p:last-child { margin-bottom: 0; }
+
+/* Figures */
+.blog-figure {
+  margin: 32px 0;
+}
+
+.blog-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.blog-figure figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--silver);
+  text-align: center;
+}
