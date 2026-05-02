@@ -1,1 +1,94 @@
-/* Real styles arrive in Task 12. */
+.blog-post {
+  padding: var(--sect-pad) var(--side-pad);
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.blog-post--missing {
+  text-align: center;
+}
+
+.blog-post__article {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.blog-post__header {
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.blog-post__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.blog-post__meta {
+  color: var(--silver);
+  font-size: 14px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.blog-post__body {
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--paper);
+}
+
+.blog-author-card {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.blog-author-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.blog-author-card__name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.blog-author-card__title {
+  color: var(--silver);
+  font-size: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
+}
+
+.blog-author-card__bio {
+  color: var(--silver);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.blog-author-card__links {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.blog-author-card__links a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.blog-author-card__links a:hover {
+  text-decoration: underline;
+}
