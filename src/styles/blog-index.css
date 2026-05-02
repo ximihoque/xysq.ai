@@ -1,1 +1,96 @@
-/* Real styles arrive in Task 11. */
+.blog-index {
+  padding: var(--sect-pad) var(--side-pad);
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.blog-index__hero {
+  margin-bottom: 64px;
+}
+
+.blog-index__hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.blog-index__hero p {
+  color: var(--silver);
+  font-size: 18px;
+  max-width: 480px;
+}
+
+.blog-index__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-index__row {
+  border-top: 1px solid var(--line);
+}
+
+.blog-index__row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.blog-index__link {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  padding: 28px 0;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.blog-index__link:hover {
+  opacity: 0.85;
+}
+
+.blog-index__date {
+  color: var(--silver);
+  font-size: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.02em;
+  padding-top: 4px;
+}
+
+.blog-index__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.blog-index__excerpt {
+  color: var(--silver);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  max-width: 60ch;
+}
+
+.blog-index__reading {
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.blog-index__empty {
+  color: var(--silver);
+  padding: 48px 0;
+}
+
+@media (max-width: 720px) {
+  .blog-index__link {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .blog-index__date {
+    padding-top: 0;
+  }
+}
