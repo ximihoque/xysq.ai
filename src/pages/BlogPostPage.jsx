@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { MDXProvider } from '@mdx-js/react'
 import Nav from '../components/Nav'
@@ -5,6 +6,7 @@ import Footer from '../components/Footer'
 import SEO from '../components/SEO'
 import BlogPostHeader from '../components/BlogPostHeader'
 import BlogAuthorCard from '../components/BlogAuthorCard'
+import BlogTOC from '../components/BlogTOC'
 import { getPostBySlug } from '../lib/blog'
 import { mdxComponents } from '../lib/mdxComponents'
 import '../styles/blog-post.css'
@@ -12,6 +14,7 @@ import '../styles/blog-mdx.css'
 
 export default function BlogPostPage() {
   const { slug } = useParams()
+  const articleRef = useRef(null)
   const post = getPostBySlug(slug)
 
   if (!post) {
@@ -61,8 +64,8 @@ export default function BlogPostPage() {
         extraLinks={[{ rel: 'alternate', type: 'application/rss+xml', title: 'xysq blog', href: '/blog/rss.xml' }]}
       />
       <Nav />
-      <main className="blog-post">
-        <article className="blog-post__article">
+      <main className="blog-post blog-post--with-toc">
+        <article className="blog-post__article" ref={articleRef}>
           <BlogPostHeader post={post} />
           <div className="blog-post__body">
             <MDXProvider components={mdxComponents}>
@@ -71,6 +74,7 @@ export default function BlogPostPage() {
           </div>
           <BlogAuthorCard author={post.author} />
         </article>
+        <BlogTOC articleRef={articleRef} />
       </main>
       <Footer />
     </>
