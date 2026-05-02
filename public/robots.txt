@@ -3,3 +3,4 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://xysq.ai/sitemap.xml
+Sitemap: https://docs.xysq.ai/sitemap.xml
