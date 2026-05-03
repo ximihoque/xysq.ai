@@ -35,7 +35,7 @@ export default function BlogIndexPage() {
       <main className="blog-index">
         <header className="blog-index__hero">
           <h1>Blog</h1>
-          <p>Notes from the team building xysq.</p>
+          <p>Notes from the team building xysq — a consent-first memory layer for AI agents.</p>
         </header>
         <BlogPostList posts={posts} />
       </main>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import '../styles/blog-toc.css'
 
 export default function BlogTOC({ articleRef }) {
@@ -33,21 +34,26 @@ export default function BlogTOC({ articleRef }) {
     return () => observerRef.current?.disconnect()
   }, [headings, articleRef])
 
-  if (headings.length === 0) return null
-
   return (
-    <nav className="blog-toc" aria-label="Table of contents">
-      <div className="blog-toc__label">Contents</div>
-      <ul>
-        {headings.map((h) => (
-          <li
-            key={h.id}
-            className={`blog-toc__item blog-toc__item--h${h.level} ${activeId === h.id ? 'is-active' : ''}`}
-          >
-            <a href={`#${h.id}`}>{h.text}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <aside className="blog-toc" aria-label="Post navigation">
+      <Link to="/blog" className="blog-toc__back">
+        <span aria-hidden="true">←</span> Back to Blog
+      </Link>
+      {headings.length > 0 && (
+        <nav className="blog-toc__nav" aria-label="Table of contents">
+          <div className="blog-toc__label">Table of Contents</div>
+          <ul>
+            {headings.map((h) => (
+              <li
+                key={h.id}
+                className={`blog-toc__item blog-toc__item--h${h.level} ${activeId === h.id ? 'is-active' : ''}`}
+              >
+                <a href={`#${h.id}`}>{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </aside>
   )
 }

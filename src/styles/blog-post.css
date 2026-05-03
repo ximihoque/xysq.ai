@@ -14,24 +14,62 @@
 }
 
 .blog-post__header {
-  margin-bottom: 56px;
+  margin-bottom: 64px;
   padding-bottom: 32px;
   border-bottom: 1px solid var(--line);
 }
 
 .blog-post__title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 5vw, 56px);
+  font-size: clamp(44px, 6.4vw, 76px);
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin-bottom: 20px;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  margin-bottom: 28px;
 }
 
-.blog-post__meta {
+.blog-post__subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.55;
+  font-weight: 300;
   color: var(--silver);
+  margin-bottom: 40px;
+  max-width: 60ch;
+}
+
+.blog-post__byline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.blog-post__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.blog-post__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.blog-post__author-name {
+  font-size: 15px;
+  color: var(--paper);
+  font-weight: 400;
+}
+
+.blog-post__date {
   font-size: 14px;
+  color: var(--silver);
   font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.01em;
 }
 
 .blog-post__body {
@@ -96,12 +134,13 @@
 @media (min-width: 1100px) {
   .blog-post--with-toc {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 64px;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 80px;
     max-width: 1180px;
   }
   .blog-post--with-toc .blog-post__article {
     margin: 0;
     min-width: 0;
+    max-width: 760px;
   }
 }

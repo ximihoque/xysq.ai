@@ -65,6 +65,7 @@ export default function BlogPostPage() {
       />
       <Nav />
       <main className="blog-post blog-post--with-toc">
+        <BlogTOC articleRef={articleRef} />
         <article className="blog-post__article" ref={articleRef}>
           <BlogPostHeader post={post} />
           <div className="blog-post__body">
@@ -74,7 +75,6 @@ export default function BlogPostPage() {
           </div>
           <BlogAuthorCard author={post.author} />
         </article>
-        <BlogTOC articleRef={articleRef} />
       </main>
       <Footer />
     </>

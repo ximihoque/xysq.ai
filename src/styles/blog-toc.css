@@ -1,54 +1,82 @@
 .blog-toc {
   position: sticky;
-  top: 100px;
-  font-size: 13px;
-  font-family: 'JetBrains Mono', monospace;
+  top: 110px;
+  font-family: 'Outfit', sans-serif;
   color: var(--silver);
   max-height: calc(100vh - 140px);
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.blog-toc__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--silver);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  transition: color 0.15s ease;
+  width: fit-content;
+}
+
+.blog-toc__back:hover {
+  color: var(--paper);
+}
+
+.blog-toc__back span {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.blog-toc__back:hover span {
+  transform: translateX(-3px);
+}
+
+.blog-toc__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .blog-toc__label {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 16px;
-  padding-left: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--paper);
+  letter-spacing: -0.005em;
 }
 
-.blog-toc ul {
+.blog-toc__nav ul {
   list-style: none;
-  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .blog-toc__item {
-  padding: 6px 0 6px 12px;
-  margin-left: -1px;
-  border-left: 2px solid transparent;
-  line-height: 1.45;
-  word-break: normal;
-  overflow-wrap: break-word;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.blog-toc__item--h3 { padding-left: 24px; }
-
-.blog-toc__item.is-active {
-  border-left-color: var(--cyan);
-}
+.blog-toc__item--h3 a { padding-left: 16px; }
 
 .blog-toc__item.is-active a {
   color: var(--paper);
 }
 
-.blog-toc a {
-  color: inherit;
+.blog-toc__item a {
+  color: var(--silver);
   text-decoration: none;
   display: block;
-  line-height: 1.4;
+  padding: 4px 0;
+  transition: color 0.15s ease;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
-.blog-toc a:hover {
+.blog-toc__item a:hover {
   color: var(--paper);
 }
 
