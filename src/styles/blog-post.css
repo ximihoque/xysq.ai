@@ -137,6 +137,7 @@
     grid-template-columns: 240px minmax(0, 1fr);
     gap: 80px;
     max-width: 1180px;
+    align-items: start;
   }
   .blog-post--with-toc .blog-post__article {
     margin: 0;
