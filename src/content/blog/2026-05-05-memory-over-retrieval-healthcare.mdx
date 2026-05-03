@@ -1,0 +1,190 @@
+---
+title: "Memory > Retrieval: Fixing Healthcare Continuity with xysq"
+slug: "memory-over-retrieval-healthcare"
+date: "2026-05-05"
+author: "Navneet Garg"
+excerpt: "RAG retrieves knowledge, but healthcare needs memory. Here's how we built a system that actually remembers patients."
+category: "Engineering"
+draft: false
+---
+
+## The Problem No One Solves
+
+Doctors see the same patient twice.  
+The second visit starts from zero.
+
+Healthcare doesn’t have a knowledge problem.  
+It has a **continuity problem**.
+
+A patient with Type 2 diabetes visits:
+
+- Dr. A → prescribes Metformin  
+- Follow-up scheduled  
+- Risk notes added  
+
+Next visit:
+
+- Different doctor  
+- Same patient  
+- Zero context  
+
+Everything resets.
+
+The patient repeats everything.
+
+---
+
+## Why This Happens
+
+Medical knowledge already exists:
+
+- clinical guidelines  
+- drug references  
+- treatment protocols  
+
+Systems today are very good at retrieving this.
+
+But they cannot answer:
+
+> What happened to this patient last time?
+
+Because that answer is not in documents.
+
+It lives in **history**.
+
+---
+
+## What We Built
+
+Instead of trying to force retrieval to solve this, we introduced a **memory-first system**.
+
+### xysq Memory Layer (Core System)
+
+- Persistent patient memory via MCP  
+- Session-independent  
+- Shared across staff  
+
+Stores:
+
+- symptoms  
+- diagnosis  
+- medications  
+- doctor notes  
+- follow-ups  
+
+This creates a **continuous patient timeline**.
+
+---
+
+### Where RAG Fits (Secondary)
+
+RAG is still useful, but only for:
+
+- general medical knowledge  
+- guidelines  
+- reference queries  
+
+It is **not responsible for patient continuity**.
+
+---
+
+## The Difference in Practice
+
+### Session 1
+
+Patient:
+
+“I have diabetes.”
+
+xysq stores:
+
+- diagnosis  
+- context  
+- timeline  
+
+---
+
+### Session 2
+
+Patient:
+
+“What did the doctor say last time?”
+
+---
+
+### RAG
+
+Returns general medical information about diabetes.
+
+Correct — but not specific to the patient.
+
+---
+
+### xysq
+
+Returns:
+
+“At your last visit, the doctor diagnosed Type 2 diabetes, recommended dietary changes, and discussed starting Metformin.”
+
+Specific.  
+Contextual.  
+Useful.
+
+---
+
+## Architecture (Minimal)
+
+```text
+User Query
+    │
+    ▼
+Backend (FastAPI)
+    ├── RAG (optional)
+    │     → medical knowledge
+    │
+    └── xysq Memory (core)
+          → patient history
+```
+---
+
+## RAG supports. xysq drives.
+
+---
+
+## Why This Matters
+
+- Doctors don’t repeat intake  
+- Patient history persists across staff  
+- Follow-ups are not lost  
+- Context improves over time  
+
+This is not about better answers.  
+It’s about **continuous care**.
+
+---
+
+## The Insight
+
+Most healthcare AI today is retrieval.
+
+But healthcare is not a document problem.  
+It’s a **memory problem**.
+
+---
+
+## Memory > Retrieval
+
+RAG can tell you what to do.  
+xysq tells you what already happened.
+
+Only one creates continuity.
+
+---
+
+## Explore the Project
+
+**GitHub (Full Implementation):**  
+https://github.com/TheLunarLogic/RAG_VS_XYSQ
+
+**xysq Platform:**  
+https://docs.xysq.ai/
