@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { formatDate } from '../lib/blog'
 
-function categoryFor(post) {
-  return post.tags?.[0] ?? 'Article'
+function pickFeatured(posts) {
+  const flagged = posts.find((p) => p.featured)
+  return flagged ?? posts[0]
 }
 
 function FeaturedCard({ post }) {
@@ -37,7 +38,7 @@ function PostCard({ post }) {
   return (
     <li className="blog-card">
       <Link to={`/blog/${post.slug}`} className="blog-card__link">
-        <span className="blog-tag blog-tag--ghost">{categoryFor(post)}</span>
+        <span className="blog-tag blog-tag--ghost">{post.category}</span>
         <h3 className="blog-card__title">{post.title}</h3>
         {post.excerpt && <p className="blog-card__excerpt">{post.excerpt}</p>}
         <div className="blog-card__byline">
@@ -58,7 +59,8 @@ export default function BlogPostList({ posts }) {
   if (posts.length === 0) {
     return <p className="blog-index__empty">No posts yet — check back soon.</p>
   }
-  const [featured, ...rest] = posts
+  const featured = pickFeatured(posts)
+  const rest = posts.filter((p) => p.slug !== featured.slug)
   return (
     <>
       <FeaturedCard post={featured} />
