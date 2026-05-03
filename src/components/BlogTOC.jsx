@@ -40,7 +40,7 @@ export default function BlogTOC({ articleRef }) {
         <span aria-hidden="true">←</span> Back to Blog
       </Link>
       {headings.length > 0 && (
-        <nav className="blog-toc__nav" aria-label="Table of contents">
+        <div className="blog-toc__nav" role="navigation" aria-label="Table of contents">
           <div className="blog-toc__label">Table of Contents</div>
           <ul>
             {headings.map((h) => (
@@ -52,7 +52,7 @@ export default function BlogTOC({ articleRef }) {
               </li>
             ))}
           </ul>
-        </nav>
+        </div>
       )}
     </aside>
   )
