@@ -1,76 +1,71 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import TimelineArc from './TimelineArc'
+import LogoMarquee from './LogoMarquee'
 import '../styles/hero.css'
 
-const h1Words = ['One', 'presence,', 'across', 'time.']
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay },
+})
 
-const springTap = { type: 'spring', stiffness: 400, damping: 25 }
+const tap = { type: 'spring', stiffness: 400, damping: 25 }
 
 export default function Hero() {
   return (
     <section id="hero">
+      <div className="hero-bg" aria-hidden="true">
+        <div className="hero-grid" />
+        <div className="hero-spot" />
+      </div>
+
       <div className="hero-inner">
-        <h1 className="hero-h1">
-          {h1Words.map((word, i) => (
-            <motion.span
-              key={word}
-              className="word"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: i * 0.08 }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
-
-        <motion.p
-          className="hero-sub"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
+        <motion.a
+          {...fade(0)}
+          href="https://docs.xysq.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hero-eyebrow"
         >
-          Your context, your patterns, how you think — carried forward.<br />
-          The model can change. You keep going.
+          <span className="hero-eyebrow-dot" />
+          <span>MEMORY INFRASTRUCTURE FOR AI</span>
+          <span className="hero-eyebrow-arrow">→</span>
+        </motion.a>
+
+        <motion.h1 {...fade(0.05)} className="hero-h1">
+          Unified Memory for<br />you and your AI.
+        </motion.h1>
+
+        <motion.p {...fade(0.15)} className="hero-sub">
+          One memory across every app and agent you use. Captured automatically,
+          synthesised continuously, shared on your terms.
         </motion.p>
 
-        <motion.p
-          className="hero-body"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-        >
-          A system that continuously understands you by connecting who you've been with who you're becoming.
-        </motion.p>
-
-        <motion.div
-          className="hero-btns"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.65 }}
-        >
+        <motion.div {...fade(0.25)} className="hero-btns">
           <motion.a
             href="https://app.xysq.ai"
             className="btn-main"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={springTap}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
+            transition={tap}
           >
             Get started free
+            <span className="btn-main-arrow">→</span>
           </motion.a>
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={springTap}
+          <motion.a
+            href="#memory-diagram"
+            className="btn-out"
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
+            transition={tap}
           >
-            <Link to="/for-business" className="btn-out">
-              For businesses →
-            </Link>
-          </motion.div>
+            See how it works
+            <span className="btn-out-arrow">↓</span>
+          </motion.a>
         </motion.div>
 
-        <TimelineArc />
+        <motion.div {...fade(0.4)} className="hero-marquee-slot">
+          <LogoMarquee />
+        </motion.div>
       </div>
     </section>
   )

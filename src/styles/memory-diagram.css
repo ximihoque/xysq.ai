@@ -1,0 +1,300 @@
+/* ── Memory diagram (knowledge graph view) ── */
+
+.md-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* ── In-card title chip (top-left corner) ── */
+.md-title {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  background: rgba(2, 4, 8, 0.7);
+  border: 1px solid rgba(0, 229, 200, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--silver);
+  z-index: 3;
+  pointer-events: none;
+}
+
+[data-theme="light"] .md-title {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 100, 90, 0.2);
+  color: var(--paper);
+}
+
+.md-title-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: md-cap-pulse 1.6s ease-in-out infinite;
+}
+
+[data-theme="light"] .md-title-dot {
+  background: var(--lychee);
+  box-shadow: 0 0 8px var(--lychee);
+}
+
+.md-title-text {
+  white-space: nowrap;
+}
+
+.md-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 560 / 440;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at center, rgba(0, 229, 200, 0.04) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(8, 15, 24, 0.45) 0%, rgba(2, 4, 8, 0.65) 100%);
+  border: 1px solid rgba(0, 229, 200, 0.14);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="light"] .md-card {
+  background:
+    radial-gradient(ellipse at center, rgba(255, 107, 122, 0.05) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(232, 238, 246, 0.55) 100%);
+  border-color: rgba(0, 100, 90, 0.18);
+}
+
+.md-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  /* `color` drives currentColor for the ruled-grid pattern below. */
+  color: rgba(0, 229, 200, 0.085);
+}
+
+[data-theme="light"] .md-svg {
+  color: rgba(0, 100, 90, 0.12);
+}
+
+/* ── Central xysq logo (orbital core) ── */
+.md-core-logo {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.md-core-logo svg {
+  display: block;
+}
+
+/* ── Nodes ── circular icon badges ── */
+.md-node {
+  --md-size: 44px;
+  position: absolute;
+  width: var(--md-size);
+  height: var(--md-size);
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+  overflow: hidden;
+}
+
+[data-theme="light"] .md-node {
+  background: #ffffff;
+  border-color: rgba(13, 21, 32, 0.08);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* AI nodes are slightly larger — they're the active interfaces. */
+.md-node--ai {
+  --md-size: 52px;
+}
+
+/* Logos that are pure white shapes (Cursor, ChatGPT) need a dark plate
+   to be visible. Apply in BOTH modes. */
+.md-node--dark {
+  background: #111827;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="light"] .md-node--dark {
+  background: #111827;
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.md-node-logo {
+  --md-logo-scale: 1;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  display: block;
+  transform: scale(var(--md-logo-scale));
+  transition: filter 0.4s ease;
+}
+
+/* ── Active states ── */
+.md-node--source-active {
+  border-color: rgba(0, 229, 200, 0.85);
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow:
+    0 0 0 2px rgba(0, 229, 200, 0.5),
+    0 6px 22px rgba(0, 229, 200, 0.35);
+}
+
+.md-node--ai-active {
+  border-color: rgba(0, 229, 200, 1);
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow:
+    0 0 0 2.5px rgba(0, 229, 200, 0.7),
+    0 8px 32px rgba(0, 229, 200, 0.5);
+}
+
+[data-theme="light"] .md-node--source-active {
+  border-color: rgba(255, 107, 122, 0.75);
+  box-shadow:
+    0 0 0 2px rgba(255, 107, 122, 0.5),
+    0 6px 22px rgba(255, 107, 122, 0.32);
+}
+
+[data-theme="light"] .md-node--ai-active {
+  border-color: rgba(255, 107, 122, 0.95);
+  box-shadow:
+    0 0 0 2.5px rgba(255, 107, 122, 0.7),
+    0 8px 32px rgba(255, 107, 122, 0.45);
+}
+
+/* ── Pulse ring ── */
+.md-node-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0, 229, 200, 0.55);
+  pointer-events: none;
+}
+
+.md-node-pulse--ai {
+  inset: -6px;
+  border-width: 2px;
+  border-color: rgba(0, 229, 200, 0.8);
+}
+
+[data-theme="light"] .md-node-pulse {
+  border-color: rgba(255, 107, 122, 0.55);
+}
+
+[data-theme="light"] .md-node-pulse--ai {
+  border-color: rgba(255, 107, 122, 0.85);
+}
+
+/* ── Caption (lives below the card now) ── */
+.md-caption-outside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  min-height: 30px; /* prevents layout shift between scenarios */
+}
+
+.md-caption-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(2, 4, 8, 0.55);
+  border: 1px solid rgba(0, 229, 200, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--silver);
+}
+
+[data-theme="light"] .md-caption-inner {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 100, 90, 0.18);
+  color: var(--paper);
+}
+
+.md-caption-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: md-cap-pulse 1.6s ease-in-out infinite;
+}
+
+[data-theme="light"] .md-caption-dot {
+  background: var(--lychee);
+  box-shadow: 0 0 8px var(--lychee);
+}
+
+@keyframes md-cap-pulse {
+  0%, 100% { opacity: 1;   }
+  50%      { opacity: 0.4; }
+}
+
+.md-caption-text {
+  /* Long captions wrap on narrow screens instead of getting truncated. */
+  white-space: normal;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ── Mobile ── */
+@media (max-width: 720px) {
+  .md-wrap {
+    margin-top: 12px;
+    padding: 0 12px;
+  }
+
+  .md-node {
+    --md-size: 36px;
+  }
+  .md-node--ai {
+    --md-size: 42px;
+  }
+
+  .md-caption-inner {
+    font-size: 0.58rem;
+    padding: 5px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-caption-dot {
+    animation: none;
+  }
+  /* Particles still travel via animateMotion — those respect the spec
+     because we're not forcing them, the user can still see the diagram
+     but we silence the pulse. */
+}

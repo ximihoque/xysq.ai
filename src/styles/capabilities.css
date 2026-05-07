@@ -1,0 +1,233 @@
+/* ── Capabilities section (Section 2) ── */
+
+.cap-section {
+  position: relative;
+  padding: 56px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .cap-section {
+    padding-top: 40px;
+    padding-bottom: 72px;
+  }
+}
+
+.cap-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .cap-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+}
+
+/* ── Left column: text ── */
+.cap-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 560px;
+}
+
+.cap-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 229, 200, 0.06);
+  border: 1px solid rgba(0, 229, 200, 0.22);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--cyan);
+  margin-bottom: 28px;
+}
+
+[data-theme="light"] .cap-eyebrow {
+  background: rgba(255, 107, 122, 0.08);
+  border-color: rgba(255, 107, 122, 0.3);
+  color: var(--lychee);
+}
+
+.cap-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  animation: cap-pulse 2.4s ease-in-out infinite;
+}
+
+[data-theme="light"] .cap-eyebrow-dot {
+  background: var(--lychee);
+  box-shadow: 0 0 10px var(--lychee);
+}
+
+/* Uses currentColor so it picks up the theme-scoped --cyan/--lychee
+   value applied to .cap-eyebrow-dot above. */
+@keyframes cap-pulse {
+  0%, 100% { opacity: 1;   }
+  50%      { opacity: 0.4; }
+}
+
+.cap-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 22px;
+}
+
+.cap-headline em {
+  font-style: normal;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .cap-headline em {
+  color: var(--lychee);
+}
+
+.cap-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--silver);
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+/* ── Bullets ── */
+.cap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.cap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--silver);
+}
+
+.cap-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 229, 200, 0.12);
+  border: 1px solid rgba(0, 229, 200, 0.35);
+  color: var(--cyan);
+  margin-top: 2px;
+}
+
+.cap-check svg {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="light"] .cap-check {
+  background: rgba(255, 107, 122, 0.12);
+  border-color: rgba(255, 107, 122, 0.4);
+  color: var(--lychee);
+}
+
+.cap-item-body {
+  display: inline;
+}
+
+.cap-verb {
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: -0.005em;
+}
+
+.cap-sep {
+  margin: 0 8px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.cap-body {
+  color: var(--silver);
+}
+
+/* ── CTA link ── */
+.cap-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--cyan);
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.cap-cta:hover {
+  border-color: var(--cyan);
+}
+
+.cap-cta-arrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.cap-cta:hover .cap-cta-arrow {
+  transform: translateX(3px);
+}
+
+[data-theme="light"] .cap-cta {
+  color: var(--lychee);
+}
+
+[data-theme="light"] .cap-cta:hover {
+  border-color: var(--lychee);
+}
+
+/* ── Right column: diagram visual ── */
+.cap-visual {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .cap-text {
+    max-width: 640px;
+    margin: 0 auto;
+    align-items: flex-start;
+  }
+  .cap-visual {
+    order: 2;
+  }
+}

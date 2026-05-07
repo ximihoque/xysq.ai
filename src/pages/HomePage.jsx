@@ -1,10 +1,9 @@
 import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
+import Capabilities from '../components/Capabilities'
 import WhatItIs from '../components/WhatItIs'
-import HowItWorks from '../components/HowItWorks'
 import ThreeLayers from '../components/ThreeLayers'
-import PatternRecognition from '../components/PatternRecognition'
 import WorksEverywhere from '../components/WorksEverywhere'
 import CtaStrip from '../components/CtaStrip'
 import Footer from '../components/Footer'
@@ -31,10 +30,9 @@ export default function HomePage() {
       <NeuralBackground />
       <Nav />
       <Hero />
+      <Capabilities />
       <WhatItIs />
-      <HowItWorks />
       <ThreeLayers />
-      <PatternRecognition />
       <WorksEverywhere />
       <CtaStrip />
       <Footer />
