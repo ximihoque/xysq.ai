@@ -1,12 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ChevronDown, Brain, Users, FolderKanban, ArrowUpRight } from 'lucide-react'
+import {
+  ChevronDown, Brain, Users, FolderKanban, ArrowUpRight,
+  Sparkles, Hammer, Network, Target,
+} from 'lucide-react'
 import { USE_CASE_CATEGORIES } from '../data/useCases'
 import { handleHashLink } from '../lib/hashLink'
 import '../styles/nav.css'
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
+
+const USE_CASE_ICONS = { Sparkles, Hammer, Network, Target }
 
 const FEATURES = [
   {
@@ -168,23 +173,31 @@ export default function Nav() {
   const useCasesPanel = (
     <div className="nav-mega">
       <div className="nav-mega-grid">
-        {USE_CASE_CATEGORIES.map((c) => (
-          <Link
-            key={c.slug}
-            to={`/use-cases/${c.slug}`}
-            className="nav-mega-cell"
-            onClick={closeMenu}
-          >
-            <span className="nav-mega-eyebrow">{c.eyebrow}</span>
-            <span className="nav-mega-title">
-              {c.title}
-              <ArrowUpRight className="nav-mega-arrow" size={14} strokeWidth={1.8} />
-            </span>
-            <span className="nav-mega-personas">
-              {c.personas.map((p) => p.name).join(' · ')}
-            </span>
-          </Link>
-        ))}
+        {USE_CASE_CATEGORIES.map((c) => {
+          const Icon = USE_CASE_ICONS[c.icon]
+          return (
+            <Link
+              key={c.slug}
+              to={`/use-cases/${c.slug}`}
+              className="nav-mega-cell"
+              onClick={closeMenu}
+            >
+              {Icon && (
+                <span className="nav-mega-cell-icon" aria-hidden="true">
+                  <Icon strokeWidth={1.6} />
+                </span>
+              )}
+              <span className="nav-mega-cell-body">
+                <span className="nav-mega-eyebrow">{c.eyebrow}</span>
+                <span className="nav-mega-title">{c.title}</span>
+                <span className="nav-mega-personas">
+                  {c.personas.map((p) => p.name).join(' · ')}
+                </span>
+              </span>
+              <ArrowUpRight className="nav-mega-arrow" size={16} strokeWidth={1.8} />
+            </Link>
+          )
+        })}
       </div>
     </div>
   )
@@ -225,6 +238,16 @@ export default function Nav() {
           className="nav-link"
         >
           Docs
+        </a>
+
+        <a
+          href="https://docs.xysq.ai/sdk/getting-started"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={closeMenu}
+          className="nav-link"
+        >
+          SDK
         </a>
 
         {/* Mobile: CTA appears inside the menu so users on small screens see it */}

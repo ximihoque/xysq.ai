@@ -9,7 +9,14 @@
 @media (max-width: 900px) {
   .cap-section {
     padding-top: 40px;
-    padding-bottom: 72px;
+    padding-bottom: 56px;
+  }
+}
+
+@media (max-width: 720px) {
+  .cap-section {
+    padding-top: 32px;
+    padding-bottom: 48px;
   }
 }
 
@@ -229,5 +236,32 @@
   }
   .cap-visual {
     order: 2;
+  }
+}
+
+/* The memory diagram is the simplest of the three visuals (no overlapping
+   feed cards) so it stays visible on phones — but constrain it so it
+   doesn't dominate. */
+@media (max-width: 720px) {
+  .cap-visual {
+    margin-top: -12px;
+  }
+  .md-wrap {
+    max-width: 100%;
+  }
+  /* Tighten the bullet list spacing — desktop padding feels luxurious on
+     a phone where every centimeter is currency. */
+  .cap-list {
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .cap-headline {
+    margin-bottom: 16px;
+  }
+  .cap-deck {
+    margin-bottom: 24px;
+  }
+  .cap-eyebrow {
+    margin-bottom: 18px;
   }
 }

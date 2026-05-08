@@ -167,6 +167,342 @@
   color: var(--silver);
 }
 
+/* ── Workflow nudges ─────────────────────────────────────────────── */
+
+.uc-nudges {
+  padding: 24px var(--side-pad) 80px;
+}
+
+.uc-nudges-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.uc-nudges-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.uc-nudges-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .uc-nudges-eyebrow {
+  color: var(--lychee);
+}
+
+.uc-nudges-title {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  max-width: 720px;
+}
+
+.uc-nudges-title em {
+  font-style: italic;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .uc-nudges-title em {
+  color: var(--lychee);
+}
+
+.uc-nudges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+@media (max-width: 980px) {
+  .uc-nudges-grid { grid-template-columns: 1fr; }
+}
+
+/* Each nudge card carries a feature accent via data-feature */
+.uc-nudge {
+  --nudge-accent: var(--cyan);
+  --nudge-accent-rgb: 0, 229, 200;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 22px 18px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 100% at 0% 0%,
+      rgba(var(--nudge-accent-rgb), 0.06) 0%,
+      transparent 60%),
+    linear-gradient(180deg, rgba(8, 15, 24, 0.6) 0%, rgba(2, 4, 8, 0.78) 100%);
+  border: 1px solid rgba(var(--nudge-accent-rgb), 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+}
+
+.uc-nudge::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(var(--nudge-accent-rgb), 0) 0%,
+    rgba(var(--nudge-accent-rgb), 0.8) 30%,
+    rgba(var(--nudge-accent-rgb), 0.8) 70%,
+    rgba(var(--nudge-accent-rgb), 0) 100%);
+  opacity: 0.7;
+}
+
+.uc-nudge:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--nudge-accent-rgb), 0.34);
+}
+
+[data-theme="light"] .uc-nudge {
+  background:
+    radial-gradient(120% 100% at 0% 0%,
+      rgba(var(--nudge-accent-rgb), 0.05) 0%,
+      transparent 60%),
+    rgba(255, 255, 255, 0.78);
+  border-color: rgba(var(--nudge-accent-rgb), 0.2);
+}
+
+/* Feature-specific accent — drives top hairline + border + dot colour */
+.uc-nudge[data-feature="memory"]   { --nudge-accent: var(--cyan);   --nudge-accent-rgb: 0, 229, 200; }
+.uc-nudge[data-feature="organise"] { --nudge-accent: #ffb454;       --nudge-accent-rgb: 255, 180, 84; }
+.uc-nudge[data-feature="teams"]    { --nudge-accent: #9b87ff;       --nudge-accent-rgb: 155, 135, 255; }
+.uc-nudge[data-feature="chat"]     { --nudge-accent: #ff79b0;       --nudge-accent-rgb: 255, 121, 176; }
+
+[data-theme="light"] .uc-nudge[data-feature="memory"]   { --nudge-accent: #007a6b; --nudge-accent-rgb: 0, 122, 107; }
+[data-theme="light"] .uc-nudge[data-feature="organise"] { --nudge-accent: #c87d10; --nudge-accent-rgb: 200, 125, 16; }
+[data-theme="light"] .uc-nudge[data-feature="teams"]    { --nudge-accent: #6d54e0; --nudge-accent-rgb: 109, 84, 224; }
+[data-theme="light"] .uc-nudge[data-feature="chat"]     { --nudge-accent: #d63d72; --nudge-accent-rgb: 214, 61, 114; }
+
+.uc-nudge-persona {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.uc-nudge-label {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.08rem;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  line-height: 1.2;
+}
+
+.uc-nudge-body {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--silver);
+  flex: 1;
+}
+
+/* Tool chip row */
+.uc-nudge-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.uc-nudge-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--silver);
+}
+
+[data-theme="light"] .uc-nudge-tool {
+  background: rgba(13, 21, 32, 0.04);
+  border-color: rgba(13, 21, 32, 0.06);
+}
+
+.uc-nudge-tool-logo {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  filter: brightness(0) invert(0.78);
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .uc-nudge-tool-logo {
+  filter: brightness(0) invert(0.28);
+}
+
+/* ── Inline body mentions ── */
+/* Tool mentions render as plain text — the chip below carries the visual
+   emphasis. (No styling needed; left as a hook for future tweaks.) */
+
+/* Feature mention — accent-coloured link to that feature's docs.
+   Each link sets its own accent vars via data-feature so a card with a
+   teams primary can still mention {feature:organise} in amber. */
+.uc-nudge-feature-link {
+  --link-accent: var(--cyan);
+  --link-accent-rgb: 0, 229, 200;
+
+  display: inline;
+  font-weight: 600;
+  color: var(--link-accent);
+  text-decoration: none;
+  background-image: linear-gradient(transparent calc(100% - 2px),
+    rgba(var(--link-accent-rgb), 0.45) calc(100% - 2px));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 0 1px;
+  border-radius: 2px;
+  transition: background-image 0.2s ease, background-color 0.2s ease;
+}
+
+.uc-nudge-feature-link:hover {
+  background-image: linear-gradient(transparent calc(100% - 2px),
+    var(--link-accent) calc(100% - 2px));
+  background-color: rgba(var(--link-accent-rgb), 0.08);
+}
+
+.uc-nudge-feature-link[data-feature="memory"]   { --link-accent: var(--cyan); --link-accent-rgb: 0, 229, 200; }
+.uc-nudge-feature-link[data-feature="organise"] { --link-accent: #ffb454;     --link-accent-rgb: 255, 180, 84; }
+.uc-nudge-feature-link[data-feature="teams"]    { --link-accent: #9b87ff;     --link-accent-rgb: 155, 135, 255; }
+.uc-nudge-feature-link[data-feature="chat"]     { --link-accent: #ff79b0;     --link-accent-rgb: 255, 121, 176; }
+
+[data-theme="light"] .uc-nudge-feature-link[data-feature="memory"]   { --link-accent: #007a6b; --link-accent-rgb: 0, 122, 107; }
+[data-theme="light"] .uc-nudge-feature-link[data-feature="organise"] { --link-accent: #c87d10; --link-accent-rgb: 200, 125, 16; }
+[data-theme="light"] .uc-nudge-feature-link[data-feature="teams"]    { --link-accent: #6d54e0; --link-accent-rgb: 109, 84, 224; }
+[data-theme="light"] .uc-nudge-feature-link[data-feature="chat"]     { --link-accent: #d63d72; --link-accent-rgb: 214, 61, 114; }
+
+.uc-nudge-feature-link-arrow {
+  display: inline-block;
+  vertical-align: -1px;
+  margin-left: 1px;
+  opacity: 0.7;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.uc-nudge-feature-link:hover .uc-nudge-feature-link-arrow {
+  transform: translate(1px, -1px);
+  opacity: 1;
+}
+
+/* ── Bottom row — feature pills + docs link ── */
+.uc-nudge-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 4px;
+}
+
+[data-theme="light"] .uc-nudge-foot {
+  border-top-color: rgba(13, 21, 32, 0.06);
+}
+
+.uc-nudge-features {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Each feature pill carries its own accent via data-feature, independent of
+   the card's primary accent. */
+.uc-nudge-feature {
+  --pill-accent: var(--cyan);
+  --pill-accent-rgb: 0, 229, 200;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(var(--pill-accent-rgb), 0.08);
+  border: 1px solid rgba(var(--pill-accent-rgb), 0.28);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pill-accent);
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.uc-nudge-feature:hover {
+  background: rgba(var(--pill-accent-rgb), 0.14);
+  border-color: rgba(var(--pill-accent-rgb), 0.44);
+}
+
+.uc-nudge-feature[data-feature="memory"]   { --pill-accent: var(--cyan); --pill-accent-rgb: 0, 229, 200; }
+.uc-nudge-feature[data-feature="organise"] { --pill-accent: #ffb454;     --pill-accent-rgb: 255, 180, 84; }
+.uc-nudge-feature[data-feature="teams"]    { --pill-accent: #9b87ff;     --pill-accent-rgb: 155, 135, 255; }
+.uc-nudge-feature[data-feature="chat"]     { --pill-accent: #ff79b0;     --pill-accent-rgb: 255, 121, 176; }
+
+[data-theme="light"] .uc-nudge-feature[data-feature="memory"]   { --pill-accent: #007a6b; --pill-accent-rgb: 0, 122, 107; }
+[data-theme="light"] .uc-nudge-feature[data-feature="organise"] { --pill-accent: #c87d10; --pill-accent-rgb: 200, 125, 16; }
+[data-theme="light"] .uc-nudge-feature[data-feature="teams"]    { --pill-accent: #6d54e0; --pill-accent-rgb: 109, 84, 224; }
+[data-theme="light"] .uc-nudge-feature[data-feature="chat"]     { --pill-accent: #d63d72; --pill-accent-rgb: 214, 61, 114; }
+
+.uc-nudge-feature-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pill-accent);
+  box-shadow: 0 0 6px var(--pill-accent);
+}
+
+.uc-nudge-docs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--silver);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.uc-nudge-docs:hover {
+  color: var(--paper);
+}
+
+.uc-nudge-docs svg {
+  transition: transform 0.2s ease;
+}
+
+.uc-nudge-docs:hover svg {
+  transform: translate(2px, -2px);
+}
+
 /* ContextFlow host (only Builders) */
 .uc-contextflow-host {
   padding: 40px 0 40px;
@@ -321,9 +657,98 @@
 
 @media (max-width: 720px) {
   .uc-hero {
-    padding-top: 110px;
+    padding-top: 100px;
+    padding-bottom: 32px;
   }
+
+  .uc-hero-inner {
+    gap: 16px;
+  }
+
+  .uc-headline {
+    font-size: clamp(2rem, 8.5vw, 2.8rem);
+  }
+
+  .uc-deck {
+    font-size: 0.95rem;
+  }
+
+  .uc-personas {
+    padding-top: 24px;
+    padding-bottom: 48px;
+  }
+
+  .uc-personas-inner {
+    gap: 14px;
+  }
+
+  .uc-persona-card {
+    padding: 24px 22px;
+    gap: 12px;
+    border-radius: 16px;
+  }
+
+  .uc-persona-name {
+    font-size: 1.15rem;
+  }
+
+  .uc-persona-body {
+    font-size: 0.92rem;
+  }
+
+  .uc-nudges {
+    padding-top: 16px;
+    padding-bottom: 48px;
+  }
+
+  .uc-nudges-header {
+    margin-bottom: 24px;
+  }
+
+  .uc-nudges-grid {
+    gap: 14px;
+  }
+
+  .uc-nudge {
+    padding: 22px 20px 18px;
+    gap: 10px;
+  }
+
+  .uc-nudge-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding-top: 14px;
+  }
+
+  .uc-other {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .uc-other-row {
+    gap: 8px;
+  }
+
+  .uc-other-chip {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+
   .uc-cta {
-    padding-bottom: 80px;
+    padding-top: 48px;
+    padding-bottom: 64px;
+  }
+
+  .uc-cta-headline {
+    font-size: clamp(1.55rem, 6vw, 2rem);
+  }
+
+  .uc-cta-deck {
+    font-size: 0.95rem;
+  }
+
+  .uc-cta-btn {
+    padding: 13px 24px;
   }
 }

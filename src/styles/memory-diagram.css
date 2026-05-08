@@ -271,19 +271,52 @@
 @media (max-width: 720px) {
   .md-wrap {
     margin-top: 12px;
-    padding: 0 12px;
+    padding: 0;
   }
 
   .md-node {
-    --md-size: 36px;
+    --md-size: 32px;
   }
   .md-node--ai {
-    --md-size: 42px;
+    --md-size: 38px;
+  }
+
+  /* The XysqLogo is rendered with a fixed `size` prop in JSX (88px). At
+     mobile card widths the card is ~250-300px tall, so the logo balloons
+     to a third of the canvas. Scale it down here so it stays proportional
+     to the orbiting nodes. */
+  .md-core-logo > svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .md-title {
+    font-size: 0.55rem;
+    padding: 4px 9px;
+    top: 10px;
+    left: 10px;
   }
 
   .md-caption-inner {
     font-size: 0.58rem;
     padding: 5px 10px;
+  }
+
+  .md-caption-outside {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .md-core-logo > svg {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .md-node {
+    --md-size: 28px;
+  }
+  .md-node--ai {
+    --md-size: 32px;
   }
 }
 

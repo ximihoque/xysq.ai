@@ -59,6 +59,7 @@ export default function Organise() {
                 <span className="og-bullet" aria-hidden="true" />
                 <span className="og-item-body">
                   <span className="og-item-headline">{p.headline}</span>
+                  <span className="og-item-sep">—</span>
                   <span className="og-item-text">{p.body}</span>
                 </span>
               </motion.li>
@@ -66,9 +67,7 @@ export default function Organise() {
           </ul>
 
           <motion.a
-            href="https://docs.xysq.ai/features/organise"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/features/organise"
             className="og-cta"
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +75,7 @@ export default function Organise() {
             transition={{ duration: 0.55, ease: 'easeOut', delay: 0.55 }}
             whileHover={{ x: 2 }}
           >
-            Organise your knowledge
+            Explore Organise
             <span className="og-cta-arrow">→</span>
           </motion.a>
         </motion.div>

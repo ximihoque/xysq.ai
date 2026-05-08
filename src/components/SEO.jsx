@@ -6,6 +6,7 @@ const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`
 export default function SEO({ title, description, path = '/', image = DEFAULT_IMAGE, schema }) {
   const fullTitle = title ? `${title} — xysq.ai` : 'xysq.ai — One presence, across time.'
   const canonical = `${BASE_URL}${path}`
+  const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
 
   return (
     <Helmet>
@@ -22,9 +23,22 @@ export default function SEO({ title, description, path = '/', image = DEFAULT_IM
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
-      {schema && (
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      )}
+      {schemas.map((s, i) => (
+        <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+      ))}
     </Helmet>
   )
+}
+
+export function breadcrumbSchema(trail) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((t, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: t.name,
+      item: t.item.startsWith('http') ? t.item : `${BASE_URL}${t.item}`,
+    })),
+  }
 }

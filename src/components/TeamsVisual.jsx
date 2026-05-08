@@ -61,7 +61,7 @@ const OUTER_NODES = [
   { id: 'person-maya',  name: 'Maya',     kind: 'person', t0: 1 / 10 },
   { id: 'llamaindex', name: 'LlamaIndex', kind: 'agent',  logo: '/logos/llamaindex.svg',  t0: 2 / 10,  darkBg: false, scale: 1.0 },
   { id: 'person-rohan', name: 'Rohan',    kind: 'person', t0: 3 / 10 },
-  { id: 'crewai',     name: 'CrewAI',     kind: 'agent',  logo: '/logos/crewai.svg',      t0: 4 / 10,  darkBg: false, scale: 1.0 },
+  { id: 'crewai',     name: 'CrewAI',     kind: 'agent',  logo: '/logos/crewai.svg',      t0: 4 / 10,  darkBg: false, scale: 1.25 },
   { id: 'person-sara',  name: 'Sara',     kind: 'person', t0: 5 / 10 },
   { id: 'googleadk',  name: 'Google ADK', kind: 'agent',  logo: '/logos/google-adk.png',  t0: 6 / 10,  darkBg: false, scale: 1.0 },
   { id: 'person-jordan',name: 'Jordan',   kind: 'person', t0: 7 / 10 },
@@ -334,6 +334,9 @@ export default function TeamsVisual() {
                   alt={node.name}
                   className="tv-node-logo"
                   style={node.scale ? { '--tv-logo-scale': node.scale } : undefined}
+                  width="24"
+                  height="24"
+                  loading="lazy"
                 />
               )}
 
@@ -427,6 +430,9 @@ export default function TeamsVisual() {
                 src={node.logo}
                 alt={node.name}
                 className="tv-node-logo"
+                width="24"
+                height="24"
+                loading="lazy"
               />
             </div>
           )

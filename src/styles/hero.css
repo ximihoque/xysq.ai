@@ -283,20 +283,40 @@ h1.hero-h1 {
   margin-bottom: 24px;
 }
 
+/* ── Tablet (iPad Pro portrait, etc.) — drop the 92vh constraint ──
+   On tall narrow viewports (1024×1366) the 92vh hero leaves a 500px+
+   empty band between the marquee and the next section. Size to content
+   from tablet down. */
+@media (max-width: 1024px) {
+  #hero {
+    min-height: auto;
+    padding-top: 130px;
+    padding-bottom: 56px;
+  }
+}
+
 /* ── Mobile ── */
 @media (max-width: 720px) {
   #hero {
-    padding-top: 110px;
-    padding-bottom: 60px;
+    /* On mobile we size to content + a comfortable top offset for the fixed
+       nav. The desktop 92vh creates a long empty bottom on tall phones. */
+    min-height: auto;
+    padding-top: 96px;
+    padding-bottom: 32px;
   }
 
   h1.hero-h1 {
     max-width: 100%;
+    margin-bottom: 20px;
   }
 
   .hero-eyebrow {
     font-size: 0.62rem;
     padding: 6px 12px;
+    margin-bottom: 22px;
+  }
+
+  .hero-sub {
     margin-bottom: 28px;
   }
 
@@ -306,12 +326,16 @@ h1.hero-h1 {
     width: 100%;
     max-width: 320px;
     margin-inline: auto;
-    margin-bottom: 44px;
+    margin-bottom: 32px;
   }
 
   .btn-main,
   .btn-out {
     justify-content: center;
     width: 100%;
+  }
+
+  .hero-marquee-slot {
+    margin-bottom: 0;
   }
 }

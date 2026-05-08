@@ -89,17 +89,17 @@ const LOGO_CY = 350
 const LOGO_CLEAR_HALF_W = 180
 const LOGO_CLEAR_HALF_H = 70
 
-// Card width is 200px. Frame is 640 wide. Outer x sits flush against each
-// frame edge (left=100 → card edge at 0; right=500 → card edge at 600 with
-// a 40px buffer). Inner x reaches further into the centre — left=180 and
+// Card width is 200px. Frame is 640 wide. Outer x leaves a ~20px breathing
+// gap from each frame edge (left=120 → card edge at 20; right=500 → card edge
+// at 600 with 40px). Inner x reaches further into the centre — left=200 and
 // right=420 — and is only used at y values where the logo clearance allows.
 const SLOTS = [
   // Left column — Documents (zigzag: outer · inner · outer · inner · outer)
-  { x: 100, y:  95, rot: -2, pool: 'doc'  },
-  { x: 180, y: 150, rot:  3, pool: 'doc'  },
-  { x: 100, y: 210, rot: -3, pool: 'doc'  },
-  { x: 180, y: 270, rot:  2, pool: 'doc'  },
-  { x: 100, y: 325, rot: -2, pool: 'doc'  },
+  { x: 120, y:  95, rot: -2, pool: 'doc'  },
+  { x: 200, y: 150, rot:  3, pool: 'doc'  },
+  { x: 120, y: 210, rot: -3, pool: 'doc'  },
+  { x: 200, y: 270, rot:  2, pool: 'doc'  },
+  { x: 120, y: 325, rot: -2, pool: 'doc'  },
 
   // Right column — Conversations (mirrored zigzag)
   { x: 500, y:  95, rot:  2, pool: 'conv' },
@@ -134,7 +134,7 @@ const CONSUMERS_LEFT = [
 const CONSUMERS_RIGHT = [
   { id: 'langchain',  name: 'LangChain',  logo: '/logos/langchain.svg',  darkBg: false, scale: 1.05 },
   { id: 'llamaindex', name: 'LlamaIndex', logo: '/logos/llamaindex.svg', darkBg: false, scale: 1.0 },
-  { id: 'crewai',     name: 'CrewAI',     logo: '/logos/crewai.svg',     darkBg: false, scale: 1.0 },
+  { id: 'crewai',     name: 'CrewAI',     logo: '/logos/crewai.svg',     darkBg: false, scale: 1.25 },
   { id: 'googleadk',  name: 'Google ADK', logo: '/logos/google-adk.png', darkBg: false, scale: 1.0 },
 ]
 
@@ -295,6 +295,9 @@ export default function OrganiseVisual() {
                     alt={node.name}
                     className="ov-node-logo"
                     style={node.scale ? { '--ov-logo-scale': node.scale } : undefined}
+                    width="24"
+                    height="24"
+                    loading="lazy"
                   />
                 </div>
               ))}
@@ -321,6 +324,9 @@ export default function OrganiseVisual() {
                     alt={node.name}
                     className="ov-node-logo"
                     style={node.scale ? { '--ov-logo-scale': node.scale } : undefined}
+                    width="24"
+                    height="24"
+                    loading="lazy"
                   />
                 </div>
               ))}

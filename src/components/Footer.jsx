@@ -30,13 +30,14 @@ const FEATURE_LINKS = [
 ]
 
 const RESOURCE_LINKS = [
-  { label: 'Docs', href: 'https://docs.xysq.ai', external: true },
-  { label: 'App',  href: APP_URL, external: true },
-  { label: 'For business', to: '/for-business' },
+  { label: 'Docs',            href: 'https://docs.xysq.ai',                            external: true },
+  { label: 'SDK',             href: 'https://docs.xysq.ai/sdk/getting-started',        external: true },
+  { label: 'Product updates', href: 'https://docs.xysq.ai/product-releases/2026',      external: true },
+  { label: 'App',             href: APP_URL,                                           external: true },
 ]
 
 const COMPANY_LINKS = [
-  { label: 'Vision',  to: '/vision' },
+  { label: 'Contact', to: '/contact' },
   { label: 'Privacy', to: '/privacy' },
 ]
 
@@ -136,7 +137,7 @@ export default function Footer() {
 
         <div className="ft-bar">
           <span className="ft-copy">
-            © {new Date().getFullYear()} xysq.ai · Seen. Heard. Felt. Remembered.
+            © {new Date().getFullYear()} xysq.ai · Memory infrastructure for AI.
           </span>
           <div className="ft-socials">
             {SOCIALS.map(({ label, href, Icon }) => (

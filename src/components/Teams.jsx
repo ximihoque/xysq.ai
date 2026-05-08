@@ -64,6 +64,7 @@ export default function Teams() {
                 <span className="tm-bullet" aria-hidden="true" />
                 <span className="tm-item-body">
                   <span className="tm-item-headline">{p.headline}</span>
+                  <span className="tm-item-sep">—</span>
                   <span className="tm-item-text">{p.body}</span>
                 </span>
               </motion.li>
@@ -71,9 +72,7 @@ export default function Teams() {
           </ul>
 
           <motion.a
-            href="https://docs.xysq.ai/features/teams"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/features/teams"
             className="tm-cta"
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +80,7 @@ export default function Teams() {
             transition={{ duration: 0.55, ease: 'easeOut', delay: 0.55 }}
             whileHover={{ x: 2 }}
           >
-            Set up team memory
+            Explore Teams
             <span className="tm-cta-arrow">→</span>
           </motion.a>
         </motion.div>

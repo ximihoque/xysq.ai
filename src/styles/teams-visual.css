@@ -438,25 +438,69 @@
 /* ── Mobile ── */
 @media (max-width: 720px) {
   .tv-node {
-    --tv-size: 42px;
+    --tv-size: 36px;
   }
   .tv-node--ai {
-    --tv-size: 46px;
+    --tv-size: 40px;
   }
   .tv-node--person {
-    --tv-size: 42px;
+    --tv-size: 36px;
+  }
+  .tv-person-name {
+    font-size: 7px;
+  }
+  /* Central logo — JSX renders at fixed pixel size; CSS-scale it down so
+     it stays proportional to the orbiting chips on a phone-sized card. */
+  .tv-core > svg {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .tv-core-subtext {
+    font-size: 0.5rem;
+    letter-spacing: 0.22em;
   }
   .tv-caption-inner {
-    font-size: 0.58rem;
-    padding: 5px 10px;
+    font-size: 0.55rem;
+    padding: 4px 8px;
+  }
+  .tv-caption-dot {
+    width: 5px;
+    height: 5px;
   }
   .tv-note {
-    padding: 5px 10px 5px 6px;
+    padding: 4px 8px 4px 5px;
+    border-radius: 9px;
   }
   .tv-note-name {
-    font-size: 0.74rem;
+    font-size: 0.66rem;
   }
   .tv-note-sub {
-    font-size: 0.54rem;
+    font-size: 0.48rem;
+  }
+  .tv-note-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+  }
+  .tv-isolation-note {
+    font-size: 0.52rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 480px) {
+  .tv-node,
+  .tv-node--person {
+    --tv-size: 30px;
+  }
+  .tv-node--ai {
+    --tv-size: 34px;
+  }
+  .tv-core > svg {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .tv-person-name {
+    font-size: 6px;
   }
 }

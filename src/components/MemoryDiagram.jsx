@@ -346,6 +346,9 @@ export default function MemoryDiagram() {
                 alt={node.name}
                 className="md-node-logo"
                 style={node.scale ? { '--md-logo-scale': node.scale } : undefined}
+                width="24"
+                height="24"
+                loading="lazy"
               />
 
               {isActive && (

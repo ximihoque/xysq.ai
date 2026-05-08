@@ -37,7 +37,7 @@ const columns = [
     eyebrow: 'For businesses',
     title: 'Bring xysq to your team.',
     body: 'Institutional memory across Slack, Drive, Notion, and the rest. Your team’s knowledge, queryable from any agent.',
-    cta: { kind: 'internal', label: 'Book a call', href: '/for-business#fb-contact' },
+    cta: { kind: 'internal', label: 'Book a call', href: '/contact' },
     accent: 'lychee',
   },
 ]

@@ -198,7 +198,7 @@ function MultiAgentPanel({ agents }) {
             transition={{ duration: 0.45, ease: 'easeOut', delay: i * 0.1 + 0.3 }}
           >
             <div className="cf-ma-agent-top">
-              <img src={agent.logo} alt={agent.name} className="cf-ma-logo" />
+              <img src={agent.logo} alt={agent.name} className="cf-ma-logo" width="24" height="24" loading="lazy" />
               <span className="cf-ma-name">{agent.name}</span>
               <span className="cf-ma-dot" />
             </div>
@@ -239,7 +239,7 @@ function ChatCard({ moment, index }) {
         >
           <div className="cf-card-header">
             <div className="cf-card-tool">
-              <img src={moment.logo} alt={moment.tool} className={`cf-tool-logo${moment.whiteLogo ? ' cf-tool-logo--white' : ''}`} />
+              <img src={moment.logo} alt={moment.tool} className={`cf-tool-logo${moment.whiteLogo ? ' cf-tool-logo--white' : ''}`} width="24" height="24" loading="lazy" />
               <span className="cf-tool-name" style={moment.toolColor ? { color: moment.toolColor } : undefined}>{moment.tool}</span>
             </div>
             <span className="cf-time">{moment.time}</span>
@@ -261,7 +261,7 @@ function ChatCard({ moment, index }) {
         >
           <div className="cf-card-header">
             <div className="cf-card-tool">
-              <img src={moment.logo} alt={moment.tool} className={`cf-tool-logo${moment.whiteLogo ? ' cf-tool-logo--white' : ''}`} />
+              <img src={moment.logo} alt={moment.tool} className={`cf-tool-logo${moment.whiteLogo ? ' cf-tool-logo--white' : ''}`} width="24" height="24" loading="lazy" />
               <span className="cf-tool-name" style={moment.toolColor ? { color: moment.toolColor } : undefined}>{moment.tool}</span>
             </div>
             <span className="cf-time">{moment.time}</span>

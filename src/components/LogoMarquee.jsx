@@ -39,6 +39,8 @@ function Item({ logo, keyPrefix, idx }) {
         aria-hidden="true"
         className={`lm-logo lm-logo--${logo.tint}`}
         loading="lazy"
+        width="24"
+        height="24"
       />
       <span className="lm-name">{logo.name}</span>
     </div>

@@ -332,18 +332,95 @@
 /* ── Mobile ── */
 @media (max-width: 720px) {
   .ov-node {
-    --ov-size: 36px;
+    --ov-size: 26px;
   }
-  .ov-strip-row {
-    gap: 8px;
+
+  /* Central logo — JSX renders at fixed pixel size; scale it down so it
+     stays proportional inside a phone-sized card. */
+  .ov-core > svg {
+    width: 44px !important;
+    height: 44px !important;
   }
+  .ov-core-subtext {
+    font-size: 0.5rem;
+    letter-spacing: 0.22em;
+  }
+
+  .ov-cluster-name {
+    font-size: 0.7rem;
+  }
+  .ov-cluster-hint {
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
+  }
+
+  /* Feed cards: shrink hard so two columns can sit side-by-side without
+     colliding on a 320–360px wide card. */
   .ov-feed-slot {
-    width: 160px;
+    width: 120px;
+  }
+  .ov-feed-card-inner {
+    padding: 5px 6px;
+    gap: 5px;
+    border-radius: 7px;
+  }
+  .ov-feed-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+  .ov-feed-icon svg {
+    width: 9px;
+    height: 9px;
   }
   .ov-feed-title {
-    font-size: 0.66rem;
+    font-size: 0.55rem;
   }
   .ov-feed-badge {
+    font-size: 0.42rem;
+    padding: 1px 4px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Bottom strip — keep readable; tighten gaps */
+  .ov-strip {
+    left: 8px;
+    right: 8px;
+    bottom: 12px;
+    gap: 6px;
+  }
+  .ov-strip-row {
+    gap: 5px;
+  }
+  .ov-strip-label {
+    font-size: 0.46rem;
+    letter-spacing: 0.18em;
+  }
+  .ov-strip-sublabel {
+    font-size: 0.55rem;
+    margin-bottom: 2px;
+  }
+  .ov-strip-divider {
+    height: 60px;
+  }
+
+  .ov-tagline {
     font-size: 0.5rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 480px) {
+  .ov-node {
+    --ov-size: 22px;
+  }
+  .ov-feed-slot {
+    width: 100px;
+  }
+  .ov-feed-title {
+    font-size: 0.5rem;
+  }
+  .ov-strip-row {
+    gap: 4px;
   }
 }

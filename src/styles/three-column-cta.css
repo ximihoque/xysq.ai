@@ -6,6 +6,28 @@
   z-index: 1;
 }
 
+@media (max-width: 720px) {
+  .t3-section {
+    padding-top: 56px;
+    padding-bottom: 64px;
+  }
+  .t3-inner {
+    gap: 28px;
+  }
+  .t3-grid {
+    gap: 14px;
+  }
+  .t3-card {
+    padding: 26px 24px 22px;
+    gap: 12px;
+    border-radius: 18px;
+  }
+  .t3-cta {
+    align-self: stretch;
+    justify-content: center;
+  }
+}
+
 .t3-inner {
   max-width: 1240px;
   margin: 0 auto;

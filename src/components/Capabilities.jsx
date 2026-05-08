@@ -16,7 +16,7 @@ const capabilities = [
   },
   {
     verb: 'Surface',
-    body: 'Every agent gets the right context, the moment it needs it. No re-introduction, no copy-paste, no “as we discussed earlier.”',
+    body: 'Your AI tools and agents gets the right context, the moment it needs it. No re-introduction, no copy-paste, no “as we discussed earlier.”',
   },
   {
     verb: 'Synthesise',
@@ -75,9 +75,7 @@ export default function Capabilities() {
           </ul>
 
           <motion.a
-            href="https://docs.xysq.ai/getting-started/introduction"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/features/memory"
             className="cap-cta"
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -85,7 +83,7 @@ export default function Capabilities() {
             transition={{ duration: 0.55, ease: 'easeOut', delay: 0.55 }}
             whileHover={{ x: 2 }}
           >
-            See how it works
+            Explore Memory
             <span className="cap-cta-arrow">→</span>
           </motion.a>
         </motion.div>
