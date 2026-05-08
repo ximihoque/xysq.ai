@@ -61,6 +61,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* fallback offset for any anchor scroll happening at the document root */
+  scroll-padding-top: 64px;
+}
+
+/* Any section targeted by an in-page anchor should park below the fixed nav. */
+section[id],
+[id] {
+  scroll-margin-top: 64px;
 }
 
 body {

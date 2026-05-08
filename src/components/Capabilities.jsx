@@ -19,10 +19,6 @@ const capabilities = [
     body: 'Every agent gets the right context, the moment it needs it. No re-introduction, no copy-paste, no “as we discussed earlier.”',
   },
   {
-    verb: 'Share',
-    body: 'Team vaults so knowledge compounds across people and projects — instead of evaporating when someone leaves.',
-  },
-  {
     verb: 'Synthesise',
     body: 'Patterns over time. Forgets the clutter, keeps the signal — your memory gets sharper the longer you use it.',
   },
@@ -30,16 +26,16 @@ const capabilities = [
 
 export default function Capabilities() {
   return (
-    <section className="cap-section" id="memory-diagram">
+    <section className="cap-section" id="memory">
       <div className="cap-inner">
         <motion.div className="cap-text" {...fade(0)}>
           <span className="cap-eyebrow">
             <span className="cap-eyebrow-dot" />
-            HOW IT WORKS
+            MEMORY
           </span>
 
           <h2 className="cap-headline">
-            Capture, surface, share, synthesise<br />
+            Capture, surface, synthesise<br />
             <em>across every tool.</em>
           </h2>
 

@@ -52,7 +52,7 @@ export default function Hero() {
             <span className="btn-main-arrow">→</span>
           </motion.a>
           <motion.a
-            href="#memory-diagram"
+            href="#memory"
             className="btn-out"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.98 }}

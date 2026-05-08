@@ -331,7 +331,7 @@ export default function MemoryDiagram() {
               className={[
                 'md-node',
                 `md-node--${node.kind}`,
-                node.darkBg ? 'md-node--dark' : '',
+                node.darkBg ? 'md-node--invert' : '',
                 isActiveAi ? 'md-node--ai-active' : '',
                 isActiveSource ? 'md-node--source-active' : '',
               ].filter(Boolean).join(' ')}

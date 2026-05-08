@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage'
 import ForBusinessPage from './pages/ForBusinessPage'
 import VisionPage from './pages/VisionPage'
 import PrivacyPage from './pages/PrivacyPage'
+import UseCaseCategoryPage from './pages/UseCaseCategoryPage'
+import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
   const location = useLocation()
@@ -19,13 +21,17 @@ export default function App() {
   }, [location.pathname, location.search])
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/for-business" element={<ForBusinessPage />} />
-        <Route path="/vision" element={<VisionPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
-      </Routes>
-    </AnimatePresence>
+    <>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/for-business" element={<ForBusinessPage />} />
+          <Route path="/vision" element={<VisionPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/use-cases/:slug" element={<UseCaseCategoryPage />} />
+        </Routes>
+      </AnimatePresence>
+    </>
   )
 }

@@ -2,10 +2,10 @@ import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import Capabilities from '../components/Capabilities'
-import WhatItIs from '../components/WhatItIs'
-import ThreeLayers from '../components/ThreeLayers'
-import WorksEverywhere from '../components/WorksEverywhere'
-import CtaStrip from '../components/CtaStrip'
+import Teams from '../components/Teams'
+import Organise from '../components/Organise'
+import TrustPrivacy from '../components/TrustPrivacy'
+import ThreeColumnCTA from '../components/ThreeColumnCTA'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
@@ -31,10 +31,10 @@ export default function HomePage() {
       <Nav />
       <Hero />
       <Capabilities />
-      <WhatItIs />
-      <ThreeLayers />
-      <WorksEverywhere />
-      <CtaStrip />
+      <Teams />
+      <Organise />
+      <TrustPrivacy />
+      <ThreeColumnCTA />
       <Footer />
     </PageTransition>
   )

@@ -1,0 +1,220 @@
+/* ── Teams section (Section 3) ── */
+
+.tm-section {
+  position: relative;
+  padding: 56px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .tm-section {
+    padding-top: 40px;
+    padding-bottom: 72px;
+  }
+}
+
+.tm-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  /* Visual on the left, text on the right */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .tm-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+  .tm-visual { order: 2; }
+  .tm-text   { order: 1; }
+}
+
+/* ── Right column: text ── */
+.tm-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 560px;
+  /* On wide screens, push text against the column's right edge so it
+     reads as a balanced inverse of the diagram on the left. */
+  justify-self: end;
+}
+
+@media (max-width: 980px) {
+  .tm-text {
+    max-width: 640px;
+    margin: 0 auto;
+    justify-self: stretch;
+  }
+}
+
+.tm-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 229, 200, 0.06);
+  border: 1px solid rgba(0, 229, 200, 0.22);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--cyan);
+  margin-bottom: 28px;
+}
+
+[data-theme="light"] .tm-eyebrow {
+  background: rgba(255, 107, 122, 0.08);
+  border-color: rgba(255, 107, 122, 0.3);
+  color: var(--lychee);
+}
+
+.tm-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  animation: tm-pulse 2.4s ease-in-out infinite;
+}
+
+[data-theme="light"] .tm-eyebrow-dot {
+  background: var(--lychee);
+  box-shadow: 0 0 10px var(--lychee);
+}
+
+@keyframes tm-pulse {
+  0%, 100% { opacity: 1;   }
+  50%      { opacity: 0.4; }
+}
+
+.tm-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 22px;
+}
+
+.tm-headline em {
+  font-style: normal;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .tm-headline em {
+  color: var(--lychee);
+}
+
+.tm-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--silver);
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+/* ── Bullets ── */
+.tm-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+.tm-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.tm-bullet {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 9px;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+[data-theme="light"] .tm-bullet {
+  background: var(--lychee);
+  box-shadow: 0 0 8px var(--lychee);
+}
+
+.tm-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tm-item-headline {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--paper);
+  letter-spacing: -0.005em;
+}
+
+.tm-item-text {
+  font-size: 0.94rem;
+  color: var(--silver);
+  line-height: 1.55;
+}
+
+/* ── CTA link ── */
+.tm-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--cyan);
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.tm-cta:hover {
+  border-color: var(--cyan);
+}
+
+.tm-cta-arrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.tm-cta:hover .tm-cta-arrow {
+  transform: translateX(3px);
+}
+
+[data-theme="light"] .tm-cta {
+  color: var(--lychee);
+}
+
+[data-theme="light"] .tm-cta:hover {
+  border-color: var(--lychee);
+}
+
+/* ── Left column: visual ── */
+.tm-visual {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

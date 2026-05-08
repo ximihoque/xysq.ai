@@ -126,10 +126,11 @@
 
 [data-theme="light"] .md-node {
   background: #ffffff;
-  border-color: rgba(13, 21, 32, 0.08);
+  border-color: rgba(13, 21, 32, 0.18);
   box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 1px 0 rgba(13, 21, 32, 0.04),
+    0 6px 18px rgba(13, 21, 32, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* AI nodes are slightly larger — they're the active interfaces. */
@@ -137,16 +138,12 @@
   --md-size: 52px;
 }
 
-/* Logos that are pure white shapes (Cursor, ChatGPT) need a dark plate
-   to be visible. Apply in BOTH modes. */
-.md-node--dark {
-  background: #111827;
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-[data-theme="light"] .md-node--dark {
-  background: #111827;
-  border-color: rgba(0, 0, 0, 0.18);
+/* Logos that are pure white shapes (Cursor, ChatGPT) get the same
+   white plate as every other chip in BOTH modes — the logo is inverted
+   to a dark mark so it reads cleanly against the plate. Keeps the chip
+   family visually consistent across the entire graph. */
+.md-node--invert .md-node-logo {
+  filter: invert(1);
 }
 
 .md-node-logo {

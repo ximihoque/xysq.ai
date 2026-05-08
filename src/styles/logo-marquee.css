@@ -34,11 +34,14 @@
   background: linear-gradient(90deg, transparent, rgba(255, 107, 122, 0.4), transparent);
 }
 
-/* ── Viewport (the visible window of the marquee) ── */
+/* ── Viewport (stacks both rows; both share one edge-fade mask) ── */
 .lm-viewport {
   position: relative;
   width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
   /* Edge fade — both ends of the marquee dissolve into the bg */
   mask-image: linear-gradient(
     90deg,
@@ -56,23 +59,37 @@
   );
 }
 
-/* ── Track (the scrolling row) ── */
+/* ── Tracks ──
+   Both rows duplicate their content (see component) so a -50% / 0% translation
+   yields a seamless infinite loop. Slightly different durations make the two
+   rows feel like organic streams rather than synchronised. */
 .lm-track {
   display: flex;
   align-items: center;
   gap: 56px;
   width: max-content;
-  animation: lm-scroll 44s linear infinite;
-  /* The list is duplicated; we translate by -50% to seamless-loop. */
+}
+
+.lm-track--rtl {
+  animation: lm-scroll-rtl 44s linear infinite;
+}
+
+.lm-track--ltr {
+  animation: lm-scroll-ltr 52s linear infinite;
 }
 
 .lm-viewport:hover .lm-track {
   animation-play-state: paused;
 }
 
-@keyframes lm-scroll {
+@keyframes lm-scroll-rtl {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+@keyframes lm-scroll-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
 
 /* ── Logo item ── */
@@ -130,7 +147,9 @@
 
 /* ── Reduced motion: stop the marquee but keep the row scrollable */
 @media (prefers-reduced-motion: reduce) {
-  .lm-track {
+  .lm-track,
+  .lm-track--rtl,
+  .lm-track--ltr {
     animation: none;
     flex-wrap: wrap;
     justify-content: center;
@@ -148,10 +167,14 @@
   .lm-wrap {
     margin-bottom: 16px;
   }
+  .lm-viewport {
+    gap: 12px;
+  }
   .lm-track {
     gap: 36px;
-    animation-duration: 32s;
   }
+  .lm-track--rtl { animation-duration: 32s; }
+  .lm-track--ltr { animation-duration: 38s; }
   .lm-logo {
     width: 18px;
     height: 18px;
