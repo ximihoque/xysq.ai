@@ -1,5 +1,5 @@
 .pp-root {
-  min-height: 100vh;
+  min-height: 100%;
   background: var(--bg);
   color: var(--paper);
   font-family: 'Outfit', sans-serif;
@@ -190,8 +190,56 @@
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
-  .pp-table { font-size: 0.8rem; }
-  .pp-table th, .pp-table td { padding: 8px 10px; }
-  .pp-footer { flex-direction: column; gap: 8px; }
+@media (max-width: 720px) {
+  .pp-root {
+    padding-top: 48px;
+    padding-bottom: 64px;
+  }
+  .pp-header {
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+  .pp-logo {
+    margin-bottom: 22px;
+    font-size: 1rem;
+  }
+  .pp-intro {
+    padding: 16px 18px;
+    margin-bottom: 36px;
+  }
+  .pp-intro p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .pp-body {
+    gap: 32px;
+  }
+  .pp-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .pp-section p,
+  .pp-section li {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .pp-table {
+    font-size: 0.8rem;
+    /* Tables on narrow screens — let them scroll horizontally rather than
+       crushing the columns to unreadable widths. */
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .pp-table th,
+  .pp-table td {
+    padding: 8px 10px;
+  }
+  .pp-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 48px;
+    padding-top: 24px;
+  }
 }

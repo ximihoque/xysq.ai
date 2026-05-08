@@ -1,3 +1,4 @@
+import SEO, { breadcrumbSchema } from '../components/SEO'
 import '../styles/privacy.css'
 
 const EFFECTIVE_DATE = 'April 6, 2026'
@@ -6,6 +7,15 @@ const CONTACT_EMAIL = 'privacy@xysq.ai'
 export default function PrivacyPage() {
   return (
     <div className="pp-root">
+      <SEO
+        title="Privacy Policy"
+        path="/privacy"
+        description="How xysq collects, protects, and gives you control over your memories. We don't sell data and don't train AI on your content."
+        schema={breadcrumbSchema([
+          { name: 'Home', item: '/' },
+          { name: 'Privacy Policy', item: '/privacy' },
+        ])}
+      />
       <div className="pp-wrap">
         <header className="pp-header">
           <a href="/" className="pp-logo">xysq<span>.ai</span></a>

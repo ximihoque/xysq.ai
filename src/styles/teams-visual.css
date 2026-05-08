@@ -1,0 +1,506 @@
+/* ── Teams visual — orbital diagram with mixed cast + join/depart cycle ── */
+
+.tv-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.tv-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 600 / 480;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at center, rgba(0, 229, 200, 0.05) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(8, 15, 24, 0.5) 0%, rgba(2, 4, 8, 0.7) 100%);
+  border: 1px solid rgba(0, 229, 200, 0.14);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="light"] .tv-card {
+  background:
+    radial-gradient(ellipse at center, rgba(255, 107, 122, 0.06) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(232, 238, 246, 0.6) 100%);
+  border-color: rgba(0, 100, 90, 0.18);
+}
+
+.tv-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  color: rgba(0, 229, 200, 0.085);
+}
+
+[data-theme="light"] .tv-svg {
+  color: rgba(0, 100, 90, 0.12);
+}
+
+/* ── Centre core — xysq logo + "Teams" subtext ── */
+.tv-core {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.tv-core-subtext {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-top: 2px;
+  text-shadow: 0 0 8px rgba(0, 229, 200, 0.4);
+}
+
+[data-theme="light"] .tv-core-subtext {
+  color: var(--lychee);
+  text-shadow: 0 0 8px rgba(255, 107, 122, 0.3);
+}
+
+/* ── Orbit nodes — white-plate chips, mirrors section 1 (.md-node) ── */
+.tv-node {
+  --tv-size: 52px; /* outer ring default — bumped per request */
+  position: absolute;
+  width: var(--tv-size);
+  height: var(--tv-size);
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, transform 0.7s ease, opacity 0.7s ease;
+  overflow: hidden;
+  z-index: 2;
+}
+
+[data-theme="light"] .tv-node {
+  background: #ffffff;
+  border-color: rgba(13, 21, 32, 0.18);
+  box-shadow:
+    0 1px 0 rgba(13, 21, 32, 0.04),
+    0 6px 18px rgba(13, 21, 32, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Inner ring AI nodes — slightly larger still */
+.tv-node--ai {
+  --tv-size: 56px;
+}
+
+/* Logos with white-on-dark marks (Cursor, ChatGPT) get the same white plate
+   as every other chip — invert the logo so it reads dark on white. */
+.tv-node--invert .tv-node-logo {
+  filter: invert(1);
+}
+
+.tv-node-logo {
+  --tv-logo-scale: 1;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  display: block;
+  transform: scale(var(--tv-logo-scale));
+  transition: filter 0.4s ease;
+}
+
+/* LangChain mark uses light-blue strokes (#7FC8FF) that vanish on a white
+   plate — boost contrast with a hue-rotate + saturation bump that pulls
+   the strokes to a darker, more readable color in both themes. */
+.tv-node-logo[src$="langchain.svg"] {
+  /* Increase saturation & darken slightly so the parrot mark reads. */
+  filter: brightness(0.7) saturate(1.4) hue-rotate(-10deg);
+}
+
+/* When the langchain logo lives on an inverted (dark-plate) node, skip the
+   custom filter — but actually langchain isn't dark-plate, so this is moot. */
+
+/* ── Person silhouettes ── */
+.tv-node--person {
+  --tv-size: 52px;
+}
+
+/* Each person chip stacks the head silhouette over the first name. */
+.tv-person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 100%;
+  height: 100%;
+  padding: 4px 2px 3px;
+  line-height: 1;
+}
+
+.tv-person-head-svg {
+  width: 56%;
+  height: 56%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.tv-person-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: #1a2530;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.05;
+}
+
+/* ── Join / depart states ── */
+.tv-joining {
+  animation: tv-join 1.2s ease-out;
+}
+
+.tv-leaving {
+  animation: tv-leave 1.4s ease-in forwards;
+}
+
+@keyframes tv-join {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes tv-leave {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  70%  { opacity: 0.25; transform: translate(-50%, -50%) scale(0.85); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+}
+
+/* Joining spoke fades up smoothly (set initial state via animation) */
+.tv-spoke-joining {
+  animation: tv-spoke-fadein 0.9s ease-out 0.5s both;
+}
+
+@keyframes tv-spoke-fadein {
+  from { stroke-opacity: 0; }
+  to   { stroke-opacity: 1; }
+}
+
+/* Strikethrough on the leaving node — diagonal amber slash */
+.tv-strike {
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    transparent calc(50% - 1.5px),
+    var(--amber) calc(50% - 1px),
+    var(--amber) calc(50% + 1px),
+    transparent calc(50% + 1.5px)
+  );
+  border-radius: 50%;
+  opacity: 0;
+  animation: tv-strike-in 1s ease-out forwards;
+  animation-delay: 0.2s;
+  z-index: 4;
+}
+
+@keyframes tv-strike-in {
+  0%   { opacity: 0; }
+  100% { opacity: 0.85; }
+}
+
+/* ── Notification badges (join + leave) ── */
+.tv-note {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 8px;
+  border-radius: 12px;
+  background: rgba(2, 4, 8, 0.92);
+  border: 1px solid rgba(0, 229, 200, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(0, 229, 200, 0.15);
+  font-family: 'Outfit', sans-serif;
+  z-index: 5;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+[data-theme="light"] .tv-note {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(0, 100, 90, 0.32);
+  box-shadow:
+    0 8px 24px rgba(13, 21, 32, 0.15),
+    0 0 0 1px rgba(0, 100, 90, 0.08);
+}
+
+/* Anchor offsets — sit ABOVE the chip and to the side, depending on quadrant */
+.tv-note--right {
+  /* When the person is on the right of the diagram, anchor the note's
+     right edge near the chip and have it extend leftward + upward. */
+  transform: translate(-100%, -100%) translate(-12px, -12px);
+}
+
+.tv-note--left {
+  transform: translate(0, -100%) translate(12px, -12px);
+}
+
+.tv-note--leave {
+  border-color: rgba(245, 166, 35, 0.45);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(245, 166, 35, 0.18);
+}
+
+[data-theme="light"] .tv-note--leave {
+  border-color: rgba(245, 166, 35, 0.55);
+  box-shadow:
+    0 8px 24px rgba(13, 21, 32, 0.15),
+    0 0 0 1px rgba(245, 166, 35, 0.18);
+}
+
+.tv-note-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.tv-note-badge--join {
+  background: var(--cyan);
+  color: #001e1a;
+  box-shadow: 0 0 12px rgba(0, 229, 200, 0.6);
+}
+
+[data-theme="light"] .tv-note-badge--join {
+  background: var(--lychee);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 107, 122, 0.5);
+}
+
+.tv-note-badge--leave {
+  background: var(--amber);
+  color: #2a1a00;
+  box-shadow: 0 0 12px rgba(245, 166, 35, 0.55);
+}
+
+.tv-note-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.15;
+}
+
+.tv-note-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+}
+
+[data-theme="light"] .tv-note-name {
+  color: var(--paper);
+}
+
+.tv-note-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--silver);
+  text-transform: lowercase;
+}
+
+[data-theme="light"] .tv-note-sub {
+  color: var(--muted);
+}
+
+/* ── Caption strip ── */
+.tv-caption-outside {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 28px;
+}
+
+.tv-caption-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(2, 4, 8, 0.55);
+  border: 1px solid rgba(0, 229, 200, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--silver);
+}
+
+[data-theme="light"] .tv-caption-inner {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 100, 90, 0.18);
+  color: var(--paper);
+}
+
+.tv-caption-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  animation: tv-cap-pulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .tv-caption-dot {
+  background: var(--lychee);
+  box-shadow: 0 0 10px var(--lychee);
+}
+
+@keyframes tv-cap-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+.tv-caption-text {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ── Isolation note (the bottom punchline) ── */
+.tv-isolation-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--silver);
+  text-align: center;
+  margin: 0;
+}
+
+[data-theme="light"] .tv-isolation-note {
+  color: var(--paper);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .tv-joining,
+  .tv-leaving,
+  .tv-strike,
+  .tv-spoke-joining,
+  .tv-caption-dot {
+    animation: none;
+  }
+  .tv-leaving {
+    opacity: 0;
+  }
+  .tv-strike {
+    opacity: 0.85;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 720px) {
+  .tv-node {
+    --tv-size: 36px;
+  }
+  .tv-node--ai {
+    --tv-size: 40px;
+  }
+  .tv-node--person {
+    --tv-size: 36px;
+  }
+  .tv-person-name {
+    font-size: 7px;
+  }
+  /* Central logo — JSX renders at fixed pixel size; CSS-scale it down so
+     it stays proportional to the orbiting chips on a phone-sized card. */
+  .tv-core > svg {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .tv-core-subtext {
+    font-size: 0.5rem;
+    letter-spacing: 0.22em;
+  }
+  .tv-caption-inner {
+    font-size: 0.55rem;
+    padding: 4px 8px;
+  }
+  .tv-caption-dot {
+    width: 5px;
+    height: 5px;
+  }
+  .tv-note {
+    padding: 4px 8px 4px 5px;
+    border-radius: 9px;
+  }
+  .tv-note-name {
+    font-size: 0.66rem;
+  }
+  .tv-note-sub {
+    font-size: 0.48rem;
+  }
+  .tv-note-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+  }
+  .tv-isolation-note {
+    font-size: 0.52rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 480px) {
+  .tv-node,
+  .tv-node--person {
+    --tv-size: 30px;
+  }
+  .tv-node--ai {
+    --tv-size: 34px;
+  }
+  .tv-core > svg {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .tv-person-name {
+    font-size: 6px;
+  }
+}

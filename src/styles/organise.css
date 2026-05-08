@@ -1,0 +1,242 @@
+/* ── Organise section (Section 4) ── */
+
+.og-section {
+  position: relative;
+  padding: 56px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .og-section {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+}
+
+@media (max-width: 720px) {
+  .og-section {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+  .og-list {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .og-headline {
+    margin-bottom: 16px;
+  }
+  .og-deck {
+    margin-bottom: 24px;
+  }
+  .og-eyebrow {
+    margin-bottom: 18px;
+  }
+}
+
+.og-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  /* Text on the left, visual on the right — flipped from Teams so the
+     page alternates section orientation (Teams: visual L / text R; Organise:
+     text L / visual R). */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .og-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+  .og-visual { order: 2; }
+  .og-text   { order: 1; }
+}
+
+/* ── Left column: text ── */
+.og-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 560px;
+  justify-self: start;
+}
+
+@media (max-width: 980px) {
+  .og-text {
+    max-width: 640px;
+    margin: 0 auto;
+    justify-self: stretch;
+  }
+}
+
+.og-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 229, 200, 0.06);
+  border: 1px solid rgba(0, 229, 200, 0.22);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--cyan);
+  margin-bottom: 28px;
+}
+
+[data-theme="light"] .og-eyebrow {
+  background: rgba(255, 107, 122, 0.08);
+  border-color: rgba(255, 107, 122, 0.3);
+  color: var(--lychee);
+}
+
+.og-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  animation: og-pulse 2.4s ease-in-out infinite;
+}
+
+[data-theme="light"] .og-eyebrow-dot {
+  background: var(--lychee);
+  box-shadow: 0 0 10px var(--lychee);
+}
+
+@keyframes og-pulse {
+  0%, 100% { opacity: 1;   }
+  50%      { opacity: 0.4; }
+}
+
+.og-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 22px;
+}
+
+.og-headline em {
+  font-style: normal;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .og-headline em {
+  color: var(--lychee);
+}
+
+.og-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--silver);
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+/* ── Bullets ── */
+.og-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+.og-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.og-bullet {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 9px;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+[data-theme="light"] .og-bullet {
+  background: var(--lychee);
+  box-shadow: 0 0 8px var(--lychee);
+}
+
+.og-item-body {
+  display: inline;
+}
+
+.og-item-headline {
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: -0.005em;
+}
+
+.og-item-sep {
+  margin: 0 8px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.og-item-text {
+  color: var(--silver);
+}
+
+/* ── CTA link ── */
+.og-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--cyan);
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.og-cta:hover {
+  border-color: var(--cyan);
+}
+
+.og-cta-arrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.og-cta:hover .og-cta-arrow {
+  transform: translateX(3px);
+}
+
+[data-theme="light"] .og-cta {
+  color: var(--lychee);
+}
+
+[data-theme="light"] .og-cta:hover {
+  border-color: var(--lychee);
+}
+
+/* ── Right column: visual ── */
+.og-visual {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

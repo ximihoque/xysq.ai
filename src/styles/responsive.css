@@ -1,12 +1,14 @@
 /* ================================================================
    RESPONSIVE — xysq.ai
-   Breakpoints: 900px (tablet), 600px (mobile), 400px (small mobile)
+   Breakpoints: 980px (tablet), 720px (handheld), 480px (small phone)
+   This file holds the global, cross-component mobile rules.
+   Component-specific rules live in their respective stylesheets.
    ================================================================ */
 
-/* ── 900px: tablet & below ─────────────────────────────────── */
-@media (max-width: 900px) {
+/* ── 980px: tablet & below ──────────────────────────────────── */
+@media (max-width: 980px) {
 
-  /* Footer */
+  /* Footer — stacks vertically on tablet/mobile */
   footer {
     flex-direction: column;
     gap: 32px;
@@ -30,33 +32,92 @@
   }
 }
 
-/* ── 600px: mobile ─────────────────────────────────────────── */
-@media (max-width: 600px) {
+/* ── 720px: handheld breakpoint (phones + small tablets) ─────── */
+@media (max-width: 720px) {
 
-  /* ── Global ── */
+  /* ── Global section rhythm ── */
+  /* Tighten the per-section vertical padding so consecutive sections
+     don't double-up large bottom + top paddings. The horizontal padding
+     stays at --side-pad so all content lines up. */
+  .sect,
+  .cap-section,
+  .tm-section,
+  .og-section,
+  .tp-section,
+  .t3-section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  /* Inner column gap on side-by-side sections */
+  .cap-inner,
+  .tm-inner,
+  .og-inner {
+    gap: 32px;
+  }
+
+  /* Headline scale — keep punch but stop overflow on narrow screens */
   h2 {
-    font-size: clamp(2rem, 8vw, 2.8rem);
+    font-size: clamp(1.95rem, 7.4vw, 2.6rem);
   }
 
-  .sect {
-    padding: 72px var(--side-pad);
+  .cap-headline,
+  .tm-headline,
+  .og-headline {
+    font-size: clamp(1.95rem, 7.4vw, 2.6rem);
   }
 
-  /* ── Hero ── */
-  #hero {
-    padding-top: 100px;
-    padding-bottom: 64px;
+  /* Hide the elaborate orbital diagrams on small screens. They're
+     positioned absolutely against fixed pixel coordinates (640×540 etc)
+     and become unreadable when squeezed below ~600px wide. The headline
+     + bullet copy carries the meaning on its own. */
+  .tm-visual,
+  .og-visual {
+    display: none;
   }
 
-  .hero-btns {
-    flex-direction: column;
-    align-items: stretch;
+  /* Memory diagram — keep visible but constrain so it doesn't dominate */
+  .cap-visual {
+    margin-top: 4px;
   }
 
-  .btn-main,
-  .btn-out {
-    width: 100%;
-    text-align: center;
+  .md-wrap {
+    max-width: 100%;
+  }
+
+  /* ── Trust & Privacy ── */
+  .tp-grid {
+    margin-top: 16px;
+    gap: 14px;
+  }
+
+  .tp-card {
+    padding: 24px 22px;
+    gap: 10px;
+  }
+
+  .tp-link {
+    margin-top: 18px;
+    font-size: 0.92rem;
+  }
+
+  /* ── Three-column CTA ── */
+  .t3-inner {
+    gap: 32px;
+  }
+
+  .t3-grid {
+    gap: 14px;
+  }
+
+  .t3-card {
+    padding: 28px 26px 26px;
+    gap: 12px;
+  }
+
+  .t3-cta {
+    align-self: stretch;
+    justify-content: center;
   }
 
   /* ── Timeline arc — horizontally scrollable ── */
@@ -164,19 +225,11 @@
     font-size: clamp(2.2rem, 9vw, 3rem);
   }
 
-  .fb-verticals-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .fb-fix-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
+  .fb-verticals-grid,
+  .fb-fix-grid,
   .fb-metrics-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
   .fb-cta-split {
@@ -217,16 +270,16 @@
   }
 
   .vision-h1 {
-    font-size: clamp(3rem, 12vw, 5rem);
+    font-size: clamp(2.6rem, 11vw, 4rem);
   }
 
   .vision-pillars-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
   .vision-pillar-card {
-    padding: 28px 24px;
+    padding: 26px 22px;
   }
 
   .vision-domains {
@@ -246,25 +299,54 @@
   .glass-snippet pre {
     font-size: 0.72rem;
   }
+
+  /* ── Nav mega panel (open state) — fit the viewport on mobile.
+     The mobile burger menu turns this into an in-flow accordion via the
+     --mobile modifier class, but the desktop hover-popup variant can still
+     leak past the viewport edge — clamp it. */
+  .nav-drop-panel--mega {
+    min-width: 0;
+    max-width: calc(100vw - 32px);
+  }
+
+  .nav-mega-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* ── 400px: small mobile ───────────────────────────────────── */
-@media (max-width: 400px) {
+/* ── 480px: small phone ───────────────────────────────────── */
+@media (max-width: 480px) {
 
   .we-grid {
     grid-template-columns: 1fr 1fr;
   }
 
   .fb-hero h1 {
-    font-size: clamp(1.9rem, 10vw, 2.4rem);
+    font-size: clamp(1.85rem, 9.5vw, 2.4rem);
   }
 
   .vision-h1 {
-    font-size: clamp(2.6rem, 13vw, 3.5rem);
+    font-size: clamp(2.3rem, 12vw, 3.2rem);
   }
 
   .arch-item {
     font-size: 0.7rem;
     padding: 5px 10px;
+  }
+
+  /* Even tighter section rhythm on the smallest phones */
+  .sect,
+  .cap-section,
+  .tm-section,
+  .og-section,
+  .tp-section,
+  .t3-section {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+
+  .tp-card,
+  .t3-card {
+    padding: 22px 20px;
   }
 }
