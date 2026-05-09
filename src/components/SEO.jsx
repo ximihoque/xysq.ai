@@ -4,7 +4,7 @@ const BASE_URL = 'https://xysq.ai'
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`
 
 export default function SEO({ title, description, path = '/', image = DEFAULT_IMAGE, schema }) {
-  const fullTitle = title ? `${title} — xysq.ai` : 'xysq.ai — One presence, across time.'
+  const fullTitle = title ? `${title} — xysq.ai` : 'xysq.ai — Memory infrastructure for AI.'
   const canonical = `${BASE_URL}${path}`
   const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
 

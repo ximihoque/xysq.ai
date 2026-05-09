@@ -15,7 +15,7 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
-        description="xysq is a persistent memory layer for AI agents. One identity, one context, across Claude, Cursor, ChatGPT and more. Connect in minutes — no rebuild required."
+        description="xysq is the memory infrastructure for AI. One memory across every app and agent — Claude, Cursor, ChatGPT, and the rest. Connect in minutes, no rebuild required."
         schema={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',

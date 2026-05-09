@@ -122,7 +122,7 @@ export default function Nav() {
   const { pathname } = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [theme, setTheme] = useState(() =>
-    typeof window !== 'undefined' ? (localStorage.getItem('theme') || 'dark') : 'dark'
+    typeof window !== 'undefined' ? (localStorage.getItem('theme') || 'light') : 'light'
   )
 
   const { scrollY } = useScroll()
