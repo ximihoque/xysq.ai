@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { MDXProvider } from '@mdx-js/react'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
-import SEO from '../components/SEO'
+import SEO, { breadcrumbSchema } from '../components/SEO'
 import BlogPostHeader from '../components/BlogPostHeader'
 import BlogAuthorCard from '../components/BlogAuthorCard'
 import BlogTOC from '../components/BlogTOC'
@@ -32,23 +32,31 @@ export default function BlogPostPage() {
     )
   }
 
-  const ogImage = post.cover ?? `https://xysq.ai/blog/og/${post.slug}.png`
+  const ogImage = post.cover
+    ? (post.cover.startsWith('http') ? post.cover : `https://xysq.ai${post.cover}`)
+    : `https://xysq.ai/blog/og/${post.slug}.png`
+  const modifiedDate = post.updated ?? post.date
 
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: modifiedDate,
     author: { '@type': 'Person', name: post.author.name },
     image: ogImage,
     publisher: {
       '@type': 'Organization',
       name: 'xysq',
       url: 'https://xysq.ai',
+      logo: { '@type': 'ImageObject', url: 'https://xysq.ai/logo.svg' },
     },
     mainEntityOfPage: `https://xysq.ai/blog/${post.slug}`,
+    articleSection: post.category,
+    keywords: post.tags?.join(', '),
+    inLanguage: 'en-US',
+    wordCount: post.readingTime?.minutes ? post.readingTime.minutes * 200 : undefined,
   }
 
   const Body = post.Body
@@ -60,7 +68,23 @@ export default function BlogPostPage() {
         description={post.excerpt}
         path={`/blog/${post.slug}`}
         image={ogImage}
-        schema={schema}
+        imageWidth={1600}
+        imageHeight={900}
+        schema={[schema, breadcrumbSchema([
+          { name: 'Home', item: '/' },
+          { name: 'Blog', item: '/blog' },
+          { name: post.title, item: `/blog/${post.slug}` },
+        ])]}
+        ogType="article"
+        author={post.author.name}
+        keywords={post.tags}
+        article={{
+          publishedTime: post.date,
+          modifiedTime: modifiedDate,
+          author: post.author.name,
+          section: post.category,
+          tags: post.tags,
+        }}
         extraLinks={[{ rel: 'alternate', type: 'application/rss+xml', title: 'xysq blog', href: '/blog/rss.xml' }]}
       />
       <Nav />

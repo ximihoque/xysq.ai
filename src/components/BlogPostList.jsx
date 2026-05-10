@@ -38,6 +38,11 @@ function PostCard({ post }) {
   return (
     <li className="blog-card">
       <Link to={`/blog/${post.slug}`} className="blog-card__link">
+        {post.cover && (
+          <div className="blog-card__cover" aria-hidden="true">
+            <img src={post.cover} alt="" />
+          </div>
+        )}
         <span className="blog-tag blog-tag--ghost">{post.category}</span>
         <h3 className="blog-card__title">{post.title}</h3>
         {post.excerpt && <p className="blog-card__excerpt">{post.excerpt}</p>}

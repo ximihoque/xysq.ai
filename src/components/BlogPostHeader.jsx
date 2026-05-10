@@ -3,6 +3,11 @@ import { formatDate } from '../lib/blog'
 export default function BlogPostHeader({ post }) {
   return (
     <header className="blog-post__header">
+      {post.cover && (
+        <div className="blog-post__cover">
+          <img src={post.cover} alt={`Cover illustration for "${post.title}"`} />
+        </div>
+      )}
       <h1 className="blog-post__title">{post.title}</h1>
       {post.excerpt && (
         <p className="blog-post__subtitle">{post.excerpt}</p>

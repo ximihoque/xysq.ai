@@ -1,6 +1,6 @@
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
-import SEO from '../components/SEO'
+import SEO, { breadcrumbSchema } from '../components/SEO'
 import BlogPostList from '../components/BlogPostList'
 import { loadPosts } from '../lib/blog'
 import '../styles/blog-index.css'
@@ -28,7 +28,10 @@ export default function BlogIndexPage() {
         title="Blog"
         description="Notes from the team building xysq — a consent-first memory layer for AI agents."
         path="/blog"
-        schema={schema}
+        schema={[schema, breadcrumbSchema([
+          { name: 'Home', item: '/' },
+          { name: 'Blog', item: '/blog' },
+        ])]}
         extraLinks={[{ rel: 'alternate', type: 'application/rss+xml', title: 'xysq blog', href: '/blog/rss.xml' }]}
       />
       <Nav />

@@ -6,7 +6,7 @@ const POSTS_DIR = new URL('../src/content/blog/', import.meta.url).pathname
 const AUTHORS_DIR = new URL('../src/content/authors/', import.meta.url).pathname
 const CATEGORIES_FILE = new URL('../src/content/categories.json', import.meta.url).pathname
 
-const REQUIRED = ['title', 'slug', 'date', 'author', 'excerpt', 'category']
+const REQUIRED = ['title', 'slug', 'date', 'author', 'excerpt', 'category', 'cover']
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
 
 function fail(msg) {

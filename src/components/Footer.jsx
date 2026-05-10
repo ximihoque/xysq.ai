@@ -30,6 +30,7 @@ const FEATURE_LINKS = [
 ]
 
 const RESOURCE_LINKS = [
+  { label: 'Blog',            to: '/blog' },
   { label: 'Docs',            href: 'https://docs.xysq.ai',                            external: true },
   { label: 'SDK',             href: 'https://docs.xysq.ai/sdk/getting-started',        external: true },
   { label: 'Product updates', href: 'https://docs.xysq.ai/product-releases/2026',      external: true },

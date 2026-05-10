@@ -6,6 +6,7 @@ import { Writable } from 'node:stream'
 import App from './App.jsx'
 import { USE_CASE_CATEGORIES } from './data/useCases.js'
 import { FEATURE_PAGES } from './data/features.js'
+import { loadPosts } from './lib/blog.js'
 
 // Single source of truth for the prerender script. Bundled by Vite SSR build
 // so `import.meta.env` works for any data files that reference it.
@@ -15,6 +16,8 @@ export const ROUTES = [
   '/privacy',
   ...Object.keys(FEATURE_PAGES).map((slug) => `/features/${slug}`),
   ...USE_CASE_CATEGORIES.map((c) => `/use-cases/${c.slug}`),
+  '/blog',
+  ...loadPosts({ includeDrafts: false }).map((p) => `/blog/${p.slug}`),
 ]
 
 // Renders the app at the given URL into a static HTML string. Uses

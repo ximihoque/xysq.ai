@@ -10,6 +10,7 @@ export default function BlogAuthorCard({ author }) {
           <div className="blog-author-card__links">
             {author.links.twitter && <a href={author.links.twitter} rel="noopener">Twitter</a>}
             {author.links.linkedin && <a href={author.links.linkedin} rel="noopener">LinkedIn</a>}
+            {author.links.github && <a href={author.links.github} rel="noopener">GitHub</a>}
           </div>
         )}
       </div>
