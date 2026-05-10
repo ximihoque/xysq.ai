@@ -127,6 +127,7 @@ nav.menu-open .nav-backdrop {
   background: rgba(13, 21, 32, 0.05);
 }
 
+
 .nav-drop-chev {
   opacity: 0.7;
   transition: transform 0.22s ease;

@@ -1,0 +1,10 @@
+{
+  "id": "navneet",
+  "name": "Navneet Garg",
+  "title": "AI Engineer",
+  "avatar": "/blog/authors/navneet.svg",
+  "bio": "AI engineer focused on long-term memory systems, agent infrastructure, and developer tooling.",
+  "links": {
+    "github": "https://github.com/TheLunarLogic"
+  }
+}

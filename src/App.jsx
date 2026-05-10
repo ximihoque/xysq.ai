@@ -8,6 +8,8 @@ const ContactPage = lazy(() => import('./pages/ContactPage'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
 const FeaturePage = lazy(() => import('./pages/FeaturePage'))
+const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
 
 export default function App() {
   const location = useLocation()
@@ -32,6 +34,8 @@ export default function App() {
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/use-cases/:slug" element={<UseCaseCategoryPage />} />
             <Route path="/features/:slug"  element={<FeaturePage />} />
+            <Route path="/blog" element={<BlogIndexPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
           </Routes>
         </Suspense>
       </AnimatePresence>

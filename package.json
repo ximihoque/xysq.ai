@@ -5,13 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:server && npm run prerender",
+    "build": "npm run validate:posts && npm run build:client && npm run build:server && npm run prerender",
     "build:client": "vite build --outDir dist",
     "build:server": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
     "prerender": "node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "postbuild": "node scripts/postbuild.mjs",
+    "preview": "vite preview",
+    "validate:posts": "node scripts/validate-posts.mjs"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "react": "^18.3.1",
@@ -20,7 +23,19 @@
     "react-router-dom": "^7.13.2"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "^3.1.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@vitejs/plugin-react": "^4.3.4",
+    "gray-matter": "^4.0.3",
+    "reading-time": "^1.5.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-pretty-code": "^0.13.2",
+    "rehype-slug": "^6.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.2.0",
+    "satori": "^0.12.2",
+    "shiki": "^1.29.2",
     "vite": "^6.2.0"
   }
 }

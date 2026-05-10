@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, createContext, useContext, useId } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
@@ -66,8 +66,22 @@ function MoonIcon() {
 //     14px gap so the cursor can travel from trigger → panel without the panel
 //     vanishing. Closes after a short timeout.
 //   • Mobile (inside the open burger menu): renders as an inline accordion.
-function NavDropdown({ label, panelClassName = '', children, isMobile }) {
-  const [open, setOpen] = useState(false)
+/**
+ * Shared "which dropdown is open" coordinator. With independent state per
+ * dropdown, moving fast between Features/Use-cases left the previous panel
+ * visible during its close timer — felt amateur. Now only one panel can be
+ * open, and switching from one trigger directly to another closes the
+ * previous instantly (no timer).
+ */
+const DropdownCtx = createContext({
+  openId: null,
+  request: () => {},
+  scheduleClose: () => {},
+  cancelClose: () => {},
+})
+
+function NavDropdownProvider({ children }) {
+  const [openId, setOpenId] = useState(null)
   const closeTimer = useRef(null)
 
   const cancelClose = () => {
@@ -76,11 +90,45 @@ function NavDropdown({ label, panelClassName = '', children, isMobile }) {
       closeTimer.current = null
     }
   }
+  const request = (id) => {
+    cancelClose()
+    setOpenId(id)
+  }
   const scheduleClose = () => {
     cancelClose()
-    closeTimer.current = setTimeout(() => setOpen(false), 140)
+    closeTimer.current = setTimeout(() => setOpenId(null), 120)
   }
   useEffect(() => () => cancelClose(), [])
+
+  return (
+    <DropdownCtx.Provider value={{ openId, request, scheduleClose, cancelClose }}>
+      {children}
+    </DropdownCtx.Provider>
+  )
+}
+
+/**
+ * Non-dropdown nav link that participates in the dropdown coordinator —
+ * hovering it instantly closes any open dropdown panel, so the user doesn't
+ * see a stale panel hanging while they move across the nav row.
+ */
+function SiblingNavLink({ as: As = 'a', children, onMouseEnter, ...rest }) {
+  const { request } = useContext(DropdownCtx)
+  return (
+    <As
+      className="nav-link"
+      onMouseEnter={(e) => { request(null); onMouseEnter?.(e) }}
+      {...rest}
+    >
+      {children}
+    </As>
+  )
+}
+
+function NavDropdown({ label, panelClassName = '', children, isMobile }) {
+  const id = useId()
+  const { openId, request, scheduleClose, cancelClose } = useContext(DropdownCtx)
+  const open = openId === id
 
   if (isMobile) {
     return (
@@ -96,9 +144,9 @@ function NavDropdown({ label, panelClassName = '', children, isMobile }) {
   return (
     <div
       className={`nav-drop${open ? ' nav-drop--open' : ''}`}
-      onMouseEnter={() => { cancelClose(); setOpen(true) }}
+      onMouseEnter={() => request(id)}
       onMouseLeave={scheduleClose}
-      onFocus={() => { cancelClose(); setOpen(true) }}
+      onFocus={() => { cancelClose(); request(id) }}
       onBlur={scheduleClose}
     >
       <button
@@ -106,7 +154,7 @@ function NavDropdown({ label, panelClassName = '', children, isMobile }) {
         className="nav-drop-label"
         aria-expanded={open}
         aria-haspopup="true"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => request(open ? null : id)}
       >
         {label}
         <ChevronDown size={13} className="nav-drop-chev" strokeWidth={2.2} />
@@ -217,45 +265,51 @@ export default function Nav() {
         <span className="nav-logo-word">xysq<span>.ai</span></span>
       </Link>
 
-      <div className={`nav-center${isMenuOpen ? ' open' : ''}`}>
-        <NavDropdown label="Features" isMobile={isMenuOpen}>
-          {featuresPanel}
-        </NavDropdown>
+      <NavDropdownProvider>
+        <div className={`nav-center${isMenuOpen ? ' open' : ''}`}>
+          <NavDropdown label="Features" isMobile={isMenuOpen}>
+            {featuresPanel}
+          </NavDropdown>
 
-        <NavDropdown
-          label="Use cases"
-          panelClassName="nav-drop-panel--mega"
-          isMobile={isMenuOpen}
-        >
-          {useCasesPanel}
-        </NavDropdown>
+          <NavDropdown
+            label="Use cases"
+            panelClassName="nav-drop-panel--mega"
+            isMobile={isMenuOpen}
+          >
+            {useCasesPanel}
+          </NavDropdown>
 
-        <a
-          href="https://docs.xysq.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={closeMenu}
-          className="nav-link"
-        >
-          Docs
-        </a>
+          <SiblingNavLink
+            as="a"
+            href="https://docs.xysq.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMenu}
+          >
+            Docs
+          </SiblingNavLink>
 
-        <a
-          href="https://docs.xysq.ai/sdk/getting-started"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={closeMenu}
-          className="nav-link"
-        >
-          SDK
-        </a>
+          <SiblingNavLink
+            as="a"
+            href="https://docs.xysq.ai/sdk/getting-started"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMenu}
+          >
+            SDK
+          </SiblingNavLink>
 
-        {/* Mobile: CTA appears inside the menu so users on small screens see it */}
-        <a href={APP_URL} className="nav-cta nav-cta--mobile" onClick={closeMenu}>
-          Get started
-          <ArrowUpRight size={14} strokeWidth={2} />
-        </a>
-      </div>
+          <SiblingNavLink as={Link} to="/blog" onClick={closeMenu}>
+            Blog
+          </SiblingNavLink>
+
+          {/* Mobile: CTA appears inside the menu so users on small screens see it */}
+          <a href={APP_URL} className="nav-cta nav-cta--mobile" onClick={closeMenu}>
+            Get started
+            <ArrowUpRight size={14} strokeWidth={2} />
+          </a>
+        </div>
+      </NavDropdownProvider>
 
       <div className="nav-end">
         <button className="nav-theme" onClick={toggleTheme} aria-label="Toggle theme">
