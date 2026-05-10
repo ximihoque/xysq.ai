@@ -60,7 +60,7 @@ export default function CtaStrip() {
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               style={{ display: 'inline-block' }}
             >
-              <Link to="/for-business#fb-contact" className="cs-btn-secondary">
+              <Link to="/contact" className="cs-btn-secondary">
                 Talk to us →
               </Link>
             </motion.div>

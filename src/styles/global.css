@@ -61,6 +61,46 @@
 
 html {
   scroll-behavior: smooth;
+  /* fallback offset for any anchor scroll happening at the document root */
+  scroll-padding-top: 64px;
+}
+
+/* Any section targeted by an in-page anchor should park below the fixed nav. */
+section[id],
+[id] {
+  scroll-margin-top: 64px;
+}
+
+/* ── Ambient page grid ─────────────────────────────────────────────
+   Sits behind everything (incl. NeuralBackground particles which use
+   z-index:0). The radial mask focuses the grid in the centre of the
+   viewport and dissolves it at the edges — so the lines feel like they
+   "breathe" in and out as the user scrolls past sections. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right,  rgba(0, 229, 200, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 200, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 95% 75% at 50% 50%,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.55) 55%,
+    transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 75% at 50% 50%,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.55) 55%,
+    transparent 100%);
+}
+
+[data-theme="light"] body::before {
+  background-image:
+    linear-gradient(to right,  rgba(0, 100, 90, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 100, 90, 0.07) 1px, transparent 1px);
 }
 
 body {
@@ -68,7 +108,15 @@ body {
   color: var(--paper);
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
-  overflow-x: hidden;
+}
+
+/* Horizontal-overflow guard moved off <body> because `overflow-x: hidden`
+   on body has a long-standing iOS Safari bug that locks vertical scrolling
+   on tall pages, and `overflow-x: clip` isn't supported on Safari < 16.
+   Clip horizontal overflow on the React root instead — same effect, no
+   side effects on iPad Safari scroll. */
+#root {
+  overflow-x: clip;
 }
 
 /* ── Shared section ── */

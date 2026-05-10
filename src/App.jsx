@@ -1,12 +1,15 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import HomePage from './pages/HomePage'
-import ForBusinessPage from './pages/ForBusinessPage'
-import VisionPage from './pages/VisionPage'
-import PrivacyPage from './pages/PrivacyPage'
-import BlogIndexPage from './pages/BlogIndexPage'
-import BlogPostPage from './pages/BlogPostPage'
+import ScrollToTop from './components/ScrollToTop'
+
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
+const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
+const FeaturePage = lazy(() => import('./pages/FeaturePage'))
+const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
 
 export default function App() {
   const location = useLocation()
@@ -21,15 +24,21 @@ export default function App() {
   }, [location.pathname, location.search])
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/for-business" element={<ForBusinessPage />} />
-        <Route path="/vision" element={<VisionPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
-        <Route path="/blog" element={<BlogIndexPage />} />
-        <Route path="/blog/:slug" element={<BlogPostPage />} />
-      </Routes>
-    </AnimatePresence>
+    <>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Suspense fallback={null}>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/use-cases/:slug" element={<UseCaseCategoryPage />} />
+            <Route path="/features/:slug"  element={<FeaturePage />} />
+            <Route path="/blog" element={<BlogIndexPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
+          </Routes>
+        </Suspense>
+      </AnimatePresence>
+    </>
   )
 }
