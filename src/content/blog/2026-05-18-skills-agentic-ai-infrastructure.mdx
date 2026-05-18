@@ -1,0 +1,115 @@
+---
+title: "Skills Are Becoming the Real Infrastructure Behind Agentic AI"
+slug: "skills-agentic-ai-infrastructure"
+date: "2026-05-18"
+author: "ritika"
+excerpt: "Most AI conversations focus on models and memory. But the quietest shift is happening at the skills layer — where agents learn not just what to do, but how."
+category: "Insight"
+cover: "https://storage.googleapis.com/xysq_public/blogs/ritika-skills-blog/skills-cover.svg"
+tags: ["skills", "agentic-ai", "memory", "infrastructure", "claude"]
+featured: false
+draft: false
+---
+
+import { Figure } from '../../components/mdx/Figure'
+
+Most conversations around agentic AI focus on models, reasoning, and memory. But one of the most important shifts is happening at a quieter layer: skills.
+
+As AI agents move beyond simple prompting into long-running workflows, skills are becoming the system that defines how agents actually behave. They are no longer just shortcuts for tool usage or predefined commands. Modern skills act more like operational playbooks — teaching agents how to approach tasks, how to structure workflows, when to retrieve context, and how to improve over time.
+
+In many ways, skills are becoming the infrastructure layer for agentic systems.
+
+## What a Skill Actually Looks Like
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/ritika-skills-blog/skill-anatomy.svg" caption="Anatomy of a skill: metadata the agent reads first, full instructions loaded only when needed." />
+
+At its core, a skill is a directory with a `SKILL.md` file containing structured instructions, scripts, and resources an agent can load dynamically. One of the most widely used examples in the community is the brainstorming skill from [obra/Superpowers](https://github.com/obra/superpowers) (193k stars), which activates automatically before any code is written:
+
+```yaml
+---
+name: brainstorming
+description: >
+  Use this skill before writing any code or implementation plan.
+  Activates when a user wants to build something new. Refines rough
+  ideas through structured questions, explores alternatives, and
+  produces a validated design document before any execution begins.
+  Do NOT use for bug fixes, small edits, or tasks with a clear spec.
+---
+
+# Brainstorming
+
+Announce at start: "I'm using the brainstorming skill to explore this with you."
+
+## Process
+1. Ask what the user is really trying to accomplish, not just what they asked for
+2. Explore 2-3 alternative approaches before committing to one
+3. Present the proposed design in short sections the user can actually read
+4. Get explicit sign-off on the design before saving the design document
+
+## Rules
+- Questions are tasks. Check for skills before asking anything.
+- Skill check comes BEFORE clarifying questions.
+- If brainstorming is complete, do not re-trigger this skill.
+- Skills tell you HOW to explore. Check first, then act.
+
+## Output
+Save the agreed design to: docs/superpowers/specs/YYYY-MM-DD-<feature-name>.md
+```
+
+The YAML frontmatter is what the agent reads first. The body only loads if the agent decides the skill is relevant. That two-step structure is called **progressive disclosure**, and it is the core design principle behind why skills work efficiently at scale. The same skill file works across Claude Code, OpenAI Codex CLI, Gemini CLI, and Cursor without modification.
+
+## The Context Problem Skills Solve
+
+Current AI systems are heavily constrained by context windows. Every instruction added to the prompt consumes tokens, increases latency, and gradually reduces performance. Traditionally, developers handled persistent instructions through large `agent.md` files loaded on every turn.
+
+Skills fix this through progressive disclosure: the agent reads only metadata at startup — just enough to know when each skill applies — and loads full instructions only when the skill is actually needed. The result is faster reasoning, lower token costs, and better overall performance.
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/ritika-skills-blog/progressive-disclosure.svg" caption="Progressive disclosure: metadata loads always, full instructions load only when the skill is triggered." />
+
+## The Ecosystem: Everyone Is Building This Layer
+
+Skills are not a Claude-specific idea. Anthropic introduced Agent Skills as composable, portable expertise through structured `SKILL.md` files and has since published the format as an open standard. Their [official skills repository](https://github.com/anthropics/skills) ships production-ready skills for documents, frontend design, MCP building, and more. They also recently launched the [Skill Creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator), an interactive tool that walks developers through building custom skills via guided Q&A.
+
+MCP (Model Context Protocol) operates at the tool-connection layer, giving agents access to external services, while skills sit on top as the knowledge layer — teaching agents how to use those tools well. OpenAI's custom GPT instructions and Cursor rules serve the same conceptual purpose: encoding procedural knowledge so agents behave predictably in specific domains. The terminology differs, but the problem being solved is identical.
+
+One of the most prominent community examples is [obra/Superpowers](https://github.com/obra/superpowers), a composable skill framework for Claude Code covering the full software development lifecycle, with over 193k GitHub stars.
+
+## Skills Are Earned, Not Written
+
+The best skills are rarely written upfront. Effective skills emerge from experience. A workflow is first executed manually, mistakes are identified, edge cases are discovered, and only after the process becomes reliable is it codified into a reusable skill. This creates a feedback loop where skills are grounded in real operational behaviour rather than theoretical instructions.
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/ritika-skills-blog/skill-lifecycle.svg" caption="The skill lifecycle: execute manually, identify gaps, codify into a reusable skill." />
+
+The clearest real-world example of this taken to its architectural conclusion is [Hermes Agent](https://github.com/nousresearch/hermes-agent) by Nous Research. Hermes is built around a closed learning loop: it creates skills from experience, improves them during use, nudges itself to persist knowledge, and builds a deepening model of who you are across sessions. Every workflow it learns gets saved as a reusable skill, compounding its capabilities over time at the architectural level. Self-created skills have been reported to cut research task time by around 40% compared to a fresh agent instance on the same job.
+
+This is what separates skills from static prompts. Prompts are temporary. Skills accumulate operational knowledge.
+
+## Skills + Memory: Where It Gets Personal
+
+Skills tell an agent how to act. Memory tells it what it knows about you. Without memory, skills are generic playbooks. With memory, they become personalised operating procedures shaped around your habits, tools, and recurring workflows.
+
+A "write a status update" skill without memory produces something reasonable. The same skill backed by memory of your communication style, your team's preferred format, and your running project context produces something that actually fits. The skill is the method; memory is what makes it yours.
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/ritika-skills-blog/skills-memory-stack.svg" caption="Skills define how an agent acts. Memory makes it personal." />
+
+This is where [xysq](https://xysq.ai/) becomes relevant. xysq combines persistent identity-aware memory with [personalised skills](https://docs.xysq.ai/features/personalised-skills), turning your accumulated memory into a skill that shapes your agent's behaviour over time. Instead of repeatedly re-explaining context, the agent progressively builds behavioural understanding around you across sessions.
+
+## Best Practices for Writing Skills That Work
+
+The name and description in a skill's metadata are critical. Claude uses these to decide whether to trigger the skill, and Anthropic's own skill-creator recommends writing descriptions that are slightly "pushy" — since agents tend to under-trigger.
+
+A few principles that hold up in practice:
+
+- Write descriptions with explicit exclusions, not just positive triggers
+- Explain the *why* behind rules, not just the rule itself — so the agent can handle cases the skill did not anticipate
+- Iterate based on observation: watch for missed triggers, ignored sections, and overreliance on certain parts
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/ritika-skills-blog/comparison-table.svg" caption="Architectural layers of AI agents: Prompts, Tools, Skills, and Memory." />
+
+For anyone starting out, Anthropic's [Skill Creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) is the fastest on-ramp, and the [awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) repository is the best place to see what the community has already built.
+
+## The Broader Shift
+
+The future of AI agents will not depend only on bigger models or longer context windows. It will depend on how effectively agents can structure knowledge, refine workflows, and personalise over time — through skills backed by memory.
+
+The infrastructure is already being built. The question is whether developers are designing for it.
