@@ -6,7 +6,7 @@ Everything you need to publish a post to [xysq.ai/blog](https://xysq.ai/blog).
 
 ## Quick start
 
-1. Pull the repo and create a branch off `main` (or `blog` while the portal is still being iterated on).
+1. Pull the repo and create a branch off `main`.
 2. Create one MDX file at `website/src/content/blog/YYYY-MM-DD-<slug>.mdx`.
 3. Run `cd website && npm run dev` and visit `http://localhost:5173/blog/<slug>` to preview.
 4. Open a PR. Reviewers run `npm run dev` to read the rendered post.
