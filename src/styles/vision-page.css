@@ -1,0 +1,440 @@
+/* ─────────────────────────────────────────────────────────────
+   Vision page — the staged path, for investors and partners.
+   Built on global tokens; respects light + dark themes.
+   ───────────────────────────────────────────────────────────── */
+
+.vision-hero {
+  padding: 180px var(--side-pad) 90px;
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.vision-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color 180ms ease;
+}
+.vision-back:hover {
+  color: var(--cyan);
+}
+
+.vision-eyebrow {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 18px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--cyan-dim);
+}
+
+.vision-h1 {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+  line-height: 1.07;
+  letter-spacing: -0.015em;
+  color: var(--paper);
+  margin: 0 0 32px;
+  max-width: 900px;
+}
+
+.vision-lede {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--paper);
+  opacity: 0.86;
+  max-width: 720px;
+  margin: 0 0 22px;
+}
+
+.vision-staged {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--cyan);
+  max-width: 720px;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+/* ── Sections ───────────────────────────────────────────────── */
+
+.vision-sect {
+  padding: var(--sect-pad) var(--side-pad);
+  position: relative;
+  z-index: 2;
+}
+.vision-sect--accent {
+  background: var(--bg2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.vision-sect-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.vision-h2 {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.85rem, 3.4vw, 2.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin: 14px 0 36px;
+  max-width: 820px;
+}
+.vision-h2 em {
+  font-style: italic;
+  color: var(--cyan);
+  font-weight: 500;
+}
+
+.vision-prose {
+  font-size: 1.025rem;
+  line-height: 1.7;
+  color: var(--paper);
+  opacity: 0.82;
+  max-width: 720px;
+  margin: 0 0 18px;
+}
+.vision-prose--narrow {
+  max-width: 620px;
+}
+.vision-prose--lead {
+  color: var(--paper);
+  opacity: 1;
+  font-weight: 500;
+  border-left: 2px solid var(--cyan);
+  padding-left: 18px;
+  margin-top: 28px;
+}
+
+/* ── Stages ─────────────────────────────────────────────────── */
+
+.vision-stages {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 800px) {
+  .vision-stages { grid-template-columns: 1fr; }
+}
+
+.vision-stage {
+  position: relative;
+  padding: 28px 28px 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: border-color 240ms ease, transform 240ms ease;
+}
+.vision-stage:hover {
+  border-color: var(--cyan-glow);
+  transform: translateY(-2px);
+}
+
+.vision-stage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.vision-stage-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--cyan);
+  letter-spacing: 0.04em;
+}
+.vision-stage-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--card-num);
+}
+.vision-stage-title {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: 1.55rem;
+  letter-spacing: -0.005em;
+  color: var(--paper);
+  margin: 0 0 14px;
+}
+.vision-stage-body {
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--paper);
+  opacity: 0.78;
+  margin: 0;
+}
+
+/* ── Personas ──────────────────────────────────────────────── */
+
+.vision-personas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 28px;
+}
+@media (max-width: 900px) {
+  .vision-personas { grid-template-columns: 1fr; }
+}
+
+.vision-persona {
+  padding: 22px;
+  border-left: 2px solid var(--cyan);
+  background: var(--surface);
+  border-radius: 0 6px 6px 0;
+}
+.vision-persona-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+.vision-persona p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--paper);
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* ── Use cases ─────────────────────────────────────────────── */
+
+.vision-usecases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 28px;
+}
+@media (max-width: 900px) {
+  .vision-usecases { grid-template-columns: 1fr; }
+}
+
+.vision-usecase {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.vision-usecase h3 {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--paper);
+  margin: 0 0 10px;
+}
+.vision-usecase p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--paper);
+  opacity: 0.78;
+  margin: 0;
+}
+
+/* ── Why now ───────────────────────────────────────────────── */
+
+.vision-why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 36px;
+}
+@media (max-width: 800px) {
+  .vision-why-grid { grid-template-columns: 1fr; }
+}
+
+.vision-why {
+  display: flex;
+  gap: 16px;
+  padding: 22px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.vision-why-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  color: var(--cyan);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.vision-why p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--paper);
+  opacity: 0.85;
+  margin: 0;
+}
+.vision-why strong {
+  color: var(--paper);
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* ── Commitments ───────────────────────────────────────────── */
+
+.vision-commitments {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+@media (max-width: 800px) {
+  .vision-commitments { grid-template-columns: 1fr; }
+}
+
+.vision-commitment {
+  padding: 24px;
+  border-top: 1px solid var(--line);
+}
+.vision-commitment h4 {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: 1.18rem;
+  color: var(--cyan);
+  margin: 0 0 10px;
+  letter-spacing: -0.005em;
+}
+.vision-commitment p {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--paper);
+  opacity: 0.78;
+  margin: 0;
+}
+
+/* ── Long view ─────────────────────────────────────────────── */
+
+.vision-longview {
+  padding: 130px var(--side-pad);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg2);
+}
+.vision-quote {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+  line-height: 1.55;
+  color: var(--paper);
+  max-width: 720px;
+  margin: 0 auto 36px;
+  letter-spacing: -0.005em;
+}
+.vision-longview-body {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--paper);
+  opacity: 0.78;
+}
+
+/* ── CTA section ───────────────────────────────────────────── */
+
+.vision-cta-sect {
+  padding-top: 110px;
+  padding-bottom: 130px;
+}
+.vision-cta-inner {
+  text-align: center;
+}
+.vision-cta-inner .vision-h2 {
+  margin-left: auto;
+  margin-right: auto;
+}
+.vision-cta-inner .vision-prose {
+  margin-left: auto;
+  margin-right: auto;
+}
+.vision-cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.vision-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 22px;
+  background: var(--cyan);
+  color: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  box-shadow: 0 8px 28px var(--cyan-glow);
+}
+.vision-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px var(--cyan-glow);
+}
+.vision-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 22px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+.vision-cta-secondary:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ── Mobile tightening ─────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .vision-hero { padding-top: 130px; padding-bottom: 64px; }
+  .vision-stage { padding: 22px; }
+  .vision-stage-title { font-size: 1.35rem; }
+  .vision-quote { line-height: 1.5; }
+  .vision-cta-row { flex-direction: column; gap: 10px; width: 100%; }
+  .vision-cta-btn, .vision-cta-secondary { width: 100%; justify-content: center; }
+}

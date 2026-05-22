@@ -14,6 +14,7 @@ export const ROUTES = [
   '/',
   '/contact',
   '/privacy',
+  '/vision',
   ...Object.keys(FEATURE_PAGES).map((slug) => `/features/${slug}`),
   ...USE_CASE_CATEGORIES.map((c) => `/use-cases/${c.slug}`),
   '/blog',

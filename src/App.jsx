@@ -10,6 +10,7 @@ const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
 const FeaturePage = lazy(() => import('./pages/FeaturePage'))
 const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
+const VisionPage = lazy(() => import('./pages/VisionPage'))
 
 export default function App() {
   const location = useLocation()
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/features/:slug"  element={<FeaturePage />} />
             <Route path="/blog" element={<BlogIndexPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/vision" element={<VisionPage />} />
           </Routes>
         </Suspense>
       </AnimatePresence>

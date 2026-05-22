@@ -303,6 +303,10 @@ export default function Nav() {
             Blog
           </SiblingNavLink>
 
+          <SiblingNavLink as={Link} to="/vision" onClick={closeMenu}>
+            Vision
+          </SiblingNavLink>
+
           {/* Mobile: CTA appears inside the menu so users on small screens see it */}
           <a href={APP_URL} className="nav-cta nav-cta--mobile" onClick={closeMenu}>
             Get started
