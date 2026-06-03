@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="20 18 160 215" width="128" height="171" fill="none">
-  <defs><clipPath id="fc"><circle cx="100" cy="140" r="74"/></clipPath></defs>
+  <defs>
+    <clipPath id="fc"><circle cx="100" cy="140" r="74"/></clipPath>
+    <!-- Body clip: nothing in the textured fruit may poke past the round edge -->
+    <clipPath id="body"><circle cx="100" cy="140" r="76"/></clipPath>
+  </defs>
+  <!-- Fruit body + scallops + facets, all clipped to the round body so no red bits leak out -->
+  <g clip-path="url(#body)">
   <!-- Body -->
   <circle cx="100" cy="140" r="76" fill="#ff6b7a"/>
   <!-- Scallops -->
@@ -46,6 +52,7 @@
   <polygon points="148,138 141,149 155,147" fill="#d94a5c" opacity="0.52"/>
   <polygon points="133,160 126,170 140,168" fill="#e85568" opacity="0.55"/>
   <polygon points="95,160 88,171 102,170"   fill="#d94a5c" opacity="0.52"/>
+  </g>
   <!-- Outline -->
   <circle cx="100" cy="140" r="76" fill="none" stroke="white" stroke-width="5"/>
   <!-- Graph -->
