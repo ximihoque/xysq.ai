@@ -12,7 +12,7 @@ import { loadPosts } from './lib/blog.js'
 // so `import.meta.env` works for any data files that reference it.
 export const ROUTES = [
   '/',
-  '/contact',
+  '/pricing',
   '/privacy',
   '/vision',
   ...Object.keys(FEATURE_PAGES).map((slug) => `/features/${slug}`),

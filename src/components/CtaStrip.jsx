@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import '../styles/cta-strip.css'
 
 const colVariants = {
@@ -60,9 +59,14 @@ export default function CtaStrip() {
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               style={{ display: 'inline-block' }}
             >
-              <Link to="/contact" className="cs-btn-secondary">
+              <a
+                href="https://calendly.com/hoque-ximi/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cs-btn-secondary"
+              >
                 Talk to us →
-              </Link>
+              </a>
             </motion.div>
           </motion.div>
         </div>

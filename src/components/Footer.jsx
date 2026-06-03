@@ -38,7 +38,8 @@ const RESOURCE_LINKS = [
 ]
 
 const COMPANY_LINKS = [
-  { label: 'Contact', to: '/contact' },
+  { label: 'Pricing', to: '/pricing' },
+  { label: 'Contact', href: 'https://calendly.com/hoque-ximi/30min', external: true },
   { label: 'Privacy', to: '/privacy' },
 ]
 
@@ -129,7 +130,7 @@ export default function Footer() {
               <h4 className="ft-col-title">Company</h4>
               <ul>
                 {COMPANY_LINKS.map((l) => (
-                  <li key={l.label}><FooterLink to={l.to}>{l.label}</FooterLink></li>
+                  <li key={l.label}><FooterLink {...l}>{l.label}</FooterLink></li>
                 ))}
               </ul>
             </div>

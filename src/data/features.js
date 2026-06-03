@@ -89,7 +89,7 @@ export const FEATURE_PAGES = {
     eyebrow: 'Introducing Teams',
     headline: { lead: 'Shared memory for', accent: 'shared work.' },
     deck: 'Onboarding takes hours, not weeks. Institutional knowledge survives turnover. Every teammate’s AI starts with the same context — consent-gated, never trained on.',
-    primaryCta:   { label: 'Bring it to your team', href: '/contact' },
+    primaryCta:   { label: 'Bring it to your team', href: 'https://calendly.com/hoque-ximi/30min' },
     secondaryCta: { label: 'How it works',          href: '#fp-how' },
     personas: ['Engineering', 'Marketing', 'Sales', 'Operations', 'Founders'],
     steps: [
@@ -112,7 +112,7 @@ export const FEATURE_PAGES = {
       headline: 'Bring memory to your team.',
       subtext: 'Talk to us about rolling xysq out across your org — consent-first, security-reviewed, audit-ready.',
       label: 'Book a call',
-      href: '/contact',
+      href: 'https://calendly.com/hoque-ximi/30min',
     },
     seo: {
       description: 'xysq Teams gives every member of your org the same context across every AI tool — consent-gated, never trained on. Onboarding in hours, not weeks.',

@@ -37,7 +37,7 @@ const columns = [
     eyebrow: 'For businesses',
     title: 'Bring xysq to your team.',
     body: 'Institutional memory across Slack, Drive, Notion, and the rest. Your team’s knowledge, queryable from any agent.',
-    cta: { kind: 'internal', label: 'Book a call', href: '/contact' },
+    cta: { kind: 'external', label: 'Book a call', href: 'https://calendly.com/hoque-ximi/30min' },
     accent: 'lychee',
   },
 ]

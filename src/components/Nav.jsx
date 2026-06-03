@@ -299,6 +299,10 @@ export default function Nav() {
             SDK
           </SiblingNavLink>
 
+          <SiblingNavLink as={Link} to="/pricing" onClick={closeMenu}>
+            Pricing
+          </SiblingNavLink>
+
           <SiblingNavLink as={Link} to="/blog" onClick={closeMenu}>
             Blog
           </SiblingNavLink>

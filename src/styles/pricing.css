@@ -1,0 +1,292 @@
+/* ── Pricing page ── */
+
+.pricing-main {
+  position: relative;
+  z-index: 1;
+  padding: 120px var(--side-pad) 0;
+}
+
+@media (max-width: 900px) {
+  .pricing-main {
+    padding-top: 100px;
+  }
+}
+
+.pr-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* Header */
+.pr-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+
+.pr-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .pr-eyebrow {
+  color: var(--lychee);
+}
+
+.pr-title {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.pr-title em {
+  font-style: italic;
+  color: var(--cyan);
+}
+
+[data-theme="light"] .pr-title em {
+  color: var(--lychee);
+}
+
+.pr-sub {
+  margin: 0;
+  max-width: 540px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--silver);
+}
+
+/* Card grid */
+.pr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+@media (max-width: 820px) {
+  .pr-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* Card */
+.pr-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 38px 34px 34px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(8, 15, 24, 0.6) 0%, rgba(2, 4, 8, 0.78) 100%);
+  border: 1px solid rgba(0, 229, 200, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.pr-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 229, 200, 0.36);
+  box-shadow: 0 18px 40px rgba(0, 229, 200, 0.08);
+}
+
+[data-theme="light"] .pr-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 250, 253, 0.85) 100%);
+  border-color: rgba(0, 100, 90, 0.16);
+}
+
+[data-theme="light"] .pr-card:hover {
+  border-color: rgba(0, 100, 90, 0.32);
+  box-shadow: 0 18px 40px rgba(13, 21, 32, 0.08);
+}
+
+/* Featured (Business) card — lychee accent, matches t3-card--lychee language */
+.pr-card--featured {
+  border-color: rgba(255, 107, 122, 0.4);
+}
+
+.pr-card--featured:hover {
+  border-color: rgba(255, 107, 122, 0.6);
+  box-shadow: 0 18px 40px rgba(255, 107, 122, 0.14);
+}
+
+[data-theme="light"] .pr-card--featured {
+  border-color: rgba(255, 107, 122, 0.4);
+}
+
+[data-theme="light"] .pr-card--featured:hover {
+  border-color: rgba(255, 107, 122, 0.6);
+  box-shadow: 0 18px 40px rgba(255, 107, 122, 0.18);
+}
+
+/* Card head */
+.pr-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pr-plan {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.pr-card--featured .pr-plan {
+  color: var(--lychee, #ff6b7a);
+}
+
+.pr-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lychee, #ff6b7a);
+  background: rgba(255, 107, 122, 0.1);
+  border: 1px solid rgba(255, 107, 122, 0.32);
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pr-price {
+  margin: 22px 0 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.pr-price-num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 2.6rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.pr-price-unit {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  color: var(--silver);
+}
+
+.pr-for {
+  margin: 0 0 24px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--silver);
+}
+
+/* Feature list */
+.pr-features {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.pr-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--paper);
+}
+
+.pr-check {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--cyan);
+}
+
+.pr-card--featured .pr-check {
+  color: var(--lychee, #ff6b7a);
+}
+
+/* CTA button */
+.pr-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.98rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.pr-cta:hover {
+  transform: translateY(-1px);
+}
+
+/* Primary (Free) — filled cyan */
+.pr-cta--primary {
+  background: var(--cyan);
+  border: 1px solid var(--cyan);
+  color: var(--bg);
+}
+
+.pr-cta--primary:hover {
+  background: var(--cyan2);
+  border-color: var(--cyan2);
+}
+
+/* Secondary (Business) — lychee outline */
+.pr-cta--secondary {
+  background: rgba(255, 107, 122, 0.1);
+  border: 1px solid rgba(255, 107, 122, 0.4);
+  color: var(--lychee, #ff6b7a);
+}
+
+.pr-cta--secondary:hover {
+  background: rgba(255, 107, 122, 0.18);
+  border-color: var(--lychee, #ff6b7a);
+}
+
+.pr-cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.pr-cta:hover .pr-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* Reassurance strip */
+.pr-note {
+  margin: 36px auto 0;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  color: var(--muted);
+}

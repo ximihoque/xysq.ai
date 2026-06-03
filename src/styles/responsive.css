@@ -20,12 +20,6 @@
     justify-content: center;
   }
 
-  /* Waitlist 2-col → 1-col */
-  #wl {
-    grid-template-columns: 1fr !important;
-    gap: 56px;
-  }
-
   /* For-business hero padding */
   .fb-hero {
     padding-top: 120px;
@@ -199,20 +193,6 @@
 
   .cs-col {
     padding: 48px 24px;
-  }
-
-  /* ── Waitlist ── */
-  #wl {
-    grid-template-columns: 1fr !important;
-    gap: 48px;
-  }
-
-  .wll p {
-    margin-bottom: 28px;
-  }
-
-  .wrs {
-    gap: 32px;
   }
 
   /* ── ForBusiness ── */

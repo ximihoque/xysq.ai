@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import HomePage from './pages/HomePage'
 import ScrollToTop from './components/ScrollToTop'
 
-const ContactPage = lazy(() => import('./pages/ContactPage'))
+const PricingPage = lazy(() => import('./pages/PricingPage'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
 const FeaturePage = lazy(() => import('./pages/FeaturePage'))
@@ -31,7 +31,7 @@ export default function App() {
         <Suspense fallback={null}>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/use-cases/:slug" element={<UseCaseCategoryPage />} />
             <Route path="/features/:slug"  element={<FeaturePage />} />
