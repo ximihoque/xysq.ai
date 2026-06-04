@@ -175,12 +175,13 @@
 }
 
 .pr-price-num {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
   font-size: 2.6rem;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--paper);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 .pr-price-unit {
