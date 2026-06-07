@@ -20,35 +20,28 @@ const stagger = (i) => ({
   transition: { duration: 0.65, ease: 'easeOut', delay: i * 0.08 },
 })
 
-/* The four-stage path — pillars of the page. */
+/* The three pillars of the page: Capture, Memory, Skills. */
 const STAGES = [
   {
     num: '01',
-    tag: 'Shipping now',
-    title: 'Connectivity',
+    tag: 'Consent-first, always',
+    title: 'Capture',
     body:
-      'MCP-native bridges in two directions. We connect to the work tools your team already lives in — Slack, Granola, Notion, Confluence, Jira, Linear, Google Docs — and to the AI tools your team already uses — Claude, Cowork, ChatGPT, Cursor, Copilot, and your internal agents. Bidirectional from day one. We read history, keep it in sync, write back when it is time, and serve the same truthy source to every agent that asks.',
+      'Deep integrations with the tools your product and engineering teams already use (Cursor, Claude Code, GitHub, Linear, Slack, Notion, Granola) and the AI sessions your team runs every day. Bidirectional from day one. Nothing flows in by default: every source, scope, and agent is something you turn on.',
   },
   {
     num: '02',
-    tag: 'First layer shipping',
-    title: 'Memory + intelligence',
+    tag: 'The living knowledge graph',
+    title: 'Memory [core]',
     body:
-      'A living knowledge graph that organises itself. Contradiction detection, decay, behavioural signal — the trail of what people edit, search, ignore, promote. Humans in the loop on escalations. Plugs into Claude, Cowork, Cursor, Copilot, and your internal agents as the truthy source. Humans and agents work off the same reality.',
+      'Captured signal organises itself into one knowledge graph that decides what to keep, how the team works, and what things mean. Three kinds of memory, held together. Episodic: what happened, the decisions and threads. Procedural: how the team actually works, its standards and patterns. Semantic: what things mean, the shared vocabulary. Contradiction detection, decay, and humans in the loop on escalations keep it the truthy source every agent reads from.',
   },
   {
     num: '03',
-    tag: 'Next',
-    title: 'Actions',
+    tag: 'Born from your knowledge',
+    title: 'Skills',
     body:
-      'Proactiveness is the product. xysq drafts the document, files it in the right folder, applies your standards. Routes the right notification to the right person. Raises the alarm early when a lateral conversation contradicts the current roadmap. Tiered autonomy with humans always in the loop where it matters.',
-  },
-  {
-    num: '04',
-    tag: 'The closed loop',
-    title: 'Sync',
-    body:
-      'Engineering is always in sync with product. Strategy is always in sync with execution. Decisions made anywhere reach everyone who needs to know, in the form they need to act on. With full provenance, a transparent audit trail, and consent at every step.',
+      'Repeated work becomes reusable skills, generated from the company’s own memory. Every decision and correction makes the graph more correct; every skill makes the next one easier to generate. The longer your team works, the more the system compounds, and humans and agents both ship from the same reality.',
   },
 ]
 
@@ -69,14 +62,14 @@ const PERSONAS = [
 
 const USE_CASES = [
   {
-    title: 'Decision capture',
+    title: 'Skills that compound',
     body:
-      'Decisions made in Slack and meetings become structured documents in your existing tools — drafted, filed, formatted to your standards.',
+      'Repeated work becomes a reusable skill, generated from your team’s own memory. The next onboarding doc, review, or spec writes itself, to your standards, not a generic template.',
   },
   {
     title: 'Agent-readable memory',
     body:
-      'Your existing AI tools get the truthy source for free. No new app to learn. Claude, Cursor, Copilot, your internal agents — all smarter overnight.',
+      'Your existing AI tools get the truthy source for free. No new app to learn. Claude, Cursor, Copilot, your internal agents, all smarter overnight.',
   },
   {
     title: 'Audit and provenance',
@@ -91,7 +84,7 @@ export default function VisionPage() {
       <SEO
         title="Vision"
         path="/vision"
-        description="xysq is the AI operating system for companies — connectivity, memory, intelligence, actions. Closing the loop between strategy and execution."
+        description="xysq is the shared knowledge layer for AI-native teams: capture, a living memory graph, and skills that compound. The foundational block companies build on."
         schema={[
           breadcrumbSchema([
             { name: 'Home', item: '/' },
@@ -101,9 +94,9 @@ export default function VisionPage() {
             '@context': 'https://schema.org',
             '@type': 'AboutPage',
             url: 'https://xysq.ai/vision',
-            name: 'Vision — xysq.ai',
+            name: 'Vision · xysq.ai',
             description:
-              'xysq is the AI operating system for companies — a staged path from connectivity to memory, intelligence, and actions that closes the open loop between strategy and execution.',
+              'xysq is the shared knowledge layer for AI-native teams: a path from consent-first capture to a living memory graph and skills that compound, born from your company’s own knowledge.',
             isPartOf: {
               '@type': 'WebSite',
               name: 'xysq.ai',
@@ -114,7 +107,7 @@ export default function VisionPage() {
               name: 'xysq',
               url: 'https://xysq.ai',
               description:
-                'Memory infrastructure and AI operating system for modern organizations. Connectivity, memory, intelligence, and actions across the tools and AI agents teams already use.',
+                'Shared knowledge layer for AI-native teams. Consent-first capture, a living memory graph, and skills generated from a company’s own knowledge, across the tools and AI agents teams already use.',
             },
           },
         ]}
@@ -136,63 +129,65 @@ export default function VisionPage() {
         </motion.span>
 
         <motion.h1 className="vision-h1" {...stagger(2)}>
-          The AI operating system for&nbsp;companies.
+          The shared knowledge layer for AI-native&nbsp;teams.
         </motion.h1>
 
         <motion.p className="vision-lede" {...stagger(3)}>
-          Every company runs as an open loop. Decisions happen in Slack threads, in meetings, in someone&apos;s head — and the right people find out weeks later, if at all. xysq closes that loop.
+          A company runs on shared context: what it knows, what it decided, why it chose this over that. That context now forms inside AI tools and scatters across them. xysq is the layer that holds it, shared on your team&apos;s terms.
         </motion.p>
 
         <motion.p className="vision-staged" {...stagger(4)}>
-          Connectivity. Memory. Intelligence. Actions. In that order.
+          Capture. Memory. Skills. The foundational block for AI-native companies.
         </motion.p>
       </section>
 
-      {/* ─────────────────────── THE OPEN LOOP ─────────────────────── */}
+      {/* ─────────────────────── THE PROBLEM ─────────────────────── */}
       <section className="vision-sect vision-sect--accent">
         <div className="vision-sect-inner">
           <motion.span className="vision-eyebrow" {...fadeUp}>
             The problem
           </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
-            Companies are running as <em>open&nbsp;loops</em>.
+            Working knowledge is split across <em>three&nbsp;places</em>, and
+            nothing holds all three.
           </motion.h2>
 
           <motion.p className="vision-prose" {...stagger(2)}>
-            The information already exists. It lives in Slack threads, in Granola
-            transcripts, in someone&apos;s head, in a half-written Notion page
-            nobody finished. It is just not connected, structured, current, or
-            trusted.
+            AI sessions hold what your team is figuring out, in Cursor, Claude
+            Code, ChatGPT. Docs and specs hold what got written down, in Notion,
+            Google Docs, READMEs. Communication holds what got decided, in Slack,
+            Linear, email. The information already exists. It is just not
+            connected, current, or trusted across all three.
           </motion.p>
 
           <motion.p className="vision-prose" {...stagger(3)}>
-            CEOs say things at all-hands that engineers do not internalise.
-            Engineers learn things in Slack debates that PMs see two quarters
-            later in NPS reports. Support sees a pattern that product hears about
-            from sales after the renewal closes. The signal is always real-time.
-            Nothing routes it.
+            No teammate and no AI tool ever sees all three. So the team re-asks,
+            re-derives, and contradicts itself. CEOs say things at all-hands that
+            engineers never internalise. Support sees a pattern that product
+            hears about from sales after the renewal closes. Every AI tool you
+            add does it faster, not slower.
           </motion.p>
 
           <motion.p className="vision-prose vision-prose--lead" {...stagger(4)}>
-            The AI-native companies that have figured this out are shipping twice
-            as much. The rest are losing time, decisions, and launches to the
-            gap.
+            The teams that close this gap are shipping twice as much. The rest
+            lose roughly 5.3 hours a week per person recreating work that already
+            exists.
           </motion.p>
         </div>
       </section>
 
-      {/* ─────────────────────── THE FOUR STAGES ─────────────────────── */}
+      {/* ─────────────────────── THE THREE PILLARS ─────────────────────── */}
       <section className="vision-sect">
         <div className="vision-sect-inner">
           <motion.span className="vision-eyebrow" {...fadeUp}>
             The path
           </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
-            Four stages. One closed&nbsp;loop.
+            Three pillars. One shared&nbsp;brain.
           </motion.h2>
           <motion.p className="vision-prose vision-prose--narrow" {...stagger(2)}>
-            We build the bedrock first. Trust earns the right to operate. The
-            order matters.
+            We build the bedrock first. Capture earns trust, memory earns the
+            graph, skills earn the compounding. The order matters.
           </motion.p>
 
           <div className="vision-stages">
@@ -242,7 +237,7 @@ export default function VisionPage() {
             What it does
           </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
-            The first three jobs.
+            What it does today.
           </motion.h2>
 
           <div className="vision-usecases">
@@ -271,8 +266,8 @@ export default function VisionPage() {
               <span className="vision-why-num">01</span>
               <p>
                 <strong>MCP standardised.</strong> A universal protocol for
-                connecting agents to tools — it did not exist eighteen months
-                ago. Connectivity is finally a solved layer.
+                connecting agents to tools, one that did not exist eighteen
+                months ago. Connectivity is finally a solved layer.
               </p>
             </motion.div>
             <motion.div className="vision-why" {...stagger(3)}>
@@ -286,18 +281,19 @@ export default function VisionPage() {
             <motion.div className="vision-why" {...stagger(4)}>
               <span className="vision-why-num">03</span>
               <p>
-                <strong>The thesis is publicly endorsed.</strong> Y Combinator
-                just put out a Request for Startups for the AI operating system
-                for companies — the closed loop that flags when engineering is
-                building the wrong thing. The capital is forming.
+                <strong>The category is proven.</strong> ChatGPT, Claude, and
+                Gemini all shipped memory this year. The market is validating
+                shared, persistent context in real time. The open question is
+                who becomes the layer the agents depend on.
               </p>
             </motion.div>
             <motion.div className="vision-why" {...stagger(5)}>
               <span className="vision-why-num">04</span>
               <p>
-                <strong>The cost of inaction has spiked.</strong> Companies
-                running closed loops ship twice as much. The gap is now visible,
-                measurable, and expensive.
+                <strong>The cost of inaction has spiked.</strong> Teams that
+                share context ship twice as much. Without it, ~5.3 hours a week
+                per person goes to recreating work that already exists. The gap
+                is now visible, measurable, and expensive.
               </p>
             </motion.div>
           </div>
@@ -343,7 +339,7 @@ export default function VisionPage() {
               <p>
                 We are not a wiki. We do not compete with Notion or Confluence.
                 We make them better. Our business model rewards being neutral
-                across them — not capturing you on a surface.
+                across them, not capturing you on a surface.
               </p>
             </motion.div>
           </div>
@@ -360,9 +356,9 @@ export default function VisionPage() {
         </motion.blockquote>
 
         <motion.p className="vision-longview-body" {...stagger(1)}>
-          xysq is building the memory layer — with an operating system around
-          it — that carries individuals, teams, and entire organisations forward
-          across time. The substrate that makes a company legible to itself —
+          xysq is building the shared knowledge layer, the foundational block
+          that carries individuals, teams, and entire organisations forward
+          across time. The substrate that makes a company legible to itself,
           and to every AI tool it has deployed.
         </motion.p>
       </section>
@@ -375,7 +371,7 @@ export default function VisionPage() {
           </motion.h2>
           <motion.p className="vision-prose vision-prose--narrow" {...stagger(1)}>
             Investors, design partners, and future operators who want to see the
-            staged path in detail — book a 25-minute call. We share the deck
+            staged path in detail can book a 25-minute call. We share the deck
             ahead of the conversation.
           </motion.p>
           <motion.div className="vision-cta-row" {...stagger(2)}>

@@ -139,6 +139,13 @@
   box-shadow: 0 0 10px var(--lychee);
 }
 
+/* ── Logo above headline ── */
+.hero-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
 /* ── Headline ── */
 h1.hero-h1 {
   font-family: 'Outfit', sans-serif;
@@ -148,11 +155,26 @@ h1.hero-h1 {
   letter-spacing: -0.035em;
   color: var(--paper);
   margin-bottom: 28px;
-  max-width: 14ch;
-  background: linear-gradient(180deg, var(--paper) 0%, rgba(240, 244, 248, 0.78) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  max-width: 20ch;
+}
+
+/* Smaller, lighter second line — sits under the main statement as a
+   qualifier, not a competing headline. Solid fill (no gradient) so it
+   stays fully legible top-to-bottom and does not fade out. */
+.hero-h1-sub {
+  display: block;
+  margin-top: 0.12em;
+  font-size: 0.5em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: none;
+  color: rgba(214, 222, 230, 0.82);
+  -webkit-text-fill-color: rgba(214, 222, 230, 0.82);
+}
+
+[data-theme="light"] .hero-h1-sub {
+  color: rgba(13, 21, 32, 0.62);
+  -webkit-text-fill-color: rgba(13, 21, 32, 0.62);
 }
 
 [data-theme="light"] h1.hero-h1 {

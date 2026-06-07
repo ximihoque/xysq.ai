@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import LogoMarquee from './LogoMarquee'
+import XysqLogo from './XysqLogo'
 import '../styles/hero.css'
 
 const fade = (delay = 0) => ({
@@ -19,25 +20,18 @@ export default function Hero() {
       </div>
 
       <div className="hero-inner">
-        <motion.a
-          {...fade(0)}
-          href="https://docs.xysq.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hero-eyebrow"
-        >
-          <span className="hero-eyebrow-dot" />
-          <span>MEMORY INFRASTRUCTURE FOR AI</span>
-          <span className="hero-eyebrow-arrow">→</span>
-        </motion.a>
+        <motion.div {...fade(0)} className="hero-logo" aria-hidden="true">
+          <XysqLogo size={72} />
+        </motion.div>
 
         <motion.h1 {...fade(0.05)} className="hero-h1">
-          Unified Memory for<br />you and your AI.
+          Collaborative memory
+          <span className="hero-h1-sub">for AI-native teams and enterprises.</span>
         </motion.h1>
 
         <motion.p {...fade(0.15)} className="hero-sub">
-          One memory across every app and agent you use. Captured automatically,
-          synthesised continuously, shared on your terms.
+          The foundational block for AI-native companies, and the ones
+          becoming one.
         </motion.p>
 
         <motion.div {...fade(0.25)} className="hero-btns">

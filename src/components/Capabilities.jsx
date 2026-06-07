@@ -11,16 +11,16 @@ const fade = (delay = 0) => ({
 
 const capabilities = [
   {
-    verb: 'Capture',
-    body: 'Automatically pulls context from Slack, Gmail, Notion, Drive, Calendar — and your AI sessions across Claude, Cursor, ChatGPT.',
+    verb: 'Episodic',
+    body: 'What happened. The decisions, threads, and sessions your team works through, kept in context.',
   },
   {
-    verb: 'Surface',
-    body: 'Your AI tools and agents gets the right context, the moment it needs it. No re-introduction, no copy-paste, no “as we discussed earlier.”',
+    verb: 'Procedural',
+    body: 'How your team works. The standards, patterns, and ways of doing things, learned from how you operate.',
   },
   {
-    verb: 'Synthesise',
-    body: 'Patterns over time. Forgets the clutter, keeps the signal — your memory gets sharper the longer you use it.',
+    verb: 'Semantic',
+    body: 'What things mean. The shared vocabulary and concepts your team and its agents reason over.',
   },
 ]
 
@@ -35,13 +35,14 @@ export default function Capabilities() {
           </span>
 
           <h2 className="cap-headline">
-            Capture, surface, synthesise<br />
-            <em>across every tool.</em>
+            The working context of your team,<br />
+            <em>stored as one memory.</em>
           </h2>
 
           <p className="cap-deck">
-            One memory layer between your apps and your AI. Watch context move
-            in real time — the same way it will the moment you connect.
+            We capture from the connectors your team already uses, build a living
+            knowledge graph, and provide the right context the moment your AI
+            tool or agent needs it.
           </p>
 
           <ul className="cap-list">

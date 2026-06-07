@@ -1,7 +1,9 @@
 /**
  * Inline xysq lychee logo with internal graph dots that blink.
  *
- * Mirrors public/logo.svg exactly, with two changes:
+ * Mirrors public/logo.svg exactly, including the body clip-path that keeps
+ * the red body/scallops/facets from leaking past the round edge, with two
+ * additions:
  *   1. The 12 main-graph circles each have a per-dot <animate> that
  *      pulses opacity (0.25 → 0.95 → 0.25), staggered so they twinkle
  *      independently rather than in lockstep.
@@ -50,8 +52,14 @@ export default function XysqLogo({ size = 88, className = '' }) {
     >
       <defs>
         <clipPath id="fc-anim"><circle cx="100" cy="140" r="74"/></clipPath>
+        {/* Body clip: nothing in the textured fruit may poke past the round
+            edge. Keeps the red body/scallops/facets from leaking out. */}
+        <clipPath id="fc-anim-body"><circle cx="100" cy="140" r="76"/></clipPath>
       </defs>
 
+      {/* Fruit body + scallops + facets, clipped to the round body so no red
+          bits leak past the edge. */}
+      <g clipPath="url(#fc-anim-body)">
       {/* Body */}
       <circle cx="100" cy="140" r="76" fill="#ff6b7a"/>
 
@@ -101,6 +109,7 @@ export default function XysqLogo({ size = 88, className = '' }) {
       <polygon points="148,138 141,149 155,147" fill="#d94a5c" opacity="0.52"/>
       <polygon points="133,160 126,170 140,168" fill="#e85568" opacity="0.55"/>
       <polygon points="95,160 88,171 102,170"   fill="#d94a5c" opacity="0.52"/>
+      </g>
 
       {/* Outline */}
       <circle cx="100" cy="140" r="76" fill="none" stroke="white" strokeWidth="5"/>
