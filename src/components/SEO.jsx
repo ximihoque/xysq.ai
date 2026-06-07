@@ -18,7 +18,7 @@ export default function SEO({
   ogType = 'website',
   article,
 }) {
-  const fullTitle = title ? `${title} — xysq.ai` : 'xysq.ai — Memory infrastructure for AI.'
+  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · Collaborative memory for AI-native teams.'
   const canonical = `${BASE_URL}${path}`
   const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
   const keywordList = Array.isArray(keywords) ? keywords.join(', ') : keywords

@@ -130,7 +130,7 @@ export default function Footer() {
 
         <div className="ft-bar">
           <span className="ft-copy">
-            © {new Date().getFullYear()} xysq.ai · Memory infrastructure for AI.
+            © {new Date().getFullYear()} xysq.ai · Collaborative memory for AI-native teams.
           </span>
           <div className="ft-socials">
             {SOCIALS.map(({ label, href, Icon }) => (

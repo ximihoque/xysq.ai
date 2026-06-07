@@ -15,14 +15,14 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
-        description="xysq is the memory infrastructure for AI. One memory across every app and agent — Claude, Cursor, ChatGPT, and the rest. Connect in minutes, no rebuild required."
+        description="xysq is collaborative memory for AI-native teams and enterprises. Capture context from the tools your team already uses, build a living knowledge graph, and give every AI tool and agent the right context when it needs it."
         schema={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
           name: 'xysq',
           applicationCategory: 'DeveloperApplication',
           url: 'https://xysq.ai',
-          description: 'Persistent memory layer for AI agents. Capture, surface, and synthesize context across every tool.',
+          description: 'Collaborative memory for AI-native teams. A living knowledge graph (episodic, procedural, semantic) shared across every AI tool and agent, consent-first.',
           operatingSystem: 'Web',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         }}
