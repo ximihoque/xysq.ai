@@ -126,45 +126,98 @@
   margin-top: 28px;
 }
 
-/* ── Stages ─────────────────────────────────────────────────── */
+/* ── Pillars (vertical tabs) ────────────────────────────────── */
 
-.vision-stages {
+.vision-tabs {
   margin-top: 56px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  gap: 24px;
+  align-items: start;
 }
 @media (max-width: 800px) {
-  .vision-stages { grid-template-columns: 1fr; }
+  .vision-tabs { grid-template-columns: 1fr; }
 }
 
-.vision-stage {
+/* Left rail: stacked tab buttons */
+.vision-tabs-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vision-tab {
   position: relative;
-  padding: 28px 28px 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  padding: 18px 20px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
-  transition: border-color 240ms ease, transform 240ms ease;
+  cursor: pointer;
+  transition: border-color 240ms ease, background 240ms ease, transform 240ms ease;
 }
-.vision-stage:hover {
+.vision-tab:hover {
   border-color: var(--cyan-glow);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+}
+.vision-tab--active {
+  border-color: var(--cyan-glow);
+  background: var(--card-num);
 }
 
-.vision-stage-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
+/* Sliding accent bar on the active tab */
+.vision-tab-marker {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--cyan);
 }
-.vision-stage-num {
+
+.vision-tab-num {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: var(--cyan);
   letter-spacing: 0.04em;
+  flex-shrink: 0;
+  padding-top: 2px;
 }
-.vision-stage-tag {
+.vision-tab-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.vision-tab-title {
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  letter-spacing: -0.005em;
+  color: var(--paper);
+}
+.vision-tab-line {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--paper);
+  opacity: 0.7;
+}
+
+/* Right panel: active pillar details, as points */
+.vision-tab-panel {
+  padding: 30px 32px 34px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-height: 100%;
+}
+.vision-tab-panel-tag {
+  display: inline-block;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.12em;
@@ -175,20 +228,39 @@
   border-radius: 3px;
   background: var(--card-num);
 }
-.vision-stage-title {
+.vision-tab-panel-title {
   font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
   font-weight: 500;
-  font-size: 1.55rem;
+  font-size: 1.7rem;
   letter-spacing: -0.005em;
   color: var(--paper);
-  margin: 0 0 14px;
+  margin: 14px 0 20px;
 }
-.vision-stage-body {
-  font-size: 0.96rem;
-  line-height: 1.65;
-  color: var(--paper);
-  opacity: 0.78;
+.vision-tab-points {
+  list-style: none;
+  padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.vision-tab-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--paper);
+  opacity: 0.82;
+}
+.vision-tab-points li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
 }
 
 /* ── Personas ──────────────────────────────────────────────── */
@@ -257,46 +329,6 @@
   color: var(--paper);
   opacity: 0.78;
   margin: 0;
-}
-
-/* ── Why now ───────────────────────────────────────────────── */
-
-.vision-why-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  margin-top: 36px;
-}
-@media (max-width: 800px) {
-  .vision-why-grid { grid-template-columns: 1fr; }
-}
-
-.vision-why {
-  display: flex;
-  gap: 16px;
-  padding: 22px 24px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-}
-.vision-why-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.1rem;
-  color: var(--cyan);
-  letter-spacing: 0.04em;
-  flex-shrink: 0;
-}
-.vision-why p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--paper);
-  opacity: 0.85;
-  margin: 0;
-}
-.vision-why strong {
-  color: var(--paper);
-  opacity: 1;
-  font-weight: 600;
 }
 
 /* ── Commitments ───────────────────────────────────────────── */
@@ -432,8 +464,8 @@
 
 @media (max-width: 600px) {
   .vision-hero { padding-top: 130px; padding-bottom: 64px; }
-  .vision-stage { padding: 22px; }
-  .vision-stage-title { font-size: 1.35rem; }
+  .vision-tab-panel { padding: 22px 24px 26px; }
+  .vision-tab-panel-title { font-size: 1.4rem; }
   .vision-quote { line-height: 1.5; }
   .vision-cta-row { flex-direction: column; gap: 10px; width: 100%; }
   .vision-cta-btn, .vision-cta-secondary { width: 100%; justify-content: center; }

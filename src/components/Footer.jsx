@@ -81,18 +81,9 @@ export default function Footer() {
               <span className="ft-logo-word">xysq<span>.ai</span></span>
             </Link>
             <p className="ft-tagline">
-              Memory that follows you across every AI tool — consent-first,
+              Memory that follows you across every AI tool. Consent-first,
               never trained on.
             </p>
-            <a
-              className="ft-status"
-              href="https://status.xysq.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="ft-status-dot" />
-              All systems normal
-            </a>
           </div>
 
           {/* Link columns */}

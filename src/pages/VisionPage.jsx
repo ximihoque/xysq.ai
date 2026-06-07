@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, ArrowRight } from 'lucide-react'
 import SEO, { breadcrumbSchema } from '../components/SEO'
 import Nav from '../components/Nav'
@@ -20,28 +21,44 @@ const stagger = (i) => ({
   transition: { duration: 0.65, ease: 'easeOut', delay: i * 0.08 },
 })
 
-/* The three pillars of the page: Capture, Memory, Skills. */
+/* The three pillars of the page: Capture, Memory, Skills.
+   `line` is the one-liner shown on the tab; `points` are the bullets shown
+   in the detail panel when a tab is active. */
 const STAGES = [
   {
     num: '01',
     tag: 'Consent-first, always',
     title: 'Capture',
-    body:
-      'Deep integrations with the tools your product and engineering teams already use (Cursor, Claude Code, GitHub, Linear, Slack, Notion, Granola) and the AI sessions your team runs every day. Bidirectional from day one. Nothing flows in by default: every source, scope, and agent is something you turn on.',
+    line: 'Pull context from the tools your team already lives in, consent-first.',
+    points: [
+      'Deep integrations with Cursor, Claude Code, GitHub, Linear, Slack, Notion, and Granola, plus the AI sessions your team runs every day.',
+      'Bidirectional from day one: we read history, keep it in sync, and write back when it is time.',
+      'Nothing flows in by default. Every source, scope, and agent is something you explicitly turn on.',
+    ],
   },
   {
     num: '02',
     tag: 'The living knowledge graph',
     title: 'Memory [core]',
-    body:
-      'Captured signal organises itself into one knowledge graph that decides what to keep, how the team works, and what things mean. Three kinds of memory, held together. Episodic: what happened, the decisions and threads. Procedural: how the team actually works, its standards and patterns. Semantic: what things mean, the shared vocabulary. Contradiction detection, decay, and humans in the loop on escalations keep it the truthy source every agent reads from.',
+    line: 'Captured signal organises itself into one living knowledge graph.',
+    points: [
+      'Episodic: what happened, the decisions and threads your team works through.',
+      'Procedural: how the team actually works, its standards and patterns.',
+      'Semantic: what things mean, the shared vocabulary agents reason over.',
+      'Contradiction detection, decay, and humans in the loop on escalations keep it the truthy source every agent reads from.',
+    ],
   },
   {
     num: '03',
     tag: 'Born from your knowledge',
     title: 'Skills',
-    body:
-      'Repeated work becomes reusable skills, generated from the company’s own memory. Every decision and correction makes the graph more correct; every skill makes the next one easier to generate. The longer your team works, the more the system compounds, and humans and agents both ship from the same reality.',
+    line: 'Repeated work becomes reusable skills, born from your own memory.',
+    points: [
+      'Skills are generated from the company’s own memory, not generic templates.',
+      'Every decision and correction makes the graph more correct.',
+      'Every skill makes the next one easier to generate, so the system compounds the longer your team works.',
+      'Humans and agents both ship from the same reality.',
+    ],
   },
 ]
 
@@ -79,6 +96,9 @@ const USE_CASES = [
 ]
 
 export default function VisionPage() {
+  const [activeStage, setActiveStage] = useState(0)
+  const active = STAGES[activeStage]
+
   return (
     <PageTransition>
       <SEO
@@ -190,22 +210,58 @@ export default function VisionPage() {
             graph, skills earn the compounding. The order matters.
           </motion.p>
 
-          <div className="vision-stages">
-            {STAGES.map((s, i) => (
-              <motion.div
-                key={s.num}
-                className="vision-stage"
-                {...stagger(i + 2)}
-              >
-                <div className="vision-stage-head">
-                  <span className="vision-stage-num">{s.num}</span>
-                  <span className="vision-stage-tag">{s.tag}</span>
-                </div>
-                <h3 className="vision-stage-title">{s.title}</h3>
-                <p className="vision-stage-body">{s.body}</p>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div className="vision-tabs" {...stagger(2)}>
+            {/* Left rail: one tab per pillar, with a one-liner each. */}
+            <div className="vision-tabs-rail" role="tablist" aria-label="The three pillars">
+              {STAGES.map((s, i) => {
+                const isActive = i === activeStage
+                return (
+                  <button
+                    key={s.num}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`vision-tab${isActive ? ' vision-tab--active' : ''}`}
+                    onClick={() => setActiveStage(i)}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="vision-tab-marker"
+                        className="vision-tab-marker"
+                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      />
+                    )}
+                    <span className="vision-tab-num">{s.num}</span>
+                    <span className="vision-tab-text">
+                      <span className="vision-tab-title">{s.title}</span>
+                      <span className="vision-tab-line">{s.line}</span>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Right panel: active pillar's details, as points. */}
+            <div className="vision-tab-panel" role="tabpanel">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.num}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <span className="vision-tab-panel-tag">{active.tag}</span>
+                  <h3 className="vision-tab-panel-title">{active.title}</h3>
+                  <ul className="vision-tab-points">
+                    {active.points.map((p, i) => (
+                      <li key={i}>{p}</li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -247,55 +303,6 @@ export default function VisionPage() {
                 <p>{u.body}</p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────── WHY NOW ─────────────────────── */}
-      <section className="vision-sect vision-sect--accent">
-        <div className="vision-sect-inner">
-          <motion.span className="vision-eyebrow" {...fadeUp}>
-            Why now
-          </motion.span>
-          <motion.h2 className="vision-h2" {...stagger(1)}>
-            The window opened in the last twelve&nbsp;months.
-          </motion.h2>
-
-          <div className="vision-why-grid">
-            <motion.div className="vision-why" {...stagger(2)}>
-              <span className="vision-why-num">01</span>
-              <p>
-                <strong>MCP standardised.</strong> A universal protocol for
-                connecting agents to tools, one that did not exist eighteen
-                months ago. Connectivity is finally a solved layer.
-              </p>
-            </motion.div>
-            <motion.div className="vision-why" {...stagger(3)}>
-              <span className="vision-why-num">02</span>
-              <p>
-                <strong>Agents are everywhere.</strong> 81% of enterprises use
-                three or more AI tools. 37% use five or more in production. Each
-                one needs a memory layer. None of them have it.
-              </p>
-            </motion.div>
-            <motion.div className="vision-why" {...stagger(4)}>
-              <span className="vision-why-num">03</span>
-              <p>
-                <strong>The category is proven.</strong> ChatGPT, Claude, and
-                Gemini all shipped memory this year. The market is validating
-                shared, persistent context in real time. The open question is
-                who becomes the layer the agents depend on.
-              </p>
-            </motion.div>
-            <motion.div className="vision-why" {...stagger(5)}>
-              <span className="vision-why-num">04</span>
-              <p>
-                <strong>The cost of inaction has spiked.</strong> Teams that
-                share context ship twice as much. Without it, ~5.3 hours a week
-                per person goes to recreating work that already exists. The gap
-                is now visible, measurable, and expensive.
-              </p>
-            </motion.div>
           </div>
         </div>
       </section>
