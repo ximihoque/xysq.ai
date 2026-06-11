@@ -10,6 +10,8 @@ import { handleHashLink } from '../lib/hashLink'
 import '../styles/nav.css'
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
+const CHROME_EXTENSION_URL =
+  'https://chromewebstore.google.com/detail/xysq-memory-for-you-and-y/knpcnfdnahkinongbiedcllmigffodpm'
 
 const USE_CASE_ICONS = { Sparkles, Hammer, Network, Target }
 
@@ -59,6 +61,11 @@ function MoonIcon() {
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
   )
+}
+
+// Official multi-color Chrome logo (asset in public/)
+function ChromeIcon() {
+  return <img src="/chrome-logo.svg" alt="" width="16" height="16" />
 }
 
 // Dropdown trigger + panel.
@@ -311,7 +318,17 @@ export default function Nav() {
             Vision
           </SiblingNavLink>
 
-          {/* Mobile: CTA appears inside the menu so users on small screens see it */}
+          {/* Mobile: CTAs appear inside the menu so users on small screens see them */}
+          <a
+            href={CHROME_EXTENSION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-chrome nav-chrome--mobile"
+            onClick={closeMenu}
+          >
+            <ChromeIcon />
+            Install on Chrome
+          </a>
           <a href={APP_URL} className="nav-cta nav-cta--mobile" onClick={closeMenu}>
             Get started
             <ArrowUpRight size={14} strokeWidth={2} />
@@ -323,6 +340,15 @@ export default function Nav() {
         <button className="nav-theme" onClick={toggleTheme} aria-label="Toggle theme">
           {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
         </button>
+        <a
+          href={CHROME_EXTENSION_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-chrome nav-chrome--desktop"
+        >
+          <ChromeIcon />
+          Install on Chrome
+        </a>
         <a href={APP_URL} className="nav-cta nav-cta--desktop">
           Get started
           <ArrowUpRight size={14} strokeWidth={2} />

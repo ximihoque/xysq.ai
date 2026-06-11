@@ -210,6 +210,47 @@ nav.menu-open .nav-backdrop {
 .nav-cta--mobile { display: none; }
 .nav-cta--desktop { display: inline-flex; }
 
+/* Secondary pill — Install on Chrome (outline/ghost, sits left of the CTA) */
+.nav-chrome {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--paper);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.88rem;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.nav-chrome:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .nav-chrome {
+  background: rgba(13, 21, 32, 0.04);
+  border-color: rgba(13, 21, 32, 0.1);
+  color: var(--muted);
+}
+
+[data-theme="light"] .nav-chrome:hover {
+  color: var(--paper);
+  border-color: rgba(13, 21, 32, 0.2);
+  background: rgba(13, 21, 32, 0.08);
+}
+
+.nav-chrome svg { flex-shrink: 0; }
+
+.nav-chrome--mobile { display: none; }
+.nav-chrome--desktop { display: inline-flex; }
+
 /* Burger (mobile only) */
 .nav-burger {
   display: none;
@@ -546,6 +587,8 @@ nav.menu-open .nav-backdrop {
   .nav-burger { display: flex; }
   .nav-cta--desktop { display: none; }
   .nav-cta--mobile { display: inline-flex; margin-top: 12px; }
+  .nav-chrome--desktop { display: none; }
+  .nav-chrome--mobile { display: inline-flex; }
 
   /* Mobile menu — fullscreen overlay, top-aligned, scrollable.
      Fully opaque bg so menu cards remain visible; soft radial tint at the
@@ -764,5 +807,17 @@ nav.menu-open .nav-backdrop {
     justify-content: center;
     padding: 14px 22px;
     font-size: 1rem;
+  }
+
+  /* Install on Chrome — secondary button, sits above the primary CTA */
+  .nav-chrome--mobile {
+    margin-top: 18px;
+    width: 100%;
+    justify-content: center;
+    padding: 14px 22px;
+    font-size: 1rem;
+  }
+  .nav-chrome--mobile + .nav-cta--mobile {
+    margin-top: 10px;
   }
 }
