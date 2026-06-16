@@ -9,6 +9,7 @@ import BlogAuthorCard from '../components/BlogAuthorCard'
 import BlogTOC from '../components/BlogTOC'
 import { getPostBySlug } from '../lib/blog'
 import { mdxComponents } from '../lib/mdxComponents'
+import '../styles/blog-fonts.css'
 import '../styles/blog-post.css'
 import '../styles/blog-mdx.css'
 

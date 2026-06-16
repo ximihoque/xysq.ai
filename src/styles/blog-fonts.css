@@ -1,0 +1,18 @@
+/* Blog typography — Geist (Vercel's typeface), scoped to the blog only.
+   The rest of the marketing site keeps Playfair / Outfit / JetBrains Mono.
+   Loaded self-hosted via @fontsource so there's no Google Fonts dependency. */
+@import '@fontsource/geist-sans/300.css';
+@import '@fontsource/geist-sans/400.css';
+@import '@fontsource/geist-sans/500.css';
+@import '@fontsource/geist-sans/600.css';
+@import '@fontsource/geist-sans/700.css';
+@import '@fontsource/geist-mono/400.css';
+@import '@fontsource/geist-mono/500.css';
+
+:root {
+  --font-geist-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
+  /* Display headings keep the ui/ identity: Playfair Display (.display-serif).
+     Geist handles body + code; Playfair handles the big titles. */
+  --font-display: 'Playfair Display', serif;
+}

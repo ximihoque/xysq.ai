@@ -3,6 +3,7 @@ import Footer from '../components/Footer'
 import SEO, { breadcrumbSchema } from '../components/SEO'
 import BlogPostList from '../components/BlogPostList'
 import { loadPosts } from '../lib/blog'
+import '../styles/blog-fonts.css'
 import '../styles/blog-index.css'
 
 export default function BlogIndexPage() {

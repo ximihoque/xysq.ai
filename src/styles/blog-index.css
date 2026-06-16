@@ -9,9 +9,9 @@
 }
 
 .blog-index__hero h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: clamp(48px, 7vw, 88px);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.05;
   margin-bottom: 16px;
@@ -34,7 +34,7 @@
   display: inline-flex;
   align-items: center;
   font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-geist-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--cyan);
@@ -108,9 +108,9 @@
 }
 
 .blog-featured__title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: clamp(28px, 2.6vw, 40px);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin-bottom: 16px;
@@ -189,9 +189,9 @@
 }
 
 .blog-card__title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.25;
   margin-bottom: 12px;
