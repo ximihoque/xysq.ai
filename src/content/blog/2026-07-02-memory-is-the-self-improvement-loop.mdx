@@ -1,0 +1,102 @@
+---
+title: "Memory is the boring half of the self-improvement loop"
+slug: "memory-is-the-self-improvement-loop"
+date: "2026-07-02"
+author: "ximi"
+excerpt: "Freeze a model's weights and it still gets better at a task? The learning went somewhere outside the weights. That somewhere is memory. A tour of Mem0, Letta, Zep, and Memora, and why a real self-improvement loop can't work without a store to compound into."
+category: "Insight"
+cover: "/blog/posts/memory-is-the-self-improvement-loop/hero.png"
+tags: ["memory", "agents", "self-improvement", "context-engineering", "research"]
+featured: false
+draft: false
+readingTimeMinutes: 4
+---
+
+import { Figure } from '../../components/mdx/Figure'
+
+Memory is not a sexy problem. Nobody puts "long-term memory layer" on a launch slide next to a benchmark chart with a hockey stick. It gets attention the moment your model stops getting better on its own, and not one second before.
+
+Here is the thing that made it click for me. If you want an agent that improves in the real world (not on a leaderboard, in the world, over weeks, on your actual tasks), you need a self-improvement loop. And a loop, by definition, has to remember what happened last time around. Take the memory out and it isn't a loop, it's a very expensive goldfish that re-reads the manual every morning. So the frontier stops being "make the model smarter" and starts being "give the model somewhere to put what it learned." That second problem is memory, and it's suddenly the interesting one.
+
+Let me make the argument tight, then walk the actual systems people are building, because the research this past year has quietly converged on exactly this.
+
+## The loop, reduced to its smallest honest unit
+
+Freeze a model's weights. Don't fine-tune, don't RL, don't touch a single parameter. Now suppose it still gets better at a task the more it does it. Where did that improvement go? It can't be in the weights; you froze them. It went somewhere outside the weights, into a store the model writes to and reads back later. That store is persistent memory. That's the whole argument, and when you scope it this way it's almost a tautology: **frozen-model self-improvement has to compound into a memory, because there is nowhere else for it to go.**
+
+The nice part is it's not just a word game, people have built it and measured it.
+
+**Voyager** is the cleanest example I know (Wang et al., 2023). They drop GPT-4 into Minecraft, frozen, queried as a black box, and the paper is explicit that this "bypasses the need for model parameter fine-tuning." The agent gets better anyway, because it writes an "ever-growing skill library of executable code for storing and retrieving complex behaviors." The skills are "temporally extended, interpretable, and compositional," and the authors credit the library with alleviating catastrophic forgetting. Delete the library and the compounding stops. The model never changed; the memory did all the learning. It's about as direct as a causal claim gets in this field.
+
+**Reflexion** (Shinn et al., NeurIPS 2023) makes the same point in language instead of code. The agent improves "not by updating weights, but instead through linguistic feedback": it reflects on what went wrong and keeps that reflection "in an episodic memory buffer to induce better decision-making in subsequent trials." Result, 91% pass@1 on HumanEval against the previous GPT-4 state of the art of 80% (early-2023 numbers, so read them as a jump of the day, not a live scoreboard). Weights untouched. The gain lives in retained text.
+
+Two systems, two modalities, same shape: reflect, write to a persistent store, read it back, behave better. The loop is real and the memory is the part doing the work.
+
+Where I'd stop myself: this is airtight for the *frozen-model* branch of self-improvement. If you're happy to retrain on your own trajectories, the learning can live in the weights and you don't strictly need an external store. So the honest headline isn't "nothing improves without memory," it's "you can't have compounding, frozen-model improvement without a memory to compound into." That's the version I'll defend. It also happens to be the version that matters commercially, because almost nobody is going to fine-tune a frontier model on your Tuesday.
+
+## Everyone is now building the "somewhere to put it"
+
+Once you see the loop, the whole memory-systems landscape reads as different answers to one question: what should the store actually look like? Here's the field, roughly in order of how they think about it, and I've tried to be careful with the numbers because most of these come from vendors benchmarking their own products.
+
+<Figure src="/blog/posts/memory-is-the-self-improvement-loop/hero.png" alt="Four AI memory systems (Mem0, Letta, Zep, Memora) with each system's distinctive idea and one verified benchmark number." caption="Four bets on what the store should be. Each number carries its baseline." />
+
+**Mem0** treats memory as a small, self-editing set of facts, not a growing transcript. Its trick is a two-phase pipeline: an extraction step pulls candidate facts out of the recent conversation, then an update step compares each one against similar existing memories and picks ADD / UPDATE / DELETE / NOOP. So the store stays small and stops contradicting itself. On LOCOMO (their paper, arXiv:2504.19413, ECAI 2025) the headline is "~26% more accurate than OpenAI." Worth reading the fine print: that's a *relative* gain over OpenAI's consumer memory feature (66.9% vs 52.9%), and plain full-context actually beats Mem0 on raw accuracy (72.9%). The real win isn't accuracy, it's efficiency, ~91% lower p95 latency and roughly 90% less context injected per query than dumping the whole conversation. Which is the honest pitch for most memory systems, by the way: not smarter, but far cheaper per turn and unbounded in horizon.
+
+**Letta** (the team behind the 2023 MemGPT paper) took the idea most literally: memory as an operating system. The model's context window is RAM, external storage is disk, and the agent pages information between them and edits its own memory through tool calls. The 2023 MemGPT numbers were striking, on nested key-value retrieval, fixed-context baselines collapse to 0% as the nesting deepens while MemGPT holds steady. Their newer trick, from a separate 2025 paper, is the part that made me sit up: "sleep-time compute," where an asynchronous agent reflects on raw context *offline*, before you ask anything, and writes a cleaner version for the live agent to read later. Reported ~5x less test-time compute for the same accuracy. That is a self-improvement loop drawn out as an architecture diagram, reflect-into-store-into-future-behavior, with the reflection literally happening while the agent "sleeps."
+
+**Zep** bets the important thing about memory isn't what you store, it's *when it was true*. Its open-source engine, Graphiti, is a bi-temporal knowledge graph: every fact carries both when it was true in the world and when the system learned it. When something changes, the old fact isn't deleted, its validity window is closed. So you can ask "what's true now" or "what did I believe last March" and get different, correct answers. This is the piece plain vector search quietly gets wrong: embeddings have no clock, so a fact and its own contradiction sit next to each other forever. On LongMemEval Zep reports lifting gpt-4o from 60.2% to 71.2%, at ~90% lower latency from carrying ~1.6K tokens of retrieved context instead of ~115K. (To their credit, their own paper calls the older DMR benchmark inadequate and flags a category where their system got *worse*. I trust vendor papers more when they publish their own regressions.)
+
+**Memora**, out of Microsoft Research this year (arXiv:2602.03315), is the most conceptually ambitious of the bunch. It decouples what you store from how you find it: rich unindexed "memory values" hold the detail, short "primary abstractions" act as the search handle, and "cue anchors" link related entries so retrieval can walk sideways instead of returning one top-k blob. A policy-guided retriever treats fetching memory as active reasoning, refining the query and expanding through those links, rather than a single cosine-similarity lookup. The paper argues, nicely, that plain RAG and knowledge-graph memory both fall out as special cases of this scheme. On LoCoMo the paper reports 86.3% LLM-judge accuracy against Full-Context 82.5%, Nemori 79.4%, and Mem0 65.3%, and Microsoft's writeup adds that it stores roughly half the entries per conversation that Mem0 does (344 vs 651). When a big lab's research arm ships an open-source memory system with a paper at a top venue, that's the field telling you where it thinks the puck is going.
+
+Four systems, one recurring theme: don't hand the model a transcript, hand it a *curated* store, small, deduplicated, time-aware, and searchable by meaning rather than string match. The disagreements are all about the shape of the curation.
+
+## Context engineering, context lakes, and the customer who remembers you
+
+Zoom out and this connects to two things people are already feeling in production.
+
+One is the shift Karpathy and Tobi Lütke named last year: from prompt engineering to **context engineering**, "the delicate art and science of filling the context window with just the right information for the next step." The moment you take that seriously, the context window becomes the bottleneck, and memory is just context engineering across time instead of within a single call. You need a long-lived store to pull "just the right information" *from*. Call it a context lake if you like (I'm coining that loosely, it isn't an established term, it just rhymes with data lake and captures the vibe): the durable pool your agent draws context out of, session after session, instead of starting from an empty prompt every morning.
+
+The other is money, which tends to focus the mind. McKinsey's personalization work found 71% of consumers expect personalized interactions and 76% get frustrated when they don't get them, and that personalization "most often drives a 10-15% revenue lift." Accenture put it more bluntly a few years back: 91% of consumers are more likely to shop with brands that "recognize, remember, and provide them with relevant offers and recommendations." Recognize and *remember*. That's not a model-quality problem, no amount of parameters fixes an assistant that forgets you between sessions. It's a memory problem, and it's the one your customers actually notice.
+
+## Where this goes
+
+My read: the last couple of years were about making the model bigger, and that curve is flattening in exactly the frontier domains where we most want superhuman help. Silver and Sutton put the strong version of this in "Welcome to the Era of Experience" (2025), arguing that experience will "become the dominant medium of improvement and ultimately dwarf the scale of human data used in today's systems," because the knowledge we can extract from human data is "rapidly approaching a limit." I think they're roughly right about the direction, and I'll add the boring corollary they mostly leave implicit: experience that isn't stored isn't experience, it's just something that happened once. An agent that learns from doing needs somewhere to keep what it learned. The field even has a survey and a benchmark for this now ("From Human Memory to AI Memory," Evo-Memory), which is usually the sign a thing has stopped being a one-off and become a category.
+
+So here's the bet. The next round of real capability gains won't come only from a bigger base model. They'll come from wrapping a good-enough frozen model in a loop that remembers, and the systems above are early, competing sketches of the memory that closes it. Memory looks boring right up until it's the only thing standing between you and an agent that actually gets better at your job. Then it's the whole game.
+
+Good luck out there.
+
+## Sources
+
+Everything above is pulled from primary sources and the numbers carry their baselines. If a figure sounded too round, that's because I checked it, and the ones that survived are here.
+
+**The loop (self-improvement without touching weights)**
+
+- Voyager: an open-ended embodied agent with LLMs (Wang et al., 2023), [arXiv:2305.16291](https://arxiv.org/abs/2305.16291)
+- Reflexion: language agents with verbal reinforcement learning (Shinn et al., NeurIPS 2023), [arXiv:2303.11366](https://arxiv.org/abs/2303.11366)
+
+**The systems**
+
+- Mem0: building production-ready AI agents with scalable long-term memory (Chhikara et al., ECAI 2025), [arXiv:2504.19413](https://arxiv.org/abs/2504.19413), [repo](https://github.com/mem0ai/mem0)
+- MemGPT: towards LLMs as operating systems (Packer et al., 2023), [arXiv:2310.08560](https://arxiv.org/abs/2310.08560)
+- Letta, "sleep-time compute" (2025), [arXiv:2504.13171](https://arxiv.org/abs/2504.13171)
+- Zep: a temporal knowledge graph architecture for agent memory (2025), [arXiv:2501.13956](https://arxiv.org/abs/2501.13956), [Graphiti](https://github.com/getzep/graphiti)
+- Memora: a harmonic memory representation balancing abstraction and specificity (Microsoft Research, 2026), [arXiv:2602.03315](https://arxiv.org/abs/2602.03315), [repo](https://github.com/microsoft/Memora)
+
+**The benchmark dispute (worth reading both sides)**
+
+- Zep's rebuttal, ["Is Mem0 really SOTA in agent memory?"](https://blog.getzep.com/lies-damn-lies-statistics-is-mem0-really-sota-in-agent-memory/)
+- Mem0's [counter-claim](https://github.com/getzep/zep-papers/issues/5)
+
+**Context engineering, the field, the macro bet**
+
+- Tobi Lütke [on "context engineering"](https://x.com/tobi/status/1935533422589399127) (June 2025)
+- Andrej Karpathy on "context engineering", [chronicled by Simon Willison](https://simonwillison.net/2025/Jun/27/context-engineering/) (June 2025)
+- From Human Memory to AI Memory: a survey (Wu et al., 2025), [arXiv:2504.15965](https://arxiv.org/abs/2504.15965)
+- Evo-Memory: benchmarking LLM agent test-time learning with self-evolving memory (2025), [arXiv:2511.20857](https://arxiv.org/abs/2511.20857)
+- Silver & Sutton, "Welcome to the Era of Experience" (2025), MIT Press chapter
+
+**Personalization economics**
+
+- McKinsey, ["The value of getting personalization right, or wrong, is multiplying"](https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying) (Next in Personalization 2021)
+- Accenture, [2018 Personalization Pulse Check](https://newsroom.accenture.com/news/2018/widening-gap-between-consumer-expectations-and-reality-in-personalization-signals-warning-for-brands-accenture-interactive-research-finds)

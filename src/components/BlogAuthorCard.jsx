@@ -8,7 +8,7 @@ export default function BlogAuthorCard({ author }) {
         {author.bio && <p className="blog-author-card__bio">{author.bio}</p>}
         {author.links && (
           <div className="blog-author-card__links">
-            {author.links.twitter && <a href={author.links.twitter} rel="noopener">Twitter</a>}
+            {(author.links.x || author.links.twitter) && <a href={author.links.x || author.links.twitter} rel="noopener">X</a>}
             {author.links.linkedin && <a href={author.links.linkedin} rel="noopener">LinkedIn</a>}
             {author.links.github && <a href={author.links.github} rel="noopener">GitHub</a>}
           </div>
