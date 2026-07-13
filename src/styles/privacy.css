@@ -20,7 +20,7 @@
 
 .pp-logo {
   display: inline-block;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.1rem;
   color: var(--cyan);
   text-decoration: none;
@@ -31,7 +31,7 @@
 .pp-logo span { opacity: 0.6; }
 
 .pp-header h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 700;
   color: var(--paper);
@@ -67,7 +67,7 @@
 }
 
 .pp-section h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.35rem;
   font-weight: 600;
   color: var(--paper);

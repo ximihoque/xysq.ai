@@ -106,10 +106,6 @@ export default function UseCaseCategoryPage() {
         {/* Hero */}
         <section className="uc-hero">
           <div className="uc-hero-inner">
-            <motion.span className="uc-eyebrow" {...fade(0)}>
-              <span className="uc-eyebrow-dot" />
-              {category.eyebrow}
-            </motion.span>
             <motion.h1 className="uc-headline" {...fade(0.05)}>
               {category.headline.split('\n').map((line, i, arr) => (
                 <span key={i}>
@@ -148,7 +144,6 @@ export default function UseCaseCategoryPage() {
         <section className="uc-nudges">
           <div className="uc-nudges-inner">
             <motion.div className="uc-nudges-header" {...fade(0)}>
-              <span className="uc-nudges-eyebrow">How it might fit</span>
               <h2 className="uc-nudges-title">
                 Tiny workflows you can <em>try this week.</em>
               </h2>

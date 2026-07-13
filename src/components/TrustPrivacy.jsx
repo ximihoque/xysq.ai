@@ -13,7 +13,7 @@ const pillars = [
   {
     icon: ShieldCheck,
     title: 'We don’t train on your data.',
-    body: 'Your memory is yours. Period. We don’t use it to train models — ours, anyone else’s, or the providers we route through.',
+    body: 'Your memory stays yours. We never use it to train models, ours or anyone else’s, including the providers we route through.',
   },
   {
     icon: Lock,
@@ -31,19 +31,14 @@ export default function TrustPrivacy() {
   return (
     <section className="tp-section" id="trust">
       <div className="tp-inner">
-        <motion.span className="tp-eyebrow" {...fade(0)}>
-          <span className="tp-eyebrow-dot" />
-          TRUST &amp; PRIVACY
-        </motion.span>
-
         <motion.h2 className="tp-headline" {...fade(0.05)}>
-          Your memory.<br />
-          <em>Not our training set.</em>
+          Your memory is yours,<br />
+          <em>not our training set.</em>
         </motion.h2>
 
         <motion.p className="tp-deck" {...fade(0.1)}>
-          xysq is built consent-first. The whole point is for an AI to know
-          you better — not for a model maker to learn from you in the process.
+          xysq is consent-first. Your agents get to know you and your team;
+          model makers don’t get to learn from you in the process.
         </motion.p>
 
         <div className="tp-grid">

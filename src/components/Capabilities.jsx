@@ -29,11 +29,6 @@ export default function Capabilities() {
     <section className="cap-section" id="memory">
       <div className="cap-inner">
         <motion.div className="cap-text" {...fade(0)}>
-          <span className="cap-eyebrow">
-            <span className="cap-eyebrow-dot" />
-            MEMORY
-          </span>
-
           <h2 className="cap-headline">
             The working context of your team,<br />
             <em>stored as one memory.</em>
@@ -68,7 +63,7 @@ export default function Capabilities() {
                 </span>
                 <span className="cap-item-body">
                   <span className="cap-verb">{cap.verb}</span>
-                  <span className="cap-sep">—</span>
+                  <span className="cap-sep">·</span>
                   <span className="cap-body">{cap.body}</span>
                 </span>
               </motion.li>

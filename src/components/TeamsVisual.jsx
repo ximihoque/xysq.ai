@@ -91,14 +91,14 @@ const SCENARIOS = [
     visible: ['person-maya', 'person-rohan', 'person-sara', 'person-jordan'],
     leaving: 'person-maya',
     joining: null,
-    caption: 'Maya left — the team’s memory stays with the team.',
+    caption: 'Maya left. The team’s memory stays with the team.',
   },
   {
     id: 'join',
     visible: ['person-rohan', 'person-sara', 'person-jordan', 'person-amir'],
     leaving: null,
     joining: 'person-amir',
-    caption: 'Amir just joined — already has full team context.',
+    caption: 'Amir just joined. He already has full team context.',
   },
 ]
 

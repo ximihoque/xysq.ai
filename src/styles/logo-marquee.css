@@ -18,20 +18,21 @@
 .lm-label-line {
   flex: 0 1 60px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 229, 200, 0.28), transparent);
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
 }
 
 .lm-label-text {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--silver);
   white-space: nowrap;
 }
 
 [data-theme="light"] .lm-label-line {
-  background: linear-gradient(90deg, transparent, rgba(255, 107, 122, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
 }
 
 /* ── Viewport (stacks both rows; both share one edge-fade mask) ── */

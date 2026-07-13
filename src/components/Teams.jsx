@@ -35,11 +35,6 @@ export default function Teams() {
 
         {/* Text on the RIGHT */}
         <motion.div className="tm-text" {...fade(0)}>
-          <span className="tm-eyebrow">
-            <span className="tm-eyebrow-dot" />
-            TEAMS
-          </span>
-
           <h2 className="tm-headline">
             Knowledge that compounds<br />
             <em>across the whole team.</em>
@@ -47,7 +42,7 @@ export default function Teams() {
 
           <p className="tm-deck">
             Memory shouldn’t evaporate when someone changes role or leaves.
-            Team vaults turn individual context into institutional knowledge —
+            Team vaults turn individual context into institutional knowledge:
             decisions, patterns, and answers that stay.
           </p>
 
@@ -64,7 +59,7 @@ export default function Teams() {
                 <span className="tm-bullet" aria-hidden="true" />
                 <span className="tm-item-body">
                   <span className="tm-item-headline">{p.headline}</span>
-                  <span className="tm-item-sep">—</span>
+                  <span className="tm-item-sep">·</span>
                   <span className="tm-item-text">{p.body}</span>
                 </span>
               </motion.li>

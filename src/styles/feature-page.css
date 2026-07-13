@@ -50,10 +50,10 @@
   border-radius: 999px;
   background: rgba(var(--tone-rgb), 0.08);
   border: 1px solid rgba(var(--tone-rgb), 0.28);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.66rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
   color: var(--tone);
 }
 
@@ -197,11 +197,11 @@
 
 .fp-section-eyebrow {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.22em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--silver);
   margin-bottom: 32px;
 }

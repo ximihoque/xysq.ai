@@ -42,11 +42,11 @@ const TIERS = [
     featured: true,
     features: [
       'Everything in Free',
-      'Unlimited memories — personal and team',
+      'Unlimited memories, personal and team',
       'Unlimited connectors',
       'Teams, SSO and admin controls',
       'Priority support and SLA',
-      '30-day business trial, then a custom quote — most quotes within ~15 minutes of your call',
+      '30-day business trial, then a custom quote, most quotes within ~15 minutes of your call',
     ],
     cta: { label: 'Talk to us', href: CALENDLY_URL, variant: 'secondary' },
   },
@@ -58,7 +58,7 @@ export default function PricingPage() {
       <SEO
         title="Pricing"
         path="/pricing"
-        description="Start free with 1,000 memories and up to 3 connectors. Scale to unlimited memories, connectors, teams, SSO, and priority support — talk to us for a custom quote."
+        description="Start free with 1,000 memories and up to 3 connectors. Scale to unlimited memories, connectors, teams, SSO, and priority support, talk to us for a custom quote."
         schema={breadcrumbSchema([
           { name: 'Home', item: '/' },
           { name: 'Pricing', item: '/pricing' },
@@ -69,7 +69,6 @@ export default function PricingPage() {
       <main className="pricing-main">
         <div className="pr-inner">
           <motion.div className="pr-head" {...fadeUp}>
-            <span className="pr-eyebrow">Pricing</span>
             <h1 className="pr-title">
               Simple, <em>honest</em> pricing
             </h1>

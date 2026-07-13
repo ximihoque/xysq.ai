@@ -27,7 +27,7 @@ const columns = [
     icon: Code2,
     eyebrow: 'For developers',
     title: 'Build with xysq.',
-    body: 'API, SDKs, and reference architectures. Drop persistent memory into your agents in minutes — no rebuild required.',
+    body: 'API, SDKs, and reference architectures. Drop persistent memory into your agents in minutes, no rebuild required.',
     cta: { kind: 'external', label: 'Read the docs', href: 'https://docs.xysq.ai' },
     accent: 'cyan',
   },

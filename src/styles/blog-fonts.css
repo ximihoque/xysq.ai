@@ -10,9 +10,9 @@
 @import '@fontsource/geist-mono/500.css';
 
 :root {
-  --font-geist-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
-  --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-geist-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'JetBrains Mono', ui-monospace, monospace;
   /* Display headings keep the ui/ identity: Playfair Display (.display-serif).
      Geist handles body + code; Playfair handles the big titles. */
-  --font-display: 'Playfair Display', serif;
+  --font-display: 'Outfit', sans-serif;
 }

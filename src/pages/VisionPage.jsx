@@ -144,9 +144,6 @@ export default function VisionPage() {
           </Link>
         </motion.div>
 
-        <motion.span className="vision-eyebrow" {...stagger(1)}>
-          The vision
-        </motion.span>
 
         <motion.h1 className="vision-h1" {...stagger(2)}>
           The shared knowledge layer for AI-native&nbsp;teams.
@@ -164,9 +161,6 @@ export default function VisionPage() {
       {/* ─────────────────────── THE PROBLEM ─────────────────────── */}
       <section className="vision-sect vision-sect--accent">
         <div className="vision-sect-inner">
-          <motion.span className="vision-eyebrow" {...fadeUp}>
-            The problem
-          </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
             Working knowledge is split across <em>three&nbsp;places</em>, and
             nothing holds all three.
@@ -199,9 +193,6 @@ export default function VisionPage() {
       {/* ─────────────────────── THE THREE PILLARS ─────────────────────── */}
       <section className="vision-sect">
         <div className="vision-sect-inner">
-          <motion.span className="vision-eyebrow" {...fadeUp}>
-            The path
-          </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
             Three pillars. One shared&nbsp;brain.
           </motion.h2>
@@ -268,9 +259,6 @@ export default function VisionPage() {
       {/* ─────────────────────── WHO IT'S FOR ─────────────────────── */}
       <section className="vision-sect vision-sect--accent">
         <div className="vision-sect-inner">
-          <motion.span className="vision-eyebrow" {...fadeUp}>
-            Who it is for
-          </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
             One product. Three&nbsp;altitudes.
           </motion.h2>
@@ -289,9 +277,6 @@ export default function VisionPage() {
       {/* ─────────────────────── USE CASES ─────────────────────── */}
       <section className="vision-sect">
         <div className="vision-sect-inner">
-          <motion.span className="vision-eyebrow" {...fadeUp}>
-            What it does
-          </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
             What it does today.
           </motion.h2>
@@ -310,9 +295,6 @@ export default function VisionPage() {
       {/* ─────────────────────── COMMITMENTS ─────────────────────── */}
       <section className="vision-sect">
         <div className="vision-sect-inner">
-          <motion.span className="vision-eyebrow" {...fadeUp}>
-            What we will not compromise
-          </motion.span>
           <motion.h2 className="vision-h2" {...stagger(1)}>
             Commitments.
           </motion.h2>

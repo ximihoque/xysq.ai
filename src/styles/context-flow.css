@@ -214,18 +214,18 @@
 }
 
 .cf-xysq-logo {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.65rem;
   color: var(--cyan);
-  letter-spacing: 0.15em;
+  letter-spacing: 0;
   font-weight: 500;
   opacity: 0.8;
 }
 
 .cf-xysq-action {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   padding: 2px 8px;
   border-radius: 4px;
 }
@@ -280,11 +280,11 @@
 }
 
 .cf-ma-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.62rem;
   color: var(--cyan);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   opacity: 0.8;
 }
 
@@ -292,10 +292,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.58rem;
   color: #4ade80;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .cf-ma-pulse {

@@ -60,19 +60,19 @@
 }
 
 .tv-core-subtext {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--cyan);
   margin-top: 2px;
-  text-shadow: 0 0 8px rgba(0, 229, 200, 0.4);
+  
 }
 
 [data-theme="light"] .tv-core-subtext {
   color: var(--lychee);
-  text-shadow: 0 0 8px rgba(255, 107, 122, 0.3);
+  
 }
 
 /* ── Orbit nodes — white-plate chips, mirrors section 1 (.md-node) ── */
@@ -334,10 +334,10 @@
 }
 
 .tv-note-sub {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.6rem;
   font-weight: 400;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   color: var(--silver);
   text-transform: lowercase;
 }
@@ -361,12 +361,12 @@
   padding: 8px 16px;
   border-radius: 999px;
   background: rgba(2, 4, 8, 0.55);
-  border: 1px solid rgba(0, 229, 200, 0.22);
+  border: 1px solid var(--line);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   color: var(--silver);
 }
 
@@ -381,20 +381,13 @@
   height: 7px;
   border-radius: 50%;
   background: var(--cyan);
-  box-shadow: 0 0 10px var(--cyan);
-  animation: tv-cap-pulse 2.4s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 [data-theme="light"] .tv-caption-dot {
   background: var(--lychee);
-  box-shadow: 0 0 10px var(--lychee);
 }
 
-@keyframes tv-cap-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.4; }
-}
 
 .tv-caption-text {
   white-space: normal;
@@ -404,11 +397,11 @@
 
 /* ── Isolation note (the bottom punchline) ── */
 .tv-isolation-note {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--silver);
   text-align: center;
   margin: 0;
@@ -457,7 +450,7 @@
   }
   .tv-core-subtext {
     font-size: 0.5rem;
-    letter-spacing: 0.22em;
+    letter-spacing: 0;
   }
   .tv-caption-inner {
     font-size: 0.55rem;
@@ -484,7 +477,7 @@
   }
   .tv-isolation-note {
     font-size: 0.52rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
   }
 }
 

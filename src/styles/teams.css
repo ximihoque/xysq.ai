@@ -78,20 +78,20 @@
   gap: 8px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(0, 229, 200, 0.06);
-  border: 1px solid rgba(0, 229, 200, 0.22);
-  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: 'Outfit', sans-serif;
   font-size: 0.65rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--cyan);
+  letter-spacing: 0;
+  color: var(--silver);
   margin-bottom: 28px;
 }
 
 [data-theme="light"] .tm-eyebrow {
-  background: rgba(255, 107, 122, 0.08);
-  border-color: rgba(255, 107, 122, 0.3);
-  color: var(--lychee);
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--silver);
 }
 
 .tm-eyebrow-dot {
@@ -99,19 +99,12 @@
   height: 6px;
   border-radius: 50%;
   background: var(--cyan);
-  box-shadow: 0 0 10px var(--cyan);
-  animation: tm-pulse 2.4s ease-in-out infinite;
 }
 
 [data-theme="light"] .tm-eyebrow-dot {
   background: var(--lychee);
-  box-shadow: 0 0 10px var(--lychee);
 }
 
-@keyframes tm-pulse {
-  0%, 100% { opacity: 1;   }
-  50%      { opacity: 0.4; }
-}
 
 .tm-headline {
   font-family: 'Outfit', sans-serif;
@@ -125,7 +118,7 @@
 
 .tm-headline em {
   font-style: normal;
-  color: var(--cyan);
+  color: var(--lychee);
 }
 
 [data-theme="light"] .tm-headline em {

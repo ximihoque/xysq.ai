@@ -44,19 +44,19 @@
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(0, 229, 200, 0.06);
-  border: 1px solid rgba(0, 229, 200, 0.22);
-  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: 'Outfit', sans-serif;
   font-size: 0.65rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--cyan);
+  letter-spacing: 0;
+  color: var(--silver);
 }
 
 [data-theme="light"] .tp-eyebrow {
-  background: rgba(255, 107, 122, 0.08);
-  border-color: rgba(255, 107, 122, 0.3);
-  color: var(--lychee);
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--silver);
 }
 
 .tp-eyebrow-dot {
@@ -64,17 +64,15 @@
   height: 6px;
   border-radius: 50%;
   background: var(--cyan);
-  box-shadow: 0 0 10px var(--cyan);
 }
 
 [data-theme="light"] .tp-eyebrow-dot {
   background: var(--lychee);
-  box-shadow: 0 0 10px var(--lychee);
 }
 
 .tp-headline {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 600;
   font-size: clamp(2.2rem, 4vw, 3.4rem);
   line-height: 1.08;
@@ -83,8 +81,8 @@
 }
 
 .tp-headline em {
-  font-style: italic;
-  color: var(--cyan);
+  font-style: normal;
+  color: var(--lychee);
 }
 
 [data-theme="light"] .tp-headline em {
@@ -147,8 +145,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 229, 200, 0.08);
-  border: 1px solid rgba(0, 229, 200, 0.22);
+  background: var(--surface);
+  border: 1px solid var(--line);
   color: var(--cyan);
 }
 

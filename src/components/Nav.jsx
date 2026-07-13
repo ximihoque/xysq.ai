@@ -33,7 +33,7 @@ const FEATURES = [
   {
     id: 'organise',
     label: 'Organise',
-    description: 'Drop in documents and conversations — all queryable.',
+    description: 'Drop in documents and conversations, all queryable.',
     href: '/#organise',
     Icon: FolderKanban,
   },

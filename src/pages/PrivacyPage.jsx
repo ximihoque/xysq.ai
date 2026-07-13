@@ -45,16 +45,16 @@ export default function PrivacyPage() {
           <Section n="2" title="What We Collect">
             <Subsection title="Information you provide">
               <ul>
-                <li><strong>Memories</strong> — the text content you or your AI agents store through xysq.</li>
-                <li><strong>Account information</strong> — your email address and display name, provided via Auth0 login (email/password or Google).</li>
-                <li><strong>Profile data</strong> — optional fields you choose to fill in: occupation, location, bio, and social links.</li>
+                <li><strong>Memories</strong>, the text content you or your AI agents store through xysq.</li>
+                <li><strong>Account information</strong>, your email address and display name, provided via Auth0 login (email/password or Google).</li>
+                <li><strong>Profile data</strong>, optional fields you choose to fill in: occupation, location, bio, and social links.</li>
               </ul>
             </Subsection>
             <Subsection title="Information generated automatically">
               <ul>
-                <li><strong>Activity logs</strong> — which agents accessed which memories and when (used for your dashboard, not for advertising).</li>
-                <li><strong>API tokens</strong> — stored as one-way SHA-256 hashes; the raw token is shown to you once and never stored in plain text.</li>
-                <li><strong>Usage metadata</strong> — memory counts, timestamps, and tags attached to memories.</li>
+                <li><strong>Activity logs</strong>, which agents accessed which memories and when (used for your dashboard, not for advertising).</li>
+                <li><strong>API tokens</strong>, stored as one-way SHA-256 hashes; the raw token is shown to you once and never stored in plain text.</li>
+                <li><strong>Usage metadata</strong>, memory counts, timestamps, and tags attached to memories.</li>
               </ul>
             </Subsection>
             <Subsection title="What we do NOT collect">
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
               <li>Authenticating you and your connected AI agents.</li>
               <li>Displaying activity and usage statistics on your dashboard.</li>
               <li>Enforcing memory quotas and plan limits.</li>
-              <li>Sending transactional emails (account-related only — no marketing without explicit opt-in).</li>
+              <li>Sending transactional emails (account-related only, no marketing without explicit opt-in).</li>
               <li>Diagnosing errors and improving reliability.</li>
             </ul>
             <p className="pp-strong">We never sell your data, share it with advertisers, or use your memories to train AI models.</p>
@@ -104,22 +104,22 @@ export default function PrivacyPage() {
 
           <Section n="5" title="Data Retention">
             <ul>
-              <li><strong>Memories</strong> — retained until you delete them or close your account.</li>
-              <li><strong>Activity logs</strong> — retained for 12 months, then automatically purged.</li>
-              <li><strong>Device sessions</strong> — expired sessions are pruned hourly.</li>
-              <li><strong>Account data</strong> — deleted within 30 days of account closure.</li>
+              <li><strong>Memories</strong>, retained until you delete them or close your account.</li>
+              <li><strong>Activity logs</strong>, retained for 12 months, then automatically purged.</li>
+              <li><strong>Device sessions</strong>, expired sessions are pruned hourly.</li>
+              <li><strong>Account data</strong>, deleted within 30 days of account closure.</li>
             </ul>
           </Section>
 
           <Section n="6" title="Your Rights &amp; Controls">
             <p>You have full control over your data at all times:</p>
             <ul>
-              <li><strong>Access</strong> — view all stored memories from your dashboard.</li>
-              <li><strong>Edit</strong> — update or correct any memory at any time.</li>
-              <li><strong>Delete</strong> — remove individual memories or all memories at once.</li>
-              <li><strong>Export</strong> — request a full export of your data by emailing us.</li>
-              <li><strong>Revoke agent access</strong> — disconnect any AI agent from the Connected Agents page; that agent immediately loses access to your memory.</li>
-              <li><strong>Close account</strong> — permanently delete your account and all associated data from Settings.</li>
+              <li><strong>Access</strong>, view all stored memories from your dashboard.</li>
+              <li><strong>Edit</strong>, update or correct any memory at any time.</li>
+              <li><strong>Delete</strong>, remove individual memories or all memories at once.</li>
+              <li><strong>Export</strong>, request a full export of your data by emailing us.</li>
+              <li><strong>Revoke agent access</strong>, disconnect any AI agent from the Connected Agents page; that agent immediately loses access to your memory.</li>
+              <li><strong>Close account</strong>, permanently delete your account and all associated data from Settings.</li>
             </ul>
             <p>
               If you are in the European Economic Area (EEA) or the UK, you also have rights under GDPR
@@ -135,7 +135,7 @@ export default function PrivacyPage() {
             </p>
             <ul>
               <li>All data is encrypted in transit (TLS 1.2+) and at rest (AES-256 via GCP).</li>
-              <li>API tokens are stored as one-way SHA-256 hashes — we cannot recover your raw token.</li>
+              <li>API tokens are stored as one-way SHA-256 hashes, we cannot recover your raw token.</li>
               <li>Authentication is handled by Auth0 with RS256-signed JWTs.</li>
               <li>Access to production systems is restricted to authorised personnel only.</li>
             </ul>

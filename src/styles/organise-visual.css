@@ -60,19 +60,19 @@
 }
 
 .ov-core-subtext {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--cyan);
   margin-top: 2px;
-  text-shadow: 0 0 8px rgba(0, 229, 200, 0.4);
+  
 }
 
 [data-theme="light"] .ov-core-subtext {
   color: var(--lychee);
-  text-shadow: 0 0 8px rgba(255, 107, 122, 0.3);
+  
 }
 
 /* ── Cluster headers ── */
@@ -104,11 +104,11 @@
 }
 
 .ov-cluster-hint {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.56rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--silver);
 }
 
@@ -215,11 +215,11 @@
 }
 
 .ov-strip-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.56rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--cyan);
 }
 
@@ -315,11 +315,11 @@
 
 /* ── Tagline ── */
 .ov-tagline {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--silver);
   text-align: center;
   margin: 0;
@@ -343,7 +343,7 @@
   }
   .ov-core-subtext {
     font-size: 0.5rem;
-    letter-spacing: 0.22em;
+    letter-spacing: 0;
   }
 
   .ov-cluster-name {
@@ -351,7 +351,7 @@
   }
   .ov-cluster-hint {
     font-size: 0.48rem;
-    letter-spacing: 0.12em;
+    letter-spacing: 0;
   }
 
   /* Feed cards: shrink hard so two columns can sit side-by-side without
@@ -394,7 +394,7 @@
   }
   .ov-strip-label {
     font-size: 0.46rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
   }
   .ov-strip-sublabel {
     font-size: 0.55rem;
@@ -406,7 +406,7 @@
 
   .ov-tagline {
     font-size: 0.5rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
   }
 }
 

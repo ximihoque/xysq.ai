@@ -85,11 +85,6 @@ export default function FeaturePage() {
         {/* ── Hero ── */}
         <section className="fp-hero">
           <div className="fp-hero-inner">
-            <motion.span className="fp-eyebrow" {...fade(0)}>
-              <span className="fp-eyebrow-mark" />
-              {feature.eyebrow}
-            </motion.span>
-
             <motion.h1 className="fp-headline" {...fade(0.05)}>
               {feature.headline.lead}{' '}
               <em>{feature.headline.accent}</em>
@@ -118,9 +113,6 @@ export default function FeaturePage() {
         {/* ── How it works ── */}
         <section className="fp-how" id="fp-how">
           <div className="fp-section-inner">
-            <motion.span className="fp-section-eyebrow" {...fade(0)}>
-              How it works
-            </motion.span>
 
             <div className="fp-steps">
               {feature.steps.map((s, i) => {
@@ -150,9 +142,6 @@ export default function FeaturePage() {
         {/* ── Why teams choose [feature] ── */}
         <section className="fp-why">
           <div className="fp-section-inner">
-            <motion.span className="fp-section-eyebrow" {...fade(0)}>
-              Why teams choose {feature.title}
-            </motion.span>
 
             <div className="fp-benefits">
               {feature.benefits.map((b, i) => {
@@ -182,7 +171,7 @@ export default function FeaturePage() {
             <div className="fp-section-inner">
               <motion.blockquote className="fp-quote" {...fade(0)}>
                 <p className="fp-quote-text">“{feature.testimonial.quote}”</p>
-                <cite className="fp-quote-attr">— {feature.testimonial.attribution}</cite>
+                <cite className="fp-quote-attr">{feature.testimonial.attribution}</cite>
               </motion.blockquote>
             </div>
           </section>

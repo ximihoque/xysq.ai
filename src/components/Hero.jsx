@@ -25,13 +25,16 @@ export default function Hero() {
         </motion.div>
 
         <motion.h1 {...fade(0.05)} className="hero-h1">
-          Collaborative memory
-          <span className="hero-h1-sub">for AI-native teams and enterprises.</span>
+          Collaborative context
+          <span className="hero-h1-sub">
+            for AI <span className="hero-accent">agents</span> and{' '}
+            <span className="hero-accent hero-accent-teams">teams</span>.
+          </span>
         </motion.h1>
 
         <motion.p {...fade(0.15)} className="hero-sub">
-          The foundational block for AI-native companies, and the ones
-          becoming one.
+          One memory platform your agents and teams share, so what one learns,
+          all of them know.
         </motion.p>
 
         <motion.div {...fade(0.25)} className="hero-btns">

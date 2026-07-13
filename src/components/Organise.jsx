@@ -12,7 +12,7 @@ const fade = (delay = 0) => ({
 const points = [
   {
     headline: 'Drop in anything',
-    body: 'PDFs, transcripts, screenshots, links, code — xysq indexes the lot.',
+    body: 'PDFs, transcripts, screenshots, links, code. xysq indexes the lot.',
   },
   {
     headline: 'Auto-tagged & connected',
@@ -20,7 +20,7 @@ const points = [
   },
   {
     headline: 'Queryable from any agent',
-    body: 'Ask Claude, Cursor, ChatGPT — they all reach into the same library.',
+    body: 'Ask Claude, Cursor, or ChatGPT; they all reach into the same library.',
   },
 ]
 
@@ -30,11 +30,6 @@ export default function Organise() {
       <div className="og-inner">
         {/* Text on the LEFT */}
         <motion.div className="og-text" {...fade(0)}>
-          <span className="og-eyebrow">
-            <span className="og-eyebrow-dot" />
-            ORGANISE
-          </span>
-
           <h2 className="og-headline">
             Every document.<br />
             <em>One searchable mind.</em>
@@ -59,7 +54,7 @@ export default function Organise() {
                 <span className="og-bullet" aria-hidden="true" />
                 <span className="og-item-body">
                   <span className="og-item-headline">{p.headline}</span>
-                  <span className="og-item-sep">—</span>
+                  <span className="og-item-sep">·</span>
                   <span className="og-item-text">{p.body}</span>
                 </span>
               </motion.li>

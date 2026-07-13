@@ -15,10 +15,10 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
   text-decoration: none;
   margin-bottom: 28px;
@@ -30,11 +30,11 @@
 
 .vision-eyebrow {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--cyan);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--silver);
   margin-bottom: 18px;
   padding: 4px 10px;
   border: 1px solid var(--line);
@@ -43,7 +43,7 @@
 }
 
 .vision-h1 {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: clamp(2.4rem, 5.4vw, 4.4rem);
   line-height: 1.07;
@@ -63,10 +63,10 @@
 }
 
 .vision-staged {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  color: var(--cyan);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  color: var(--silver);
   max-width: 720px;
   margin: 0;
   padding-top: 10px;
@@ -91,7 +91,7 @@
 }
 
 .vision-h2 {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: clamp(1.85rem, 3.4vw, 2.85rem);
   line-height: 1.15;
@@ -195,7 +195,7 @@
   gap: 5px;
 }
 .vision-tab-title {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: 1.2rem;
   letter-spacing: -0.005em;
@@ -218,10 +218,10 @@
 }
 .vision-tab-panel-tag {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
   padding: 4px 9px;
   border: 1px solid var(--line);
@@ -229,7 +229,7 @@
   background: var(--card-num);
 }
 .vision-tab-panel-title {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: 1.7rem;
   letter-spacing: -0.005em;
@@ -283,10 +283,10 @@
 }
 .vision-persona-label {
   display: block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--cyan);
   margin-bottom: 10px;
 }
@@ -317,7 +317,7 @@
   border-radius: 8px;
 }
 .vision-usecase h3 {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: 1.25rem;
   color: var(--paper);
@@ -348,7 +348,7 @@
   border-top: 1px solid var(--line);
 }
 .vision-commitment h4 {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: 1.18rem;
   color: var(--cyan);
@@ -375,7 +375,7 @@
   background: var(--bg2);
 }
 .vision-quote {
-  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 400;
   font-style: italic;
   font-size: clamp(1.4rem, 2.6vw, 1.95rem);
@@ -426,10 +426,10 @@
   padding: 13px 22px;
   background: var(--cyan);
   color: var(--bg);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   font-weight: 600;
   border-radius: 6px;
   text-decoration: none;
@@ -447,10 +447,10 @@
   border: 1px solid var(--line);
   background: transparent;
   color: var(--paper);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   border-radius: 6px;
   text-decoration: none;
   transition: border-color 200ms ease, color 200ms ease;
