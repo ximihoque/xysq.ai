@@ -5,7 +5,7 @@ date: "2026-07-02"
 author: "ximi"
 excerpt: "Freeze a model's weights and it still gets better at a task? The learning went somewhere outside the weights. That somewhere is memory. A tour of Mem0, Letta, Zep, and Memora, and why a real self-improvement loop can't work without a store to compound into."
 category: "Insight"
-cover: "/blog/posts/memory-is-the-self-improvement-loop/hero.png"
+cover: "https://storage.googleapis.com/xysq_public/blogs/memory-is-the-self-improvement-loop/hero.png"
 tags: ["memory", "agents", "self-improvement", "context-engineering", "research"]
 featured: false
 draft: false
@@ -38,7 +38,7 @@ Where I'd stop myself: this is airtight for the *frozen-model* branch of self-im
 
 Once you see the loop, the whole memory-systems landscape reads as different answers to one question: what should the store actually look like? Here's the field, roughly in order of how they think about it, and I've tried to be careful with the numbers because most of these come from vendors benchmarking their own products.
 
-<Figure src="/blog/posts/memory-is-the-self-improvement-loop/hero.png" alt="Four AI memory systems (Mem0, Letta, Zep, Memora) with each system's distinctive idea and one verified benchmark number." caption="Four bets on what the store should be. Each number carries its baseline." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/memory-is-the-self-improvement-loop/hero.png" alt="Four AI memory systems (Mem0, Letta, Zep, Memora) with each system's distinctive idea and one verified benchmark number." caption="Four bets on what the store should be. Each number carries its baseline." />
 
 **Mem0** treats memory as a small, self-editing set of facts, not a growing transcript. Its trick is a two-phase pipeline: an extraction step pulls candidate facts out of the recent conversation, then an update step compares each one against similar existing memories and picks ADD / UPDATE / DELETE / NOOP. So the store stays small and stops contradicting itself. On LOCOMO (their paper, arXiv:2504.19413, ECAI 2025) the headline is "~26% more accurate than OpenAI." Worth reading the fine print: that's a *relative* gain over OpenAI's consumer memory feature (66.9% vs 52.9%), and plain full-context actually beats Mem0 on raw accuracy (72.9%). The real win isn't accuracy, it's efficiency, ~91% lower p95 latency and roughly 90% less context injected per query than dumping the whole conversation. Which is the honest pitch for most memory systems, by the way: not smarter, but far cheaper per turn and unbounded in horizon.
 

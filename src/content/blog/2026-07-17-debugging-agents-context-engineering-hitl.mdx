@@ -1,0 +1,121 @@
+---
+title: "Debugging Agents in Production: Context Engineering with HITL"
+slug: "debugging-agents-context-engineering-hitl"
+date: "2026-07-17"
+author: "ximi"
+excerpt: "You shipped an agent and it broke in production. The model was fine; the context was wrong. A field guide to debugging context engineering, prompt to queries to context to answer, and closing the loop so the same failure does not repeat."
+category: "Engineering"
+cover: "https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/hero.png"
+tags: ["context-engineering", "agents", "memory", "evals", "hitl", "self-improvement"]
+featured: false
+draft: false
+readingTimeMinutes: 5
+---
+
+import { Figure } from '../../components/mdx/Figure'
+
+You built an agent. It passed every test you threw at it. You shipped it. Then a real user asked a real question, and ka-boom: it hallucinated, or it answered confidently with information that was wrong, or it missed something obvious.
+
+You open the trace to debug it. **Cause detected: context failure** (incorrect context, insufficient context, or irrelevant context).
+
+The model is not the problem. The prompt is not the problem. The problem is context: the agent was given the wrong information to reason over. Fixing that is called context engineering, and it is where most production agents break. This article walks through how to actually debug it, step by step.
+
+## 1. The problem
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s1-problem.png" alt="The best model gives a confident wrong answer if the context is wrong. Right context is not universal; it is defined by your business and by what is true right now." />
+
+An agent is only as good as the context it is handed at the moment it answers. Get the context right and a mid-tier model looks brilliant. Get it wrong and the best model on the market gives you a confident, wrong answer.
+
+The hard part is that "right context" is not universal. It is defined by your business. A support agent needs the refund policy that is in effect today, not the one from last quarter. A legal agent needs the current version of the clause. A healthcare agent needs this patient's actual record. "Correct" depends on your domain, your data, and what is true right now.
+
+So teams do this by hand. They tune what the agent retrieves, read the outputs, adjust, and repeat. It works for a while, then the data changes underneath them and it breaks again. There is no clean signal for when the context is right, so the tuning never ends. That is the problem we are solving: making context engineering a measurable, self-correcting process instead of endless manual work.
+
+## 2. The base: memory and its two engines
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s2-engines.png" alt="Memory has two engines. The structural engine is what is stored. The retrieval engine is what is pulled. Keeping them separate is how you debug." />
+
+Before you can debug context, you need to understand where context comes from. Whether you call it RAG or a memory layer, it is the system that holds your knowledge and serves the relevant piece to the agent on each query. Every context problem is a problem in this layer.
+
+It has two engines, and keeping them separate is the key to debugging.
+
+**The structural engine: what is stored.** This is the knowledge itself. What facts exist, how they connect, and which version is current. When a support team changes its refund policy, the structural engine is what should retire the old policy and record the new one. When a drug's contraindication is updated, it is what keeps the healthcare agent's knowledge current. If this engine is wrong, the truth itself is wrong, and no clever lookup can save you.
+
+**The retrieval engine: what is pulled.** Given a query, this decides which pieces of the stored knowledge to hand the agent, in what order, and how much. Ranking, filtering, and assembly live here. A legal agent's memory may hold the exact right clause, but if the retrieval engine ranks a similar-looking amended clause higher, the agent cites the wrong one. If this engine is wrong, the right fact is sitting in memory but never makes it to the agent.
+
+Almost every wrong answer traces back to one of these two. Either the memory did not hold the correct fact (structural), or it held it but did not surface it (retrieval). Incorrect context is usually structural. Insufficient or irrelevant context is usually retrieval. Debugging context means finding out which engine failed, and fixing that one.
+
+## 3. Traceability: the two things you actually optimize
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s3-trace.png" alt="Trace the whole chain, then optimize two things: prompt to queries, and query to context." />
+
+To find the failing engine, you need to trace the full path of a single answer. Not just the final output, but the two steps before it. Start from the original prompt the user or agent sent. From that prompt, one or more queries were made to memory. From each query, some context was pulled. Prompt, then queries, then context, then answer. If you cannot see that chain, you are guessing.
+
+Once you can see it, two distinct things need optimizing, and they are not the same problem.
+
+**Given a prompt, what queries should you ask memory?** A single prompt rarely maps to a single lookup. "Why was this claim denied?" might need the policy, the customer's plan, and the claim history, three separate queries. Ask too few and the context is insufficient. Ask the wrong ones and you retrieve irrelevant material. This step decides what you even go looking for, and getting it wrong means the right answer was never reachable, no matter how good retrieval is.
+
+**Given a query, what context does memory pull?** This is the retrieval engine from the previous section. For each query, memory returns some set of facts, ranked and assembled. The right document may exist but rank too low, or noise may crowd out the signal.
+
+These two stack. A wrong answer can come from asking the wrong queries, or from asking the right queries and pulling the wrong context. Traceability is what lets you tell them apart: you look at the chain and see whether the query set was incomplete, or whether a good query returned bad context. Then you know which of the two to optimize, and you have the record to prove the fix worked.
+
+## 4. Measure it: context evals
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s4-evals.png" alt="Output evals say the answer was wrong. Context evals say why. Score the context on precision, recall, and faithfulness, then capture user feedback, sessions, and outcomes." />
+
+You cannot fix what you cannot measure. The first step is to evaluate the context itself, not just the final answer.
+
+This is different from grading the agent's output. Output evals tell you the answer was wrong. Context evals tell you *why*: was the retrieved context relevant to the question, was it complete, did it actually support the answer, or was it noise. That distinction is what points you at the failing engine.
+
+You do not have to build this from scratch. Libraries like Ragas give you ready measures for exactly this: context precision (was the retrieved context relevant and well-ranked), context recall (did retrieval get everything the answer needed), and faithfulness (was the answer actually grounded in the retrieved context). Run these on your traffic and you get a signal on every answer, not a hunch.
+
+These automated scores are only one source of signal, and you should capture the others too, because they carry information the metrics miss. End-user feedback is the most direct: a thumbs down, a "that's not right," a support ticket reopened, a customer who rephrases the same question three times. Session captures matter just as much: the full trace of what the agent retrieved and answered, whether the user acted on it or abandoned the conversation, whether they escalated to a human. In domains with a real outcome you already track, that outcome is a signal too. A support answer that led to a re-contact within 24 hours, a piece of brand content the reviewer rejected, a legal draft sent back for a wrong citation. Each of these is a data point that the context on that query was wrong, and collecting them is what turns a handful of eval scores into a continuous stream of ground truth about where your memory is failing.
+
+Now the failure has a shape. Low context recall means the fact was missing or not retrieved, a retrieval or structural problem. Low faithfulness means the agent went beyond its context. You have moved from "the agent seems off" to something specific: "on refund questions, the support agent retrieves the general terms page but not the current refund policy," or "the brand agent pulls last quarter's approved messaging, so its content evals fail on the new campaign." That is a diagnosis you can act on.
+
+## 5. Judge the hard cases: humans and self-assessment
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s5-hitl.png" alt="Automatic evals run on proxies. The final judgment lives with your people. A human catches the dead policy or the bad citation, and that correction is the ground truth." />
+
+Automatic evals catch a lot, but they run on proxies. They cannot always tell whether a retrieved fact is actually the current, correct one for your business, because that judgment lives with your people.
+
+So the hard cases go to a human. When a support lead sees the agent quote a dead policy, when a lawyer flags a bad citation, when a clinician catches a missing contraindication, that correction is the ground truth the automatic evals could not produce. This is human-in-the-loop, and in these domains it already happens, often because the law requires a person to review the output anyway.
+
+The agent can also assess itself. Before answering, it can check its own retrieved context: is this current, do these sources agree, is anything missing. Self-assessment catches the obvious cases early and cheaply, and escalates the uncertain ones to a human. Between the two, every answer gets judged: automatically first, by a person when it matters.
+
+The output of this stage is a clean signal: for this query, the context was wrong, and here is what right looks like.
+
+## 6. Close the loop: feed the correction back to memory
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s6-loop.png" alt="Route each correction to the right engine. Retrieval fix: fast and reversible. Structural fix: slow but compounds. The wrong engine and it comes back next week." />
+
+This is the step everyone skips, and it is the whole point. A correction that gets logged and forgotten changes nothing. A correction that flows back into memory means the same mistake never happens twice.
+
+The feedback updates one of the two engines, and choosing correctly is what makes the loop work.
+
+**Fix the retrieval engine** when the right fact was in memory but did not surface. Re-rank, re-weight, adjust filters, change what gets assembled. The legal agent had the correct clause stored but ranked the amended one higher, so you fix the ranking, not the knowledge. Fast, cheap, reversible. Most wrong answers are retrieval misses, and these are fixable immediately.
+
+**Fix the structural engine** when the memory itself was wrong. Retire the stale fact, add the missing one, resolve the conflict by marking the current source of truth, repair a broken connection. When the support team's refund policy actually changed, no amount of re-ranking helps, the old policy has to be retired and the new one recorded. When a brand deprecates a claim, it has to leave the store, not just rank lower. Slower, but it compounds, because correcting the stored knowledge improves every future answer, not just the next one.
+
+Send a structural problem to the retrieval engine and it comes back next week. Rebuild the structure for what was only a ranking bug and you wasted the effort. The loop has to route each correction to the right engine, and it learns to do that from the corrections themselves.
+
+The goal is to automate this whole loop. Doing it by hand is where teams are stuck today: a human notices the bad answer, traces the chain, decides which engine to fix, and edits it. That does not scale. The end state is a self-improving context layer that runs the loop on its own, evals flag the bad context, the trace localizes the failing engine, and the fix is applied automatically, while keeping a human in the loop where it counts. The person no longer hand-tunes retrieval or edits memory entry by entry. They review and approve the corrections the system proposes, and their judgment on the hard cases becomes the training signal that makes the automation better. HITL is not a fallback for when the automation fails. It is the source of ground truth that makes the self-improving loop trustworthy in the first place.
+
+## 7. The journey, end to end
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/s7-selfimprove.png" alt="Automate the loop and keep the human where it counts. A self-improving context layer: evals flag, the trace localizes, the fix applies, the agent stops drifting." />
+
+Put it together and context engineering stops being manual guesswork:
+
+1. The agent answers in production.
+2. Context evals score the context behind every answer and flag the bad ones.
+3. Self-assessment and humans judge the hard cases and produce the ground truth.
+4. That correction flows back and updates the right engine, retrieval for a lookup miss, structural for a knowledge error.
+5. The memory is now more correct, and the same failure does not repeat.
+
+Each pass makes the memory better, so the agent gets more right over time instead of drifting. That is the difference between an agent you babysit and one that improves on its own.
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/debugging-agents-context-engineering-hitl/process-overview.png" alt="The self-improving context loop: agent answers, context evals score every answer, humans and self-assessment judge the hard cases, route the fix to the retrieval engine or the structural engine, and memory gets more correct on every pass." caption="The whole loop on one page. Each pass makes memory more correct, so the same failure does not repeat." />
+
+Scoring your context tells you it is broken. Closing this loop is what fixes it, at both the structural and retrieval level, driven by the corrections your domain experts already make. That is the part nobody has built well, and it is what we are building at xysq.
+
+If your agents give wrong answers on stale or missing context, and your team's corrections do not stick, we would like to talk. Email [ximi@xysq.ai](mailto:ximi@xysq.ai) or [grab 30 minutes](https://calendly.com/hoque-ximi/30min).
