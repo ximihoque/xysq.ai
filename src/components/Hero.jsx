@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
-import LogoMarquee from './LogoMarquee'
-import XysqLogo from './XysqLogo'
+import { Brain, Network, ShieldCheck } from 'lucide-react'
 import '../styles/hero.css'
 
 const fade = (delay = 0) => ({
@@ -20,48 +19,78 @@ export default function Hero() {
       </div>
 
       <div className="hero-inner">
-        <motion.div {...fade(0)} className="hero-logo" aria-hidden="true">
-          <XysqLogo size={72} />
-        </motion.div>
+        {/* ── LEFT: copy ── */}
+        <div className="hero-copy">
+          <motion.h1 {...fade(0.05)} className="hero-h1">
+            <span className="hero-h1-lead">The first</span>{' '}
+            <span className="hero-accent">self-improving</span>
+            <br />
+            context engineering
+            <br />
+            <span className="hero-h1-dim">platform.</span>
+          </motion.h1>
 
-        <motion.h1 {...fade(0.05)} className="hero-h1">
-          Collaborative context
-          <span className="hero-h1-sub">
-            for AI <span className="hero-accent">agents</span> and{' '}
-            <span className="hero-accent hero-accent-teams">teams</span>.
-          </span>
-        </motion.h1>
+          <motion.p {...fade(0.15)} className="hero-sub">
+            Powered by <span className="hero-sub-strong">the xysq Memory Engine</span>.
+            <br />
+            A domain-adaptive engine that continuously evolves knowledge
+            into better context for AI.
+          </motion.p>
 
-        <motion.p {...fade(0.15)} className="hero-sub">
-          One memory platform your agents and teams share, so what one learns,
-          all of them know.
-        </motion.p>
+          <motion.ul {...fade(0.2)} className="hero-points">
+            <li>
+              <Brain size={15} strokeWidth={1.8} aria-hidden="true" />
+              Self-Improving Memory
+            </li>
+            <li>
+              <Network size={15} strokeWidth={1.8} aria-hidden="true" />
+              Knowledge Graphs
+            </li>
+            <li>
+              <ShieldCheck size={15} strokeWidth={1.8} aria-hidden="true" />
+              Enterprise Governance
+            </li>
+          </motion.ul>
 
-        <motion.div {...fade(0.25)} className="hero-btns">
-          <motion.a
-            href="https://app.xysq.ai"
-            className="btn-main"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
-            transition={tap}
+          <motion.div {...fade(0.25)} className="hero-btns">
+            <motion.a
+              href="https://app.xysq.ai"
+              className="btn-main"
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.98 }}
+              transition={tap}
+            >
+              For AI builders
+              <span className="btn-main-arrow">→</span>
+            </motion.a>
+            <motion.a
+              href="https://app.xysq.ai/teams"
+              className="btn-out"
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.98 }}
+              transition={tap}
+            >
+              For teams
+              <span className="btn-out-arrow">→</span>
+            </motion.a>
+          </motion.div>
+        </div>
+
+        {/* ── RIGHT: infographic placeholder (build → share → own) ── */}
+        <motion.div {...fade(0.2)} className="hero-visual">
+          <div
+            className="hero-visual-ph"
+            role="img"
+            aria-label="Infographic placeholder: build your knowledge graph, share it, own it"
           >
-            Get started free
-            <span className="btn-main-arrow">→</span>
-          </motion.a>
-          <motion.a
-            href="#memory"
-            className="btn-out"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
-            transition={tap}
-          >
-            See how it works
-            <span className="btn-out-arrow">↓</span>
-          </motion.a>
-        </motion.div>
-
-        <motion.div {...fade(0.4)} className="hero-marquee-slot">
-          <LogoMarquee />
+            <span className="hero-visual-ph-tag">INFOGRAPHIC</span>
+            <span className="hero-visual-ph-title">build → share → own</span>
+            <span className="hero-visual-ph-note">
+              personal graph · share controls · team graph
+              <br />
+              (generated image drops in here)
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>
