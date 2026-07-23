@@ -1,6 +1,7 @@
 import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
+import EngineSection from '../components/EngineSection'
 import Capabilities from '../components/Capabilities'
 import Teams from '../components/Teams'
 import Organise from '../components/Organise'
@@ -15,14 +16,14 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
-        description="xysq is collaborative memory for AI-native teams and enterprises. Capture context from the tools your team already uses, build a living knowledge graph, and give every AI tool and agent the right context when it needs it."
+        description="The first self-improving context engineering platform. The xysq Memory Engine turns your files and AI sessions into knowledge graphs your team shares and owns."
         schema={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
           name: 'xysq',
           applicationCategory: 'DeveloperApplication',
           url: 'https://xysq.ai',
-          description: 'Collaborative memory for AI-native teams. A living knowledge graph (episodic, procedural, semantic) shared across every AI tool and agent, consent-first.',
+          description: 'The first self-improving context engineering platform. A domain-adaptive Memory Engine that evolves knowledge into better context for AI, with shareable knowledge graphs for teams. Consent-first.',
           operatingSystem: 'Web',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         }}
@@ -30,6 +31,7 @@ export default function HomePage() {
       <NeuralBackground />
       <Nav />
       <Hero />
+      <EngineSection />
       <Capabilities />
       <Teams />
       <Organise />

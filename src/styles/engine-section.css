@@ -1,0 +1,186 @@
+/* ── Engine section (Section 1): the self-improvement story ── */
+
+.eng-section {
+  position: relative;
+  padding: 96px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .eng-section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+}
+
+.eng-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .eng-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+}
+
+/* ── Left: text ── */
+.eng-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+}
+
+.eng-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  /* sized so "Memory that improves on command," holds one line in the column */
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 18px;
+}
+
+.eng-headline em {
+  font-style: normal;
+  color: var(--silver);
+}
+
+.eng-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  font-weight: 400;
+  color: var(--silver);
+  line-height: 1.62;
+  margin-bottom: 30px;
+}
+
+/* ── Capability rows ── */
+.eng-list {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eng-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.eng-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--cyan);
+}
+
+.eng-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eng-item-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.eng-item-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--silver);
+}
+
+/* ── CTA: whitepaper link ── */
+.eng-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 18px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.eng-cta:hover {
+  border-color: #3a3a3a;
+  background: var(--surface);
+}
+
+[data-theme="light"] .eng-cta:hover {
+  border-color: #d4d4d4;
+  background: var(--surface2);
+}
+
+.eng-cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.eng-cta:hover .eng-cta-arrow {
+  transform: translateX(2px);
+}
+
+/* ── Right: visual placeholder (real loop visual comes in pass 3) ── */
+.eng-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.eng-visual-ph {
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 16 / 11;
+  border: 1px dashed color-mix(in srgb, var(--silver) 45%, transparent);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 24px;
+}
+
+.eng-visual-ph-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.eng-visual-ph-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  color: var(--silver);
+}
