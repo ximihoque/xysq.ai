@@ -158,38 +158,14 @@
   transform: translateX(2px);
 }
 
-/* ── Right: visual placeholder (real loop visual comes in pass 3) ── */
+/* ── Right: the correction figure (shared with the whitepaper) ── */
 .eng-visual {
   display: flex;
   justify-content: center;
 }
 
-.eng-visual-ph {
+.eng-visual .wp-fig {
   width: 100%;
   max-width: 540px;
-  aspect-ratio: 16 / 11;
-  border: 1px dashed color-mix(in srgb, var(--silver) 45%, transparent);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  text-align: center;
-  padding: 24px;
-}
-
-.eng-visual-ph-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--paper);
-}
-
-.eng-visual-ph-note {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  line-height: 1.7;
-  color: var(--silver);
+  margin: 0;
 }

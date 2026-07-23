@@ -4,9 +4,9 @@ import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
 import XysqLogo from '../components/XysqLogo'
+import CorrectionFigure from '../components/CorrectionFigure'
 import {
-  FileText, ScrollText, Network, User, Bot, BarChart3,
-  ArrowDown, Check, X,
+  FileText, ScrollText, Network, User, Bot, BarChart3, ArrowDown,
 } from 'lucide-react'
 import '../styles/whitepaper.css'
 
@@ -55,33 +55,36 @@ function FigLayers() {
   )
 }
 
-/* ── Figure 2: one correction, walked end to end ── */
-function FigCorrection() {
+/* ── Figure: anatomy of a fact (ledger row) ── */
+function FigLedger() {
   return (
-    <figure className="wp-fig" role="img" aria-label="A correction walked end to end: the correction becomes a supersession event, one gated run closes the old fact, updates every hosting page and downweights stale chunks, and the next query serves the corrected state">
+    <figure className="wp-fig" role="img" aria-label="A fact in the ledger: the rendered text, its verbatim evidence quoted from the log, its validity window, and the conclusions that depend on it">
       <div className="wp-fig-quote">
         <span className="wp-fig-quote-mark">"</span>
-        We deprecated the v2 endpoint in March; everything routes through v3 now.
-        <span className="wp-fig-tag">targeted correction</span>
+        v3 is the default route for all traffic.
+        <span className="wp-fig-tag">fact · stated</span>
       </div>
-      <span className="wp-fig-arrow"><ArrowDown size={13} strokeWidth={2} /> one gated run</span>
       <div className="wp-fig-steps">
-        <span>old fact closed<br /><em>supersession event</em></span>
-        <span>every hosting page updated<br /><em>enumerated, not sampled</em></span>
-        <span>stale chunks downweighted<br /><em>retrieval retuned</em></span>
+        <span>evidence<br /><em>quotes log #4132, byte-for-byte</em></span>
+        <span>recency<br /><em>valid from Mar 12 · active</em></span>
+        <span>lineage<br /><em>2 conclusions depend on it</em></span>
       </div>
-      <span className="wp-fig-arrow"><ArrowDown size={13} strokeWidth={2} /> next query</span>
-      <div className="wp-fig-ba">
-        <span className="wp-fig-ba-row wp-fig-ba-row--before">
-          <X size={13} strokeWidth={2.2} />
-          "Route traffic through the v2 endpoint."
-        </span>
-        <span className="wp-fig-ba-row wp-fig-ba-row--after">
-          <Check size={13} strokeWidth={2.2} />
-          "v2 was deprecated in March. Route through v3."
-        </span>
+      <figcaption className="wp-fig-caption">A fact is a ledger row: quoted evidence, a validity window, a dependency chain.</figcaption>
+    </figure>
+  )
+}
+
+/* ── Figure: the write path ── */
+function FigWal() {
+  return (
+    <figure className="wp-fig" role="img" aria-label="Every change follows the same write path: staged in a write-ahead log, checked by gates, applied in ordered durable steps, committed as a diff in the vault">
+      <div className="wp-fig-steps wp-fig-steps--4">
+        <span>stage<br /><em>write-ahead log</em></span>
+        <span>gate<br /><em>six checks, in code</em></span>
+        <span>apply<br /><em>ordered, durable steps</em></span>
+        <span>commit<br /><em>a diff in your vault</em></span>
       </div>
-      <figcaption className="wp-fig-caption">Applied now. Visible on the next query. Attributable forever.</figcaption>
+      <figcaption className="wp-fig-caption">Crash mid-apply? Replay is deterministic. No model re-call.</figcaption>
     </figure>
   )
 }
@@ -171,6 +174,42 @@ export default function WhitepaperPage() {
             pile up, and a superseded fact keeps the same retrieval weight as
             its replacement.
           </p>
+
+          <h3>What's been tried</h3>
+          <p>These gaps are known, and there's real work against them:</p>
+          <ul>
+            <li>
+              <strong>Vector stores + RAG.</strong> Index everything, retrieve
+              by similarity. Simple and fast, but there's no notion of truth
+              over time: a superseded fact and its replacement are just two
+              similar chunks.
+            </li>
+            <li>
+              <strong>Extraction-based memory layers</strong> (Mem0 and
+              similar). Extract facts from conversations, dedupe, update.
+              Better than raw chunks, but the updates are decided by a model
+              you can't inspect: no verbatim ground truth underneath, and no
+              way to see what a correction actually changed.
+            </li>
+            <li>
+              <strong>Temporal knowledge graphs</strong> (Zep and similar).
+              Track when facts become valid and invalid. This gets recency
+              right, but edits still apply without deterministic checks, and a
+              correction doesn't enumerate everything it touches.
+            </li>
+            <li>
+              <strong>Self-managed agent memory</strong> (MemGPT/Letta and
+              similar). The agent edits its own memory. Flexible, but whatever
+              the model writes is the memory. No trust chain, no audit.
+            </li>
+          </ul>
+          <p>
+            <strong>The gap that remains:</strong> all of this improved storage
+            and extraction. None of it made improvement itself observable,
+            attributable, or governed. Feedback is still a hint you throw in,
+            not a transaction you can verify. That's the gap the engine
+            closes.
+          </p>
           <p>
             If you ship AI to production, context quality is part of system
             quality. It needs real engineering, not hope.
@@ -235,6 +274,7 @@ export default function WhitepaperPage() {
             built on it). A fact in a page is a rendered ledger row. It only
             changes through a new ledger event.
           </p>
+          <FigLedger />
           <p>Six families of deterministic gates run in code:</p>
           <ul>
             <li>Assembled diffs must equal the declared edits.</li>
@@ -248,6 +288,7 @@ export default function WhitepaperPage() {
             Every change goes through a write-ahead log. A crash mid-apply
             replays deterministically, without re-calling the model.
           </p>
+          <FigWal />
           <p>
             Each graph lives in its own version-controlled vault. Every change
             is a commit you can diff.
@@ -268,7 +309,7 @@ export default function WhitepaperPage() {
             beat a hundred vague ones, and its effect should be visible
             immediately.
           </p>
-          <FigCorrection />
+          <CorrectionFigure />
           <p>
             Here's what happens when you correct the engine. You say: "we
             deprecated the v2 endpoint in March; everything routes through v3

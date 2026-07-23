@@ -64,6 +64,14 @@
   margin-bottom: 16px;
 }
 
+.wp h3 {
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin: 24px 0 10px;
+}
+
 .wp p {
   font-size: 0.99rem;
   line-height: 1.72;
@@ -260,6 +268,10 @@
   gap: 8px;
 }
 
+.wp-fig-steps--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .wp-fig-steps span {
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -352,6 +364,7 @@
 
 @media (max-width: 640px) {
   .wp-fig-steps,
+  .wp-fig-steps--4,
   .wp-fig-layers2 {
     grid-template-columns: 1fr;
   }

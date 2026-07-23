@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { RefreshCw, Crosshair, Layers } from 'lucide-react'
+import CorrectionFigure from './CorrectionFigure'
 import '../styles/engine-section.css'
 
 const fade = (delay = 0) => ({
@@ -79,20 +80,9 @@ export default function EngineSection() {
           </motion.a>
         </motion.div>
 
-        {/* feedback-loop visual lands here (structure pass: placeholder) */}
+        {/* the correction walked end to end — same figure as the whitepaper */}
         <motion.div className="eng-visual" {...fade(0.15)}>
-          <div
-            className="eng-visual-ph"
-            role="img"
-            aria-label="Visual placeholder: one targeted correction flows into the engine, restructures the context graph and retunes retrieval, and the next answer improves"
-          >
-            <span className="eng-visual-ph-title">feedback loop visual</span>
-            <span className="eng-visual-ph-note">
-              correct once → structural + retrieval layers retune
-              <br />
-              → next query answers better
-            </span>
-          </div>
+          <CorrectionFigure />
         </motion.div>
       </div>
     </section>
