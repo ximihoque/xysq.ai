@@ -307,20 +307,52 @@
   gap: 12px;
 }
 
-/* bottom pill, centered */
+/* engine pill — sits inside the personal-graph card */
 .htg-pill {
-  align-self: center;
   display: inline-flex;
   align-items: center;
   gap: 7px;
   padding: 3px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--bg);
   font-family: 'Outfit', sans-serif;
   font-size: 0.68rem;
   font-weight: 500;
   color: var(--silver);
+}
+
+.htg-pill--inline {
+  align-self: flex-start;
+  margin-top: 7px;
+}
+
+/* security strip: governance + storage ownership, the "you're safe" row */
+.htg-secure {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 10px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
+.htg-secure-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.htg-secure-item svg {
+  color: var(--cyan);
+  flex-shrink: 0;
 }
 
 /* ── Mobile: badges stack, line hides (flow reads top-down already) ── */

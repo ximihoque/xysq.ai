@@ -1,4 +1,4 @@
-import { ChevronDown, Share2, HardDrive, Cloud } from 'lucide-react'
+import { ChevronDown, Share2, HardDrive, Cloud, ShieldCheck, Lock } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import '../styles/hero-infographic.css'
 
@@ -89,6 +89,10 @@ export default function HeroTeamsGraphic() {
           <MiniGraph nodes={pNodes} edges={pEdges} height={100} maxH={72} />
           <span className="hig-card-line">Build a graph from your files and AI conversations.</span>
           <span className="hig-card-line">Stored in your own drive or locally.</span>
+          <span className="htg-pill htg-pill--inline">
+            <XysqLogo size={12} />
+            Powered by the same xysq Memory Engine
+          </span>
         </span>
       </div>
 
@@ -136,16 +140,21 @@ export default function HeroTeamsGraphic() {
             <span className="hig-card-title">Team Knowledge Graph</span>
             <MiniGraph nodes={tNodes} edges={tEdges} height={72} maxH={52} />
             <span className="hig-card-line">Shared knowledge that grows with your team.</span>
-            <span className="hig-card-line">Governed and always under your control.</span>
           </span>
         </div>
       </div>
 
-      {/* ── Bottom pill ── */}
-      <span className="htg-pill">
-        <XysqLogo size={12} />
-        Powered by the same xysq Memory Engine
-      </span>
+      {/* ── Security strip: governance + storage ownership ── */}
+      <div className="htg-secure">
+        <span className="htg-secure-item">
+          <ShieldCheck size={13} strokeWidth={1.8} aria-hidden="true" />
+          Governed and always under your control.
+        </span>
+        <span className="htg-secure-item">
+          <Lock size={13} strokeWidth={1.8} aria-hidden="true" />
+          Your storage, always yours.
+        </span>
+      </div>
     </div>
   )
 }
