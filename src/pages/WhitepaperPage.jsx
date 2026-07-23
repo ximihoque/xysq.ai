@@ -5,7 +5,7 @@ import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
 import XysqLogo from '../components/XysqLogo'
 import {
-  FileText, ScrollText, Network, ShieldCheck, User, Bot, BarChart3,
+  FileText, ScrollText, Network, User, Bot, BarChart3,
   ArrowDown, Check, X,
 } from 'lucide-react'
 import '../styles/whitepaper.css'
@@ -110,7 +110,7 @@ function FigLoops() {
           </span>
         </div>
       </div>
-      <figcaption className="wp-fig-caption">Every adjustment is a versioned, revertable text change. The improvement is legible.</figcaption>
+      <figcaption className="wp-fig-caption">Every adjustment is a versioned text change you can read and revert.</figcaption>
     </figure>
   )
 }
@@ -151,7 +151,7 @@ export default function WhitepaperPage() {
           </p>
           <div className="wp-meta">
             <XysqLogo size={14} />
-            <span>xysq · 2026 · 10 min read</span>
+            <span>xysq · 2026 · 7 min read</span>
           </div>
         </header>
 
@@ -159,28 +159,21 @@ export default function WhitepaperPage() {
           <h2>The problem: memory that grows but doesn't get better</h2>
           <p>Most AI memory today accumulates. It doesn't improve.</p>
           <p>
-            The standard setup looks like this: you wire a memory store to your
-            agents, sessions and documents flow in, embeddings get indexed, and
-            retrieval pulls the top-k back out. When retrieval is wrong, you
-            write a correction into the store and move on. The theory is that
-            with enough corrections, quality trends upward.
+            The standard setup: wire a memory store to your agents, index
+            everything, retrieve top-k. When retrieval is wrong, you add a
+            correction and hope quality goes up over time.
           </p>
           <p>
-            We call this <strong>hope-based memory</strong>, where you dump
-            feedback into a store and wait for retrieval to get better, after
-            some uncertain volume of corrections. The problem isn't that it
-            never works. The problem is that you can't see it work. Improvement
-            is unobservable (no way to tell whether last month's corrections
-            changed anything) and unattributable (no way to point at a specific
-            correction and say what it fixed). Meanwhile the store decays
-            underneath you: contradictions accumulate, duplicates pile up, and
-            a fact you superseded in March sits next to its replacement with
-            equal retrieval weight in July.
+            We call this <strong>hope-based memory</strong>. The problem is you
+            can't see it work. You can't tell if last month's corrections
+            changed anything, and you can't point at a correction and say what
+            it fixed. Meanwhile the store decays: contradictions and duplicates
+            pile up, and a superseded fact keeps the same retrieval weight as
+            its replacement.
           </p>
           <p>
-            For a team shipping AI to production this is an uncomfortable place
-            to be. Context quality is now a direct input to system quality, and
-            the tooling for it behaves like a landfill with a search bar.
+            If you ship AI to production, context quality is part of system
+            quality. It needs real engineering, not hope.
           </p>
         </section>
 
@@ -188,165 +181,136 @@ export default function WhitepaperPage() {
           <h2>What the engine is</h2>
           <p>
             The xysq Memory Engine is a self-improving context engineering
-            engine. The mental model in one sentence: raw AI work goes in
-            (session transcripts from your AI tools, uploaded files), gets
-            distilled into a context graph, and that graph then improves in
-            response to feedback you can watch land on the very next query.
+            engine. Raw AI work goes in: session transcripts from your AI
+            tools, uploaded files. It gets distilled into a context graph. The
+            graph improves in response to feedback, and you can see the change
+            on the next query.
           </p>
           <p>
-            We say "context engineering" deliberately. Deciding what an AI
-            system sees is an engineering problem, and engineering problems
-            need observability, attribution, and rollback. The engine is the
-            machinery that supplies those. (The same graph, rendered for
-            humans, is the knowledge graph you browse and share; the engine is
-            what keeps it true.)
+            Deciding what an AI system sees is an engineering problem, and
+            engineering problems need observability, attribution, and
+            rollback. The engine supplies those. (The same graph, rendered for
+            humans, is the knowledge graph you browse and share.)
           </p>
           <p>Three ideas carry the design:</p>
           <ol>
             <li>
               <strong>Two layers, one trust chain.</strong> Immutable verbatim
-              logs underneath; a distilled, block-structured context graph on
-              top. The raw layer is the root of trust; the distilled layer must
-              cite it.
+              logs at the bottom. A distilled context graph on top. The graph
+              must cite the logs.
             </li>
             <li>
               <strong>Targeted feedback, applied now.</strong> A correction is
-              a first-class structured event that restructures the graph and
-              retunes retrieval in one gated run, not a hint tossed into a
-              pile.
+              a structured event. It restructures the graph and retunes
+              retrieval in one run.
             </li>
             <li>
-              <strong>The model proposes, code disposes.</strong> A language
-              model drafts every change; deterministic code verifies, gates,
-              and applies it. No invariant in the system is enforced by a
-              prompt.
+              <strong>The model proposes, code disposes.</strong> A model
+              drafts every change. Deterministic code verifies and applies it.
+              No invariant is enforced by a prompt.
             </li>
           </ol>
-          <p>The rest of this paper walks each one.</p>
         </section>
 
         <section>
           <h2>Two layers, one trust chain</h2>
           <FigLayers />
           <p>
-            Every push into the engine (a session transcript, a file) lands
-            first in the verbatim layer: an immutable log, stored
-            byte-for-byte, never edited, indexed for retrieval within seconds.
-            Nothing downstream can alter it, which is precisely what makes
+            Every push (a session transcript, a file) lands first in the
+            verbatim layer: an immutable log, stored byte-for-byte, indexed
+            within seconds. Nothing downstream can edit it. That's what makes
             everything downstream checkable.
           </p>
           <p>
-            A background distill worker then merges new content into the second
-            layer: the context graph. Graph pages are real prose a human can
-            read, structured as addressable blocks (the unit of editing,
-            merging, and fact binding), and they update within minutes of a
-            push, with a hard cap on the delay rather than a best-effort
-            promise. Cost scales with what's new: per-push model work is O(new
-            content), never O(corpus). There is no global recompute as your
-            graph grows.
+            A background worker merges new content into the context graph:
+            readable pages made of addressable blocks, updated within minutes
+            of a push. Work per push scales with the new content, not with the
+            size of your corpus. There is no global recompute.
           </p>
           <p>
-            Between the layers sits the fact ledger. Every fact is a row
-            carrying recency (when it became valid, when it was superseded, by
-            what) and lineage (verbatim quote spans pointing back into the raw
-            log, a stated-vs-inferred claim type, and a dependency chain for
-            inferred facts, so superseding a premise flags every conclusion
-            built on it). A fact in a page is not a sentence the model happened
-            to write; it is a rendered ledger row, frozen at commit, that can
-            only change through a new ledger event.
+            Between the layers sits the fact ledger. Every fact carries
+            recency (when it became valid, when it was superseded, by what)
+            and lineage (verbatim quotes from the log, stated vs inferred, and
+            a dependency chain, so superseding a premise flags the conclusions
+            built on it). A fact in a page is a rendered ledger row. It only
+            changes through a new ledger event.
+          </p>
+          <p>Six families of deterministic gates run in code:</p>
+          <ul>
+            <li>Assembled diffs must equal the declared edits.</li>
+            <li>New facts must quote the log verbatim, or they quarantine for review.</li>
+            <li>Fact renderings are frozen outside ledger events.</li>
+            <li>The changelog is composed by the server, not the model.</li>
+            <li>Every fact edit maps to exactly one ledger event.</li>
+            <li>Validators catch contradictions, orphans, and malformed structure.</li>
+          </ul>
+          <p>
+            Every change goes through a write-ahead log. A crash mid-apply
+            replays deterministically, without re-calling the model.
           </p>
           <p>
-            Around all of it, deterministic gates. The engine runs six families
-            of them, in code: assembled diffs must equal exactly the declared
-            edits, so undeclared text physically cannot change; new facts must
-            quote the raw log verbatim or they quarantine for review; fact
-            renderings are frozen outside ledger events; the changelog is
-            code-composed, so the model cannot write its own history; every
-            fact edit maps one-to-one to a ledger event; and invariant
-            validators catch contradictions, orphans, and malformed structure
-            before anything lands. Every change is staged in a write-ahead log
-            and applied in ordered durable steps; a crash mid-apply replays
-            deterministically, without re-calling the model.
+            Each graph lives in its own version-controlled vault. Every change
+            is a commit you can diff.
           </p>
           <p>
-            Each user's graph lives in its own isolated vault,
-            version-controlled, so every byte change is a commit you can diff.
-          </p>
-          <p>
-            One honest boundary, stated precisely: the mechanical edit trail is
-            100%, guaranteed by code. Semantic judgment (did the model link
-            this fact to the right entity?) is bounded and audited, not
-            guaranteed. We promise perfect recording of edits, never perfect
-            memory.
+            One boundary, stated plainly: the edit trail is guaranteed by
+            code. Semantic judgment (did the model link a fact to the right
+            entity?) is audited, not guaranteed. Perfect recording of edits,
+            not perfect memory.
           </p>
         </section>
 
         <section>
-          <h2>The centerpiece: targeted feedback, visible improvement</h2>
+          <h2>Targeted feedback, visible improvement</h2>
           <p>
-            Here is where the engine departs from the standard playbook. The
-            standard playbook says: keep sending feedback and retrieval will
-            get better, eventually, somehow. We think that's backwards. One
-            comprehensive, targeted correction should beat a hundred vague
-            ones, and its effect should be visible immediately.
+            The standard playbook says: keep sending feedback and retrieval
+            gets better, eventually. We think one targeted correction should
+            beat a hundred vague ones, and its effect should be visible
+            immediately.
           </p>
           <FigCorrection />
           <p>
-            Walk through what actually happens when you correct the engine.
-            Say you tell it "we deprecated the v2 endpoint in March; everything
-            routes through v3 now." That correction becomes a supersession
-            event in the fact ledger. In the same gated run, code closes the
-            old fact, enumerates every page in the graph that hosts it, and
-            updates each one; the stale verbatim chunks in the log layer get
-            tagged so retrieval downweights them. The next query serves the
-            corrected state. If contradictory facts ever do surface together,
-            the response flags the conflict (current fact, superseded
-            candidate) instead of returning both raw.
+            Here's what happens when you correct the engine. You say: "we
+            deprecated the v2 endpoint in March; everything routes through v3
+            now." The correction becomes a supersession event in the ledger.
+            In the same run, code closes the old fact, updates every page that
+            hosts it, and tags the stale chunks so retrieval downweights them.
+            The next query serves the corrected state. If contradictory facts
+            surface together, the response flags the conflict instead of
+            returning both.
           </p>
           <p>
-            Applied now. Visible on the next query. Attributable forever,
-            because the ledger row records what changed, on what evidence,
-            superseding what. You never wait for statistical accumulation, and
-            you never wonder whether a correction took.
+            Applied now. Visible on the next query. Attributable forever: the
+            ledger records what changed, on what evidence, superseding what.
           </p>
-          <p>Feedback tunes two layers of the system:</p>
+          <p>Feedback tunes two layers:</p>
           <ul>
             <li>
-              <strong>The structural layer: how knowledge is organized.</strong>{' '}
-              Corrections drive restructuring: pages split when they grow past
-              budget, duplicate entities merge, contradictions resolve (one
-              active value per single-valued attribute, enforced by a
-              validator, not a prompt), links rewire. The graph's shape is a
-              moving target that feedback keeps honest.
+              <strong>Structural: how knowledge is organized.</strong> Pages
+              split, duplicates merge, contradictions resolve, links rewire.
             </li>
             <li>
-              <strong>The retrieval layer: what gets selected as context.</strong>{' '}
-              Superseded content is downweighted, contradiction-aware ranking
-              prefers current truth, and the selection instructions themselves
-              are versioned per-user overlays that feedback rewrites (and that
-              you can revert, because they're versioned).
+              <strong>Retrieval: what gets selected.</strong> Superseded
+              content is downweighted, ranking prefers current truth, and
+              selection instructions are versioned overlays you can revert.
             </li>
           </ul>
           <FigLoops />
-          <p>Three closed loops feed those two layers:</p>
+          <p>Three loops feed those layers:</p>
           <ol>
             <li>
-              <strong>Human feedback.</strong> Corrections, review decisions,
-              direct edits. Highest authority, and sticky: text a human
-              authored cannot be modified by the engine without superseding
-              evidence plus explicit review. Never a silent clobber.
+              <strong>Human feedback.</strong> Corrections, reviews, edits.
+              Highest authority. Text a human wrote is never changed without
+              superseding evidence plus review.
             </li>
             <li>
-              <strong>Self feedback.</strong> The engine evaluates itself:
-              quarantine outcomes, contradiction sweeps on touched entities,
-              offline audits of merge quality against a stronger judge, and a
-              nightly consistency check across graph, ledger, and index that
-              repairs or alerts on drift.
+              <strong>Self feedback.</strong> Quarantine outcomes,
+              contradiction sweeps, merge audits, and a nightly consistency
+              check across graph, ledger, and index.
             </li>
             <li>
-              <strong>Usage signals.</strong> Which retrieved items actually
-              got used downstream feeds selection tuning, so retrieval learns
-              from outcomes, not just content.
+              <strong>Usage signals.</strong> What actually got used
+              downstream tunes what gets selected next.
             </li>
           </ol>
         </section>
@@ -354,112 +318,90 @@ export default function WhitepaperPage() {
         <section>
           <h2>It learns your domain, not a benchmark</h2>
           <p>
-            Generic memory systems optimize for generic benchmarks. Your
-            production system doesn't run on a benchmark; it runs on your
-            vocabulary, your entities, your priorities.
+            Generic memory optimizes for generic benchmarks. Your system runs
+            on your vocabulary, your entities, your priorities.
           </p>
           <p>
-            The engine is built to absorb exactly that. Entities and their
-            aliases are first-class records, so your internal names, project
-            codenames, and acronyms resolve to the same node instead of
-            fragmenting into near-duplicates (a new entity is a reviewable
-            event, not a silent mint). The instruction overlays that steer
-            distillation and selection are per-user and per-team, grown from
-            your feedback and your usage. Priorities follow what your queries
-            actually touch.
+            Entities and aliases are first-class records, so internal names
+            and acronyms resolve to one node instead of fragmenting. A new
+            entity is a reviewable event, not a silent mint. The instructions
+            that steer distillation and selection are per-user and per-team,
+            grown from your feedback and usage.
           </p>
           <p>
-            This is what "compounding" means concretely: by month three,
-            retrieval in your domain behaves differently than it did on day
-            one, and you can read the diff of exactly how, because every
-            adaptation is a versioned, revertable text change. Not a fine-tune
-            you can't inspect. Our favorite property of this design is that
-            the improvement is legible.
+            Compounding, concretely: by month three, retrieval in your domain
+            behaves differently than it did on day one, and you can read the
+            diff of how. Every adaptation is a versioned text change, not a
+            fine-tune you can't inspect.
           </p>
         </section>
 
         <section>
           <h2>Governance: every change is a diff you can read</h2>
           <p>
-            The question a serious evaluator asks about self-improving systems
-            is not "how good is it?" but "what happens when it's wrong?" Our
-            answer: nothing changes silently, and the blast radius of a mistake
-            is a review item, not a corrupted store.
+            The right question for a self-improving system isn't "how good is
+            it?" but "what happens when it's wrong?" Answer: nothing changes
+            silently, and a mistake becomes a review item, not a corrupted
+            store.
           </p>
           <ul>
             <li>
-              <strong>Provenance on every fact.</strong> Verbatim quote,
-              source, timestamp, lineage. Stated claims must ground in the raw
-              log; inferred claims are labeled as such and require multiple
-              citations.
+              <strong>Provenance on every fact.</strong> Quote, source,
+              timestamp, lineage. Inferred claims are labeled and need
+              multiple citations.
             </li>
             <li>
-              <strong>A code-owned history.</strong> Changelogs are composed by
-              the server, byte-checked on every write. The model cannot edit
-              its own trail.
+              <strong>Code-owned history.</strong> Changelogs are composed by
+              the server and byte-checked. The model can't edit its own trail.
             </li>
             <li>
-              <strong>A review queue for what deserves a human.</strong> New
-              entities, new pages, quarantined claims, a page shrinking
-              suspiciously in one run, any conflict with human-authored text:
-              these park for review rather than applying. If review items pile
-              up past a ceiling, distillation pauses for that vault and the
-              owner is notified. A bad model day becomes a visible queue, not
-              silent corruption.
+              <strong>A review queue.</strong> New entities, new pages,
+              quarantined claims, a page shrinking suspiciously, conflicts
+              with human text. If the queue passes a ceiling, distillation
+              pauses and the owner is notified.
             </li>
             <li>
-              <strong>Recoverability as a requirement.</strong> Every failure
-              mode has a defined automated recovery path. Deletion is real too:
-              removing a single item scrubs the ledger, the history, the
-              vectors, and the archives, not just the visible page.
+              <strong>Recoverability.</strong> Every failure mode has a
+              defined recovery path. Deleting an item scrubs the ledger,
+              history, vectors, and archives.
             </li>
           </ul>
           <p>
-            Human oversight concentrates where it matters. The gates handle the
-            mechanical 100%; humans handle judgment calls, at a bounded,
-            visible rate.
+            Gates handle the mechanical part. Humans handle judgment calls, at
+            a bounded, visible rate.
           </p>
         </section>
 
         <section>
           <h2>Ownership</h2>
           <p>
-            The engine's output is deliberately unexotic: plain markdown pages
-            plus a ledger, in a vault that belongs to one user or team. That's
-            a design stance. Context this valuable shouldn't live in a
-            proprietary blob.
+            The engine's output is plain markdown pages plus a ledger, in a
+            vault owned by one user or team. Context this valuable shouldn't
+            live in a proprietary blob.
           </p>
           <p>
-            Today that means full isolation per vault and export at any time;
-            nothing about your graph is locked in. The direction we're building
-            toward, and rolling out: bring your own storage, with the graph
-            mirrored to a drive you control and readable in standard markdown
-            tools, and private deployment for teams that need the engine inside
-            their own boundary. We're stating direction here, not shipped
-            guarantees; the architecture was shaped around these from the start
-            (per-vault isolation is why account deletion is a clean sweep, and
-            why a mirror to your drive is a mirror rather than a migration).
+            Today: full isolation per vault, export anytime. The direction
+            we're building, rolling out now: bring your own storage (the graph
+            mirrored to a drive you control, readable in standard markdown
+            tools) and private deployment inside your own boundary. This is
+            stated direction, not a shipped guarantee.
           </p>
         </section>
 
         <section>
           <h2>What we are not claiming</h2>
-          <p>A short list, because this audience has read enough whitepapers:</p>
           <ul>
             <li>
-              Not perfect memory. Perfect recording of edits, with semantic
-              judgment bounded and audited.
+              Not perfect memory. Perfect recording of edits; semantic
+              judgment is audited and bounded.
             </li>
             <li>
               No benchmark numbers here. The engine ships with a measurement
-              harness (real multi-session transcripts seeded with
-              contradictions and aliasing, crash injection at every write-ahead
-              step), and the numbers we publish will come from it.
+              harness, and the numbers we publish will come from it.
             </li>
             <li>
-              Not magic self-improvement. Three specific loops, tuning two
-              specific layers, through gates that make every adjustment
-              inspectable and revertable.
+              Not magic. Three loops, two layers, and gates that make every
+              adjustment inspectable and revertable.
             </li>
           </ul>
         </section>
@@ -467,17 +409,12 @@ export default function WhitepaperPage() {
         <section>
           <h2>The short version</h2>
           <p>
-            Context for AI systems today accumulates and decays, and teams are
-            asked to fix it with hope. The xysq Memory Engine replaces hope
-            with a mechanism: verbatim logs under a distilled context graph, a
-            fact ledger carrying recency and lineage, deterministic gates on
-            every change, and feedback that lands now, where you can see it,
-            structurally and in retrieval, in your domain's own terms.
+            Context today accumulates and decays. The engine replaces hope
+            with a mechanism: verbatim logs under a context graph, a ledger
+            with recency and lineage, gates on every change, and feedback that
+            lands now, where you can see it.
           </p>
-          <p>
-            Hope is not a memory strategy. Bring us a correction and watch
-            what it changes.
-          </p>
+          <p>Bring a correction and watch what it changes.</p>
         </section>
 
         <div className="wp-cta">
