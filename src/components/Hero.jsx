@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Brain, Network, ShieldCheck } from 'lucide-react'
+import HeroShowcase from './HeroShowcase'
 import '../styles/hero.css'
 
 const fade = (delay = 0) => ({
@@ -76,21 +77,9 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* ── RIGHT: infographic placeholder (build → share → own) ── */}
+        {/* ── RIGHT: rotating graphics (builders / teams) ── */}
         <motion.div {...fade(0.2)} className="hero-visual">
-          <div
-            className="hero-visual-ph"
-            role="img"
-            aria-label="Infographic placeholder: build your knowledge graph, share it, own it"
-          >
-            <span className="hero-visual-ph-tag">INFOGRAPHIC</span>
-            <span className="hero-visual-ph-title">build → share → own</span>
-            <span className="hero-visual-ph-note">
-              personal graph · share controls · team graph
-              <br />
-              (generated image drops in here)
-            </span>
-          </div>
+          <HeroShowcase />
         </motion.div>
       </div>
     </section>

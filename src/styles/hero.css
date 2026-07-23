@@ -116,11 +116,16 @@ h1.hero-h1 {
   max-width: 52ch;
 }
 
-/* ── Points: three highlights in one row, icon + label each ── */
+/* ── Points: three highlights in one row, icon + label each.
+   Auto block margins soak up the column's spare height (from the stretch)
+   so the row floats between sub and CTAs; the padding keeps a floor when
+   there's no spare height (tablet/mobile). ── */
 .hero-points {
   list-style: none;
-  margin: 0 0 32px;
-  padding: 0;
+  /* a deliberate gap after the sub pushes points + CTAs toward the
+     infographic's bottom edge without moving the headline */
+  margin: 40px 0 0;
+  padding: 14px 0 24px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -147,7 +152,14 @@ h1.hero-h1 {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
+  margin-bottom: 10px;
+}
+
+/* equal-width doors: both audience buttons match, content centered */
+.hero-btns .btn-main,
+.hero-btns .btn-out {
+  min-width: 176px;
+  justify-content: center;
 }
 
 .btn-main {
@@ -229,72 +241,12 @@ h1.hero-h1 {
   background: var(--surface2);
 }
 
-/* ── Right visual column: infographic placeholder ── */
+/* ── Right visual column ── */
 .hero-visual {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-}
-
-.hero-visual-ph {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  max-height: 560px;
-  border: 1px dashed var(--line);
-  border-radius: 16px;
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 11px,
-      rgba(255, 255, 255, 0.015) 11px,
-      rgba(255, 255, 255, 0.015) 22px
-    );
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  text-align: center;
-  padding: 24px;
-}
-
-[data-theme="light"] .hero-visual-ph {
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 11px,
-      rgba(0, 0, 0, 0.015) 11px,
-      rgba(0, 0, 0, 0.015) 22px
-    );
-}
-
-.hero-visual-ph-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  color: var(--cyan);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 4px 12px;
-}
-
-.hero-visual-ph-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--paper);
-}
-
-.hero-visual-ph-note {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.82rem;
-  line-height: 1.6;
-  color: var(--silver);
-  max-width: 30ch;
 }
 
 /* ── Tablet ── */
@@ -326,11 +278,6 @@ h1.hero-h1 {
 
   .hero-btns {
     justify-content: center;
-  }
-
-  .hero-visual-ph {
-    aspect-ratio: 16 / 10;
-    max-height: 420px;
   }
 
   .hero-spot {

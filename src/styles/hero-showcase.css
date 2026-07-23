@@ -1,0 +1,90 @@
+/* ── Hero showcase: rotating right-side graphics + controls ── */
+
+.hsc {
+  width: 100%;
+  max-width: 512px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* stable height so the hero doesn't jump when slides differ slightly;
+   slides center within it */
+.hsc-stage {
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hsc-slide {
+  width: 100%;
+}
+
+/* ── Controls row: arrow · caption · arrow ── */
+.hsc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.hsc-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--silver);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.hsc-arrow:hover {
+  border-color: #3a3a3a;
+  color: var(--paper);
+}
+
+[data-theme="light"] .hsc-arrow:hover {
+  border-color: #d4d4d4;
+}
+
+.hsc-caption {
+  display: flex;
+  gap: 10px;
+}
+
+.hsc-caption-item {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--silver);
+  opacity: 0.55;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.hsc-caption-item--active {
+  color: var(--paper);
+  opacity: 1;
+}
+
+.hsc-caption-item:hover {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .hsc {
+    margin-inline: auto;
+  }
+
+  .hsc-stage {
+    min-height: 0;
+  }
+}
