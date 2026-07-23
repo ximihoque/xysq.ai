@@ -13,17 +13,17 @@ const rows = [
   {
     icon: RefreshCw,
     label: 'Self-improving loops',
-    body: 'Human feedback, AI self-evals, and usage signals run as closed loops that keep tuning the engine.',
+    body: 'One correction improves every future retrieval.',
   },
   {
     icon: Crosshair,
     label: 'Domain-adaptive',
-    body: 'It learns your vocabulary, entities, and priorities, so retrieval optimizes for your domain, not a generic benchmark.',
+    body: 'Learns your domain instead of generic internet knowledge.',
   },
   {
     icon: Layers,
-    label: 'Feedback tunes both layers',
-    body: 'Every correction lands twice: the structural layer reorganizes the context graph, the retrieval layer retunes what gets selected.',
+    label: 'Dual-layer learning',
+    body: 'Every correction updates both knowledge structure and retrieval.',
   },
 ]
 
