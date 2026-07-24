@@ -26,7 +26,7 @@ export default function CaptureSection() {
           <div
             className="cpt-frame"
             role="img"
-            aria-label="Capture sources: AI sessions from Claude, Cursor, ChatGPT and Gemini; uploaded files; Chrome capture; and decisions saved by hand. Everything distills into one context graph"
+            aria-label="Capture sources: AI sessions from Claude, Cursor, ChatGPT and Gemini; uploaded files; Chrome capture; and decisions saved by hand. Everything distills into your context lake"
           >
             <div className="cpt-grid">
               <div className="cpt-src">
@@ -72,7 +72,7 @@ export default function CaptureSection() {
 
             <div className="cpt-graph">
               <XysqLogo size={16} />
-              <span>Your context graph</span>
+              <span>Your context lake</span>
             </div>
           </div>
         </motion.div>
@@ -88,7 +88,7 @@ export default function CaptureSection() {
             No pipelines to babysit. Connect your AI tools once and every
             session flows in. Drop in files, clip from the browser, or save a
             decision by hand. The engine distills all of it into your context
-            graph.
+            lake.
           </p>
 
           {/* faces: one capability, both audiences */}

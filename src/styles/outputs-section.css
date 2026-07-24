@@ -48,7 +48,7 @@
   max-width: 56ch;
 }
 
-/* ── The graph strip ── */
+/* ── The lake strip ── */
 .out-graph-wrap {
   width: 100%;
   display: flex;
@@ -56,9 +56,28 @@
   margin-bottom: 44px;
 }
 
+.out-lake {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 40px 24px 16px;
+}
+
+.out-lake-label {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
 .out-graph {
   width: 100%;
-  max-width: 680px;
   height: auto;
 }
 
@@ -339,6 +358,73 @@
 .out-fig-denied svg {
   color: var(--silver);
   flex-shrink: 0;
+}
+
+/* ── Governance band: the funnel's common floor ── */
+.out-gov {
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.out-gov-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.out-gov-head svg {
+  color: var(--cyan);
+}
+
+.out-gov-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .out-gov-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+.out-gov-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.out-gov-item-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.out-gov-item-label svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.out-gov-item-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--silver);
 }
 
 /* teams figure */
