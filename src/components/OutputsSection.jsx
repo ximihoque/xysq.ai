@@ -239,7 +239,7 @@ export default function OutputsSection() {
           <div className="out-gov-items">
             <div className="out-gov-item">
               <span className="out-gov-item-label"><Eye size={13} strokeWidth={1.8} aria-hidden="true" /> Transparent to your team</span>
-              <span className="out-gov-item-text">Every context graph is visible and accessible to your team. No black boxes.</span>
+              <span className="out-gov-item-text">Every context graph is visible and accessible. No black boxes.</span>
             </div>
             <div className="out-gov-item">
               <span className="out-gov-item-label"><History size={13} strokeWidth={1.8} aria-hidden="true" /> Every change auditable</span>
