@@ -38,6 +38,12 @@
   color: var(--silver);
 }
 
+/* light-mode silver (#666) hides next to the near-black headline; use the
+   same visibly-grey step dark mode gets */
+[data-theme="light"] .out-headline em {
+  color: #8f8f8f;
+}
+
 /* the two nouns carry their colors: lake green, graphs lychee */
 .out-hl-lake {
   color: var(--cyan);
