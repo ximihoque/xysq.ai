@@ -21,7 +21,7 @@ await page.addStyleTag({
     nav { display: none !important; }
     .hero-visual { display: none !important; }
     #hero { min-height: 100vh; padding: 0 64px !important; }
-    .hero-inner { grid-template-columns: 1fr; max-width: 980px; }
+    .hero-inner { grid-template-columns: 1fr; max-width: 980px; transform: translateY(-61px); }
     .hero-copy { align-items: center; text-align: center; }
     .hero-h1 { max-width: none; }
     .hero-sub { margin-inline: auto; }
