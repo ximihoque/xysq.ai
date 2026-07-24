@@ -26,6 +26,10 @@ export const USE_CASE_CATEGORIES = [
       body: 'Marketing agents that write in your brand voice and learn from every campaign you run.',
     },
     flow: { agent: 'Marketing agent', reads: ['Brand voice', 'Competitors'], writes: 'Campaigns' },
+    hitl: {
+      correction: 'We dropped the playful tone. Enterprise voice from now on.',
+      result: 'Every future draft follows the new voice.',
+    },
     seo: 'Marketing context graphs from your campaign retros, brand guidelines, and ad sessions. Your team briefs from them; your marketing agents draft from them.',
   },
   {
@@ -47,6 +51,10 @@ export const USE_CASE_CATEGORIES = [
       body: 'Correct a support agent once and the fix applies to every future ticket. Not after a thousand more corrections.',
     },
     flow: { agent: 'Support agent', reads: ['Policies', 'Product'], writes: 'Resolved tickets' },
+    hitl: {
+      correction: 'Refunds over $500 now need manager approval.',
+      result: 'Every future answer uses the new policy.',
+    },
     seo: 'Support context graphs from your policies, product notes, and resolved conversations. Consistent answers for your team; support agents that improve with every correction.',
   },
   {
@@ -68,6 +76,10 @@ export const USE_CASE_CATEGORIES = [
       body: 'Copilots that read pricing and product truth, and write what they learn back to the deals graph.',
     },
     flow: { agent: 'Sales copilot', reads: ['Pricing', 'Objections'], writes: 'Deals' },
+    hitl: {
+      correction: 'The starter plan is gone. Lead with the team plan.',
+      result: 'Every future pitch leads with the team plan.',
+    },
     seo: 'Sales context graphs from your pricing decisions, deals, and objection handling. Full-picture briefs for reps; sales copilots that learn your best practices.',
   },
   {
@@ -89,6 +101,10 @@ export const USE_CASE_CATEGORIES = [
       body: 'Your personal agents read your graphs and write back what they learn.',
     },
     flow: { agent: 'Your assistant', reads: ['Notes', 'Decisions'], writes: 'Projects' },
+    hitl: {
+      correction: 'I switched from Notion to Obsidian.',
+      result: 'Every tool you use knows, from the next session.',
+    },
     seo: 'A personal context lake: your AI sessions and files become graphs only you control. Every tool you use starts knowing your context.',
   },
   {
@@ -110,6 +126,10 @@ export const USE_CASE_CATEGORIES = [
       body: 'Team agents read the shared graphs and keep them current.',
     },
     flow: { agent: 'Team agent', reads: ['Projects', 'Playbooks'], writes: 'Team decisions' },
+    hitl: {
+      correction: 'We renamed Project Falcon to Atlas.',
+      result: 'Every graph that mentioned Falcon is updated.',
+    },
     seo: 'One context lake for the whole team: share graphs on your terms, keep control, and keep the context when people move on.',
   },
 ]

@@ -1,6 +1,6 @@
 import { useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { GitBranch, ChevronDown, ArrowRight, Bot, FileText } from 'lucide-react'
+import { GitBranch, ChevronDown, ArrowRight, Bot, FileText, User, Check, RefreshCw } from 'lucide-react'
 import SEO, { breadcrumbSchema } from '../components/SEO'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
@@ -113,6 +113,37 @@ export default function UseCaseCategoryPage() {
             </a>
           </motion.div>
         </div>
+
+        {/* the HITL loop, concrete for this function: correct once ->
+            structure + retrieval retune -> every future answer improves */}
+        <motion.div className="ucp-hitl" {...fade(0.22)}>
+          <div className="ucp-hitl-head">
+            <RefreshCw size={15} strokeWidth={1.8} aria-hidden="true" />
+            <span>Human in the loop</span>
+          </div>
+          <p className="ucp-hitl-sub">
+            Correct it once. The context layer improves for every future
+            answer.
+          </p>
+          <div
+            className="ucp-hitl-flow"
+            role="img"
+            aria-label={`You correct once: "${data.hitl.correction}" One run retunes structure and retrieval. ${data.hitl.result}`}
+          >
+            <span className="ucp-hitl-quote">
+              <User size={12} strokeWidth={1.8} aria-hidden="true" />
+              "{data.hitl.correction}"
+            </span>
+            <span className="ucp-hitl-arrow" aria-hidden="true">
+              <ArrowRight size={13} strokeWidth={2} />
+              <em>one run · structure + retrieval retuned</em>
+            </span>
+            <span className="ucp-hitl-result">
+              <Check size={12} strokeWidth={2.2} aria-hidden="true" />
+              {data.hitl.result}
+            </span>
+          </div>
+        </motion.div>
       </article>
 
       <Footer />

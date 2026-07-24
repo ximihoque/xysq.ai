@@ -61,3 +61,94 @@
   color: var(--silver);
   margin: 0;
 }
+
+/* ── HITL band: correct once -> retune -> better forever ── */
+.ucp-hitl {
+  margin-top: 20px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ucp-hitl-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.ucp-hitl-head svg {
+  color: var(--cyan);
+}
+
+.ucp-hitl-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.84rem;
+  color: var(--silver);
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.ucp-hitl-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.ucp-hitl-quote,
+.ucp-hitl-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.ucp-hitl-quote {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--paper);
+}
+
+.ucp-hitl-quote svg {
+  color: var(--silver);
+  flex-shrink: 0;
+}
+
+.ucp-hitl-result {
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+  background: var(--cyan-dim);
+  color: var(--paper);
+}
+
+.ucp-hitl-result svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.ucp-hitl-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--silver);
+}
+
+.ucp-hitl-arrow em {
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+}
