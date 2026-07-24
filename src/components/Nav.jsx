@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   ChevronDown, ArrowUpRight,
-  Sparkles, Hammer, Network, Target,
+  Megaphone, Headset, Target, User, Users,
 } from 'lucide-react'
 import { USE_CASE_CATEGORIES } from '../data/useCases'
 import { handleHashLink } from '../lib/hashLink'
@@ -13,7 +13,7 @@ const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
 const CHROME_EXTENSION_URL =
   'https://chromewebstore.google.com/detail/xysq-memory-for-you-and-y/knpcnfdnahkinongbiedcllmigffodpm'
 
-const USE_CASE_ICONS = { Sparkles, Hammer, Network, Target }
+const USE_CASE_ICONS = { Megaphone, Headset, Target, User, Users }
 
 function SunIcon() {
   return (
@@ -197,9 +197,7 @@ export default function Nav() {
               <span className="nav-mega-cell-body">
                 <span className="nav-mega-eyebrow">{c.eyebrow}</span>
                 <span className="nav-mega-title">{c.title}</span>
-                <span className="nav-mega-personas">
-                  {c.personas.map((p) => p.name).join(' · ')}
-                </span>
+                <span className="nav-mega-personas">{c.line}</span>
               </span>
               <ArrowUpRight className="nav-mega-arrow" size={16} strokeWidth={1.8} />
             </Link>

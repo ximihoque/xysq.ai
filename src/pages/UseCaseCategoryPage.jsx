@@ -1,255 +1,121 @@
-import { useParams, Navigate, Link } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import {
-  GraduationCap, User, FlaskConical,
-  Code2, Rocket, PenTool,
-  Users, Megaphone, Target,
-  LineChart, BarChart3, Compass,
-  ArrowUpRight,
-} from 'lucide-react'
+import { GitBranch, ChevronDown, ArrowRight, Bot, FileText } from 'lucide-react'
 import SEO, { breadcrumbSchema } from '../components/SEO'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
-import ContextFlow from '../components/ContextFlow'
-import ThreeColumnCTA from '../components/ThreeColumnCTA'
-import { USE_CASE_BY_SLUG, USE_CASE_CATEGORIES, TOOLS, FEATURES } from '../data/useCases'
+import { USE_CASE_BY_SLUG } from '../data/useCases'
+import '../styles/outputs-section.css'
 import '../styles/use-case-page.css'
 
-const ICONS = {
-  GraduationCap, User, FlaskConical,
-  Code2, Rocket, PenTool,
-  Users, Megaphone, Target,
-  LineChart, BarChart3, Compass,
-}
-
 const fade = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-80px' },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1], delay },
+  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay },
 })
-
-// Tokens recognised inline in nudge bodies:
-//   {tool:claude}        → bold inline tool mention
-//   {feature:organise}   → accent-coloured docs link
-const TOKEN_RE = /\{(feature|tool):([a-z0-9_-]+)\}/g
-
-function NudgeBody({ text }) {
-  const parts = []
-  let lastIdx = 0
-  let m
-  // exec is stateful; reset before reuse
-  TOKEN_RE.lastIndex = 0
-  while ((m = TOKEN_RE.exec(text)) !== null) {
-    if (m.index > lastIdx) parts.push({ kind: 'text', value: text.slice(lastIdx, m.index) })
-    parts.push({ kind: m[1], id: m[2] })
-    lastIdx = m.index + m[0].length
-  }
-  if (lastIdx < text.length) parts.push({ kind: 'text', value: text.slice(lastIdx) })
-
-  return (
-    <p className="uc-nudge-body">
-      {parts.map((part, i) => {
-        if (part.kind === 'text') return <span key={i}>{part.value}</span>
-        if (part.kind === 'feature') {
-          const f = FEATURES[part.id]
-          if (!f) return null
-          const isExternal = /^https?:/.test(f.docsHref)
-          return (
-            <a
-              key={i}
-              className="uc-nudge-feature-link"
-              data-feature={part.id}
-              href={f.docsHref}
-              target={isExternal ? '_blank' : undefined}
-              rel={isExternal ? 'noopener noreferrer' : undefined}
-            >
-              {f.name}
-              <ArrowUpRight size={11} strokeWidth={2.4} className="uc-nudge-feature-link-arrow" />
-            </a>
-          )
-        }
-        if (part.kind === 'tool') {
-          const t = TOOLS[part.id]
-          if (!t) return null
-          // Plain inline mention — chip below already carries the visual emphasis
-          return <span key={i}>{t.name}</span>
-        }
-        return null
-      })}
-    </p>
-  )
-}
 
 export default function UseCaseCategoryPage() {
   const { slug } = useParams()
-  const category = USE_CASE_BY_SLUG[slug]
-  if (!category) return <Navigate to="/" replace />
+  const data = USE_CASE_BY_SLUG[slug]
+  if (!data) return <Navigate to="/" replace />
+
+  const { flow } = data
 
   return (
     <PageTransition>
       <SEO
-        title={`${category.title} · Use cases`}
-        path={`/use-cases/${category.slug}`}
-        description={category.deck}
+        title={`${data.title} · Use cases`}
+        path={`/use-cases/${slug}`}
+        description={data.seo}
         schema={breadcrumbSchema([
           { name: 'Home', item: '/' },
-          { name: 'Use cases', item: '/' },
-          { name: category.title, item: `/use-cases/${category.slug}` },
+          { name: data.title, item: `/use-cases/${slug}` },
         ])}
       />
       <NeuralBackground />
       <Nav />
-      <main className="uc-page">
-        {/* Hero */}
-        <section className="uc-hero">
-          <div className="uc-hero-inner">
-            <motion.h1 className="uc-headline" {...fade(0.05)}>
-              {category.headline.split('\n').map((line, i, arr) => (
-                <span key={i}>
-                  {line}
-                  {i < arr.length - 1 && <br />}
-                </span>
-              ))}
-            </motion.h1>
-            <motion.p className="uc-deck" {...fade(0.1)}>{category.deck}</motion.p>
-          </div>
-        </section>
 
-        {/* Personas grid */}
-        <section className="uc-personas">
-          <div className="uc-personas-inner">
-            {category.personas.map((p, i) => {
-              const Icon = ICONS[p.icon] || User
-              return (
-                <motion.article
-                  key={p.id}
-                  className="uc-persona-card"
-                  {...fade(0.12 + i * 0.08)}
-                >
-                  <span className="uc-persona-icon">
-                    <Icon strokeWidth={1.6} />
+      <article className="ucp">
+        <motion.header className="ucp-header" {...fade(0)}>
+          <span className="ucp-eyebrow">{data.eyebrow}</span>
+          <h1 className="ucp-h1">
+            {data.h1[0]}<br />
+            <em>{data.h1[1]}</em>
+          </h1>
+          <p className="ucp-deck">{data.deck}</p>
+        </motion.header>
+
+        <div className="out-halves ucp-halves">
+          {/* teams face: what you capture becomes this function's graphs */}
+          <motion.div className="out-half" {...fade(0.1)}>
+            <h3 className="out-half-title">{data.teamFace.label}</h3>
+            <div
+              className="out-fig"
+              role="img"
+              aria-label={`What goes in (${data.captures.join(', ')}) is distilled into the ${data.title.toLowerCase()} context graphs: ${data.graphs.join(', ')}`}
+            >
+              <div className="out-fig-chips">
+                {data.captures.map((c) => (
+                  <span key={c}><FileText size={11} strokeWidth={1.8} /> {c}</span>
+                ))}
+              </div>
+              <span className="out-fig-arrow out-fig-arrow--label" aria-hidden="true">
+                <ChevronDown size={12} strokeWidth={2} /> distilled into your context graphs
+              </span>
+              <div className="out-fig-chips">
+                {data.graphs.map((g) => (
+                  <span key={g} className="out-fig-chip--own">
+                    <GitBranch size={11} strokeWidth={1.8} /> {g}
                   </span>
-                  <h3 className="uc-persona-name">{p.name}</h3>
-                  <p className="uc-persona-body">{p.body}</p>
-                </motion.article>
-              )
-            })}
-          </div>
-        </section>
-
-        {/* Workflow nudges — one per persona */}
-        <section className="uc-nudges">
-          <div className="uc-nudges-inner">
-            <motion.div className="uc-nudges-header" {...fade(0)}>
-              <h2 className="uc-nudges-title">
-                Tiny workflows you can <em>try this week.</em>
-              </h2>
-            </motion.div>
-
-            <div className="uc-nudges-grid">
-              {category.personas.map((p, i) => {
-                const n = p.nudge
-                if (!n) return null
-                const features = (n.features || []).filter((id) => FEATURES[id])
-                const primary = features[0]
-                const primaryFeature = FEATURES[primary]
-                return (
-                  <motion.article
-                    key={p.id}
-                    className="uc-nudge"
-                    data-feature={primary}
-                    {...fade(0.1 + i * 0.08)}
-                  >
-                    <span className="uc-nudge-persona">{p.name}</span>
-                    <h3 className="uc-nudge-label">{n.label}</h3>
-                    <NudgeBody text={n.body} />
-
-                    <div className="uc-nudge-tools">
-                      {n.tools.map((tid) => {
-                        const t = TOOLS[tid]
-                        if (!t) return null
-                        return (
-                          <span key={tid} className="uc-nudge-tool" title={t.name}>
-                            <img src={t.logo} alt="" className="uc-nudge-tool-logo" width="16" height="16" loading="lazy" />
-                            <span>{t.name}</span>
-                          </span>
-                        )
-                      })}
-                    </div>
-
-                    <div className="uc-nudge-foot">
-                      <div className="uc-nudge-features">
-                        {features.map((fid) => {
-                          const f = FEATURES[fid]
-                          const isExternal = /^https?:/.test(f.docsHref)
-                          return (
-                            <a
-                              key={fid}
-                              className="uc-nudge-feature"
-                              data-feature={fid}
-                              href={f.docsHref}
-                              target={isExternal ? '_blank' : undefined}
-                              rel={isExternal ? 'noopener noreferrer' : undefined}
-                              title={`Learn about ${f.name}`}
-                            >
-                              <span className="uc-nudge-feature-dot" />
-                              {f.name}
-                            </a>
-                          )
-                        })}
-                      </div>
-                      {primaryFeature && (() => {
-                        const isExternal = /^https?:/.test(primaryFeature.docsHref)
-                        return (
-                          <a
-                            className="uc-nudge-docs"
-                            href={primaryFeature.docsHref}
-                            target={isExternal ? '_blank' : undefined}
-                            rel={isExternal ? 'noopener noreferrer' : undefined}
-                          >
-                            Learn more
-                            <ArrowUpRight size={13} strokeWidth={2} />
-                          </a>
-                        )
-                      })()}
-                    </div>
-                  </motion.article>
-                )
-              })}
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+            <p className="ucp-face-body">{data.teamFace.body}</p>
+            <a href="https://app.xysq.ai" className="out-btn out-btn--main">
+              Start free <ArrowRight size={14} strokeWidth={2} />
+            </a>
+          </motion.div>
 
-        {category.showContextFlow && (
-          <section className="uc-contextflow-host">
-            <ContextFlow />
-          </section>
-        )}
-
-        {/* Cross-link to other categories */}
-        <section className="uc-other">
-          <div className="uc-other-inner">
-            <p className="uc-other-label">Other use cases</p>
-            <div className="uc-other-row">
-              {USE_CASE_CATEGORIES.filter((c) => c.slug !== category.slug).map((c) => (
-                <Link key={c.slug} to={`/use-cases/${c.slug}`} className="uc-other-chip">
-                  {c.title}
-                  <span className="uc-other-arrow">→</span>
-                </Link>
-              ))}
+          {/* builders face: the agent reads across graphs, writes to its own */}
+          <motion.div className="out-half" {...fade(0.18)}>
+            <h3 className="out-half-title">{data.builderFace.label}</h3>
+            <div
+              className="out-fig"
+              role="img"
+              aria-label={`${flow.agent} reads from the ${flow.reads.join(' and ')} graphs and writes to the ${flow.writes} graph`}
+            >
+              <div className="out-fig-chips">
+                {flow.reads.map((g) => (
+                  <span key={g}><GitBranch size={11} strokeWidth={1.8} /> {g}</span>
+                ))}
+              </div>
+              <span className="out-fig-arrow out-fig-arrow--label" aria-hidden="true">
+                <ChevronDown size={12} strokeWidth={2} /> reads
+              </span>
+              <div className="out-fig-chips">
+                <span><Bot size={11} strokeWidth={1.8} /> {flow.agent}</span>
+              </div>
+              <span className="out-fig-arrow out-fig-arrow--label" aria-hidden="true">
+                <ChevronDown size={12} strokeWidth={2} /> writes · to its own
+              </span>
+              <div className="out-fig-chips">
+                <span className="out-fig-chip--own">
+                  <GitBranch size={11} strokeWidth={1.8} /> {flow.writes}
+                </span>
+              </div>
             </div>
-          </div>
-        </section>
+            <p className="ucp-face-body">{data.builderFace.body}</p>
+            <a href="https://docs.xysq.ai" className="out-btn out-btn--alt" target="_blank" rel="noopener noreferrer">
+              Read the docs <ArrowRight size={14} strokeWidth={2} />
+            </a>
+          </motion.div>
+        </div>
+      </article>
 
-        {/* "Pick your starting point" — same three-column CTA the home page
-           uses, so every use case page funnels into a consistent next step. */}
-        <ThreeColumnCTA />
-
-        <Footer />
-      </main>
+      <Footer />
     </PageTransition>
   )
 }
