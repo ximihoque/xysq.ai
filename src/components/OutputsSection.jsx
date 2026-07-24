@@ -115,20 +115,27 @@ function TeamFig() {
   )
 }
 
-/* the lake: many distinct context graphs, one per part of your work */
+/* the lake: many distinct context graphs, one per part of your work.
+   each cluster gets its own shape (tree / dense mesh / chain) so they
+   read as different graphs, not copies */
 const clusters = [
   {
     label: 'pricing',
-    nodes: [{ x: 110, y: 56, c: true }, { x: 76, y: 32 }, { x: 144, y: 30 }, { x: 82, y: 84 }, { x: 140, y: 82 }],
+    labelX: 112,
+    nodes: [{ x: 104, y: 30, c: true }, { x: 62, y: 58 }, { x: 142, y: 54 }, { x: 172, y: 28 }, { x: 80, y: 90 }, { x: 130, y: 88 }],
+    edges: [[0, 1], [0, 2], [2, 3], [1, 4], [2, 5]],
   },
   {
     label: 'campaigns',
-    hl: true,
-    nodes: [{ x: 320, y: 52, c: true }, { x: 286, y: 28 }, { x: 354, y: 26 }, { x: 292, y: 80 }, { x: 350, y: 78 }],
+    labelX: 322,
+    nodes: [{ x: 322, y: 54, c: true }, { x: 286, y: 30 }, { x: 358, y: 28 }, { x: 270, y: 74 }, { x: 372, y: 70 }, { x: 324, y: 94 }],
+    edges: [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [3, 5], [4, 5]],
   },
   {
     label: 'support',
-    nodes: [{ x: 530, y: 56, c: true }, { x: 496, y: 32 }, { x: 564, y: 30 }, { x: 502, y: 84 }, { x: 560, y: 82 }],
+    labelX: 532,
+    nodes: [{ x: 482, y: 40 }, { x: 522, y: 70, c: true }, { x: 558, y: 32 }, { x: 592, y: 62 }, { x: 534, y: 96 }],
+    edges: [[0, 1], [1, 2], [2, 3], [1, 4]],
   },
 ]
 
@@ -143,28 +150,26 @@ function LakeStrip() {
         aria-label="Your context lake holds many separate context graphs: one for pricing, one for campaigns, one for support, each its own small graph of connected facts"
         preserveAspectRatio="xMidYMid meet"
       >
-        {clusters.map((cl) => {
-          const [center, ...rest] = cl.nodes
-          return (
-            <g key={cl.label}>
-              {rest.map((n, i) => (
-                <line
-                  key={i}
-                  x1={center.x} y1={center.y} x2={n.x} y2={n.y}
-                  className="out-graph-edge"
-                />
-              ))}
-              {cl.nodes.map((n, i) => (
-                <circle
-                  key={i}
-                  cx={n.x} cy={n.y} r={n.c ? 7 : 5}
-                  className={n.c && cl.hl ? 'out-graph-node out-graph-node--hl' : 'out-graph-node'}
-                />
-              ))}
-              <text x={center.x} y={114} className="out-graph-label">{cl.label}</text>
-            </g>
-          )
-        })}
+        {clusters.map((cl) => (
+          <g key={cl.label}>
+            {cl.edges.map(([a, b], i) => (
+              <line
+                key={i}
+                x1={cl.nodes[a].x} y1={cl.nodes[a].y}
+                x2={cl.nodes[b].x} y2={cl.nodes[b].y}
+                className="out-graph-edge"
+              />
+            ))}
+            {cl.nodes.map((n, i) => (
+              <circle
+                key={i}
+                cx={n.x} cy={n.y} r={n.c ? 7 : 5}
+                className={n.c ? 'out-graph-node out-graph-node--hl' : 'out-graph-node'}
+              />
+            ))}
+            <text x={cl.labelX} y={114} className="out-graph-label">{cl.label}</text>
+          </g>
+        ))}
       </svg>
     </div>
   )
@@ -175,7 +180,8 @@ export default function OutputsSection() {
     <section className="out-section" id="graph">
       <div className="out-inner">
         <motion.h2 className="out-headline" {...fade(0)}>
-          One context lake, <em>many context graphs.</em>
+          One <span className="out-hl-lake">context lake</span>,{' '}
+          <em>many <span className="out-hl-graphs">context graphs</span>.</em>
         </motion.h2>
 
         <motion.p className="out-deck" {...fade(0.08)}>

@@ -38,6 +38,15 @@
   color: var(--silver);
 }
 
+/* the two nouns carry their colors: lake green, graphs lychee */
+.out-hl-lake {
+  color: var(--cyan);
+}
+
+.out-hl-graphs {
+  color: var(--lychee);
+}
+
 .out-deck {
   font-family: 'Outfit', sans-serif;
   font-size: clamp(0.95rem, 1.15vw, 1.05rem);
@@ -73,7 +82,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--silver);
+  color: var(--cyan);
 }
 
 .out-graph {
@@ -93,8 +102,8 @@
 }
 
 .out-graph-node--hl {
-  fill: var(--cyan);
-  stroke: var(--cyan);
+  fill: var(--lychee);
+  stroke: var(--lychee);
 }
 
 .out-graph-label {
