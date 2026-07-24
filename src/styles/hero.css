@@ -200,7 +200,9 @@ h1.hero-h1 {
   gap: 8px;
   background: transparent;
   color: var(--paper);
-  border: 1px solid var(--line);
+  /* --line reads invisible as a lone button border; this is a peer CTA,
+     not a ghost button */
+  border: 1px solid color-mix(in srgb, var(--silver) 60%, transparent);
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
@@ -232,7 +234,6 @@ h1.hero-h1 {
 
 [data-theme="light"] .btn-out {
   background: transparent;
-  border-color: var(--line);
   color: var(--paper);
 }
 

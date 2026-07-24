@@ -235,7 +235,7 @@
 }
 
 .out-btn--alt {
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--silver) 60%, transparent);
   color: var(--paper);
 }
 
@@ -318,6 +318,8 @@
 .out-gov-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 3px;
 }
 
