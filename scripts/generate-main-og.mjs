@@ -17,6 +17,7 @@ await page.goto(TARGET, { waitUntil: 'networkidle0', timeout: 30000 })
 // card composition: no nav chrome, no right-side visual, centered copy
 await page.addStyleTag({
   content: `
+    body { zoom: 1.25; }
     nav { display: none !important; }
     .hero-visual { display: none !important; }
     #hero { min-height: 100vh; padding: 0 64px !important; }
