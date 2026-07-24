@@ -75,8 +75,8 @@ export default function Footer() {
               <span className="ft-logo-word">xysq<span>.ai</span></span>
             </Link>
             <p className="ft-tagline">
-              Memory that follows you across every AI tool. Consent-first,
-              never trained on.
+              The first self-improving context engineering platform.
+              Consent-first, never trained on.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function Footer() {
 
         <div className="ft-bar">
           <span className="ft-copy">
-            © {new Date().getFullYear()} xysq.ai · Collaborative memory for AI-native teams.
+            © {new Date().getFullYear()} xysq.ai · The first self-improving context engineering platform.
           </span>
           <div className="ft-socials">
             {SOCIALS.map(({ label, href, Icon }) => (
