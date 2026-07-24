@@ -275,104 +275,72 @@
   letter-spacing: 0.05em;
 }
 
-/* builders figure */
-.out-fig-req {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+/* builders figure: many-to-many agents x graphs */
+.out-mm {
+  width: 100%;
+  height: auto;
 }
 
-.out-fig-agents {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
+.out-mm-chip {
+  fill: var(--bg);
+  stroke: var(--line);
+  stroke-width: 1;
 }
 
-.out-fig-agent {
+.out-mm-chip--own {
+  fill: var(--cyan-dim);
+  stroke: color-mix(in srgb, var(--cyan) 45%, transparent);
+}
+
+.out-mm-agent {
+  stroke: var(--silver);
+}
+
+.out-mm-text {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--bg);
-  padding: 4px 11px;
+  fill: var(--paper);
+  text-anchor: middle;
 }
 
-.out-fig-call {
+.out-mm-read {
+  stroke: var(--silver);
+  stroke-width: 1.2;
+  opacity: 0.75;
+}
+
+.out-mm-write {
+  stroke: var(--cyan);
+  stroke-width: 1.4;
+}
+
+.out-mm-ah--read {
+  fill: var(--silver);
+}
+
+.out-mm-ah--write {
+  fill: var(--cyan);
+}
+
+.out-mm-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.04em;
-  color: var(--cyan);
-  border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent);
-  border-radius: 999px;
-  padding: 3px 10px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  fill: var(--silver);
+  text-anchor: middle;
 }
 
-.out-fig-graph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
-  background: var(--cyan-dim);
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--paper);
+.out-mm-label--write {
+  fill: var(--cyan);
 }
 
-.out-fig-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.out-fig-served,
-.out-fig-denied {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 7px 11px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.76rem;
-  line-height: 1.4;
-  flex-wrap: wrap;
-}
-
-.out-fig-served {
-  color: var(--paper);
-  border-color: color-mix(in srgb, var(--cyan) 40%, transparent);
-  background: var(--cyan-dim);
-}
-
-.out-fig-served svg {
-  color: var(--cyan);
-  flex-shrink: 0;
-}
-
-.out-fig-served em {
-  font-style: normal;
+.out-mm-rule {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.04em;
-  color: var(--silver);
-  margin-left: auto;
-}
-
-.out-fig-denied {
-  color: var(--silver);
-}
-
-.out-fig-denied svg {
-  color: var(--silver);
-  flex-shrink: 0;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  fill: var(--silver);
+  text-anchor: middle;
 }
 
 /* ── Governance band: the funnel's common floor ── */

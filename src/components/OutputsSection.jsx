@@ -2,9 +2,8 @@ import { motion } from 'framer-motion'
 import {
   Target, ShieldCheck, GitBranch, FileText, Folder, Database,
   User, Users, Lock, Download, HardDrive, Share2, ChevronDown,
-  ArrowRight, Check, History, Eye,
+  ArrowRight, History, Eye,
 } from 'lucide-react'
-import XysqLogo from './XysqLogo'
 import '../styles/outputs-section.css'
 
 const fade = (delay = 0) => ({
@@ -50,39 +49,49 @@ const teamRows = [
   },
 ]
 
-/* builders: a scoped recall, served with sources; out-of-scope stays out */
+/* builders: agents collaborate across graphs. Read from one or many,
+   write to their own — the many-to-many between agents and graphs. */
 function BuilderFig() {
   return (
     <div
       className="out-fig"
       role="img"
-      aria-label="Your marketing, support, and sales agents ask the graph questions: it answers with a fact and its source; content an agent has no access to is not shown"
+      aria-label="Agents collaborate across context graphs: a sales agent reads from the pricing and product graphs and writes what it learns to its own sales graph. Every agent reads from many graphs and writes to its own"
     >
-      <div className="out-fig-req">
-        <div className="out-fig-agents">
-          <span className="out-fig-agent">Marketing agent</span>
-          <span className="out-fig-agent">Support agent</span>
-          <span className="out-fig-agent">Sales agent</span>
-        </div>
-        <span className="out-fig-call">"What's our refund policy?"</span>
-      </div>
-      <span className="out-fig-arrow" aria-hidden="true"><ChevronDown size={12} strokeWidth={2} /></span>
-      <div className="out-fig-graph">
-        <XysqLogo size={13} />
-        <span>Context lake</span>
-      </div>
-      <span className="out-fig-arrow" aria-hidden="true"><ChevronDown size={12} strokeWidth={2} /></span>
-      <div className="out-fig-rows">
-        <span className="out-fig-served">
-          <Check size={12} strokeWidth={2.2} />
-          Refunds over $500 need manager approval.
-          <em>source: refund policy</em>
-        </span>
-        <span className="out-fig-denied">
-          <Lock size={12} strokeWidth={2} />
-          eng roadmap · no access, not shown
-        </span>
-      </div>
+      <svg viewBox="0 0 400 172" className="out-mm" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <marker id="out-mm-ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 8 4 L 0 8 z" className="out-mm-ah out-mm-ah--read" />
+          </marker>
+          <marker id="out-mm-aw" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 8 4 L 0 8 z" className="out-mm-ah out-mm-ah--write" />
+          </marker>
+        </defs>
+
+        {/* graphs on top */}
+        <rect x="8" y="8" width="112" height="26" rx="13" className="out-mm-chip" />
+        <text x="64" y="25" className="out-mm-text">Pricing graph</text>
+        <rect x="144" y="8" width="112" height="26" rx="13" className="out-mm-chip" />
+        <text x="200" y="25" className="out-mm-text">Product graph</text>
+        <rect x="280" y="8" width="112" height="26" rx="13" className="out-mm-chip out-mm-chip--own" />
+        <text x="336" y="25" className="out-mm-text out-mm-text--own">Sales graph</text>
+
+        {/* reads: many graphs -> the agent */}
+        <line x1="70" y1="36" x2="176" y2="118" className="out-mm-read" markerEnd="url(#out-mm-ar)" />
+        <line x1="200" y1="36" x2="200" y2="118" className="out-mm-read" markerEnd="url(#out-mm-ar)" />
+        <text x="112" y="84" className="out-mm-label">reads</text>
+
+        {/* write: the agent -> its own graph */}
+        <line x1="228" y1="118" x2="330" y2="37" className="out-mm-write" markerEnd="url(#out-mm-aw)" />
+        <text x="300" y="84" className="out-mm-label out-mm-label--write">writes</text>
+
+        {/* the agent */}
+        <rect x="146" y="120" width="108" height="26" rx="13" className="out-mm-chip out-mm-agent" />
+        <text x="200" y="137" className="out-mm-text">Sales agent</text>
+
+        {/* the rule */}
+        <text x="200" y="166" className="out-mm-rule">every agent reads from many · writes to its own</text>
+      </svg>
     </div>
   )
 }
