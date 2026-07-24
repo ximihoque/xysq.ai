@@ -17,26 +17,26 @@ const fade = (delay = 0) => ({
 const builderRows = [
   {
     icon: Target,
-    label: 'Scoped recall',
-    body: 'Agents pull the context they need over MCP or the SDK, in one call.',
+    label: 'The right context, every time',
+    body: 'Each agent gets exactly the context its task needs, nothing extra.',
   },
   {
     icon: ShieldCheck,
-    label: 'Permissions enforced at retrieval',
-    body: 'An agent only sees what its scope allows.',
+    label: 'Sees only what it should',
+    body: 'Each agent has the access you gave it. Nothing more.',
   },
   {
     icon: GitBranch,
-    label: 'Traceable answers',
-    body: 'Every piece of served context links back to its source.',
+    label: 'Every answer can be checked',
+    body: 'Anything an agent is told traces back to where it came from.',
   },
 ]
 
 const teamRows = [
   {
     icon: Share2,
-    label: 'Granular sharing',
-    body: 'Share one page, a folder, or a whole vault with a person or the team. Revoke anytime.',
+    label: 'Share exactly what you choose',
+    body: 'One page, a folder, or everything. With one person or the whole team. Take it back anytime.',
   },
   {
     icon: Users,
@@ -46,7 +46,7 @@ const teamRows = [
   {
     icon: Download,
     label: 'Export anytime',
-    body: 'Your data is yours. Bring-your-own-drive is rolling out.',
+    body: 'Your data is yours, all of it, whenever. Your own drive support is rolling out.',
   },
 ]
 
@@ -56,11 +56,11 @@ function BuilderFig() {
     <div
       className="out-fig"
       role="img"
-      aria-label="A support agent recalls context scoped to its vault: the graph serves a fact with its source; a page outside the agent's scope is not served"
+      aria-label="A support agent asks about the refund policy: the graph answers with a fact and its source; the eng roadmap, which the agent has no access to, is not shown"
     >
       <div className="out-fig-req">
         <span className="out-fig-agent">Support agent</span>
-        <span className="out-fig-call">recall · scope: support</span>
+        <span className="out-fig-call">"What's our refund policy?"</span>
       </div>
       <span className="out-fig-arrow" aria-hidden="true"><ChevronDown size={12} strokeWidth={2} /></span>
       <div className="out-fig-graph">
@@ -76,7 +76,7 @@ function BuilderFig() {
         </span>
         <span className="out-fig-denied">
           <Lock size={12} strokeWidth={2} />
-          eng roadmap · outside scope, not served
+          eng roadmap · no access, not shown
         </span>
       </div>
     </div>

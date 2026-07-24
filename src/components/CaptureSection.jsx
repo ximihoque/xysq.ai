@@ -26,7 +26,7 @@ export default function CaptureSection() {
           <div
             className="cpt-frame"
             role="img"
-            aria-label="Capture sources: AI sessions over MCP from Claude, Cursor, ChatGPT and Gemini; uploaded files; Chrome capture; and decisions saved by hand. Everything distills into one context graph"
+            aria-label="Capture sources: AI sessions from Claude, Cursor, ChatGPT and Gemini; uploaded files; Chrome capture; and decisions saved by hand. Everything distills into one context graph"
           >
             <div className="cpt-grid">
               <div className="cpt-src">
@@ -45,7 +45,7 @@ export default function CaptureSection() {
                     />
                   ))}
                 </span>
-                <span className="cpt-src-sub">over MCP, as you work</span>
+                <span className="cpt-src-sub">captured as you work</span>
               </div>
               <div className="cpt-src">
                 <span className="cpt-src-title">Files</span>
@@ -85,7 +85,7 @@ export default function CaptureSection() {
           </h2>
 
           <p className="cpt-deck">
-            No pipelines to babysit. Connect your AI tools over MCP and every
+            No pipelines to babysit. Connect your AI tools once and every
             session flows in. Drop in files, clip from the browser, or save a
             decision by hand. The engine distills all of it into your context
             graph.
@@ -96,8 +96,8 @@ export default function CaptureSection() {
             <div className="cpt-face">
               <span className="cpt-face-label">For builders</span>
               <p className="cpt-face-body">
-                Wire it into your product over MCP and the SDK. Every agent
-                you ship starts informed.
+                Plug it into your product. Every agent you ship starts
+                informed from day one.
               </p>
               <a href="https://docs.xysq.ai" className="cpt-face-link" target="_blank" rel="noopener noreferrer">
                 Read the docs <ArrowRight size={13} strokeWidth={2} />
