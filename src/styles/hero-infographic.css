@@ -1,0 +1,375 @@
+/* ── Hero infographic: raw data → engine → graph → governance + loop ── */
+
+.hig {
+  position: relative;
+  width: 100%;
+  max-width: 512px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* closed frame around the whole graphic; extra left padding hosts the
+     feedback loop line. --line is too faint for a standalone frame, so
+     mix silver in until the box actually reads as a box. */
+  border: 1px solid color-mix(in srgb, var(--silver) 45%, transparent);
+  border-radius: 20px;
+  padding: 18px 18px 18px 32px;
+}
+
+/* dashed return path: from the loop panel back up to the first card */
+.hig-loopline {
+  position: absolute;
+  left: 15px;
+  top: 52px;      /* mid of first card (incl. frame padding) */
+  bottom: 136px;  /* mid of loop panel (badges + gaps below it) */
+  border-left: 1px dashed var(--line);
+}
+
+.hig-loopline::before,
+.hig-loopline::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  width: 9px;
+  border-top: 1px dashed var(--line);
+}
+
+.hig-loopline::before { top: 0; }
+.hig-loopline::after { bottom: 0; }
+
+/* ── Flow of cards ── */
+.hig-flow {
+  display: flex;
+  flex-direction: column;
+}
+
+.hig-connector {
+  display: flex;
+  justify-content: center;
+  padding: 3px 0;
+  color: var(--silver);
+  opacity: 0.7;
+}
+
+.hig-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.hig-card--engine {
+  border-color: color-mix(in srgb, var(--cyan) 45%, transparent);
+  background: var(--cyan-dim);
+}
+
+.hig-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--cyan);
+}
+
+.hig-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.hig-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin-bottom: 2px;
+}
+
+.hig-card-line {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--silver);
+}
+
+/* ── Self-improving loop panel ── */
+.hig-loop {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hig-loop-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.hig-loop-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.hig-loop-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.hig-loop-item svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* ── Two learning badges ── */
+.hig-badges {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hig-badge {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.hig-badge-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 3px;
+}
+
+.hig-badge-head svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.hig-badge-line {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: var(--silver);
+}
+
+/* ════ Teams variant (HeroTeamsGraphic) ════ */
+
+/* no loop line on the teams slide; frame padding evens out.
+   Slightly tighter gap than the engine slide so both land at ~the same
+   height and the carousel doesn't jump. */
+.htg {
+  padding: 18px;
+  gap: 10px;
+}
+
+.htg .hig-connector {
+  padding: 1px 0;
+}
+
+.htg-zone {
+  width: 100%;
+}
+
+.htg-zone .hig-card-text {
+  width: 100%;
+}
+
+/* chips: storage sources + share controls */
+.htg-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 6px;
+}
+
+.htg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 500;
+  color: var(--silver);
+  white-space: nowrap;
+}
+
+.htg-chip svg {
+  color: var(--cyan);
+}
+
+/* mini graph svg — inherits page CSS vars */
+.htg-graph {
+  width: 100%;
+  height: auto;
+  margin: 0 0 6px;
+}
+
+.htg-edge {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.htg-edge--hl {
+  stroke: color-mix(in srgb, var(--cyan) 55%, transparent);
+}
+
+.htg-node {
+  fill: var(--bg);
+  stroke: var(--silver);
+  stroke-width: 1;
+}
+
+.htg-node--hl {
+  fill: var(--cyan);
+  stroke: var(--cyan);
+}
+
+.htg-node-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  fill: var(--silver);
+  text-anchor: middle;
+}
+
+/* share zone keeps its icon chip left like the engine cards */
+.htg-share {
+  align-items: flex-start;
+}
+
+/* avatars row */
+.htg-avatars {
+  display: flex;
+  align-items: center;
+  margin: 4px 0 6px;
+}
+
+.htg-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface2);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--silver);
+  margin-right: -6px; /* overlap */
+}
+
+.htg-avatar--more {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border-color: color-mix(in srgb, var(--cyan) 35%, transparent);
+}
+
+/* two outcome cards side by side */
+.htg-out {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* engine pill — sits inside the personal-graph card */
+.htg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--silver);
+}
+
+.htg-pill--inline {
+  align-self: flex-start;
+  margin-top: 7px;
+}
+
+/* security strip: governance + storage ownership, the "you're safe" row */
+.htg-secure {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 10px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
+.htg-secure-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.htg-secure-item svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* ── Mobile: badges stack, line hides (flow reads top-down already) ── */
+@media (max-width: 480px) {
+  .hig {
+    padding: 14px;
+  }
+
+  .hig-loopline {
+    display: none;
+  }
+
+  .hig-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .htg-out {
+    grid-template-columns: 1fr;
+  }
+}

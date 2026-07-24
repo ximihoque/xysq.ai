@@ -23,12 +23,6 @@ function XIcon({ size = 16 }) {
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
 
-const FEATURE_LINKS = [
-  { label: 'Unified memory', to: '/#memory' },
-  { label: 'Teams',          to: '/#teams' },
-  { label: 'Organise',       to: '/#organise' },
-]
-
 const RESOURCE_LINKS = [
   { label: 'Blog',            to: '/blog' },
   { label: 'Docs',            href: 'https://docs.xysq.ai',                            external: true },
@@ -81,22 +75,13 @@ export default function Footer() {
               <span className="ft-logo-word">xysq<span>.ai</span></span>
             </Link>
             <p className="ft-tagline">
-              Memory that follows you across every AI tool. Consent-first,
-              never trained on.
+              The first self-improving context engineering platform.
+              Consent-first, never trained on.
             </p>
           </div>
 
           {/* Link columns */}
           <div className="ft-cols">
-            <div className="ft-col">
-              <h4 className="ft-col-title">Features</h4>
-              <ul>
-                {FEATURE_LINKS.map((l) => (
-                  <li key={l.label}><FooterLink to={l.to}>{l.label}</FooterLink></li>
-                ))}
-              </ul>
-            </div>
-
             <div className="ft-col">
               <h4 className="ft-col-title">Use cases</h4>
               <ul>
@@ -130,7 +115,7 @@ export default function Footer() {
 
         <div className="ft-bar">
           <span className="ft-copy">
-            © {new Date().getFullYear()} xysq.ai · Collaborative memory for AI-native teams.
+            © {new Date().getFullYear()} xysq.ai · The first self-improving context engineering platform.
           </span>
           <div className="ft-socials">
             {SOCIALS.map(({ label, href, Icon }) => (

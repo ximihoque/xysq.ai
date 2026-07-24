@@ -5,12 +5,12 @@
   min-height: 92vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   padding-top: 140px;
   padding-left: var(--side-pad);
   padding-right: var(--side-pad);
-  padding-bottom: 32px;
+  padding-bottom: 48px;
   z-index: 1;
   overflow: hidden;
 }
@@ -31,12 +31,12 @@
   display: none;
 }
 
-/* A single soft radial lift behind the headline, monochrome. No teal, no blur
-   filter, no colored bloom. */
+/* A single soft radial lift, monochrome. No teal, no blur filter. Pulled
+   toward the left column where the headline sits. */
 .hero-spot {
   position: absolute;
-  left: 50%;
-  top: 0;
+  left: 28%;
+  top: 4%;
   width: 1100px;
   height: 620px;
   transform: translateX(-50%);
@@ -49,124 +49,117 @@
     radial-gradient(ellipse at center, rgba(0, 0, 0, 0.03) 0%, transparent 62%);
 }
 
-/* ── Inner container ── */
+/* ── Inner container: two columns (copy left, visual right) ── */
 .hero-inner {
   position: relative;
   z-index: 2;
-  max-width: 880px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  text-align: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 56px;
+  align-items: center;
+}
+
+/* ── Left copy column ── */
+.hero-copy {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  text-align: left;
 }
 
-/* ── Eyebrow chip ── */
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--silver);
-  text-decoration: none;
-  margin-bottom: 32px;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-.hero-eyebrow:hover {
-  border-color: #3a3a3a;
-  color: var(--paper);
-}
-
-/* small static accent dot — no pulse, no glow */
-.hero-eyebrow-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cyan);
-}
-
-.hero-eyebrow-arrow {
-  font-size: 0.85rem;
-  opacity: 0.6;
-  transition: transform 0.2s ease;
-}
-
-.hero-eyebrow:hover .hero-eyebrow-arrow {
-  transform: translateX(2px);
-  opacity: 1;
-}
-
-[data-theme="light"] .hero-eyebrow:hover {
-  border-color: #d4d4d4;
-}
-
-/* ── Logo above headline ── */
-.hero-logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 28px;
-}
-
-/* ── Headline ── */
+/* ── Headline (carries the whole hero — no body paragraph) ──
+   Explicit <br/>s set the 3-line shape; the size is clamped so the longest
+   line ("context engineering", 19ch) fits the left grid column without
+   wrapping mid-word. */
 h1.hero-h1 {
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
-  font-size: clamp(2.6rem, 6vw, 5rem);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   color: var(--paper);
-  margin-bottom: 24px;
-  max-width: 20ch;
+  margin-bottom: 18px;
 }
 
-/* Second line — a lighter qualifier under the main statement. Same weight
-   family, muted color, no gradient text tricks. */
-.hero-h1-sub {
-  display: block;
-  margin-top: 0.1em;
-  font-size: 0.52em;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--silver);
-}
-
-/* the two audiences each get a flat accent (no glow): agents in cyan,
-   teams in lychee red, so "agents and teams" reads as two things at a glance. */
-.hero-h1-sub .hero-accent {
+/* single flat accent on the differentiator word — no glow */
+.hero-accent {
   color: var(--cyan);
 }
 
-.hero-h1-sub .hero-accent-teams {
-  color: var(--lychee);
+/* "The first" — same size as the rest, just dimmed */
+.hero-h1-lead {
+  color: var(--silver);
 }
 
-/* ── Sub ── */
+/* "platform." — same size, dimmed a step below the main line */
+.hero-h1-dim {
+  color: var(--silver);
+}
+
+/* the engine name pops to full text color (white on dark, near-black on light) */
+.hero-sub-strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+/* ── Sub: engine intro + governance line ── */
 .hero-sub {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
   font-weight: 400;
   color: var(--silver);
-  line-height: 1.6;
-  margin-bottom: 40px;
-  max-width: 560px;
+  line-height: 1.62;
+  margin-bottom: 18px;
+  max-width: 52ch;
+}
+
+/* ── Points: three highlights in one row, icon + label each.
+   Auto block margins soak up the column's spare height (from the stretch)
+   so the row floats between sub and CTAs; the padding keeps a floor when
+   there's no spare height (tablet/mobile). ── */
+.hero-points {
+  list-style: none;
+  /* a deliberate gap after the sub pushes points + CTAs toward the
+     infographic's bottom edge without moving the headline */
+  margin: 40px 0 0;
+  padding: 14px 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+}
+
+.hero-points li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.hero-points li svg {
+  color: var(--cyan);
+  flex-shrink: 0;
 }
 
 /* ── CTAs ── */
 .hero-btns {
   display: flex;
   gap: 12px;
-  justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 56px;
+  margin-bottom: 10px;
+}
+
+/* equal-width doors: both audience buttons match, content centered */
+.hero-btns .btn-main,
+.hero-btns .btn-out {
+  min-width: 176px;
+  justify-content: center;
 }
 
 .btn-main {
@@ -207,7 +200,9 @@ h1.hero-h1 {
   gap: 8px;
   background: transparent;
   color: var(--paper);
-  border: 1px solid var(--line);
+  /* --line reads invisible as a lone button border; this is a peer CTA,
+     not a ghost button */
+  border: 1px solid color-mix(in srgb, var(--silver) 60%, transparent);
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
@@ -239,7 +234,6 @@ h1.hero-h1 {
 
 [data-theme="light"] .btn-out {
   background: transparent;
-  border-color: var(--line);
   color: var(--paper);
 }
 
@@ -248,43 +242,61 @@ h1.hero-h1 {
   background: var(--surface2);
 }
 
-/* ── Marquee slot ── */
-.hero-marquee-slot {
+/* ── Right visual column ── */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  margin-bottom: 24px;
 }
 
-/* ── Tablet (iPad Pro portrait, etc.) — drop the 92vh constraint ──
-   On tall narrow viewports (1024×1366) the 92vh hero leaves a 500px+
-   empty band between the marquee and the next section. Size to content
-   from tablet down. */
+/* ── Tablet ── */
 @media (max-width: 1024px) {
   #hero {
     min-height: auto;
     padding-top: 130px;
     padding-bottom: 56px;
   }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    max-width: 640px;
+  }
+
+  .hero-copy {
+    align-items: center;
+    text-align: center;
+  }
+
+  h1.hero-h1 {
+    max-width: 18ch;
+  }
+
+  .hero-sub {
+    max-width: 56ch;
+  }
+
+  .hero-btns {
+    justify-content: center;
+  }
+
+  .hero-spot {
+    left: 50%;
+  }
 }
 
 /* ── Mobile ── */
 @media (max-width: 720px) {
   #hero {
-    /* On mobile we size to content + a comfortable top offset for the fixed
-       nav. The desktop 92vh creates a long empty bottom on tall phones. */
     min-height: auto;
     padding-top: 96px;
-    padding-bottom: 32px;
+    padding-bottom: 40px;
   }
 
   h1.hero-h1 {
     max-width: 100%;
     margin-bottom: 20px;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.62rem;
-    padding: 6px 12px;
-    margin-bottom: 22px;
   }
 
   .hero-sub {
@@ -297,16 +309,11 @@ h1.hero-h1 {
     width: 100%;
     max-width: 320px;
     margin-inline: auto;
-    margin-bottom: 32px;
   }
 
   .btn-main,
   .btn-out {
     justify-content: center;
     width: 100%;
-  }
-
-  .hero-marquee-slot {
-    margin-bottom: 0;
   }
 }

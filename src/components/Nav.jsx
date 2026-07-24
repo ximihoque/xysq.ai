@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, createContext, useContext, useId } from 'r
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
-  ChevronDown, Brain, Users, FolderKanban, ArrowUpRight,
-  Sparkles, Hammer, Network, Target,
+  ChevronDown, ArrowUpRight,
+  Megaphone, Headset, Target, User, Users,
 } from 'lucide-react'
 import { USE_CASE_CATEGORIES } from '../data/useCases'
 import { handleHashLink } from '../lib/hashLink'
@@ -13,31 +13,7 @@ const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
 const CHROME_EXTENSION_URL =
   'https://chromewebstore.google.com/detail/xysq-memory-for-you-and-y/knpcnfdnahkinongbiedcllmigffodpm'
 
-const USE_CASE_ICONS = { Sparkles, Hammer, Network, Target }
-
-const FEATURES = [
-  {
-    id: 'unified-memory',
-    label: 'Unified memory',
-    description: 'One memory across every AI tool you use.',
-    href: '/#memory',
-    Icon: Brain,
-  },
-  {
-    id: 'teams',
-    label: 'Teams',
-    description: 'Shared context across collaborators.',
-    href: '/#teams',
-    Icon: Users,
-  },
-  {
-    id: 'organise',
-    label: 'Organise',
-    description: 'Drop in documents and conversations, all queryable.',
-    href: '/#organise',
-    Icon: FolderKanban,
-  },
-]
+const USE_CASE_ICONS = { Megaphone, Headset, Target, User, Users }
 
 function SunIcon() {
   return (
@@ -201,30 +177,6 @@ export default function Nav() {
 
   useEffect(() => { setIsMenuOpen(false) }, [pathname])
 
-  const featuresPanel = (
-    <ul className="nav-drop-list nav-drop-list--features">
-      {FEATURES.map((f) => {
-        const Icon = f.Icon
-        return (
-          <li key={f.id}>
-            <Link
-              to={f.href}
-              className="nav-drop-item"
-              onClick={(e) => handleHashLink(e, f.href, pathname, closeMenu)}
-            >
-              <span className="nav-drop-item-icon"><Icon strokeWidth={1.6} /></span>
-              <span className="nav-drop-item-text">
-                <span className="nav-drop-item-title">{f.label}</span>
-                <span className="nav-drop-item-desc">{f.description}</span>
-              </span>
-              <ArrowUpRight className="nav-drop-item-arrow" size={16} strokeWidth={1.8} />
-            </Link>
-          </li>
-        )
-      })}
-    </ul>
-  )
-
   const useCasesPanel = (
     <div className="nav-mega">
       <div className="nav-mega-grid">
@@ -245,9 +197,7 @@ export default function Nav() {
               <span className="nav-mega-cell-body">
                 <span className="nav-mega-eyebrow">{c.eyebrow}</span>
                 <span className="nav-mega-title">{c.title}</span>
-                <span className="nav-mega-personas">
-                  {c.personas.map((p) => p.name).join(' · ')}
-                </span>
+                <span className="nav-mega-personas">{c.line}</span>
               </span>
               <ArrowUpRight className="nav-mega-arrow" size={16} strokeWidth={1.8} />
             </Link>
@@ -274,10 +224,6 @@ export default function Nav() {
 
       <NavDropdownProvider>
         <div className={`nav-center${isMenuOpen ? ' open' : ''}`}>
-          <NavDropdown label="Features" isMobile={isMenuOpen}>
-            {featuresPanel}
-          </NavDropdown>
-
           <NavDropdown
             label="Use cases"
             panelClassName="nav-drop-panel--mega"
@@ -285,6 +231,7 @@ export default function Nav() {
           >
             {useCasesPanel}
           </NavDropdown>
+
 
           <SiblingNavLink
             as="a"
@@ -314,9 +261,6 @@ export default function Nav() {
             Blog
           </SiblingNavLink>
 
-          <SiblingNavLink as={Link} to="/vision" onClick={closeMenu}>
-            Vision
-          </SiblingNavLink>
 
           {/* Mobile: CTAs appear inside the menu so users on small screens see them */}
           <a

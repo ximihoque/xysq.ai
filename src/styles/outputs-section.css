@@ -1,0 +1,395 @@
+/* ── Outputs section (Section 3): one graph, two outputs ── */
+
+.out-section {
+  position: relative;
+  padding: 56px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .out-section {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+}
+
+.out-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.out-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.out-headline em {
+  font-style: normal;
+  color: var(--silver);
+}
+
+/* light-mode silver (#666) hides next to the near-black headline; use the
+   same visibly-grey step dark mode gets */
+[data-theme="light"] .out-headline em {
+  color: #8f8f8f;
+}
+
+/* the two nouns carry their colors: lake green, graphs lychee */
+.out-hl-lake {
+  color: var(--cyan);
+}
+
+.out-hl-graphs {
+  color: var(--lychee);
+}
+
+.out-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  color: var(--silver);
+  line-height: 1.62;
+  margin-bottom: 36px;
+  text-align: center;
+  max-width: 56ch;
+}
+
+/* ── The lake strip ── */
+.out-graph-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 44px;
+}
+
+.out-lake {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 40px 24px 16px;
+}
+
+.out-lake-label {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.out-graph {
+  width: 100%;
+  height: auto;
+}
+
+.out-graph-edge {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.out-graph-node {
+  fill: var(--bg);
+  stroke: var(--silver);
+  stroke-width: 1;
+}
+
+.out-graph-node--hl {
+  fill: var(--lychee);
+  stroke: var(--lychee);
+}
+
+.out-graph-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--silver);
+  text-anchor: middle;
+}
+
+/* ── The two halves ── */
+.out-halves {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .out-halves {
+    grid-template-columns: 1fr;
+  }
+}
+
+.out-half {
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.out-half-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+/* ── Rows ── */
+.out-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.out-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.out-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--cyan);
+}
+
+.out-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.out-item-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.out-item-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--silver);
+}
+
+/* ── Buttons: mirror the hero pair ── */
+.out-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  padding: 11px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: auto;
+  align-self: flex-start;
+  transition: opacity 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.out-btn--main {
+  background: var(--paper);
+  color: var(--bg);
+}
+
+.out-btn--main:hover {
+  opacity: 0.86;
+}
+
+[data-theme="light"] .out-btn--main {
+  background: #171717;
+  color: #ffffff;
+}
+
+.out-btn--alt {
+  border: 1px solid color-mix(in srgb, var(--silver) 60%, transparent);
+  color: var(--paper);
+}
+
+.out-btn--alt:hover {
+  border-color: #3a3a3a;
+  background: var(--surface);
+}
+
+[data-theme="light"] .out-btn--alt:hover {
+  border-color: #d4d4d4;
+  background: var(--surface2);
+}
+
+/* ── Mini figures inside the halves ── */
+.out-fig {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.out-fig-arrow {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--silver);
+  opacity: 0.8;
+}
+
+.out-fig-arrow--label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── Governance band: the funnel's common floor ── */
+.out-gov {
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.out-gov-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.out-gov-head svg {
+  color: var(--cyan);
+}
+
+.out-gov-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .out-gov-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+.out-gov-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3px;
+}
+
+.out-gov-item-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.out-gov-item-label svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.out-gov-item-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--silver);
+}
+
+/* chip rows (both figures) */
+.out-fig-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.out-fig-chips span,
+.out-fig-own span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  padding: 4px 11px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.out-fig-chips svg,
+.out-fig-own svg {
+  color: var(--cyan);
+}
+
+/* the agent's own graph reads tinted */
+.out-fig-chips .out-fig-chip--own {
+  background: var(--cyan-dim);
+  border-color: color-mix(in srgb, var(--cyan) 45%, transparent);
+}
+
+.out-fig-own {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.out-fig-own span {
+  color: var(--silver);
+}

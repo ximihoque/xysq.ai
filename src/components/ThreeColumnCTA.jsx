@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Sparkles, Code2, Building2 } from 'lucide-react'
+import { Users, Code2, SlidersHorizontal } from 'lucide-react'
 import '../styles/three-column-cta.css'
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
@@ -14,29 +14,29 @@ const fade = (delay = 0) => ({
 
 const columns = [
   {
-    id: 'you',
-    icon: Sparkles,
-    eyebrow: 'For you',
-    title: 'Start using xysq.',
-    body: 'Sign in, connect your favourite AI tools, and start carrying your context across them. No setup, no migration.',
-    cta: { kind: 'external', label: 'Open the app', href: APP_URL },
+    id: 'teams',
+    icon: Users,
+    eyebrow: 'For teams',
+    title: 'Start a shared context lake.',
+    body: 'Your team’s AI sessions and files become knowledge everyone can use. Free to start.',
+    cta: { kind: 'external', label: 'Start free', href: APP_URL },
     accent: 'cyan',
   },
   {
-    id: 'developers',
+    id: 'builders',
     icon: Code2,
-    eyebrow: 'For developers',
-    title: 'Build with xysq.',
-    body: 'API, SDKs, and reference architectures. Drop persistent memory into your agents in minutes, no rebuild required.',
+    eyebrow: 'For AI builders',
+    title: 'Give your agents memory.',
+    body: 'Agents that read from many graphs, write to their own, and improve with every correction.',
     cta: { kind: 'external', label: 'Read the docs', href: 'https://docs.xysq.ai' },
     accent: 'cyan',
   },
   {
-    id: 'businesses',
-    icon: Building2,
-    eyebrow: 'For businesses',
-    title: 'Bring xysq to your team.',
-    body: 'Institutional memory across Slack, Drive, Notion, and the rest. Your team’s knowledge, queryable from any agent.',
+    id: 'custom',
+    icon: SlidersHorizontal,
+    eyebrow: 'Custom solution',
+    title: 'Tuned to your domain.',
+    body: 'Context is sensitive to your domain and niche. We’ll fit the engine to yours: your vocabulary, your workflows, your deployment.',
     cta: { kind: 'external', label: 'Book a call', href: 'https://calendly.com/hoque-ximi/30min' },
     accent: 'lychee',
   },
