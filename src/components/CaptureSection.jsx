@@ -80,8 +80,8 @@ export default function CaptureSection() {
         {/* ── Text ── */}
         <motion.div className="cpt-text" {...fade(0)}>
           <h2 className="cpt-headline">
-            Captured where the work<br />
-            <em>actually happens.</em>
+            Captured where the<br />
+            work <em>actually happens.</em>
           </h2>
 
           <p className="cpt-deck">

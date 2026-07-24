@@ -34,7 +34,8 @@ export default function EngineSection() {
       <div className="eng-inner">
         <motion.div className="eng-text" {...fade(0)}>
           <h2 className="eng-headline">
-            Memory that <span className="eng-hl-improves">improves</span> on command,<br />
+            Memory that <span className="eng-hl-improves">improves</span><br />
+            on command,<br />
             <em>not by <span className="eng-hl-accident">accident</span>.</em>
           </h2>
 
