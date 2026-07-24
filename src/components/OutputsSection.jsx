@@ -120,19 +120,19 @@ function TeamFig() {
    read as different graphs, not copies */
 const clusters = [
   {
-    label: 'pricing',
+    label: 'Personal',
     labelX: 112,
     nodes: [{ x: 104, y: 30, c: true }, { x: 62, y: 58 }, { x: 142, y: 54 }, { x: 172, y: 28 }, { x: 80, y: 90 }, { x: 130, y: 88 }],
     edges: [[0, 1], [0, 2], [2, 3], [1, 4], [2, 5]],
   },
   {
-    label: 'campaigns',
+    label: 'Teams',
     labelX: 322,
     nodes: [{ x: 322, y: 54, c: true }, { x: 286, y: 30 }, { x: 358, y: 28 }, { x: 270, y: 74 }, { x: 372, y: 70 }, { x: 324, y: 94 }],
     edges: [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [3, 5], [4, 5]],
   },
   {
-    label: 'support',
+    label: 'Agents',
     labelX: 532,
     nodes: [{ x: 482, y: 40 }, { x: 522, y: 70, c: true }, { x: 558, y: 32 }, { x: 592, y: 62 }, { x: 534, y: 96 }],
     edges: [[0, 1], [1, 2], [2, 3], [1, 4]],
@@ -147,7 +147,7 @@ function LakeStrip() {
         viewBox="0 0 640 124"
         className="out-graph"
         role="img"
-        aria-label="Your context lake holds many separate context graphs: one for pricing, one for campaigns, one for support, each its own small graph of connected facts"
+        aria-label="Your context lake holds many separate context graphs: personal graphs, team graphs, and agent graphs, each its own small graph of connected facts"
         preserveAspectRatio="xMidYMid meet"
       >
         {clusters.map((cl) => (
@@ -185,9 +185,9 @@ export default function OutputsSection() {
         </motion.h2>
 
         <motion.p className="out-deck" {...fade(0.08)}>
-          Everything you capture lands in your context lake. Inside it, a
-          context graph for each part of your work: pricing, campaigns,
-          support, projects. Agents and your team draw from the same lake.
+          Everything you capture lands in your context lake. Inside it,
+          separate context graphs: yours, your teams', your agents'.
+          Everyone draws from the same lake.
         </motion.p>
 
         <motion.div className="out-graph-wrap" {...fade(0.12)}>
