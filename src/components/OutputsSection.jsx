@@ -56,10 +56,14 @@ function BuilderFig() {
     <div
       className="out-fig"
       role="img"
-      aria-label="A support agent asks about the refund policy: the graph answers with a fact and its source; the eng roadmap, which the agent has no access to, is not shown"
+      aria-label="Your marketing, support, and sales agents ask the graph questions: it answers with a fact and its source; content an agent has no access to is not shown"
     >
       <div className="out-fig-req">
-        <span className="out-fig-agent">Support agent</span>
+        <div className="out-fig-agents">
+          <span className="out-fig-agent">Marketing agent</span>
+          <span className="out-fig-agent">Support agent</span>
+          <span className="out-fig-agent">Sales agent</span>
+        </div>
         <span className="out-fig-call">"What's our refund policy?"</span>
       </div>
       <span className="out-fig-arrow" aria-hidden="true"><ChevronDown size={12} strokeWidth={2} /></span>
@@ -111,18 +115,61 @@ function TeamFig() {
   )
 }
 
+/* the graph itself: facts and decisions across marketing, support, sales */
+const graphNodes = [
+  { x: 60, y: 74 }, { x: 158, y: 38, label: 'pricing decision' },
+  { x: 258, y: 86 }, { x: 330, y: 30, label: 'campaign brief', hl: true },
+  { x: 420, y: 82 }, { x: 496, y: 40, label: 'refund policy' },
+  { x: 588, y: 70 },
+]
+const graphEdges = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [1, 3], [3, 5], [2, 4]]
+
+function GraphStrip() {
+  return (
+    <svg
+      viewBox="0 0 640 120"
+      className="out-graph"
+      role="img"
+      aria-label="A context graph: connected facts and decisions, from pricing decisions to campaign briefs to refund policies"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      {graphEdges.map(([a, b], i) => (
+        <line
+          key={i}
+          x1={graphNodes[a].x} y1={graphNodes[a].y}
+          x2={graphNodes[b].x} y2={graphNodes[b].y}
+          className="out-graph-edge"
+        />
+      ))}
+      {graphNodes.map((n, i) => (
+        <g key={i}>
+          <circle cx={n.x} cy={n.y} r={n.label ? 7 : 5} className={n.hl ? 'out-graph-node out-graph-node--hl' : 'out-graph-node'} />
+          {n.label && (
+            <text x={n.x} y={n.y - 14} className="out-graph-label">{n.label}</text>
+          )}
+        </g>
+      ))}
+    </svg>
+  )
+}
+
 export default function OutputsSection() {
   return (
-    <section className="out-section" id="outputs">
+    <section className="out-section" id="graph">
       <div className="out-inner">
         <motion.h2 className="out-headline" {...fade(0)}>
-          One graph, <em>two outputs.</em>
+          It all becomes <em>one context graph.</em>
         </motion.h2>
 
         <motion.p className="out-deck" {...fade(0.08)}>
-          Agents and your team read from the same graph. Same facts, same
-          permissions.
+          Not a pile of chat logs. Facts, decisions, and entities, connected
+          and kept current as you work. Agents and your team read from the
+          same graph, with the same permissions.
         </motion.p>
+
+        <motion.div className="out-graph-wrap" {...fade(0.12)}>
+          <GraphStrip />
+        </motion.div>
 
         <div className="out-halves">
           <motion.div className="out-half" {...fade(0.15)}>
