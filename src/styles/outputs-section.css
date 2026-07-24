@@ -275,74 +275,6 @@
   letter-spacing: 0.05em;
 }
 
-/* builders figure: many-to-many agents x graphs */
-.out-mm {
-  width: 100%;
-  height: auto;
-}
-
-.out-mm-chip {
-  fill: var(--bg);
-  stroke: var(--line);
-  stroke-width: 1;
-}
-
-.out-mm-chip--own {
-  fill: var(--cyan-dim);
-  stroke: color-mix(in srgb, var(--cyan) 45%, transparent);
-}
-
-.out-mm-agent {
-  stroke: var(--silver);
-}
-
-.out-mm-text {
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  fill: var(--paper);
-  text-anchor: middle;
-}
-
-.out-mm-read {
-  stroke: var(--silver);
-  stroke-width: 1.2;
-  opacity: 0.75;
-}
-
-.out-mm-write {
-  stroke: var(--cyan);
-  stroke-width: 1.4;
-}
-
-.out-mm-ah--read {
-  fill: var(--silver);
-}
-
-.out-mm-ah--write {
-  fill: var(--cyan);
-}
-
-.out-mm-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.06em;
-  fill: var(--silver);
-  text-anchor: middle;
-}
-
-.out-mm-label--write {
-  fill: var(--cyan);
-}
-
-.out-mm-rule {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.05em;
-  fill: var(--silver);
-  text-anchor: middle;
-}
-
 /* ── Governance band: the funnel's common floor ── */
 .out-gov {
   width: 100%;
@@ -410,7 +342,7 @@
   color: var(--silver);
 }
 
-/* teams figure */
+/* chip rows (both figures) */
 .out-fig-chips {
   display: flex;
   flex-wrap: wrap;
@@ -437,6 +369,12 @@
 .out-fig-chips svg,
 .out-fig-own svg {
   color: var(--cyan);
+}
+
+/* the agent's own graph reads tinted */
+.out-fig-chips .out-fig-chip--own {
+  background: var(--cyan-dim);
+  border-color: color-mix(in srgb, var(--cyan) 45%, transparent);
 }
 
 .out-fig-own {
