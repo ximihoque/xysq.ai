@@ -7,7 +7,6 @@ import ScrollToTop from './components/ScrollToTop'
 const PricingPage = lazy(() => import('./pages/PricingPage'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
-const FeaturePage = lazy(() => import('./pages/FeaturePage'))
 const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
 const VisionPage = lazy(() => import('./pages/VisionPage'))
@@ -35,7 +34,6 @@ export default function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/use-cases/:slug" element={<UseCaseCategoryPage />} />
-            <Route path="/features/:slug"  element={<FeaturePage />} />
             <Route path="/blog" element={<BlogIndexPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/vision" element={<VisionPage />} />

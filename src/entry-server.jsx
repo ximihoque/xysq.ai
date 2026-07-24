@@ -5,7 +5,6 @@ import { HelmetProvider } from 'react-helmet-async'
 import { Writable } from 'node:stream'
 import App from './App.jsx'
 import { USE_CASE_CATEGORIES } from './data/useCases.js'
-import { FEATURE_PAGES } from './data/features.js'
 import { loadPosts } from './lib/blog.js'
 
 // Single source of truth for the prerender script. Bundled by Vite SSR build
@@ -16,7 +15,6 @@ export const ROUTES = [
   '/privacy',
   '/vision',
   '/whitepaper',
-  ...Object.keys(FEATURE_PAGES).map((slug) => `/features/${slug}`),
   ...USE_CASE_CATEGORIES.map((c) => `/use-cases/${c.slug}`),
   '/blog',
   ...loadPosts({ includeDrafts: false }).map((p) => `/blog/${p.slug}`),

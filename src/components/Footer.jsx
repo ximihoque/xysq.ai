@@ -23,12 +23,6 @@ function XIcon({ size = 16 }) {
 
 const APP_URL = import.meta.env.VITE_APP_URL || 'https://app.xysq.ai'
 
-const FEATURE_LINKS = [
-  { label: 'Unified memory', to: '/#memory' },
-  { label: 'Teams',          to: '/#teams' },
-  { label: 'Organise',       to: '/#organise' },
-]
-
 const RESOURCE_LINKS = [
   { label: 'Blog',            to: '/blog' },
   { label: 'Docs',            href: 'https://docs.xysq.ai',                            external: true },
@@ -88,15 +82,6 @@ export default function Footer() {
 
           {/* Link columns */}
           <div className="ft-cols">
-            <div className="ft-col">
-              <h4 className="ft-col-title">Features</h4>
-              <ul>
-                {FEATURE_LINKS.map((l) => (
-                  <li key={l.label}><FooterLink to={l.to}>{l.label}</FooterLink></li>
-                ))}
-              </ul>
-            </div>
-
             <div className="ft-col">
               <h4 className="ft-col-title">Use cases</h4>
               <ul>
