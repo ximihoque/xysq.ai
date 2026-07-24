@@ -9,7 +9,6 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
 const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
-const VisionPage = lazy(() => import('./pages/VisionPage'))
 const WhitepaperPage = lazy(() => import('./pages/WhitepaperPage'))
 
 export default function App() {
@@ -36,7 +35,6 @@ export default function App() {
             <Route path="/use-cases/:slug" element={<UseCaseCategoryPage />} />
             <Route path="/blog" element={<BlogIndexPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/vision" element={<VisionPage />} />
             <Route path="/whitepaper" element={<WhitepaperPage />} />
           </Routes>
         </Suspense>

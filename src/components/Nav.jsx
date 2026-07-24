@@ -232,38 +232,6 @@ export default function Nav() {
             {useCasesPanel}
           </NavDropdown>
 
-          <SiblingNavLink
-            as="a"
-            href="https://docs.xysq.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={closeMenu}
-          >
-            Docs
-          </SiblingNavLink>
-
-          <SiblingNavLink
-            as="a"
-            href="https://docs.xysq.ai/sdk/getting-started"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={closeMenu}
-          >
-            SDK
-          </SiblingNavLink>
-
-          <SiblingNavLink as={Link} to="/pricing" onClick={closeMenu}>
-            Pricing
-          </SiblingNavLink>
-
-          <SiblingNavLink as={Link} to="/blog" onClick={closeMenu}>
-            Blog
-          </SiblingNavLink>
-
-          <SiblingNavLink as={Link} to="/vision" onClick={closeMenu}>
-            Vision
-          </SiblingNavLink>
-
           {/* Mobile: CTAs appear inside the menu so users on small screens see them */}
           <a
             href={CHROME_EXTENSION_URL}

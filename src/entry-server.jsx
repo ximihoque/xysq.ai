@@ -13,7 +13,6 @@ export const ROUTES = [
   '/',
   '/pricing',
   '/privacy',
-  '/vision',
   '/whitepaper',
   ...USE_CASE_CATEGORIES.map((c) => `/use-cases/${c.slug}`),
   '/blog',
