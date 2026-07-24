@@ -3,7 +3,6 @@ import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import EngineSection from '../components/EngineSection'
 import OutputsSection from '../components/OutputsSection'
-import TrustPrivacy from '../components/TrustPrivacy'
 import ThreeColumnCTA from '../components/ThreeColumnCTA'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
@@ -31,7 +30,6 @@ export default function HomePage() {
       <Hero />
       <EngineSection />
       <OutputsSection />
-      <TrustPrivacy />
       <ThreeColumnCTA />
       <Footer />
     </PageTransition>
