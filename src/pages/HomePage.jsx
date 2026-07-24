@@ -3,8 +3,7 @@ import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import EngineSection from '../components/EngineSection'
 import CaptureSection from '../components/CaptureSection'
-import Teams from '../components/Teams'
-import Organise from '../components/Organise'
+import OutputsSection from '../components/OutputsSection'
 import TrustPrivacy from '../components/TrustPrivacy'
 import ThreeColumnCTA from '../components/ThreeColumnCTA'
 import Footer from '../components/Footer'
@@ -33,8 +32,7 @@ export default function HomePage() {
       <Hero />
       <EngineSection />
       <CaptureSection />
-      <Teams />
-      <Organise />
+      <OutputsSection />
       <TrustPrivacy />
       <ThreeColumnCTA />
       <Footer />

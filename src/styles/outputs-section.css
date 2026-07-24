@@ -1,0 +1,341 @@
+/* ── Outputs section (Section 3): one graph, two outputs ── */
+
+.out-section {
+  position: relative;
+  padding: 56px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .out-section {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+}
+
+.out-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.out-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.out-headline em {
+  font-style: normal;
+  color: var(--silver);
+}
+
+.out-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  color: var(--silver);
+  line-height: 1.62;
+  margin-bottom: 44px;
+  text-align: center;
+  max-width: 56ch;
+}
+
+/* ── The two halves ── */
+.out-halves {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .out-halves {
+    grid-template-columns: 1fr;
+  }
+}
+
+.out-half {
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.out-half-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+/* ── Rows ── */
+.out-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.out-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.out-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--cyan);
+}
+
+.out-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.out-item-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.out-item-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--silver);
+}
+
+/* ── Buttons: mirror the hero pair ── */
+.out-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  padding: 11px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: auto;
+  align-self: flex-start;
+  transition: opacity 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.out-btn--main {
+  background: var(--paper);
+  color: var(--bg);
+}
+
+.out-btn--main:hover {
+  opacity: 0.86;
+}
+
+[data-theme="light"] .out-btn--main {
+  background: #171717;
+  color: #ffffff;
+}
+
+.out-btn--alt {
+  border: 1px solid var(--line);
+  color: var(--paper);
+}
+
+.out-btn--alt:hover {
+  border-color: #3a3a3a;
+  background: var(--surface);
+}
+
+[data-theme="light"] .out-btn--alt:hover {
+  border-color: #d4d4d4;
+  background: var(--surface2);
+}
+
+/* ── Mini figures inside the halves ── */
+.out-fig {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.out-fig-arrow {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--silver);
+  opacity: 0.8;
+}
+
+.out-fig-arrow--label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+}
+
+/* builders figure */
+.out-fig-req {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.out-fig-agent {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  padding: 4px 11px;
+}
+
+.out-fig-call {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--cyan);
+  border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.out-fig-graph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+  background: var(--cyan-dim);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.out-fig-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.out-fig-served,
+.out-fig-denied {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 7px 11px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  flex-wrap: wrap;
+}
+
+.out-fig-served {
+  color: var(--paper);
+  border-color: color-mix(in srgb, var(--cyan) 40%, transparent);
+  background: var(--cyan-dim);
+}
+
+.out-fig-served svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.out-fig-served em {
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: var(--silver);
+  margin-left: auto;
+}
+
+.out-fig-denied {
+  color: var(--silver);
+}
+
+.out-fig-denied svg {
+  color: var(--silver);
+  flex-shrink: 0;
+}
+
+/* teams figure */
+.out-fig-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.out-fig-chips span,
+.out-fig-own span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  padding: 4px 11px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.out-fig-chips svg,
+.out-fig-own svg {
+  color: var(--cyan);
+}
+
+.out-fig-own {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.out-fig-own span {
+  color: var(--silver);
+}
