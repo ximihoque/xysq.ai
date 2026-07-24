@@ -32,6 +32,11 @@ export default function EngineSection() {
   return (
     <section className="eng-section" id="engine">
       <div className="eng-inner">
+        {/* the correction walked end to end — same figure as the whitepaper */}
+        <motion.div className="eng-visual" {...fade(0.15)}>
+          <CorrectionFigure />
+        </motion.div>
+
         <motion.div className="eng-text" {...fade(0)}>
           <h2 className="eng-headline">
             Memory that <span className="eng-hl-improves">improves</span><br />
@@ -81,10 +86,6 @@ export default function EngineSection() {
           </motion.a>
         </motion.div>
 
-        {/* the correction walked end to end — same figure as the whitepaper */}
-        <motion.div className="eng-visual" {...fade(0.15)}>
-          <CorrectionFigure />
-        </motion.div>
       </div>
     </section>
   )

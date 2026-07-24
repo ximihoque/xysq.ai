@@ -18,7 +18,8 @@
   width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  /* visual left, text right */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: clamp(40px, 6vw, 88px);
   align-items: center;
 }
@@ -27,6 +28,11 @@
   .eng-inner {
     grid-template-columns: minmax(0, 1fr);
     gap: 56px;
+  }
+
+  /* text first on small screens */
+  .eng-visual {
+    order: 2;
   }
 }
 
