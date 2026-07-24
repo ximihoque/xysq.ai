@@ -2,7 +2,7 @@ import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import EngineSection from '../components/EngineSection'
-import Capabilities from '../components/Capabilities'
+import CaptureSection from '../components/CaptureSection'
 import Teams from '../components/Teams'
 import Organise from '../components/Organise'
 import TrustPrivacy from '../components/TrustPrivacy'
@@ -32,7 +32,7 @@ export default function HomePage() {
       <Nav />
       <Hero />
       <EngineSection />
-      <Capabilities />
+      <CaptureSection />
       <Teams />
       <Organise />
       <TrustPrivacy />

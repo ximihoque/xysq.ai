@@ -1,0 +1,233 @@
+/* ── Capture section (Section 2): visual left, text right ── */
+
+.cpt-section {
+  position: relative;
+  padding: 56px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .cpt-section {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+}
+
+.cpt-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .cpt-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+
+  /* text first on mobile, visual after */
+  .cpt-visual {
+    order: 2;
+  }
+}
+
+/* ── Text column ── */
+.cpt-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+}
+
+.cpt-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 18px;
+}
+
+.cpt-headline em {
+  font-style: normal;
+  color: var(--silver);
+}
+
+.cpt-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  font-weight: 400;
+  color: var(--silver);
+  line-height: 1.62;
+  margin-bottom: 30px;
+}
+
+/* ── Faces: builders / teams, always both visible ── */
+.cpt-faces {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+}
+
+@media (max-width: 560px) {
+  .cpt-faces {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cpt-face {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.cpt-face-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.cpt-face-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--silver);
+  margin: 0;
+}
+
+.cpt-face-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--paper);
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.cpt-face-link:hover {
+  color: var(--cyan);
+}
+
+/* ── Visual: sources → graph ── */
+.cpt-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.cpt-frame {
+  width: 100%;
+  max-width: 540px;
+  border: 1px solid color-mix(in srgb, var(--silver) 45%, transparent);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cpt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .cpt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cpt-src {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.cpt-src-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.cpt-src-logos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpt-logo {
+  display: block;
+}
+
+/* white-shape logos need inverting on light backgrounds */
+[data-theme="light"] .cpt-logo--invert {
+  filter: invert(1);
+}
+
+.cpt-src-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--cyan);
+}
+
+.cpt-src-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--silver);
+}
+
+.cpt-flow {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  color: var(--silver);
+}
+
+.cpt-graph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+  background: var(--cyan-dim);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--paper);
+}
