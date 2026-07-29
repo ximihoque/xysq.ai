@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { RefreshCw, Crosshair, Layers } from 'lucide-react'
+import { RefreshCw, GitBranch, Layers } from 'lucide-react'
 import CorrectionFigure from './CorrectionFigure'
 import '../styles/engine-section.css'
 
@@ -17,9 +17,9 @@ const rows = [
     body: 'One correction improves every future retrieval.',
   },
   {
-    icon: Crosshair,
-    label: 'Domain-adaptive',
-    body: 'Learns your domain instead of generic internet knowledge.',
+    icon: GitBranch,
+    label: 'Provenance on every fact',
+    body: 'Every answer traces back to its source. Nothing is made up quietly.',
   },
   {
     icon: Layers,

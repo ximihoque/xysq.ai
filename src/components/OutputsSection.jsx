@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import {
   Target, ShieldCheck, GitBranch, FileText, Folder, Database,
   User, Users, Lock, Download, HardDrive, Share2, ChevronDown,
-  ArrowRight, History, Eye, Bot,
+  ArrowRight, Eye, Bot,
 } from 'lucide-react'
 import '../styles/outputs-section.css'
 
@@ -242,8 +242,8 @@ export default function OutputsSection() {
               <span className="out-gov-item-text">Every context graph is visible and accessible. No black boxes.</span>
             </div>
             <div className="out-gov-item">
-              <span className="out-gov-item-label"><History size={13} strokeWidth={1.8} aria-hidden="true" /> Every change auditable</span>
-              <span className="out-gov-item-text">Who changed what, when, based on what. Always answerable.</span>
+              <span className="out-gov-item-label"><GitBranch size={13} strokeWidth={1.8} aria-hidden="true" /> Provenance on every fact</span>
+              <span className="out-gov-item-text">Who said it, where it came from, what changed it. Always answerable.</span>
             </div>
             <div className="out-gov-item">
               <span className="out-gov-item-label"><Lock size={13} strokeWidth={1.8} aria-hidden="true" /> Access you control</span>

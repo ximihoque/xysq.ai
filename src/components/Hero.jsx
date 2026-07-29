@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Brain, Network, ShieldCheck } from 'lucide-react'
+import { Brain, GitBranch, ShieldCheck } from 'lucide-react'
 import HeroShowcase from './HeroShowcase'
 import '../styles/hero.css'
 
@@ -44,8 +44,8 @@ export default function Hero() {
               Self-Improving Memory
             </li>
             <li>
-              <Network size={15} strokeWidth={1.8} aria-hidden="true" />
-              Knowledge Graphs
+              <GitBranch size={15} strokeWidth={1.8} aria-hidden="true" />
+              Provenance
             </li>
             <li>
               <ShieldCheck size={15} strokeWidth={1.8} aria-hidden="true" />
