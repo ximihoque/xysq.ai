@@ -273,8 +273,8 @@ export default function Nav() {
             <ChromeIcon />
             Install on Chrome
           </a>
-          <a href={APP_URL} className="nav-cta nav-cta--mobile" onClick={closeMenu}>
-            Get started
+          <a href={`${APP_URL}?src=nav-mobile`} className="nav-cta nav-cta--mobile" onClick={closeMenu}>
+            Get started free
             <ArrowUpRight size={14} strokeWidth={2} />
           </a>
         </div>
@@ -293,8 +293,8 @@ export default function Nav() {
           <ChromeIcon />
           Install on Chrome
         </a>
-        <a href={APP_URL} className="nav-cta nav-cta--desktop">
-          Get started
+        <a href={`${APP_URL}?src=nav`} className="nav-cta nav-cta--desktop">
+          Get started free
           <ArrowUpRight size={14} strokeWidth={2} />
         </a>
         <button

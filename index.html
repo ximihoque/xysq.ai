@@ -6,21 +6,9 @@
     <meta name="theme-color" content="#020408" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
 
-    <!-- title / description / canonical / og-twitter title|desc|image|url
-         are emitted per-page by react-helmet-async via <SEO/>. The static
-         pieces below (og:type, og:site_name, og:image dims, twitter:card,
-         twitter:site) are constant across all pages so they live here. -->
-    <meta name="robots" content="index, follow" />
-
-    <!-- Open Graph (static parts only) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="xysq.ai" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="xysq.ai · The first self-improving context engineering platform" />
-
-    <!-- Twitter Card (static parts only) -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <!-- every SEO tag is emitted per-page by <SEO/>. helmet can't dedupe
+         tags hardcoded here, so anything repeated ships twice and the stale
+         copy can win. only put tags here that <SEO/> never emits. -->
     <meta name="twitter:site" content="@xysqai" />
 
     <!-- Schema.org: Organization -->
@@ -31,7 +19,7 @@
       "name": "xysq",
       "url": "https://xysq.ai",
       "logo": "https://xysq.ai/logo.svg",
-      "description": "The first self-improving context engineering platform. The xysq Memory Engine turns AI sessions and files into context graphs for agents and teams.",
+      "description": "The context engineering platform for your agents and your teams. The xysq Memory Engine keeps the source behind every fact, closes the old version when something changes, and leaves you in control of who sees what.",
       "sameAs": [
         "https://x.com/xysqai"
       ]

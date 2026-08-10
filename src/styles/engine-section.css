@@ -1,9 +1,17 @@
-/* ── Engine section (Section 1): the self-improvement story ── */
+/* ── Engine section (Section 4): the closing argument ── */
 
 .eng-section {
   position: relative;
   padding: 96px var(--side-pad) 110px;
   z-index: 1;
+}
+
+/* it lands last now, so it needs a surface of its own. hairlines top and
+   bottom instead of a fill: a filled band fights the NeuralBackground. */
+.eng-section--closer {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 45%, transparent);
 }
 
 @media (max-width: 900px) {

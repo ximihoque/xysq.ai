@@ -10,27 +10,30 @@ const fade = (delay = 0) => ({
   transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay },
 })
 
+/* the closer names the three words the rest of the page has been earning.
+   they appear here and nowhere else, next to the figure that proves them.
+   one line each: the figure is the argument, the words are the labels. */
 const rows = [
   {
-    icon: RefreshCw,
-    label: 'Self-improving loops',
-    body: 'One correction improves every future retrieval.',
-  },
-  {
     icon: GitBranch,
-    label: 'Provenance on every fact',
-    body: 'Every answer traces back to its source. Nothing is made up quietly.',
+    label: 'Provable',
+    body: 'Every fact traces back to the source it came from.',
   },
   {
     icon: Layers,
-    label: 'Dual-layer learning',
-    body: 'Every correction updates both knowledge structure and retrieval.',
+    label: 'Reconciled',
+    body: 'Two facts disagree, the old one closes. You never serve both.',
+  },
+  {
+    icon: RefreshCw,
+    label: 'Self-improving',
+    body: 'Every correction is one more thing the next answer gets right.',
   },
 ]
 
 export default function EngineSection() {
   return (
-    <section className="eng-section" id="engine">
+    <section className="eng-section eng-section--closer" id="engine">
       <div className="eng-inner">
         {/* the correction walked end to end — same figure as the whitepaper */}
         <motion.div className="eng-visual" {...fade(0.15)}>
@@ -45,10 +48,9 @@ export default function EngineSection() {
           </h2>
 
           <p className="eng-deck">
-            Most memory stacks accumulate feedback and hope retrieval gets
-            better later. The xysq Memory Engine applies a targeted
-            correction the moment you give it, and you see the improvement
-            on the very next query.
+            Most memory stacks store a correction and hope retrieval sorts it
+            out later. The xysq Memory Engine applies it as an edit with a
+            blast radius, and you see it on the next query.
           </p>
 
           <ul className="eng-list">

@@ -89,12 +89,8 @@ h1.hero-h1 {
   color: var(--cyan);
 }
 
-/* "The first" — same size as the rest, just dimmed */
-.hero-h1-lead {
-  color: var(--silver);
-}
-
-/* "platform." — same size, dimmed a step below the main line */
+/* "your AI acts on." - same size as the rest, just dimmed, so the weight
+   lands on "The trust layer" */
 .hero-h1-dim {
   color: var(--silver);
 }

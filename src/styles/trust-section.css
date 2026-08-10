@@ -1,0 +1,169 @@
+/* ── Trust section (Section 2): the three questions someone asks before
+   they let an agent near real work. Grid + item styling is the old
+   governance band from outputs-section.css, promoted to its own section. ── */
+
+.tr-section {
+  position: relative;
+  padding: 56px var(--side-pad) 84px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .tr-section {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+}
+
+.tr-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tr-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 16px;
+  text-align: center;
+  max-width: 22ch;
+}
+
+.tr-hl {
+  color: var(--cyan);
+}
+
+.tr-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  color: var(--silver);
+  line-height: 1.62;
+  margin-bottom: 40px;
+  text-align: center;
+  max-width: 60ch;
+}
+
+.tr-items {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .tr-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tr-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+  padding: 22px 24px;
+}
+
+.tr-item-q {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.tr-item-q svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.tr-item-a {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--silver);
+}
+
+/* same chip grammar as the hero infographic: the specifics scan instead
+   of reading as a paragraph */
+/* margin-top:auto pins the chip row to the card bottom. the three answers
+   are different lengths, so without it the chip rows sit at three
+   different heights and the row reads as sloppy. */
+.tr-item-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.tr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.02em;
+  color: var(--silver);
+  white-space: nowrap;
+}
+
+.tr-chip svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* the common floor: governance is not a teams feature */
+.tr-floor {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--silver);
+  text-align: center;
+  max-width: 62ch;
+  margin-top: 28px;
+}
+
+.tr-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  text-decoration: none;
+  /* same tint as the Memory Engine card in the hero, so the link that
+     points at the engine looks like the thing it points at */
+  background: var(--cyan-dim);
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+  border-radius: 8px;
+  padding: 10px 18px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.tr-cta:hover {
+  border-color: color-mix(in srgb, var(--cyan) 70%, transparent);
+  background: color-mix(in srgb, var(--cyan) 16%, transparent);
+}
+
+.tr-cta-arrow {
+  color: var(--silver);
+}

@@ -1,6 +1,7 @@
 import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
+import TrustSection from '../components/TrustSection'
 import EngineSection from '../components/EngineSection'
 import OutputsSection from '../components/OutputsSection'
 import ThreeColumnCTA from '../components/ThreeColumnCTA'
@@ -13,23 +14,28 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
-        description="The first self-improving context engineering platform. The xysq Memory Engine turns your files and AI sessions into knowledge graphs your team shares and owns."
+        description="xysq is a context engineering platform for your agents and your teams. Every fact keeps the source it came from, old versions close instead of stacking next to them, and you control who sees what."
         schema={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
           name: 'xysq',
           applicationCategory: 'DeveloperApplication',
           url: 'https://xysq.ai',
-          description: 'The first self-improving context engineering platform. A domain-adaptive Memory Engine that evolves knowledge into better context for AI, with shareable knowledge graphs for teams. Consent-first.',
+          description: 'xysq is a context engineering platform for your agents and your teams. The xysq Memory Engine keeps the source behind every fact, closes the old version when something changes, and leaves you the say on who sees what. Consent-first, never trained on.',
           operatingSystem: 'Web',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         }}
       />
       <NeuralBackground />
       <Nav />
+      {/* trust first, then what you get, then the engine as the closing
+          argument. the engine used to open the page; it lands last now so
+          "provable / reconciled / self-improving" arrive after the reader
+          has a reason to care. */}
       <Hero />
-      <EngineSection />
+      <TrustSection />
       <OutputsSection />
+      <EngineSection />
       <ThreeColumnCTA />
       <Footer />
     </PageTransition>

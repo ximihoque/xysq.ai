@@ -345,9 +345,9 @@ export default function WhitepaperPage() {
               superseding evidence plus review.
             </li>
             <li>
-              <strong>Self feedback.</strong> Quarantine outcomes,
-              contradiction sweeps, merge audits, and a nightly consistency
-              check across graph, ledger, and index.
+              <strong>Self feedback.</strong> Quarantine outcomes and merge
+              audits today. Contradiction sweeps and a scheduled consistency
+              check across graph, ledger, and index are rolling out.
             </li>
             <li>
               <strong>Usage signals.</strong> What actually got used

@@ -1,6 +1,8 @@
 import {
   FileText, Hexagon, ShieldCheck, ChevronDown,
   User, Bot, BarChart3, Network, Filter,
+  Image, MessagesSquare, GitMerge, History, Link2,
+  ScrollText, Undo2, RefreshCw, Anchor, SearchCheck,
 } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import '../styles/hero-infographic.css'
@@ -10,33 +12,62 @@ import '../styles/hero-infographic.css'
   crisp, wraps properly, and follows the site theme in both modes.
   Flow: Raw Data -> Memory Engine -> Context Graph -> Governance,
   fed back by the Self-Improving Context Loop, flanked by two learnings.
+
+  the two middle cards carry the trust story (engine = the trust layer,
+  graph = provable), which is why the hero doesn't need a separate proof
+  graphic. self-improving stays one level down, in the loop panel.
 */
 
+/* one line per card, everything else demoted to icon chips. the full
+   sentences used to wrap to three lines and buried the trust claim. */
 const cards = [
   {
     id: 'raw',
     icon: FileText,
     title: 'Raw Data',
-    lines: ['Ingest PDFs, text, images and documents.', 'Turn unstructured data into usable knowledge.'],
+    line: 'Everything keeps the file it came from.',
+    chips: [
+      { icon: FileText, label: 'PDFs' },
+      { icon: Image, label: 'Images' },
+      { icon: MessagesSquare, label: 'AI sessions' },
+    ],
   },
   {
+    /* engine chips are verbs (what it does), graph chips are properties
+       (what you get). that split is what makes the arrow between them
+       mean something. "Gated" used to live here and read as access
+       control, which is the Governance card's job. */
     id: 'engine',
     icon: null, // brand mark instead
     title: 'xysq Memory Engine',
-    lines: ['Transforms raw knowledge into domain-adaptive context.', 'Continuously improves through feedback and governance.'],
+    line: 'The trust layer between your sources and your agents.',
+    chips: [
+      { icon: SearchCheck, label: 'Checks the source' },
+      { icon: GitMerge, label: 'Reconciles' },
+      { icon: RefreshCw, label: 'Self-improving' },
+    ],
     highlight: true,
   },
   {
     id: 'graph',
     icon: Hexagon,
     title: 'Context Graph',
-    lines: ['Continuously evolving knowledge for humans and AI.', 'Structured, connected and always up to date.'],
+    line: 'Every fact traces to the sentence it came from.',
+    chips: [
+      { icon: Anchor, label: 'Grounded' },
+      { icon: History, label: 'Current' },
+      { icon: Link2, label: 'Linked' },
+    ],
   },
   {
     id: 'governance',
     icon: ShieldCheck,
     title: 'Governance',
-    lines: ['Every change is auditable and reviewable.', 'Human oversight keeps knowledge trustworthy.'],
+    line: 'You decide who sees what.',
+    chips: [
+      { icon: ScrollText, label: 'Auditable' },
+      { icon: Undo2, label: 'Revocable' },
+    ],
   },
 ]
 
@@ -50,18 +81,18 @@ const badges = [
   {
     icon: Network,
     title: 'Structural Learning',
-    lines: ['Improves knowledge organization.', 'Continuously restructures for reasoning.'],
+    lines: ['Restructures what you know.'],
   },
   {
     icon: Filter,
     title: 'Retrieval Learning',
-    lines: ['Optimizes context selection.', 'Improves every future retrieval.'],
+    lines: ['Corrections land on the next query.'],
   },
 ]
 
 export default function HeroInfographic() {
   return (
-    <div className="hig" role="img" aria-label="How xysq works: raw data flows into the xysq Memory Engine, becomes a context graph under governance, and a self-improving context loop of human feedback, self feedback, and usage signals feeds it back">
+    <div className="hig" role="img" aria-label="How xysq works: raw data (PDFs, images, AI sessions) flows into the xysq Memory Engine, the trust layer between your sources and your agents, which checks the source, reconciles conflicts and is self-improving. It becomes a context graph that is grounded, current and linked, where every fact traces to the sentence it came from. Governance over it is auditable and revocable, and a self-improving loop of human feedback, self feedback and usage signals feeds back into the engine">
       {/* dashed feedback line: loop panel back up to the top card */}
       <span className="hig-loopline" aria-hidden="true" />
 
@@ -81,9 +112,15 @@ export default function HeroInfographic() {
                 </span>
                 <span className="hig-card-text">
                   <span className="hig-card-title">{card.title}</span>
-                  {card.lines.map((line) => (
-                    <span key={line} className="hig-card-line">{line}</span>
-                  ))}
+                  <span className="hig-card-line">{card.line}</span>
+                  <span className="hig-card-chips">
+                    {card.chips.map(({ icon: ChipIcon, label }) => (
+                      <span key={label} className="hig-chip">
+                        <ChipIcon size={10} strokeWidth={1.9} aria-hidden="true" />
+                        {label}
+                      </span>
+                    ))}
+                  </span>
                 </span>
               </div>
             </div>

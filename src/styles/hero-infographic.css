@@ -101,6 +101,42 @@
   color: var(--silver);
 }
 
+/* the specifics live here instead of a second sentence: scannable, and
+   they stop the cards wrapping to three lines */
+.hig-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.hig-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.02em;
+  color: var(--silver);
+  white-space: nowrap;
+}
+
+.hig-chip svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* on the engine card the chips sit on a tinted background, so give them
+   the card's own bg back or they disappear into it */
+.hig-card--engine .hig-chip {
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  border-color: color-mix(in srgb, var(--cyan) 30%, transparent);
+}
+
 /* ── Self-improving loop panel ── */
 .hig-loop {
   border: 1px solid var(--line);

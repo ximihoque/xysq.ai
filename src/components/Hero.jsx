@@ -23,39 +23,36 @@ export default function Hero() {
         {/* ── LEFT: copy ── */}
         <div className="hero-copy">
           <motion.h1 {...fade(0.05)} className="hero-h1">
-            <span className="hero-h1-lead">The first</span>{' '}
-            <span className="hero-accent">self-improving</span>
+            The <span className="hero-accent">trust layer</span>
             <br />
-            context engineering
-            <br />
-            <span className="hero-h1-dim">platform.</span>
+            <span className="hero-h1-dim">your AI acts on.</span>
           </motion.h1>
 
           <motion.p {...fade(0.15)} className="hero-sub">
-            Powered by <span className="hero-sub-strong">the xysq Memory Engine</span>.
+            xysq is the <span className="hero-sub-strong">context of record</span>{' '}
+            for your agents and your teams.
             <br />
-            A domain-adaptive engine that continuously evolves knowledge
-            into better context for AI.
+            One place they read from, with the source kept on every fact.
           </motion.p>
 
           <motion.ul {...fade(0.2)} className="hero-points">
             <li>
-              <Brain size={15} strokeWidth={1.8} aria-hidden="true" />
-              Self-Improving Memory
-            </li>
-            <li>
               <GitBranch size={15} strokeWidth={1.8} aria-hidden="true" />
-              Provenance
+              Every fact keeps its source
             </li>
             <li>
               <ShieldCheck size={15} strokeWidth={1.8} aria-hidden="true" />
-              Enterprise Governance
+              You control who sees what
+            </li>
+            <li>
+              <Brain size={15} strokeWidth={1.8} aria-hidden="true" />
+              Improves with every correction
             </li>
           </motion.ul>
 
           <motion.div {...fade(0.25)} className="hero-btns">
             <motion.a
-              href="https://app.xysq.ai"
+              href="https://app.xysq.ai?src=hero-builders"
               className="btn-main"
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}
@@ -65,7 +62,7 @@ export default function Hero() {
               <span className="btn-main-arrow">→</span>
             </motion.a>
             <motion.a
-              href="https://app.xysq.ai/teams"
+              href="https://app.xysq.ai/teams?src=hero-teams"
               className="btn-out"
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}

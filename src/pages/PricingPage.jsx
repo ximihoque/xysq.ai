@@ -27,7 +27,6 @@ const TIERS = [
     features: [
       '1,000 personal memories',
       '1,000 team memories (shared across all your teams)',
-      'Up to 3 connectors',
       'Full MCP / SDK access',
     ],
     cta: { label: 'Get started', href: APP_URL, variant: 'primary' },
@@ -43,7 +42,6 @@ const TIERS = [
     features: [
       'Everything in Free',
       'Unlimited memories, personal and team',
-      'Unlimited connectors',
       'Teams, SSO and admin controls',
       'Priority support and SLA',
       '30-day business trial, then a custom quote, most quotes within ~15 minutes of your call',
@@ -58,7 +56,7 @@ export default function PricingPage() {
       <SEO
         title="Pricing"
         path="/pricing"
-        description="Start free with 1,000 memories and up to 3 connectors. Scale to unlimited memories, connectors, teams, SSO, and priority support, talk to us for a custom quote."
+        description="Start free with 1,000 personal and 1,000 team memories. Scale to unlimited memories, teams, SSO, and priority support, talk to us for a custom quote."
         schema={breadcrumbSchema([
           { name: 'Home', item: '/' },
           { name: 'Pricing', item: '/pricing' },

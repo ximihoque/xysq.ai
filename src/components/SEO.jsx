@@ -8,8 +8,12 @@ export default function SEO({
   description,
   path = '/',
   image = DEFAULT_IMAGE,
-  imageWidth,
-  imageHeight,
+  // og-image.png is a 1200x630 card. blog posts pass 1600x900 for their own
+  // cover, which used to CONTRADICT a hardcoded 1200x630 in index.html.
+  // defaulting here means one source of truth and one pair of tags.
+  imageWidth = 1200,
+  imageHeight = 630,
+  imageAlt,
   schema,
   extraLinks = [],
   keywords,
@@ -18,7 +22,11 @@ export default function SEO({
   ogType = 'website',
   article,
 }) {
-  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · The first self-improving context engineering platform.'
+  // the h1 and the title tag diverge on purpose: the h1 carries the trust
+  // promise, the title tag keeps the category plus "AI memory", the noun
+  // people actually search, because this string sits next to mem0's in the
+  // result list.
+  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · Context engineering platform · AI memory you can check'
   const canonical = `${BASE_URL}${path}`
   const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
   const keywordList = Array.isArray(keywords) ? keywords.join(', ') : keywords
@@ -40,7 +48,7 @@ export default function SEO({
       <meta property="og:image" content={image} />
       {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
       {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
-      <meta property="og:image:alt" content={title || 'xysq.ai'} />
+      <meta property="og:image:alt" content={imageAlt || title || 'xysq.ai · the trust layer your AI acts on'} />
 
       {article && (
         <>

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import {
-  Target, ShieldCheck, GitBranch, FileText, Folder, Database,
-  User, Users, Lock, Download, HardDrive, Share2, ChevronDown,
-  ArrowRight, Eye, Bot,
+  Target, ShieldCheck, GitBranch, FileText, Database,
+  User, Users, Download, HardDrive, Share2, ChevronDown,
+  ArrowRight, Bot, PenLine,
 } from 'lucide-react'
 import '../styles/outputs-section.css'
 
@@ -25,9 +25,9 @@ const builderRows = [
     body: 'Each agent has the access you gave it. Nothing more.',
   },
   {
-    icon: GitBranch,
-    label: 'Every answer can be checked',
-    body: 'Anything an agent is told traces back to where it came from.',
+    icon: PenLine,
+    label: 'Agents write back what they learn',
+    body: 'An agent writes to its own graph, and the next agent that needs it can read it, if you let it.',
   },
 ]
 
@@ -224,33 +224,12 @@ export default function OutputsSection() {
                 </li>
               ))}
             </ul>
-            <a href="https://app.xysq.ai/teams" className="out-btn out-btn--alt">
+            <a href="https://app.xysq.ai/teams?src=outputs-teams" className="out-btn out-btn--alt">
               For teams <ArrowRight size={14} strokeWidth={2} />
             </a>
           </motion.div>
         </div>
 
-        {/* the common floor: governance applies to every graph, both sides */}
-        <motion.div className="out-gov" {...fade(0.25)}>
-          <div className="out-gov-head">
-            <ShieldCheck size={16} strokeWidth={1.8} aria-hidden="true" />
-            <span>Governance, common to both</span>
-          </div>
-          <div className="out-gov-items">
-            <div className="out-gov-item">
-              <span className="out-gov-item-label"><Eye size={13} strokeWidth={1.8} aria-hidden="true" /> Transparent to your team</span>
-              <span className="out-gov-item-text">Every context graph is visible and accessible. No black boxes.</span>
-            </div>
-            <div className="out-gov-item">
-              <span className="out-gov-item-label"><GitBranch size={13} strokeWidth={1.8} aria-hidden="true" /> Provenance on every fact</span>
-              <span className="out-gov-item-text">Who said it, where it came from, what changed it. Always answerable.</span>
-            </div>
-            <div className="out-gov-item">
-              <span className="out-gov-item-label"><Lock size={13} strokeWidth={1.8} aria-hidden="true" /> Access you control</span>
-              <span className="out-gov-item-text">Grant by graph, page, or person. Revoke anytime.</span>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
