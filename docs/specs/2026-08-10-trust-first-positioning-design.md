@@ -263,7 +263,9 @@ unqualified claim belongs.
 
 - **Footer tagline** (`Footer.jsx:78`): "The trust layer for your AI context. Every fact
   keeps its source. Consent-first, never trained on."
-- **Title tag** (`SEO.jsx:21`): `xysq.ai · Context engineering platform · AI memory you can check`
+- **Title tag** (`SEO.jsx`): `Context engineering platform. AI memory you can trust.`
+  Homepage only. Every other route passes its own `title` and renders as
+  `<Page> · xysq.ai`, so the brand still appears everywhere except here.
 - **Meta description** (`HomePage.jsx:16` AND the JSON-LD at `:23`, the easy miss):
   "xysq is a context engineering platform for your agents and your teams. Every fact
   keeps the source it came from, old versions close instead of stacking next to them,

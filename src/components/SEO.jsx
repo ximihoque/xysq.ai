@@ -26,7 +26,7 @@ export default function SEO({
   // promise, the title tag keeps the category plus "AI memory", the noun
   // people actually search, because this string sits next to mem0's in the
   // result list.
-  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · Context engineering platform · AI memory you can check'
+  const fullTitle = title ? `${title} · xysq.ai` : 'Context engineering platform. AI memory you can trust.'
   const canonical = `${BASE_URL}${path}`
   const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
   const keywordList = Array.isArray(keywords) ? keywords.join(', ') : keywords
