@@ -1,0 +1,217 @@
+---
+title: "Case Study: A Customer Support Memory Layer in Two Vaults"
+slug: "customer-support-memory-layer"
+date: "2026-08-18"
+author: "pulin"
+excerpt: "How to build a support pipeline on xysq: one vault for the product brain, one for every customer conversation, tags and metadata to slice them. Every code block in this post ran against production and every isolation check passed."
+category: "Engineering"
+cover: "https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/hero.png"
+tags: ["case-study", "customer-support", "tags", "metadata", "sdk", "context-engineering"]
+featured: false
+draft: true
+readingTimeMinutes: 8
+---
+
+Your support agent answers every ticket like it's the first ticket it has ever seen. The customer explained their problem twice already (once on email, once on chat), another customer had the exact same defect last month and got it fixed, and the warranty policy that settles the whole thing is sitting in a PDF nobody retrieves. All the context exists. None of it is in the room when the answer gets written.
+
+This post is the fix, as a pipeline you can copy. We build a support memory layer on xysq with exactly two vaults: a **product brain** (docs, policies, known issues) and a **customer brain** (every message from every customer, all channels, one vault). Then we slice them with two primitives, tags and metadata, to answer the three questions every support reply needs. It's maybe 60 lines of setup code. Everything below ran live against our production API; the isolation checks (customer A never sees customer B) passed 10/10.
+
+## The shape: two vaults, three pulls
+
+The mental model first. A good support answer needs three kinds of context, and I think of them as directions:
+
+1. **Vertical context**: everything about *this customer*. Their history, their orders, what they already tried.
+2. **Product context**: everything about *the thing itself*. Specs, policies, known issues.
+3. **Horizontal context**: *this product across all customers*. Has anyone else hit this? How was it resolved?
+
+Most support stacks have the first one at best (a CRM page the agent skims). The third one is where the leverage is: it's how the system notices that six people reported the same flicker on the same batch, and that one of them already got a working fix. Horizontal context is how a support system learns.
+
+The architecture that serves all three is small:
+
+- One **project** ("support") that owns a shared tag vocabulary.
+- One **product-kb vault**: product docs, return policy, warranty policy, known-issue notes.
+- One **customers vault**: every customer message from every channel. Not a vault per customer; one vault, with metadata doing the isolation.
+
+That last point is the part people get wrong. You do not need a thousand vaults for a thousand customers. You need one vault and one declared metadata key.
+
+## Tags vs metadata (30-second version)
+
+Two primitives, two different jobs:
+
+- **Tags** are a curated vocabulary you control: `defect`, `billing`, `resolved`, `known-issue`, `policy`. A tag filter is *hard inclusion*: pull only what carries the tag. Tags live at the project level, so every vault and every agent in the project shares one vocabulary. Unknown tags are never auto-created anywhere: a pull that filters by an unknown tag fails loudly with a 400, and `tags.apply` skips unknown names and echoes them back in the result's `unknown` field (check it; a typo is a silent no-op otherwise).
+- **Metadata keys** are identity facets: `customer_id`, `product`, `channel`. A metadata filter is *match-or-absent*: filtering by `customer_id: "alice"` excludes anything stamped with a *different* customer, and keeps everything that has no customer at all. That sounds subtle but it's exactly right for support: the warranty policy has no `customer_id`, and it should survive every customer-scoped pull.
+
+Rule of thumb: metadata for *who and what it belongs to*, tags for *what kind of thing it is*.
+
+## Step 1: project, vaults, keys
+
+Two prerequisites, both one-time: `pip install xysq`, and in the dashboard (app.xysq.ai, under Agents) create a project called "support", copy its id, and mint an agent API key with an **admin grant** on that project (creating vaults and curating tags are project-admin acts; a read or write grant will 403 on the very first call).
+
+```python
+from xysq import Xysq
+
+PROJECT_ID = "1f2a..."  # from the dashboard
+client = Xysq(api_key="xysq_agent_...")
+
+product_kb = client.vaults.create("product-kb", project_id=PROJECT_ID)
+customers  = client.vaults.create("customers",  project_id=PROJECT_ID)
+```
+
+Creating the vaults inside the project matters: it's what lets them resolve the project's shared tag vocabulary later. (Needs SDK ≥ 3.5.2; earlier sync clients dropped `project_id`.)
+
+## Step 2: declare the metadata keys
+
+Declaring a key is what turns a metadata field into a filter. Undeclared fields are stored but not filterable.
+
+```python
+client.vaults.declare_meta_key(customers.vault_id, "customer_id")
+client.vaults.declare_meta_key(customers.vault_id, "product")
+client.vaults.declare_meta_key(product_kb.vault_id, "product")
+```
+
+(If you declare a key after you've already ingested, a backfill extracts it from existing sources in the background. Order doesn't trap you.)
+
+## Step 3: curate the tag vocabulary
+
+```python
+for name in ["policy", "known-issue", "defect", "billing", "resolved"]:
+    client.tags.create(PROJECT_ID, name)
+```
+
+Five tags is a fine start. Resist the urge to mint fifty; the vocabulary is a filter surface, not a folksonomy (free-for-all tagging where anyone mints anything). Deleting a tag archives it (nothing gets untagged, and you can restore it), so curating is cheap.
+
+## Step 4: ingest the product brain
+
+Our full fixture is four KB docs; here they all are, so your run reproduces ours. Note the return policy gets pushed with *no* product metadata: match-or-absent means it stays reachable from every product-scoped pull.
+
+```python
+kb_docs = [
+    ("Return policy",
+     "Returns are accepted within 30 days of delivery. Defective units are "
+     "replaced free of charge at any time during the 12-month warranty; the "
+     "customer does not pay return shipping for a defect.",
+     None, ["policy"]),
+    ("Widget Pro spec",
+     "Widget Pro is the 27-inch model with the M3 display controller, "
+     "firmware line 4.x. Sold since January 2026.",
+     "widget-pro", []),
+    ("Known issue: Widget Pro flicker",
+     "A batch of Widget Pro units built in March 2026 can show intermittent "
+     "screen flicker at 120Hz. Firmware 4.2 reduces it; units that still "
+     "flicker after 4.2 qualify for warranty replacement.",
+     "widget-pro", ["known-issue"]),
+    ("Billing FAQ",
+     "Invoices are issued on the 1st. Duplicate charges are refunded within "
+     "3 business days once reported.",
+     None, ["policy", "billing"]),
+]
+for title, content, product, tags in kb_docs:
+    r = client.vaults.push(product_kb.vault_id, content, title=title,
+                           metadata={"product": product} if product else None)
+    if tags:
+        client.tags.apply(product_kb.vault_id, r.id, add=tags)
+```
+
+## Step 5: ingest the customer brain
+
+Every message, every channel, one vault, stamped with who and what. Our fixture is four messages from three customers:
+
+```python
+tickets = [
+    ("alice", "widget-pro", "email",
+     "Alice reported via email: my Widget Pro screen flickers every few "
+     "minutes at 120Hz. Purchased in March. Order #A-1042.", ["defect"]),
+    ("alice", "widget-pro", "chat",
+     "Alice followed up on chat: the flicker on her Widget Pro is worse "
+     "after the room warms up. She already tried a different cable.", ["defect"]),
+    ("bob", "widget-pro", "email",
+     "Bob reported flicker on his March-batch Widget Pro. Resolution: "
+     "support had him update to firmware 4.2; flicker persisted, so a "
+     "warranty replacement was shipped. Bob confirmed the replacement "
+     "unit is stable.", ["defect", "resolved"]),
+    ("carol", "widget-mini", "email",
+     "Carol was charged twice for her Widget Mini order #C-2210. Refund "
+     "of the duplicate charge requested.", ["billing"]),
+]
+for customer, product, channel, content, tags in tickets:
+    r = client.vaults.push(customers.vault_id, content,
+        metadata={"customer_id": customer, "product": product, "channel": channel})
+    client.tags.apply(customers.vault_id, r.id, add=tags)
+```
+
+In production this loop is a webhook from your helpdesk, chat, and email pipeline, not hand-written fixtures. The point is the shape: content + identity metadata + one or two curated tags per message. Give indexing a minute before you pull (our run waited 45 seconds).
+
+## The three pulls
+
+A ticket comes in: Alice, flicker, Widget Pro. Your agent (human or AI) makes three pulls.
+
+**Vertical: this customer's history.**
+
+```python
+history = client.vaults.pull(
+    customers.vault_id,
+    query="screen flicker history",
+    filters={"meta": {"customer_id": "alice"}},
+)
+for item in history:
+    print(item.title, "::", item.content[:80])
+```
+
+Pull returns a list of items (each has `title`, `content`, `source`, `score`). In our live run this returned Alice's email, her chat follow-up ("worse after the room warms up, already tried a different cable"), and (this is the part I didn't script) a distilled wiki page titled *"Widget Pro Screen Flicker Issue"* that the engine had already consolidated from her two messages. Bob and Carol appeared zero times. The isolation is the metadata filter doing its job.
+
+**Product: policies and known issues.**
+
+```python
+policy = client.vaults.pull(
+    product_kb.vault_id,
+    query="flicker warranty replacement policy",
+    filters={"meta": {"product": "widget-pro"}},
+)
+```
+
+Returns the known-issue note and the warranty policy (which, remember, has no product stamp and survives the filter by design).
+
+**Horizontal: this product across all customers.**
+
+```python
+similar = client.vaults.pull(
+    customers.vault_id,
+    query="how was the flicker resolved",
+    filters={"meta": {"product": "widget-pro"}, "tags": ["defect"]},
+)
+```
+
+Metadata and tags compose in one call: only Widget Pro sources, only the ones tagged `defect`. The top result in our run was Bob's ticket: firmware 4.2 didn't fix his March-batch unit, so support shipped a warranty replacement and he confirmed it stable. Carol's billing issue on a different product was correctly invisible.
+
+That third pull is the whole case study in one line. The agent now knows this is a known March-batch issue, knows the fix that actually worked, and knows the policy that authorizes it. The reply writes itself: "this is a known issue with March units; firmware 4.2 sometimes helps, but you qualify for a free warranty replacement either way."
+
+## The learning loop
+
+Close the loop by pushing the resolution back:
+
+```python
+r = client.vaults.push(
+    customers.vault_id,
+    "Alice's flicker: confirmed March-batch known issue. Firmware 4.2 did not "
+    "resolve it; warranty replacement shipped per policy. Customer confirmed fixed.",
+    metadata={"customer_id": "alice", "product": "widget-pro"},
+)
+client.tags.apply(customers.vault_id, r.id, add=["defect", "resolved"])
+```
+
+Now the next agent's horizontal pull finds *two* confirmed resolutions instead of one. And because the wiki layer distills repeated facts into consolidated pages (we watched it merge Alice's two reports into one page without being asked), the "March batch flickers" pattern becomes a first-class piece of context rather than a vibe spread across twelve tickets. Your system didn't just store the tickets; it noticed the defect.
+
+This works identically whether the thing making the pulls is a human agent's dashboard or an AI agent drafting replies. Same three pulls, same filters. Either way the answer comes from what your customers and docs actually said, not from what a model half-remembers.
+
+## Honest constraints (read before you build)
+
+- **Filters are single-vault per pull.** You can't join the customer brain and the product brain in one call; you make three pulls (they're independent, run them concurrently). This is a v1 constraint, not a law of physics.
+- **A tag filter's scope is capped at 1,000 sources**, and the cap is checked on the tag closure alone (a metadata filter in the same call doesn't shrink it). If `defect` alone outgrows that, split the vocabulary: `defect-display`, `defect-battery`.
+- **Match-or-absent is a choice.** A metadata filter excludes *contradicting* values and keeps *keyless* data. If you want hard exclusion of everything unstamped, stamp everything at ingest.
+- **Tags are applied after push** (push returns the source id, then `tags.apply`). Two calls today.
+
+## Build it
+
+The whole pipeline is two vaults, three declared keys, five tags, and three pulls. Our reference run: 8 documents ingested, ~45 seconds of indexing, 10/10 isolation checks passed against production. Docs for the two primitives: [tags](https://docs.xysq.ai/sdk/tags) and [metadata filters](https://docs.xysq.ai/sdk/metadata-filters), and the [SDK getting started](https://docs.xysq.ai/sdk/getting-started).
+
+If you build a support pipeline on this, I want to see it. Good luck!
