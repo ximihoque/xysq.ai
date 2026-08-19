@@ -45,7 +45,7 @@ Rule of thumb: metadata for *who and what it belongs to*, tags for *what kind of
 
 ## Step 1: project, vaults, keys
 
-Two prerequisites, both one-time: `pip install xysq`, and in the dashboard (app.xysq.ai, under Agents) create a project called "support", copy its id, and mint an agent API key with an **admin grant** on that project (creating vaults and curating tags are project-admin acts; a read or write grant will 403 on the very first call).
+Two prerequisites, both one-time: `pip install git+https://github.com/xysq-ai/sdk_python_xysq.git`, and in the dashboard (app.xysq.ai, under Agents) create a project called "support", copy its id, and mint an agent API key with an **admin grant** on that project (creating vaults and curating tags are project-admin acts; a read or write grant will 403 on the very first call).
 
 ```python
 from xysq import Xysq
