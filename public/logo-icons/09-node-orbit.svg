@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq memory node orbit">
+  <!-- 09 — Memory node. A solid core with three orbiting memory dots — abstract,
+       but it's literally what xysq is (a memory layer around an agent). Codex-clean. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <g fill="none" stroke="#00e5c8" stroke-width="4" opacity="0.45">
+    <circle cx="120" cy="120" r="62"/>
+  </g>
+  <circle cx="120" cy="120" r="30" fill="#00e5c8"/>
+  <circle cx="120" cy="58"  r="13" fill="#ff6b7a"/>
+  <circle cx="174" cy="150" r="11" fill="#00e5c8"/>
+  <circle cx="66"  cy="150" r="11" fill="#00e5c8"/>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq lychee editorial line art">
+  <!-- Take C — Editorial line-art. The lychee as fine strokes: outlined body with
+       a hint of the skin's tessellated bumps, an outlined leaf with a vein.
+       Cyan line on navy, one soft lychee-tint wash. Luxe / magazine feel. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+
+  <!-- faint tinted wash so the fruit still has presence at a glance -->
+  <path d="M120 80
+           C 154 80 173 105 173 138
+           C 173 173 148 194 120 194
+           C 92 194 67 173 67 138
+           C 67 105 86 80 120 80 Z"
+        fill="#ff6b7a" opacity="0.10"/>
+
+  <g fill="none" stroke="#00e5c8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- body outline -->
+    <path d="M120 80
+             C 154 80 173 105 173 138
+             C 173 173 148 194 120 194
+             C 92 194 67 173 67 138
+             C 67 105 86 80 120 80 Z"
+          stroke-width="4"/>
+
+    <!-- skin tessellation: a few delicate scale marks (lychee's signature bumps) -->
+    <g stroke-width="1.6" opacity="0.55">
+      <path d="M95 118 l9 9 M104 109 l9 9 M113 122 l9 9"/>
+      <path d="M132 112 l9 9 M141 123 l9 9 M120 132 l9 9"/>
+      <path d="M101 142 l9 9 M119 150 l9 9 M137 144 l9 9"/>
+      <path d="M110 162 l9 9 M128 166 l9 9"/>
+    </g>
+
+    <!-- stem -->
+    <path d="M120 80 C 121 70 122 64 125 58" stroke-width="4"/>
+
+    <!-- leaf outline + vein -->
+    <path d="M125 58
+             C 133 33 158 23 183 30
+             C 181 57 161 76 134 73
+             C 129 69 126 63 125 58 Z"
+          stroke-width="4"/>
+    <path d="M131 64 C 147 55 165 45 178 35" stroke-width="2"/>
+  </g>
+</svg>

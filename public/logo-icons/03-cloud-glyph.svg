@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq cloud with q-squared glyph">
+  <!-- 03 — Cloud, glyph. Cloud as a container; a small q² sits inside,
+       tying back to the xysq² wordmark you liked. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <g fill="#00e5c8">
+    <circle cx="92"  cy="120" r="36"/>
+    <circle cx="128" cy="100" r="44"/>
+    <circle cx="166" cy="124" r="34"/>
+    <rect x="62" y="120" width="124" height="44" rx="22"/>
+  </g>
+  <g font-family="'Outfit','Helvetica Neue',Arial,sans-serif" font-weight="700" fill="#0a121c" text-anchor="middle">
+    <text x="124" y="138" font-size="58">q</text>
+    <text x="158" y="112" font-size="30">2</text>
+  </g>
+</svg>

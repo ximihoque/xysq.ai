@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq walnut gradient halves">
+  <!-- 08 — Walnut, gradient halves. Two mirrored shell halves: left cyan, right
+       lychee, split at the seam. The brain-fold curves double as memory layers. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <!-- left half -->
+  <path d="M120 56 C 84 56 56 100 56 134 C 56 174 84 192 120 192 Z" fill="#00e5c8"/>
+  <!-- right half -->
+  <path d="M120 56 C 156 56 184 100 184 134 C 184 174 156 192 120 192 Z" fill="#ff6b7a"/>
+  <!-- folds -->
+  <g fill="none" stroke="#0a121c" stroke-width="5" stroke-linecap="round" opacity="0.85">
+    <path d="M110 86 C 88 108 88 150 110 172"/>
+    <path d="M100 96 C 84 114 84 146 100 164"/>
+    <path d="M130 86 C 152 108 152 150 130 172"/>
+    <path d="M140 96 C 156 114 156 146 140 164"/>
+  </g>
+  <line x1="120" y1="60" x2="120" y2="188" stroke="#0a121c" stroke-width="4"/>
+</svg>

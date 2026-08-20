@@ -2,8 +2,8 @@
 title: "Case Study: A Customer Support Memory Layer in Two Vaults"
 slug: "customer-support-memory-layer"
 date: "2026-08-20"
-author: "pulin"
-excerpt: "One vault for what the company publishes, one for what customers actually say, masked at the door, sliced by tags and metadata. The system wrote its own known-issues doc from repeat defect reports; nobody typed it, and no real name survived ingestion. Every code block ran against production."
+author: "ximi"
+excerpt: "Two vaults, three pulls, masked at the door. The system wrote its own known-issues doc, and every code block ran against production."
 category: "Engineering"
 cover: "https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/hero.png"
 tags: ["case-study", "customer-support", "tags", "metadata", "pii", "sdk", "context-engineering"]
@@ -12,41 +12,30 @@ draft: false
 readingTimeMinutes: 9
 ---
 
+import { Figure } from '../../components/mdx/Figure'
+
 Your support agent answers every ticket like it's the first ticket it has ever seen. The customer explained their problem twice already (once on email, once on chat), another customer had the exact same defect last month and got it fixed, and the warranty policy that settles the whole thing is sitting in a PDF nobody retrieves. All the context exists. None of it is in the room when the answer gets written.
 
-This post is the fix, as a pipeline you can copy. We build a support memory layer on xysq with exactly two vaults: a **product brain** (specs, policies: what the company publishes) and a **customer brain** (every message from every customer, all channels, one vault, with PII masked before anything is stored). Two things happen by the end that nobody typed: the system writes its own known-issues doc from repeat defect reports, and it does so without a single real name in it. It's maybe 60 lines of setup code, and everything below ran live against our production API: 12 out of 12 checks, including "zero real identities anywhere".
+This post is the fix, as a pipeline you can copy. It's maybe 60 lines of setup code, and everything below ran live against our production API: 12 out of 12 checks passed, including "zero real identities anywhere".
 
-## The shape: two vaults, three pulls
+## The system at a glance
 
-The mental model first. A good support answer needs three kinds of context, and I think of them as directions:
+Here's the whole thing. We'll walk it block by block.
 
-1. **Vertical context**: everything about *this customer*. Their history, their orders, what they already tried.
-2. **Product context**: everything about *the thing itself*. Specs and policies, the official record.
-3. **Horizontal context**: *this product across all customers*. Has anyone else hit this? How was it resolved?
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/overview.png" alt="The support memory system: a product brain vault, a customer brain vault with PII masked at ingress, one reply assembled from three filtered pulls, and an emergent wiki page consolidated by the engine." />
 
-Most support stacks have the first one at best (a CRM page the agent skims). The third one is where the leverage is: the official record never says "the March batch flickers", because nobody knew when it shipped. The customers know. Horizontal context is how a support system learns things the company hasn't written down yet.
+Four blocks:
 
-The architecture that serves all three is small:
+1. **The product brain** (block 01): a vault holding only what the company publishes. Specs, policies, FAQs. Notably absent: a known-issues doc. Nobody writes one.
+2. **The customer brain** (block 02): every customer message from every channel, in ONE vault, not a vault per customer. Tickets pass through a mask on the way in, so the stored text never carries a name, email, or order number. Identity lives in a metadata stamp instead.
+3. **The three pulls** (block 03): when a ticket comes in, the agent makes three filtered calls: this customer's history (vertical), the official record (product), and this product across all customers (horizontal).
+4. **The emergent page** (block 04): the payoff. The engine consolidates repeat reports into a known-issues page on its own. Nobody types it, and thanks to the mask it can't name anyone.
 
-- One **project** ("support") that owns a shared tag vocabulary.
-- One **product-kb vault**: specs, return policy, warranty policy, billing FAQ. Only official material.
-- One **customers vault**: every customer message from every channel, created with `pii_scrub=True`. Not a vault per customer; one vault, with metadata doing the isolation and masking doing the hygiene.
+One sentence governs what filtered pulls can see, and it's worth memorizing: **exclusive content never crosses; shared knowledge serves every side that earned it.** A finding derived only from bob's tickets never appears under alice's filter. A finding derived from both appears under both. Policies with no customer stamp appear under everyone's.
 
-That last point is the part people get wrong. You do not need a thousand vaults for a thousand customers. You need one vault, one declared metadata key, and a mask at the door.
+## The scaffolding
 
-## Tags, metadata, masking (60-second version)
-
-Three primitives, three different jobs:
-
-- **Tags** are a curated vocabulary you control: `defect`, `billing`, `resolved`, `policy`. A tag filter is *hard inclusion*: pull only what carries the tag. Tags live at the project level, so every vault and every agent in the project shares one vocabulary. Unknown tags are never auto-created anywhere: a pull that filters by an unknown tag fails loudly with a 400, and `tags.apply` skips unknown names and echoes them back in the result's `unknown` field.
-- **Metadata keys** are identity facets: `customer_id`, `product`. A metadata filter is *match-or-absent*, applied at the finest granularity the engine tracks: a piece of derived knowledge inherits the values of every source that contributed to it, so knowledge derived only from bob's tickets never appears under alice's filter, knowledge derived from both appears under both, and keyless material (policies, specs) appears under everyone's. One sentence to remember: **exclusive content never crosses; shared knowledge serves every side that earned it.**
-- **PII masking** cleans content at ingestion, before the first write. Structured identifiers (emails, phones, cards, IPs, IBANs) and any `known_pii` strings you pass become `<redacted>`; names and prose identity get rewritten to neutral voice ("the customer"). If content can't be cleaned, the push is rejected and nothing is stored. Identity then lives where it belongs: in the metadata stamp, not the text.
-
-Rule of thumb: metadata for *who it belongs to*, tags for *what kind of thing it is*, masking so the text itself stops carrying identity at all.
-
-## Step 1: project, vaults, keys
-
-Two prerequisites, both one-time: `pip install git+https://github.com/xysq-ai/sdk_python_xysq.git`, and in the dashboard (app.xysq.ai, under Agents) create a project called "support", copy its id, and mint an agent API key with an **admin grant** on that project (creating vaults and curating tags are project-admin acts; a read or write grant will 403 on the very first call).
+Before the blocks: one project, two vaults, three declared keys, four tags. Prerequisites, both one-time: `pip install git+https://github.com/xysq-ai/sdk_python_xysq.git`, and in the dashboard (app.xysq.ai, under Agents) create a project called "support", copy its id, and mint an agent API key with an **admin grant** on it (creating vaults and curating tags are admin acts; a read or write grant will 403 on the very first call).
 
 ```python
 from xysq import Xysq
@@ -59,32 +48,26 @@ customers  = client.vaults.create("customers",  project_id=PROJECT_ID,
                                   pii_scrub=True)
 ```
 
-Two things matter here. Creating the vaults inside the project is what lets them resolve the project's shared tag vocabulary later. And `pii_scrub=True` on the customers vault means every push into it gets masked before storage; the product brain holds public material and doesn't need it. (Needs SDK ≥ 3.6.0.)
+`pii_scrub=True` on the customers vault is the mask in the diagram: every push into it gets cleaned before storage. The product brain holds public material and doesn't need it. (Needs SDK ≥ 3.6.0.)
 
-## Step 2: declare the metadata keys
-
-Declaring a key is what turns a metadata field into a filter. Undeclared fields are stored but not filterable.
+Then declare which metadata fields are filterable, and curate the tag vocabulary the whole project shares:
 
 ```python
 client.vaults.declare_meta_key(customers.vault_id, "customer_id")
 client.vaults.declare_meta_key(customers.vault_id, "product")
 client.vaults.declare_meta_key(product_kb.vault_id, "product")
-```
 
-(If you declare a key after you've already ingested, a backfill extracts it from existing sources in the background. Order doesn't trap you.)
-
-## Step 3: curate the tag vocabulary
-
-```python
 for name in ["policy", "defect", "billing", "resolved"]:
     client.tags.create(PROJECT_ID, name)
 ```
 
-Four tags is a fine start. Resist the urge to mint fifty; the vocabulary is a filter surface, not a folksonomy (free-for-all tagging where anyone mints anything). Deleting a tag archives it (nothing gets untagged, and you can restore it), so curating is cheap. Notice what's *not* here: no `known-issue` tag. We don't know the issues yet. That's the point.
+Two primitives, two jobs: metadata answers *who and what it belongs to* (a filter is match-or-absent: it excludes contradicting values and keeps keyless material), tags answer *what kind of thing it is* (a tag filter is hard inclusion, and unknown tags are never silently created). Four tags is a fine start; the vocabulary is a filter surface, not a folksonomy. And notice: no `known-issue` tag. We don't know the issues yet. That's the point.
 
-## Step 4: ingest the product brain
+## Block 01: the product brain
 
-Only what the company publishes. Our full fixture is three docs; here they all are, so your run reproduces ours. Note the return policy gets pushed with *no* product metadata: match-or-absent means it stays reachable from every product-scoped pull.
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-01-product.png" alt="Block 01 highlighted: the product brain vault holding only official material - return policy, spec, billing FAQ." />
+
+Only what the company publishes. Our full fixture is three docs; here they all are, so your run reproduces ours. The return policy gets pushed with *no* product metadata on purpose: match-or-absent means it stays reachable from every product-scoped pull.
 
 ```python
 kb_docs = [
@@ -111,7 +94,9 @@ for title, content, product, tags in kb_docs:
 
 There is no known-issues doc in that list, and there never will be. Watch what happens instead.
 
-## Step 5: ingest the customer brain, through the mask
+## Block 02: the customer brain, masked at the door
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-02-customer.png" alt="Block 02 highlighted: the customer brain vault, with tickets passing through a PII mask at ingress before anything is stored." />
 
 Every message, every channel, one vault, stamped with who and what. The helpdesk knows each customer's real identifiers, so it passes them as `known_pii`; they're used for masking and never stored. Our fixture is four messages from three customers:
 
@@ -150,11 +135,13 @@ The customer reported: my Widget Pro screen flickers every few minutes
 at 120Hz. Purchased in March. Order <redacted>.
 ```
 
-No name, no email, no order number, full meaning. We asserted it hard: across every stored row in the customers vault, zero of the eight real identifiers from the fixture survived. The symptom, the batch, the firmware level, the resolution: all intact. Identity lives in the `customer_id` stamp, where filters can use it and text can't leak it.
+No name, no email, no order number, full meaning. We asserted it hard: across every stored row in the customers vault, zero of the eight real identifiers from the fixture survived. The symptom, the batch, the firmware level, the resolution: all intact. Identity lives in the `customer_id` stamp, where filters can use it and text can't leak it. If content can't be cleaned, the push is rejected with a 422 and nothing is stored.
 
-In production this loop is a webhook from your helpdesk, chat, and email pipeline, not hand-written fixtures. The point is the shape: content + identity metadata + `known_pii` + one or two curated tags per message. Give indexing a minute before you pull (our run waited 60 seconds).
+In production this loop is a webhook from your helpdesk, chat, and email pipeline, not hand-written fixtures. The shape is what matters: content + identity metadata + `known_pii` + one or two curated tags per message. Give indexing a minute before you pull (our run waited 60 seconds).
 
-## The three pulls
+## Block 03: one ticket, three pulls
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-03-pulls.png" alt="Block 03 highlighted: one reply assembled from three filtered pulls - vertical, product, and horizontal." />
 
 A ticket comes in: alice, flicker, Widget Pro. Your agent (human or AI) makes three pulls.
 
@@ -170,7 +157,7 @@ for item in history:
     print(item.title, "::", item.content[:80])
 ```
 
-Pull returns a list of items (each has `title`, `content`, `source`, `score`). In our live run this returned alice's two tickets, the extracted symptom facts, and (this is the part we didn't script) a distilled wiki page titled *"Widget Pro Flicker Issue"* that the engine had consolidated from the repeat reports. The page appears in alice's pull because her tickets helped derive it; bob's pull gets the same page for the same reason. What alice's pull does NOT contain: carol's billing issue (different customer, excluded by her stamp), and any real name at all: the whole result set is "the customer" and `<redacted>`, because that's all the vault ever stored.
+Pull returns a list of items (each has `title`, `content`, `source`, `score`). In our live run this returned alice's two tickets, the extracted symptom facts, and (this is the part we didn't script) a distilled wiki page titled *"Widget Pro Flicker Issue"*: the engine had consolidated the repeat reports on its own. The page appears in alice's pull because her tickets helped derive it; bob's pull gets the same page for the same reason. What alice's pull does NOT contain: carol's billing issue (different customer, excluded by her stamp), and any real name at all. The whole result set reads "the customer" and `<redacted>`, because that's all the vault ever stored.
 
 **Product: the official record.**
 
@@ -202,15 +189,17 @@ support had the customer update to firmware 4.2; flicker persisted, so a
 warranty replacement was shipped.
 ```
 
-That's the prior fix, fully anonymous, sitting next to the emergent *"Widget Pro Flicker Issue"* page. Nobody wrote a known-issues doc. The system wrote it, from three tickets, versioned it in the vault's wiki layer, and because masking happened at the door, the page physically cannot name anyone. Carol's billing issue on a different product was correctly invisible.
+That's the prior fix, fully anonymous. Carol's billing issue on a different product was correctly invisible. The agent now knows this is a repeat March-batch defect, knows the fix that actually worked, and knows the policy that authorizes it. The reply writes itself: "this is a known issue with March units; firmware 4.2 sometimes helps, but you qualify for a free warranty replacement either way."
 
-That is the "self-realising" moment, and it's not magic: repeat facts across sources are exactly what a distillation layer consolidates. Two customers reporting the same flicker on the same batch *is* the known issue; the wiki page is just that pattern made retrievable, and safe to hand to any customer-facing agent as-is.
+## Block 04: the page nobody wrote
 
-The agent now knows this is a repeat March-batch defect, knows the fix that actually worked, and knows the policy that authorizes it. The reply writes itself: "this is a known issue with March units; firmware 4.2 sometimes helps, but you qualify for a free warranty replacement either way."
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-04-emergent.png" alt="Block 04 highlighted: the emergent wiki page, consolidated by the engine from repeat reports." />
 
-## The learning loop
+Sitting next to that raw ticket in the horizontal pull was the distilled page itself: *"Widget Pro Flicker Issue"*, consolidated from three tickets, versioned in the vault's wiki layer, and physically unable to name anyone because masking happened at the door. Nobody wrote a known-issues doc. The system noticed the pattern and wrote it.
 
-Close the loop by pushing the resolution back:
+It's not magic: repeat facts across sources are exactly what a distillation layer consolidates. Two customers reporting the same flicker on the same batch *is* the known issue; the wiki page is just that pattern made retrievable, and safe to hand to any customer-facing agent as-is.
+
+Close the loop by pushing each resolution back:
 
 ```python
 r = client.vaults.push(
@@ -223,7 +212,7 @@ r = client.vaults.push(
 client.tags.apply(customers.vault_id, r.id, add=["defect", "resolved"])
 ```
 
-Now the emergent known-issue page has *two* confirmed resolutions feeding it, and the next agent's horizontal pull starts from a stronger page. Ticket by ticket, the "March batch flickers" pattern goes from a vibe spread across tickets to a first-class piece of context. When the pattern is loud enough, that page is also your signal to engineering: the support system noticed the defective batch before anyone filed it.
+Now the page has *two* confirmed resolutions feeding it, and the next agent's horizontal pull starts from a stronger page. When the pattern is loud enough, that page is also your signal to engineering: the support system noticed the defective batch before anyone filed it.
 
 This works identically whether the thing making the pulls is a human agent's dashboard or an AI agent drafting replies. Same three pulls, same filters. Either way the answer comes from what your customers and docs actually said, not from what a model half-remembers.
 
@@ -232,7 +221,7 @@ This works identically whether the thing making the pulls is a human agent's das
 - **Filters are single-vault per pull.** You can't join the customer brain and the product brain in one call; you make three pulls (they're independent, run them concurrently).
 - **Shared knowledge is visible from every contributing side.** That's the design, not a leak: a finding derived from alice's and bob's tickets serves both of their filtered pulls. With masking on, that shared knowledge carries no identities anyway. Exclusive content never crosses.
 - **A tag filter's scope is capped at 1,000 sources**, checked on the tag closure alone. If `defect` alone outgrows that, split the vocabulary: `defect-display`, `defect-battery`.
-- **Masking has exact edges.** The deterministic guarantee covers emails, phones (10+ digits), Luhn-valid cards, IPv4/IPv6, IBANs, and every `known_pii` string; unknown prose names are handled by the model pass, best-effort. Unscrubable content is rejected with a 422 and nothing is stored. Because the rewrite isn't byte-deterministic, re-pushing identical raw content may not dedupe on a masked vault. Full details in the [PII scrubbing docs](https://docs.xysq.ai/sdk/pii-scrub).
+- **Masking has exact edges.** The deterministic guarantee covers emails, phones (10+ digits), Luhn-valid cards, IPv4/IPv6, IBANs, and every `known_pii` string; unknown prose names are handled by the model pass, best-effort. Because the rewrite isn't byte-deterministic, re-pushing identical raw content may not dedupe on a masked vault. Full details in the [PII scrubbing docs](https://docs.xysq.ai/sdk/pii-scrub).
 - **Tags are applied after push** (push returns the source id, then `tags.apply`). Two calls today.
 
 ## Build it

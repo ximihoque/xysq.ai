@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq lychee with q-squared glyph">
+  <!-- 06 — Lychee, glyph. Berry body as a container holding a cut-out q²,
+       so the negative space reveals the dark tile. Lychee + cyan leaf. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <mask id="m06">
+    <rect width="240" height="240" fill="white"/>
+    <text x="118" y="160" font-size="64" font-family="'Outfit','Helvetica Neue',Arial,sans-serif" font-weight="800" text-anchor="middle" fill="black">q</text>
+    <text x="150" y="124" font-size="30" font-family="'Outfit','Helvetica Neue',Arial,sans-serif" font-weight="800" text-anchor="middle" fill="black">2</text>
+  </mask>
+  <circle cx="118" cy="138" r="58" fill="#ff6b7a" mask="url(#m06)"/>
+  <path d="M118 80 C118 52 138 38 168 40 C170 68 152 88 124 88 C121 86 119 83 118 80 Z" fill="#00e5c8"/>
+  <path d="M118 88 L118 80" stroke="#00e5c8" stroke-width="6" stroke-linecap="round"/>
+</svg>

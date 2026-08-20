@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq lychee soft dimensional">
+  <!-- Take B — Soft dimensional. Same refined silhouette as A, made premium:
+       radial-gradient body (plump), a soft specular highlight, a leaf gradient,
+       and a faint shadow under the leaf. Still a simple, single-fruit mark. -->
+  <defs>
+    <radialGradient id="lyB-body" cx="0.38" cy="0.30" r="0.85">
+      <stop offset="0"   stop-color="#ff97a3"/>
+      <stop offset="0.55" stop-color="#ff6b7a"/>
+      <stop offset="1"   stop-color="#e84e62"/>
+    </radialGradient>
+    <linearGradient id="lyB-leaf" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#00b8a2"/>
+      <stop offset="1" stop-color="#3df0d8"/>
+    </linearGradient>
+    <radialGradient id="lyB-hi" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+
+  <!-- soft contact shadow under the fruit -->
+  <ellipse cx="120" cy="200" rx="52" ry="10" fill="#000000" opacity="0.28"/>
+
+  <!-- Body -->
+  <path d="M120 78
+           C 156 78 176 104 176 138
+           C 176 174 150 196 120 196
+           C 90 196 64 174 64 138
+           C 64 104 84 78 120 78 Z"
+        fill="url(#lyB-body)"/>
+
+  <!-- specular highlight, upper-left -->
+  <ellipse cx="98" cy="116" rx="26" ry="20" fill="url(#lyB-hi)"/>
+
+  <!-- top dimple -->
+  <path d="M108 86 C 114 80 126 80 132 86" fill="none" stroke="#b83b4d" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- leaf shadow on body -->
+  <path d="M124 60 C 132 38 150 30 168 32 C 165 52 150 66 130 66 Z" fill="#000000" opacity="0.18"/>
+
+  <!-- stem -->
+  <path d="M120 80 C 121 70 122 64 124 58" fill="none" stroke="#008e7e" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- leaf -->
+  <path d="M124 58
+           C 132 32 158 22 184 28
+           C 182 56 162 76 134 74
+           C 129 70 125 64 124 58 Z"
+        fill="url(#lyB-leaf)"/>
+  <path d="M129 64 C 146 56 164 46 178 34" fill="none" stroke="#0a121c" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+</svg>
