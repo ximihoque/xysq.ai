@@ -5,7 +5,7 @@ date: "2026-08-20"
 author: "ximi"
 excerpt: "Two memory stores, three lookups, masked at the door. The system wrote its own known-issues doc, and every code block ran against production."
 category: "Engineering"
-cover: "https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/hero-v2.png"
+cover: "https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/hero-v3.png"
 tags: ["case-study", "customer-support", "tags", "metadata", "pii", "sdk", "context-engineering"]
 featured: false
 draft: false
@@ -18,7 +18,7 @@ import { Figure } from '../../components/mdx/Figure'
 
 A customer writes in with a real issue. What do most AI support agents do with it? One of two things: send back a generic self-help article, or escalate to a human. Not because the model is weak, but because it has nothing to work with. It doesn't know this customer's history, it can't see what's happening with similar cases, and the policy that would settle the question isn't in front of it. So it plays it safe, the customer repeats themselves, and the human queue fills with tickets that context could have answered.
 
-<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/problem-v2.png" alt="The problem: the reply is written blind while CRM history, policy PDFs, the helpdesk archive, and chat logs sit in disconnected silos; the same defect gets rediscovered ticket after ticket, and raw identity sits in the logs." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/problem-v3.png" alt="The problem: the reply is written blind while CRM history, policy PDFs, the helpdesk archive, and chat logs sit in disconnected silos; the same defect gets rediscovered ticket after ticket, and raw identity sits in the logs." />
 
 The frustrating part is that everything the reply needs already exists. The customer's history is in the CRM. The rule that settles the case is in a policy PDF. Similar tickets, some already resolved, sit in the helpdesk archive. But none of it is wired into the moment the reply gets written, so every ticket starts from zero and the same defect gets rediscovered again and again. And as a side effect, the chat logs hold customer names, emails, and order numbers in plain text, which is its own quiet liability.
 
@@ -30,7 +30,7 @@ This post builds that, as a pipeline you can copy. It's maybe 60 lines of setup 
 
 Here's what gets wired into the room. We'll build it block by block.
 
-<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/overview-v2.png" alt="The fix: a product knowledge store, a customer history store with masking at ingress, and a support agent that answers from three lookups; a known-issues page the system writes on its own." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/overview-v3.png" alt="The fix: a product knowledge store, a customer history store with masking at ingress, and a support agent that answers from three lookups; a known-issues page the system writes on its own." />
 
 Everything sits on two **vaults**. A vault is a memory store: your agent pushes content in, the engine indexes and organizes it, and the agent searches it later. We use exactly two:
 
@@ -75,7 +75,7 @@ Four is plenty to start. And notice: no `known-issue` tag. We don't know the iss
 
 ## Block 01: product knowledge
 
-<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-01-product-v2.png" alt="Block 01 highlighted: the product knowledge vault holding only official material - return policy, product spec, billing FAQ." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-01-product-v3.png" alt="Block 01 highlighted: the product knowledge vault holding only official material - return policy, product spec, billing FAQ." />
 
 Only what the company publishes. Our full fixture is three docs; here they all are, so your run reproduces ours. One detail: the return policy is pushed with no `product` label, which means it shows up in searches for *any* product. A filter only excludes content that carries a different value; content with no value at all always stays in.
 
@@ -106,7 +106,7 @@ There is no known-issues doc in that list, and there never will be. Watch what h
 
 ## Block 02: customer history, masked at the door
 
-<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-02-customer-v2.png" alt="Block 02 highlighted: the customer history vault, with tickets passing through a mask at ingress before anything is stored." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-02-customer-v3.png" alt="Block 02 highlighted: the customer history vault, with tickets passing through a mask at ingress before anything is stored." />
 
 Every message, every channel, stamped with which customer and which product. Your helpdesk already knows each customer's real identifiers, so it passes them along as `known_pii`; the engine uses them for masking and never stores them. Our fixture is four messages from three customers:
 
@@ -151,7 +151,7 @@ In production this loop is a webhook from your helpdesk, chat, and email pipelin
 
 ## Block 03: one ticket, three lookups
 
-<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-03-pulls-v2.png" alt="Block 03 highlighted: the support agent answering from three lookups - this customer's past tickets, product docs and policy, similar cases and their fixes." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-03-pulls-v3.png" alt="Block 03 highlighted: the support agent answering from three lookups - this customer's past tickets, product docs and policy, similar cases and their fixes." />
 
 A ticket comes in: alice, flicker, Widget Pro. The agent runs three lookups. Each is one `pull` call: a search query plus filters.
 
@@ -203,7 +203,7 @@ That's the prior fix, fully anonymous. The agent now knows this is a repeat Marc
 
 ## Block 04: the page nobody wrote
 
-<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-04-emergent-v2.png" alt="Block 04 highlighted: the known-issues page the engine consolidates on its own from repeat reports." />
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/block-04-emergent-v3.png" alt="Block 04 highlighted: the known-issues page the engine consolidates on its own from repeat reports." />
 
 Sitting next to that result was the summary page itself: *"Widget Pro Flicker Issue"*, consolidated from three tickets. Nobody wrote a known-issues doc; the engine noticed the repetition and wrote one, and because masking happened before storage, the page physically can't name anyone.
 
