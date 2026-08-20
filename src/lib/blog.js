@@ -54,7 +54,6 @@ export function getPostBySlug(slug, { includeDrafts = import.meta.env.DEV } = {}
   return loadPosts({ includeDrafts }).find((p) => p.slug === slug) ?? null
 }
 
-export function formatDate(iso) {
-  const d = new Date(iso)
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-}
+// lives in blogMeta so pages that don't render post bodies can format a date
+// without pulling this module (and every compiled post) into their chunk
+export { formatDate } from './blogMeta'

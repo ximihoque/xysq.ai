@@ -6,6 +6,7 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
+import UseCaseRelated from '../components/UseCaseRelated'
 import { USE_CASE_BY_SLUG } from '../data/useCases'
 import '../styles/outputs-section.css'
 import '../styles/use-case-page.css'
@@ -144,6 +145,10 @@ export default function UseCaseCategoryPage() {
             </span>
           </div>
         </motion.div>
+
+        {/* the posts we've actually written for this function. renders
+            nothing when we haven't written one yet. */}
+        <UseCaseRelated slugs={data.relatedPosts} />
       </article>
 
       <Footer />

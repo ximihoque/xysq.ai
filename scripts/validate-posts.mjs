@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import matter from 'gray-matter'
+import { USE_CASE_CATEGORIES } from '../src/data/useCases.js'
 
 const POSTS_DIR = new URL('../src/content/blog/', import.meta.url).pathname
 const AUTHORS_DIR = new URL('../src/content/authors/', import.meta.url).pathname
@@ -37,6 +38,7 @@ function validate() {
   }
 
   let featuredCount = 0
+  const publishedSlugs = new Set()
   for (const file of files) {
     const path = join(POSTS_DIR, file)
     const raw = readFileSync(path, 'utf8')
@@ -58,10 +60,24 @@ function validate() {
       fail(`${file}: unknown category "${fm.category}". Allowed: ${[...categories].join(', ')}`)
     }
     if (fm.featured === true && !fm.draft) featuredCount++
+    if (fm.slug && !fm.draft) publishedSlugs.add(fm.slug)
   }
 
   if (featuredCount > 1) {
     fail(`At most one published post may have "featured: true" (found ${featuredCount}).`)
+  }
+
+  // The use case pages link to posts by slug. Catch a rename or an unpublish
+  // here, at build time, instead of shipping a use case page whose "related
+  // reading" block silently vanished (the component drops unknown slugs).
+  for (const useCase of USE_CASE_CATEGORIES) {
+    for (const slug of useCase.relatedPosts ?? []) {
+      if (!publishedSlugs.has(slug)) {
+        fail(
+          `useCases.js: "${useCase.slug}" lists relatedPosts "${slug}", which is not a published post slug.`
+        )
+      }
+    }
   }
 
   if (process.exitCode) {

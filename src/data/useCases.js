@@ -5,6 +5,12 @@
 // personal and teams. Each page renders the same template:
 // header -> the function's slice of the context lake -> what goes in ->
 // the two faces (teams / AI builders) with an agent flow figure -> CTAs.
+//
+// `relatedPosts` holds blog slugs (from src/content/blog/*.mdx) that are
+// genuinely about that function. Only support and teams have real posts
+// today; the rest are empty on purpose and render no block at all, because
+// a "related reading" list padded with a generic post is worse than none.
+// validate-posts.mjs fails the build on an unknown slug.
 
 export const USE_CASE_CATEGORIES = [
   {
@@ -31,6 +37,7 @@ export const USE_CASE_CATEGORIES = [
       result: 'Every future draft follows the new voice.',
     },
     seo: 'Marketing context graphs from your campaign retros, brand guidelines, and ad sessions. Your team briefs from them; your marketing agents draft from them.',
+    relatedPosts: [],
   },
   {
     slug: 'support',
@@ -56,6 +63,7 @@ export const USE_CASE_CATEGORIES = [
       result: 'Every future answer uses the new policy.',
     },
     seo: 'Support context graphs from your policies, product notes, and resolved conversations. Consistent answers for your team; support agents that improve with every correction.',
+    relatedPosts: ['customer-support-memory-layer'],
   },
   {
     slug: 'sales',
@@ -81,6 +89,7 @@ export const USE_CASE_CATEGORIES = [
       result: 'Every future pitch leads with the team plan.',
     },
     seo: 'Sales context graphs from your pricing decisions, deals, and objection handling. Full-picture briefs for reps; sales copilots that learn your best practices.',
+    relatedPosts: [],
   },
   {
     slug: 'personal',
@@ -106,6 +115,7 @@ export const USE_CASE_CATEGORIES = [
       result: 'Every tool you use knows, from the next session.',
     },
     seo: 'A personal context lake: your AI sessions and files become graphs only you control. Every tool you use starts knowing your context.',
+    relatedPosts: [],
   },
   {
     slug: 'teams',
@@ -131,6 +141,7 @@ export const USE_CASE_CATEGORIES = [
       result: 'Every graph that mentioned Falcon is updated.',
     },
     seo: 'One context lake for the whole team: share graphs on your terms, keep control, and keep the context when people move on.',
+    relatedPosts: ['when-your-star-employee-quits', 'give-your-ai-team-shared-memory'],
   },
 ]
 
