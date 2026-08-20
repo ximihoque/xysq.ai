@@ -1,20 +1,20 @@
 ---
 title: "Case Study: A Customer Support Memory Layer in Two Vaults"
 slug: "customer-support-memory-layer"
-date: "2026-08-18"
+date: "2026-08-20"
 author: "pulin"
-excerpt: "One vault for what the company publishes, one for what customers actually say, tags and metadata to slice them. The system wrote its own known-issues doc from repeat defect reports; nobody typed it. Every code block ran against production."
+excerpt: "One vault for what the company publishes, one for what customers actually say, masked at the door, sliced by tags and metadata. The system wrote its own known-issues doc from repeat defect reports; nobody typed it, and no real name survived ingestion. Every code block ran against production."
 category: "Engineering"
 cover: "https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/hero.png"
-tags: ["case-study", "customer-support", "tags", "metadata", "sdk", "context-engineering"]
+tags: ["case-study", "customer-support", "tags", "metadata", "pii", "sdk", "context-engineering"]
 featured: false
 draft: false
-readingTimeMinutes: 8
+readingTimeMinutes: 9
 ---
 
 Your support agent answers every ticket like it's the first ticket it has ever seen. The customer explained their problem twice already (once on email, once on chat), another customer had the exact same defect last month and got it fixed, and the warranty policy that settles the whole thing is sitting in a PDF nobody retrieves. All the context exists. None of it is in the room when the answer gets written.
 
-This post is the fix, as a pipeline you can copy. We build a support memory layer on xysq with exactly two vaults: a **product brain** (specs, policies: what the company publishes) and a **customer brain** (every message from every customer, all channels, one vault). Here's the part that matters: the product brain contains *no known-issues doc*. Nobody writes one. By the end of the post the system has written it itself, from repeat defect reports it noticed across customers. It's maybe 60 lines of setup code, and everything below ran live against our production API.
+This post is the fix, as a pipeline you can copy. We build a support memory layer on xysq with exactly two vaults: a **product brain** (specs, policies: what the company publishes) and a **customer brain** (every message from every customer, all channels, one vault, with PII masked before anything is stored). Two things happen by the end that nobody typed: the system writes its own known-issues doc from repeat defect reports, and it does so without a single real name in it. It's maybe 60 lines of setup code, and everything below ran live against our production API: 12 out of 12 checks, including "zero real identities anywhere".
 
 ## The shape: two vaults, three pulls
 
@@ -30,18 +30,19 @@ The architecture that serves all three is small:
 
 - One **project** ("support") that owns a shared tag vocabulary.
 - One **product-kb vault**: specs, return policy, warranty policy, billing FAQ. Only official material.
-- One **customers vault**: every customer message from every channel. Not a vault per customer; one vault, with metadata doing the isolation.
+- One **customers vault**: every customer message from every channel, created with `pii_scrub=True`. Not a vault per customer; one vault, with metadata doing the isolation and masking doing the hygiene.
 
-That last point is the part people get wrong. You do not need a thousand vaults for a thousand customers. You need one vault and one declared metadata key.
+That last point is the part people get wrong. You do not need a thousand vaults for a thousand customers. You need one vault, one declared metadata key, and a mask at the door.
 
-## Tags vs metadata (30-second version)
+## Tags, metadata, masking (60-second version)
 
-Two primitives, two different jobs:
+Three primitives, three different jobs:
 
-- **Tags** are a curated vocabulary you control: `defect`, `billing`, `resolved`, `policy`. A tag filter is *hard inclusion*: pull only what carries the tag. Tags live at the project level, so every vault and every agent in the project shares one vocabulary. Unknown tags are never auto-created anywhere: a pull that filters by an unknown tag fails loudly with a 400, and `tags.apply` skips unknown names and echoes them back in the result's `unknown` field (check it; a typo is a silent no-op otherwise).
-- **Metadata keys** are identity facets: `customer_id`, `product`, `channel`. A metadata filter is *match-or-absent*: filtering by `customer_id: "alice"` excludes anything stamped with a *different* customer, and keeps everything that has no customer at all. That sounds subtle but it's exactly right for support: the warranty policy has no `customer_id`, and it should survive every customer-scoped pull.
+- **Tags** are a curated vocabulary you control: `defect`, `billing`, `resolved`, `policy`. A tag filter is *hard inclusion*: pull only what carries the tag. Tags live at the project level, so every vault and every agent in the project shares one vocabulary. Unknown tags are never auto-created anywhere: a pull that filters by an unknown tag fails loudly with a 400, and `tags.apply` skips unknown names and echoes them back in the result's `unknown` field.
+- **Metadata keys** are identity facets: `customer_id`, `product`. A metadata filter is *match-or-absent*, applied at the finest granularity the engine tracks: a piece of derived knowledge inherits the values of every source that contributed to it, so knowledge derived only from bob's tickets never appears under alice's filter, knowledge derived from both appears under both, and keyless material (policies, specs) appears under everyone's. One sentence to remember: **exclusive content never crosses; shared knowledge serves every side that earned it.**
+- **PII masking** cleans content at ingestion, before the first write. Structured identifiers (emails, phones, cards, IPs, IBANs) and any `known_pii` strings you pass become `<redacted>`; names and prose identity get rewritten to neutral voice ("the customer"). If content can't be cleaned, the push is rejected and nothing is stored. Identity then lives where it belongs: in the metadata stamp, not the text.
 
-Rule of thumb: metadata for *who and what it belongs to*, tags for *what kind of thing it is*.
+Rule of thumb: metadata for *who it belongs to*, tags for *what kind of thing it is*, masking so the text itself stops carrying identity at all.
 
 ## Step 1: project, vaults, keys
 
@@ -54,10 +55,11 @@ PROJECT_ID = "1f2a..."  # from the dashboard
 client = Xysq(api_key="xysq_agent_...")
 
 product_kb = client.vaults.create("product-kb", project_id=PROJECT_ID)
-customers  = client.vaults.create("customers",  project_id=PROJECT_ID)
+customers  = client.vaults.create("customers",  project_id=PROJECT_ID,
+                                  pii_scrub=True)
 ```
 
-Creating the vaults inside the project matters: it's what lets them resolve the project's shared tag vocabulary later. (Needs SDK ≥ 3.5.2; earlier sync clients dropped `project_id`.)
+Two things matter here. Creating the vaults inside the project is what lets them resolve the project's shared tag vocabulary later. And `pii_scrub=True` on the customers vault means every push into it gets masked before storage; the product brain holds public material and doesn't need it. (Needs SDK ≥ 3.6.0.)
 
 ## Step 2: declare the metadata keys
 
@@ -109,38 +111,52 @@ for title, content, product, tags in kb_docs:
 
 There is no known-issues doc in that list, and there never will be. Watch what happens instead.
 
-## Step 5: ingest the customer brain
+## Step 5: ingest the customer brain, through the mask
 
-Every message, every channel, one vault, stamped with who and what. Our fixture is four messages from three customers:
+Every message, every channel, one vault, stamped with who and what. The helpdesk knows each customer's real identifiers, so it passes them as `known_pii`; they're used for masking and never stored. Our fixture is four messages from three customers:
 
 ```python
 tickets = [
-    ("alice", "widget-pro", "email",
-     "Alice reported via email: my Widget Pro screen flickers every few "
-     "minutes at 120Hz. Purchased in March. Order #A-1042.", ["defect"]),
-    ("alice", "widget-pro", "chat",
-     "Alice followed up on chat: the flicker on her Widget Pro is worse "
-     "after the room warms up. She already tried a different cable.", ["defect"]),
-    ("bob", "widget-pro", "email",
-     "Bob reported flicker on his March-batch Widget Pro. Resolution: "
-     "support had him update to firmware 4.2; flicker persisted, so a "
-     "warranty replacement was shipped. Bob confirmed the replacement "
-     "unit is stable.", ["defect", "resolved"]),
-    ("carol", "widget-mini", "email",
-     "Carol was charged twice for her Widget Mini order #C-2210. Refund "
-     "of the duplicate charge requested.", ["billing"]),
+    ("alice", "widget-pro",
+     "Alice Chen (alice.c@example.com) reported: my Widget Pro screen "
+     "flickers every few minutes at 120Hz. Purchased in March. Order #A-1042.",
+     ["Alice Chen", "alice.c@example.com", "#A-1042"], ["defect"]),
+    ("alice", "widget-pro",
+     "Alice Chen followed up on chat: the flicker on her Widget Pro is worse "
+     "after the room warms up. She already tried a different cable.",
+     ["Alice Chen"], ["defect"]),
+    ("bob", "widget-pro",
+     "Bob Fischer (bob.f@example.com) reported flicker on his March-batch "
+     "Widget Pro. Resolution: support had him update to firmware 4.2; "
+     "flicker persisted, so a warranty replacement was shipped. He confirmed "
+     "the replacement unit is stable.",
+     ["Bob Fischer", "bob.f@example.com"], ["defect", "resolved"]),
+    ("carol", "widget-mini",
+     "Carol Dane (carol.d@example.com) was charged twice for her Widget Mini "
+     "order #C-2210. Refund of the duplicate charge requested.",
+     ["Carol Dane", "carol.d@example.com", "#C-2210"], ["billing"]),
 ]
-for customer, product, channel, content, tags in tickets:
+for customer, product, content, known, tags in tickets:
     r = client.vaults.push(customers.vault_id, content,
-        metadata={"customer_id": customer, "product": product, "channel": channel})
+        metadata={"customer_id": customer, "product": product},
+        known_pii=known)
     client.tags.apply(customers.vault_id, r.id, add=tags)
 ```
 
-In production this loop is a webhook from your helpdesk, chat, and email pipeline, not hand-written fixtures. The point is the shape: content + identity metadata + one or two curated tags per message. Give indexing a minute before you pull (our run waited 45 seconds).
+Here's what the vault actually stored for alice's first ticket, read straight back from the database in our run:
+
+```
+The customer reported: my Widget Pro screen flickers every few minutes
+at 120Hz. Purchased in March. Order <redacted>.
+```
+
+No name, no email, no order number, full meaning. We asserted it hard: across every stored row in the customers vault, zero of the eight real identifiers from the fixture survived. The symptom, the batch, the firmware level, the resolution: all intact. Identity lives in the `customer_id` stamp, where filters can use it and text can't leak it.
+
+In production this loop is a webhook from your helpdesk, chat, and email pipeline, not hand-written fixtures. The point is the shape: content + identity metadata + `known_pii` + one or two curated tags per message. Give indexing a minute before you pull (our run waited 60 seconds).
 
 ## The three pulls
 
-A ticket comes in: Alice, flicker, Widget Pro. Your agent (human or AI) makes three pulls.
+A ticket comes in: alice, flicker, Widget Pro. Your agent (human or AI) makes three pulls.
 
 **Vertical: this customer's history.**
 
@@ -154,7 +170,7 @@ for item in history:
     print(item.title, "::", item.content[:80])
 ```
 
-Pull returns a list of items (each has `title`, `content`, `source`, `score`). In our live run this returned Alice's email and her chat follow-up ("worse after the room warms up, already tried a different cable"). Bob and Carol appear zero times: the metadata filter is doing the isolation, one vault or not.
+Pull returns a list of items (each has `title`, `content`, `source`, `score`). In our live run this returned alice's two tickets, the extracted symptom facts, and (this is the part we didn't script) a distilled wiki page titled *"Widget Pro Flicker Issue"* that the engine had consolidated from the repeat reports. The page appears in alice's pull because her tickets helped derive it; bob's pull gets the same page for the same reason. What alice's pull does NOT contain: carol's billing issue (different customer, excluded by her stamp), and any real name at all: the whole result set is "the customer" and `<redacted>`, because that's all the vault ever stored.
 
 **Product: the official record.**
 
@@ -178,9 +194,17 @@ similar = client.vaults.pull(
 )
 ```
 
-Metadata and tags compose in one call: only Widget Pro sources, only the ones tagged `defect`. And here's the part we didn't script. Alongside Bob's raw ticket (firmware 4.2 didn't fix his March-batch unit, warranty replacement did), our run returned a distilled wiki page titled *"Widget Pro Flicker Issue"*: the engine had noticed that Alice's two reports and Bob's report describe the same defect and consolidated them into one page, with the resolution attached. Nobody wrote a known-issues doc. The system wrote it, from three tickets, and versioned it in the vault's wiki layer. Carol's billing issue on a different product was correctly invisible.
+Metadata and tags compose in one call: only Widget Pro sources, only the ones tagged `defect`. Our run's top item, verbatim:
 
-That is the "self-realising" moment, and it's not magic: repeat facts across sources are exactly what a distillation layer consolidates. Two customers reporting the same flicker on the same batch *is* the known issue; the wiki page is just that pattern made retrievable.
+```
+The customer reported flicker on the March-batch Widget Pro. Resolution:
+support had the customer update to firmware 4.2; flicker persisted, so a
+warranty replacement was shipped.
+```
+
+That's the prior fix, fully anonymous, sitting next to the emergent *"Widget Pro Flicker Issue"* page. Nobody wrote a known-issues doc. The system wrote it, from three tickets, versioned it in the vault's wiki layer, and because masking happened at the door, the page physically cannot name anyone. Carol's billing issue on a different product was correctly invisible.
+
+That is the "self-realising" moment, and it's not magic: repeat facts across sources are exactly what a distillation layer consolidates. Two customers reporting the same flicker on the same batch *is* the known issue; the wiki page is just that pattern made retrievable, and safe to hand to any customer-facing agent as-is.
 
 The agent now knows this is a repeat March-batch defect, knows the fix that actually worked, and knows the policy that authorizes it. The reply writes itself: "this is a known issue with March units; firmware 4.2 sometimes helps, but you qualify for a free warranty replacement either way."
 
@@ -191,9 +215,9 @@ Close the loop by pushing the resolution back:
 ```python
 r = client.vaults.push(
     customers.vault_id,
-    "Alice's flicker: confirmed March-batch defect, same as Bob's. Firmware "
-    "4.2 did not resolve it; warranty replacement shipped per policy. "
-    "Customer confirmed fixed.",
+    "Confirmed March-batch defect, same as the earlier case. Firmware 4.2 "
+    "did not resolve it; warranty replacement shipped per policy. Customer "
+    "confirmed fixed.",
     metadata={"customer_id": "alice", "product": "widget-pro"},
 )
 client.tags.apply(customers.vault_id, r.id, add=["defect", "resolved"])
@@ -205,13 +229,14 @@ This works identically whether the thing making the pulls is a human agent's das
 
 ## Honest constraints (read before you build)
 
-- **Filters are single-vault per pull.** You can't join the customer brain and the product brain in one call; you make three pulls (they're independent, run them concurrently). This is a v1 constraint, not a law of physics.
-- **A tag filter's scope is capped at 1,000 sources**, and the cap is checked on the tag closure alone (a metadata filter in the same call doesn't shrink it). If `defect` alone outgrows that, split the vocabulary: `defect-display`, `defect-battery`.
-- **Match-or-absent is a choice.** A metadata filter excludes *contradicting* values and keeps *keyless* data. If you want hard exclusion of everything unstamped, stamp everything at ingest.
+- **Filters are single-vault per pull.** You can't join the customer brain and the product brain in one call; you make three pulls (they're independent, run them concurrently).
+- **Shared knowledge is visible from every contributing side.** That's the design, not a leak: a finding derived from alice's and bob's tickets serves both of their filtered pulls. With masking on, that shared knowledge carries no identities anyway. Exclusive content never crosses.
+- **A tag filter's scope is capped at 1,000 sources**, checked on the tag closure alone. If `defect` alone outgrows that, split the vocabulary: `defect-display`, `defect-battery`.
+- **Masking has exact edges.** The deterministic guarantee covers emails, phones (10+ digits), Luhn-valid cards, IPv4/IPv6, IBANs, and every `known_pii` string; unknown prose names are handled by the model pass, best-effort. Unscrubable content is rejected with a 422 and nothing is stored. Because the rewrite isn't byte-deterministic, re-pushing identical raw content may not dedupe on a masked vault. Full details in the [PII scrubbing docs](https://docs.xysq.ai/sdk/pii-scrub).
 - **Tags are applied after push** (push returns the source id, then `tags.apply`). Two calls today.
 
 ## Build it
 
-The whole pipeline is two vaults, three declared keys, four tags, and three pulls. Our reference run: 7 documents ingested, ~45 seconds of indexing, and the isolation checks (customer A never sees customer B) passed against production. Docs for the two primitives: [tags](https://docs.xysq.ai/sdk/tags) and [metadata filters](https://docs.xysq.ai/sdk/metadata-filters), and the [SDK getting started](https://docs.xysq.ai/sdk/getting-started).
+The whole pipeline is two vaults (one masked), three declared keys, four tags, and three pulls. Our reference run: 7 documents ingested through the mask, ~60 seconds of indexing, 12 out of 12 checks passed against production, including zero real identities in any stored row or any served pull. Docs for the three primitives: [tags](https://docs.xysq.ai/sdk/tags), [metadata filters](https://docs.xysq.ai/sdk/metadata-filters), and [PII scrubbing](https://docs.xysq.ai/sdk/pii-scrub), plus the [SDK getting started](https://docs.xysq.ai/sdk/getting-started).
 
 If you build a support pipeline on this, I want to see it. Good luck!
