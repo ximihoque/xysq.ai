@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 18 160 215" width="160" height="215" fill="none" role="img" aria-label="xysq lychee with brain-graph">
+  <!-- Perfected lychee, borrowed from logo.svg:
+       · same body / outline / leaf palette
+       · graph re-laid as a BRAIN: two hemispheres of nodes+edges, centre fissure
+       · leaves brought DOWN to overlap and cover the top of the fruit
+       · noisy scattered facets removed; faint even skin texture kept -->
+  <defs>
+    <clipPath id="lb-fc"><circle cx="100" cy="140" r="74"/></clipPath>
+    <radialGradient id="lb-body" cx="0.4" cy="0.32" r="0.85">
+      <stop offset="0"    stop-color="#ff8593"/>
+      <stop offset="0.6"  stop-color="#ff6b7a"/>
+      <stop offset="1"    stop-color="#ed5266"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ── Body ── -->
+  <circle cx="100" cy="140" r="76" fill="url(#lb-body)"/>
+
+  <!-- Faint, even skin texture: a light scatter of low-opacity dimples (not the old noisy triangles) -->
+  <g fill="#d94a5c" opacity="0.18" clip-path="url(#lb-fc)">
+    <circle cx="62"  cy="104" r="3"/><circle cx="80"  cy="92"  r="2.6"/><circle cx="120" cy="90"  r="2.6"/>
+    <circle cx="140" cy="104" r="3"/><circle cx="150" cy="128" r="2.6"/><circle cx="150" cy="160" r="2.6"/>
+    <circle cx="138" cy="182" r="3"/><circle cx="118" cy="192" r="2.6"/><circle cx="82"  cy="192" r="2.6"/>
+    <circle cx="62"  cy="180" r="3"/><circle cx="52"  cy="156" r="2.6"/><circle cx="52"  cy="128" r="2.6"/>
+  </g>
+
+  <!-- ── Brain-graph: nodes + edges arranged as two domed hemispheres + centre fissure ──
+       Built inside the clip so nothing spills past the rim. -->
+  <g clip-path="url(#lb-fc)">
+    <!-- edges -->
+    <g stroke="#fff" stroke-width="1.6" opacity="0.34" fill="none" stroke-linecap="round">
+      <!-- LEFT hemisphere: domed top + folds sweeping toward the fissure -->
+      <path d="M92 96 C 76 96 64 106 60 122"/>
+      <path d="M60 122 C 66 116 80 116 92 116"/>
+      <path d="M58 142 C 70 140 82 134 92 124"/>
+      <path d="M60 162 C 74 162 84 154 92 144"/>
+      <path d="M70 180 C 80 178 86 170 92 162"/>
+      <line x1="92" y1="96"  x2="92" y2="116"/>
+      <line x1="92" y1="116" x2="92" y2="124"/>
+      <line x1="92" y1="124" x2="92" y2="144"/>
+      <line x1="92" y1="144" x2="92" y2="162"/>
+      <line x1="60" y1="122" x2="58" y2="142"/>
+      <line x1="58" y1="142" x2="60" y2="162"/>
+      <!-- RIGHT hemisphere: mirror -->
+      <path d="M108 96 C 124 96 136 106 140 122"/>
+      <path d="M140 122 C 134 116 120 116 108 116"/>
+      <path d="M142 142 C 130 140 118 134 108 124"/>
+      <path d="M140 162 C 126 162 116 154 108 144"/>
+      <path d="M130 180 C 120 178 114 170 108 162"/>
+      <line x1="108" y1="96"  x2="108" y2="116"/>
+      <line x1="108" y1="116" x2="108" y2="124"/>
+      <line x1="108" y1="124" x2="108" y2="144"/>
+      <line x1="108" y1="144" x2="108" y2="162"/>
+      <line x1="140" y1="122" x2="142" y2="142"/>
+      <line x1="142" y1="142" x2="140" y2="162"/>
+    </g>
+
+    <!-- centre fissure: the gap between hemispheres, faint -->
+    <line x1="100" y1="98" x2="100" y2="176" stroke="#fff" stroke-width="1.4" opacity="0.22"/>
+
+    <!-- nodes -->
+    <g fill="#fff" opacity="0.85">
+      <!-- left lobe -->
+      <circle cx="92"  cy="96"  r="3.4"/><circle cx="60" cy="122" r="3.8"/>
+      <circle cx="92"  cy="116" r="4.2"/><circle cx="58" cy="142" r="3.4"/>
+      <circle cx="92"  cy="124" r="3"/>  <circle cx="60" cy="162" r="3.4"/>
+      <circle cx="92"  cy="144" r="3.8"/><circle cx="70" cy="180" r="3"/>
+      <circle cx="92"  cy="162" r="3.2"/>
+      <!-- right lobe -->
+      <circle cx="108" cy="96"  r="3.4"/><circle cx="140" cy="122" r="3.8"/>
+      <circle cx="108" cy="116" r="4.2"/><circle cx="142" cy="142" r="3.4"/>
+      <circle cx="108" cy="124" r="3"/>  <circle cx="140" cy="162" r="3.4"/>
+      <circle cx="108" cy="144" r="3.8"/><circle cx="130" cy="180" r="3"/>
+      <circle cx="108" cy="162" r="3.2"/>
+    </g>
+  </g>
+
+  <!-- ── Outline (over the graph, so the rim stays crisp) ── -->
+  <circle cx="100" cy="140" r="76" fill="none" stroke="#fff" stroke-width="5"/>
+
+  <!-- ── Leaves draped DOWN over the crown, COVERING the top of the fruit ──
+       Both leaves spring from one stem point at the very top, then their bellies
+       sag downward across the fruit's shoulders (down to ~y100) so they overlap and
+       cover the upper body — like the leaf crown sitting on a real lychee. -->
+  <!-- stem point where both leaves meet, sitting right at the fruit's crown -->
+  <path d="M100 76 Q100 70 100 64" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- LEFT leaf: tip points up-left; the lower edge dips down onto the shoulder (y up to ~104),
+       so the leaf body lies across the top-left of the fruit. -->
+  <path d="M100 66
+           C 86 44 56 44 42 64
+           C 40 84 62 104 90 92
+           C 96 88 100 80 100 72 Z"
+        fill="#2ccfae" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M99 70 C 82 70 62 74 48 70" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.5"/>
+
+  <!-- RIGHT leaf: mirror, slightly smaller, draping over the top-right shoulder. -->
+  <path d="M100 66
+           C 114 46 140 48 152 66
+           C 154 84 134 100 110 90
+           C 104 86 100 79 100 72 Z"
+        fill="#22c4a5" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M100 70 C 116 70 134 74 146 70" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.45"/>
+</svg>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>xysq — icon logo samples</title>
+  <style>
+    :root{
+      --bg:#020408; --bg2:#060c14; --surface:#0a121c;
+      --cyan:#00e5c8; --lychee:#ff6b7a; --paper:#f0f4f8; --muted:#5a6a7a;
+      --line:rgba(0,229,200,0.15);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:
+        radial-gradient(900px 500px at 80% -10%, rgba(0,229,200,0.08), transparent 60%),
+        radial-gradient(700px 500px at 10% 110%, rgba(255,107,122,0.07), transparent 60%),
+        var(--bg);
+      color:var(--paper);
+      font-family:'Outfit','Helvetica Neue',Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      padding:56px 40px 96px;
+    }
+    header{max-width:1100px;margin:0 auto 44px}
+    h1{font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:38px;margin:0 0 8px;letter-spacing:-0.5px}
+    h1 b{color:var(--cyan)}
+    .sub{color:var(--muted);font-size:15px;line-height:1.6;max-width:680px}
+    .controls{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+    .controls button{
+      background:var(--surface);color:var(--paper);border:1px solid var(--line);
+      padding:9px 16px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer;transition:.18s;
+    }
+    .controls button:hover{border-color:var(--cyan);color:var(--cyan)}
+    .controls button.on{background:var(--cyan);color:#04181a;border-color:var(--cyan);font-weight:600}
+    .grid{
+      max-width:1100px;margin:0 auto;
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;
+    }
+    .card{
+      background:var(--surface);border:1px solid var(--line);border-radius:22px;
+      padding:26px 24px 20px;display:flex;flex-direction:column;gap:18px;transition:.2s;
+    }
+    .card:hover{border-color:rgba(0,229,200,0.45);transform:translateY(-3px)}
+    .stage{
+      display:flex;align-items:center;justify-content:center;gap:26px;
+      background:var(--canvas,#060c14);border-radius:16px;padding:26px;min-height:170px;transition:.2s;
+    }
+    .stage img.big{width:128px;height:128px;display:block}
+    .favs{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .favs .lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+    .favs img{display:block;image-rendering:auto}
+    .meta{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+    .meta .name{font-weight:600;font-size:15px}
+    .meta .tag{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',ui-monospace,monospace}
+    .desc{color:var(--muted);font-size:12.5px;line-height:1.5;margin:-6px 0 0}
+    footer{max-width:1100px;margin:54px auto 0;color:var(--muted);font-size:13px;line-height:1.6}
+    code{background:var(--bg2);padding:2px 7px;border-radius:6px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--cyan)}
+  </style>
+</head>
+<body>
+  <header>
+    <h1><b>xysq</b> icon logo — 10 samples</h1>
+    <p class="sub">
+      Three shape families (cloud · lychee · walnut) plus two abstract marks, spread across
+      flat / gradient / glyph treatments. Brand palette: navy <code>#020408</code>,
+      cyan <code>#00e5c8</code>, lychee <code>#ff6b7a</code>. Each tile shows the mark at
+      128px next to its real favicon sizes (32 / 16) so you can judge how it holds up tiny.
+    </p>
+    <div class="controls">
+      <span style="align-self:center;color:var(--muted);font-size:13px;margin-right:4px">Canvas:</span>
+      <button data-bg="#060c14" class="on">Dark</button>
+      <button data-bg="#f0f4f8">Light</button>
+      <button data-bg="#ffffff">White</button>
+      <button data-bg="transparent">Checker</button>
+    </div>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    Files live in <code>public/logo-icons/*.svg</code>. Tell me which number(s) you like —
+    I can refine it, drop the rest, and wire the winner into the nav + favicon.
+  </footer>
+
+  <script>
+    const ICONS = [
+      ["01-cloud-flat.svg","Cloud — flat","cloud · flat","Single cyan memory-cloud silhouette. Cleanest, most app-icon-like of the set."],
+      ["02-cloud-gradient.svg","Cloud — gradient","cloud · gradient","Same cloud filled cyan→lychee for a richer 'AI product' feel."],
+      ["03-cloud-glyph.svg","Cloud — q² glyph","cloud · glyph","Cloud as a container holding a small q² — thread back to the xysq² wordmark."],
+      ["04-lychee-flat.svg","Lychee — flat","lychee · flat","Berry body + one cyan leaf, stripped to two shapes. On-brand (lychee = the name)."],
+      ["05-lychee-facets.svg","Lychee — faceted","lychee · gradient","Gradient body with a few subtle skin facets — bumpier, still crisp."],
+      ["06-lychee-glyph.svg","Lychee — q² cut-out","lychee · glyph","q² knocked out of the berry as negative space."],
+      ["07-walnut-flat.svg","Walnut — flat","walnut · flat","Shell with a center seam + kernel lobes. Brain/memory connotation."],
+      ["08-walnut-gradient.svg","Walnut — split halves","walnut · gradient","Two mirrored halves (cyan + lychee); folds double as memory layers."],
+      ["09-node-orbit.svg","Memory node","abstract · flat","Core + three orbiting memory dots — literally what xysq is. Codex-clean."],
+      ["10-squircle-q2.svg","Squircle q²","abstract · glyph","Gradient app-tile with bold q². Strongest tie to the wordmark you liked."],
+    ];
+    const grid = document.getElementById("grid");
+    ICONS.forEach(([file,name,tag,desc],i)=>{
+      const n = String(i+1).padStart(2,"0");
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="stage">
+          <img class="big" src="./${file}" alt="${name}"/>
+          <div class="favs">
+            <span class="lbl">favicon</span>
+            <img src="./${file}" width="32" height="32" alt=""/>
+            <img src="./${file}" width="16" height="16" alt=""/>
+          </div>
+        </div>
+        <div class="meta"><span class="name">${n} · ${name}</span><span class="tag">${tag}</span></div>
+        <p class="desc">${desc}</p>`;
+      grid.appendChild(card);
+    });
+    // canvas toggles
+    const checker = "repeating-conic-gradient(#23303f 0% 25%, #1a242f 0% 50%) 50%/22px 22px";
+    document.querySelectorAll(".controls button").forEach(b=>{
+      b.addEventListener("click",()=>{
+        document.querySelectorAll(".controls button").forEach(x=>x.classList.remove("on"));
+        b.classList.add("on");
+        const bg = b.dataset.bg;
+        document.querySelectorAll(".stage").forEach(s=>{
+          s.style.background = bg==="transparent" ? checker : bg;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq lychee refined minimal">
+  <!-- Take A — Refined minimal. Flat & favicon-safe, but perfected:
+       slightly ovoid body, a leaf with a real curve + center vein,
+       a small top dimple/seam, optically centred in the tile. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+
+  <!-- Body: gently ovoid (taller than wide), narrowing toward the top where the
+       stem sits — closer to a real lychee than a plain circle. -->
+  <path d="M120 78
+           C 156 78 176 104 176 138
+           C 176 174 150 196 120 196
+           C 90 196 64 174 64 138
+           C 64 104 84 78 120 78 Z"
+        fill="#ff6b7a"/>
+
+  <!-- Top dimple: a thin darker notch where the stem joins, gives the fruit a 'top'. -->
+  <path d="M108 86 C 114 80 126 80 132 86" fill="none" stroke="#0a121c" stroke-width="4.5" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Stem -->
+  <path d="M120 80 C 121 70 122 64 124 58" fill="none" stroke="#00b8a2" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Leaf: a single elegant teardrop with a real sweep. -->
+  <path d="M124 58
+           C 132 32 158 22 184 28
+           C 182 56 162 76 134 74
+           C 129 70 125 64 124 58 Z"
+        fill="#00e5c8"/>
+  <!-- Leaf center vein -->
+  <path d="M129 64 C 146 56 164 46 178 34" fill="none" stroke="#0a121c" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+</svg>

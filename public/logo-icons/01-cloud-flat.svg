@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq cloud flat">
+  <!-- 01 — Cloud, flat. Memory-cloud built from overlapping circles + a flat base
+       so the silhouette is guaranteed clean. Single cyan fill, app-icon tile. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <g fill="#00e5c8">
+    <circle cx="92"  cy="118" r="34"/>
+    <circle cx="128" cy="100" r="42"/>
+    <circle cx="164" cy="122" r="32"/>
+    <rect x="64" y="118" width="120" height="40" rx="20"/>
+  </g>
+</svg>

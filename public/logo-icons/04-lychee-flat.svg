@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq lychee flat">
+  <!-- 04 — Lychee, flat. Round berry body in lychee-pink + one cyan leaf.
+       Stripped down to two shapes so it stays crisp at small sizes. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <circle cx="118" cy="136" r="58" fill="#ff6b7a"/>
+  <!-- leaf -->
+  <path d="M118 78 C118 50 138 36 168 38 C170 66 152 86 124 86 C121 84 119 81 118 78 Z" fill="#00e5c8"/>
+  <!-- stem -->
+  <path d="M118 86 L118 78" stroke="#00e5c8" stroke-width="6" stroke-linecap="round"/>
+</svg>

@@ -37,6 +37,8 @@ export default function BlogPostPage() {
     ? (post.cover.startsWith('http') ? post.cover : `https://xysq.ai${post.cover}`)
     : `https://xysq.ai/blog/og/${post.slug}.png`
   const modifiedDate = post.updated ?? post.date
+  const xLink = post.author.links?.x
+  const twitterCreator = xLink ? `@${xLink.replace(/\/+$/, '').split('/').pop()}` : undefined
 
   const schema = {
     '@context': 'https://schema.org',
@@ -77,6 +79,7 @@ export default function BlogPostPage() {
           { name: post.title, item: `/blog/${post.slug}` },
         ])]}
         ogType="article"
+        twitterCreator={twitterCreator}
         author={post.author.name}
         keywords={post.tags}
         article={{

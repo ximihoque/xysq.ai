@@ -19,6 +19,7 @@ export default function SEO({
   keywords,
   author,
   twitterCard = 'summary_large_image',
+  twitterCreator,
   ogType = 'website',
   article,
 }) {
@@ -63,6 +64,7 @@ export default function SEO({
       )}
 
       <meta name="twitter:card" content={twitterCard} />
+      {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />

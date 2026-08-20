@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>xysq — perfected lychee (brain-graph)</title>
+  <style>
+    :root{
+      --bg:#020408; --bg2:#060c14; --surface:#0a121c;
+      --cyan:#00e5c8; --lychee:#ff6b7a; --paper:#f0f4f8; --muted:#5a6a7a;
+      --line:rgba(0,229,200,0.15);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:
+      radial-gradient(900px 500px at 80% -10%, rgba(0,229,200,0.08), transparent 60%),
+      radial-gradient(700px 500px at 10% 110%, rgba(255,107,122,0.07), transparent 60%),
+      var(--bg);
+      color:var(--paper);font-family:'Outfit','Helvetica Neue',Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;padding:56px 40px 96px}
+    header{max-width:980px;margin:0 auto 40px}
+    h1{font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:36px;margin:0 0 8px;letter-spacing:-0.5px}
+    h1 b{color:var(--lychee)}
+    .sub{color:var(--muted);font-size:15px;line-height:1.65;max-width:680px}
+    .controls{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .controls span{color:var(--muted);font-size:13px}
+    .controls button{background:var(--surface);color:var(--paper);border:1px solid var(--line);
+      padding:9px 16px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer;transition:.18s}
+    .controls button:hover{border-color:var(--cyan);color:var(--cyan)}
+    .controls button.on{background:var(--cyan);color:#04181a;border-color:var(--cyan);font-weight:600}
+    .grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+    .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px 24px 22px;
+      display:flex;flex-direction:column;gap:18px}
+    .card.feat{border-color:rgba(0,229,200,0.55)}
+    .stage{display:flex;align-items:center;justify-content:center;gap:30px;background:var(--canvas,#060c14);
+      border-radius:16px;padding:30px;min-height:230px;transition:.2s}
+    .stage img.big{width:170px;height:auto;display:block}
+    .favs{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .favs .lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+    .meta{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+    .meta .name{font-weight:600;font-size:16px}
+    .meta .pill{font-size:10px;color:#04181a;background:var(--cyan);padding:3px 9px;border-radius:999px;font-weight:700}
+    .meta .pill.old{background:var(--muted);color:#fff}
+    .desc{color:var(--muted);font-size:13px;line-height:1.55;margin:-4px 0 0}
+    footer{max-width:980px;margin:48px auto 0;color:var(--muted);font-size:13px;line-height:1.7}
+    code{background:var(--bg2);padding:2px 7px;border-radius:6px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--cyan)}
+    a{color:var(--cyan)}
+    ul{color:var(--muted);font-size:13.5px;line-height:1.7;max-width:680px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Perfected <b>lychee</b> — borrowed from <code>logo.svg</code>, graph kept</h1>
+    <p class="sub">
+      Same concept as your original: lychee body, graph-mind inside, leaves on top.
+      What changed, toward classier:
+    </p>
+    <ul>
+      <li>Graph re-laid as a <b>brain</b> — two domed hemispheres of nodes + edges with a centre fissure, balanced &amp; centred (was clustered top-left).</li>
+      <li>Leaves brought <b>down to cover the fruit's crown</b>, draping over the shoulders (were floating above on a branch).</li>
+      <li>Dropped the noisy scattered facet-triangles; kept a faint, even skin texture + a soft body gradient so it reads plump, not speckled.</li>
+    </ul>
+    <div class="controls">
+      <span>Canvas:</span>
+      <button data-bg="#060c14" class="on">Dark</button>
+      <button data-bg="#f0f4f8">Light</button>
+      <button data-bg="#ffffff">White</button>
+      <button data-bg="transparent">Checker</button>
+    </div>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    File: <code>public/logo-icons/lychee-brain.svg</code> (drops into the same coordinate
+    system as <code>logo.svg</code>). Tell me what to tune — leaf size/overlap, graph density,
+    body colour — and I'll lock it in, then wire it into the nav + favicon.
+    &nbsp;←&nbsp;<a href="./lychee.html">other lychee takes</a> · <a href="./index.html">all 10</a>
+  </footer>
+
+  <script>
+    const ICONS = [
+      ["lychee-brain.svg","Perfected — brain-graph","Brain hemispheres inside, leaves draped over the crown. Soft gradient body.","new"],
+      ["_original-logo.svg","Original logo.svg","Your existing lychee — graph clustered, facets scattered, leaves floating above.","old"],
+    ];
+    const grid=document.getElementById("grid");
+    ICONS.forEach(([file,name,desc,kind])=>{
+      const card=document.createElement("div");
+      card.className="card"+(kind==="new"?" feat":"");
+      const pill = kind==="new" ? '<span class="pill">perfected</span>' : '<span class="pill old">before</span>';
+      card.innerHTML=`
+        <div class="stage">
+          <img class="big" src="./${file}" alt="${name}"/>
+          <div class="favs">
+            <span class="lbl">favicon</span>
+            <img src="./${file}" width="32" alt=""/>
+            <img src="./${file}" width="16" alt=""/>
+          </div>
+        </div>
+        <div class="meta"><span class="name">${name}</span>${pill}</div>
+        <p class="desc">${desc}</p>`;
+      grid.appendChild(card);
+    });
+    const checker="repeating-conic-gradient(#23303f 0% 25%, #1a242f 0% 50%) 50%/22px 22px";
+    document.querySelectorAll(".controls button").forEach(b=>{
+      b.addEventListener("click",()=>{
+        document.querySelectorAll(".controls button").forEach(x=>x.classList.remove("on"));
+        b.classList.add("on");
+        const bg=b.dataset.bg;
+        document.querySelectorAll(".stage").forEach(s=>{s.style.background=bg==="transparent"?checker:bg;});
+      });
+    });
+  </script>
+</body>
+</html>

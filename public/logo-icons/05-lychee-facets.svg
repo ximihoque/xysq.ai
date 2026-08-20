@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq lychee faceted">
+  <!-- 05 — Lychee, gentle facets. Body with a few subtle darker triangles to read
+       as the lychee's bumpy skin — richer than 04 but still clean. Gradient body. -->
+  <defs>
+    <radialGradient id="g05" cx="0.4" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#ff8a96"/>
+      <stop offset="1" stop-color="#e8556a"/>
+    </radialGradient>
+  </defs>
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <circle cx="118" cy="138" r="58" fill="url(#g05)"/>
+  <g fill="#d94a5c" opacity="0.55">
+    <polygon points="82,118 96,112 92,128"/>
+    <polygon points="118,156 132,150 128,168"/>
+    <polygon points="146,124 160,120 154,138"/>
+    <polygon points="100,150 114,146 108,164"/>
+  </g>
+  <path d="M118 80 C118 52 138 38 168 40 C170 68 152 88 124 88 C121 86 119 83 118 80 Z" fill="#00e5c8"/>
+  <path d="M118 88 L118 80" stroke="#00e5c8" stroke-width="6" stroke-linecap="round"/>
+</svg>

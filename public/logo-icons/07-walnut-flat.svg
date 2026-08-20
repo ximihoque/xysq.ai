@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="xysq walnut flat">
+  <!-- 07 — Walnut, flat. Slightly egg-shaped shell with a vertical seam and two
+       inner curves hinting at the kernel. Single cyan fill, dark seam. -->
+  <rect width="240" height="240" rx="52" fill="#0a121c"/>
+  <!-- shell: a circle squashed taller toward the top -->
+  <path d="M120 56
+           C 168 56 184 100 184 134
+           C 184 174 156 192 120 192
+           C 84 192 56 174 56 134
+           C 56 100 72 56 120 56 Z" fill="#00e5c8"/>
+  <!-- central seam -->
+  <line x1="120" y1="66" x2="120" y2="182" stroke="#0a121c" stroke-width="7"/>
+  <!-- kernel lobes -->
+  <path d="M112 92 C 92 110 92 150 112 170" fill="none" stroke="#0a121c" stroke-width="6" stroke-linecap="round"/>
+  <path d="M128 92 C 148 110 148 150 128 170" fill="none" stroke="#0a121c" stroke-width="6" stroke-linecap="round"/>
+</svg>
