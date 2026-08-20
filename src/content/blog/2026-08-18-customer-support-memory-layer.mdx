@@ -14,13 +14,21 @@ readingTimeMinutes: 9
 
 import { Figure } from '../../components/mdx/Figure'
 
-Your support agent answers every ticket like it's the first ticket it has ever seen. The customer explained their problem twice already (once on email, once on chat), another customer had the exact same defect last month and got it fixed, and the warranty policy that settles the whole thing is sitting in a PDF nobody retrieves. All the context exists. None of it is in the room when the answer gets written.
+Your support agent answers every ticket like it's the first ticket it has ever seen. The customer explained their problem twice already (once on email, once on chat), another customer had the exact same defect last month and got it fixed, and the warranty policy that settles the whole thing is sitting in a PDF nobody retrieves.
+
+## The problem
+
+Draw the desk your support agent actually sits at and the failure is obvious:
+
+<Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/problem.png" alt="The problem: the reply is written blind while CRM history, policy PDFs, the helpdesk archive, and chat logs sit in disconnected silos; the same defect gets rediscovered ticket after ticket, and raw identity sprawls through the logs." />
+
+Everything the reply needs already exists. The customer's history is in the CRM, three tabs away. The rule that settles the case is in a policy PDF nobody opens mid-ticket. Forty similar tickets sit in the helpdesk archive with their resolutions buried. And the chat logs hold all of it in raw form, names and order numbers included, which is its own quiet liability. None of these silos is wired into the moment the reply gets written, so every agent starts from a blank page, and the same defect gets rediscovered from scratch, ticket after ticket. The company learns nothing from its own support volume.
 
 This post is the fix, as a pipeline you can copy. It's maybe 60 lines of setup code, and everything below ran live against our production API: 12 out of 12 checks passed, including "zero real identities anywhere".
 
 ## The system at a glance
 
-Here's the whole thing. We'll walk it block by block.
+Same ticket, same desk. Now look what's wired into the room:
 
 <Figure src="https://storage.googleapis.com/xysq_public/blogs/customer-support-memory-layer/overview.png" alt="The support memory system: a product brain vault, a customer brain vault with PII masked at ingress, one reply assembled from three filtered pulls, and an emergent wiki page consolidated by the engine." />
 
