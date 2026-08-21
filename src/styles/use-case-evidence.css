@@ -1,0 +1,96 @@
+/* ── On the record: documented cases for this function.
+   Sits between the deck and the two faces, so the reader meets the cost
+   before the pitch. Each case is a hairline-ruled entry with the primary
+   source as the only link. Deliberately plain, because the credibility
+   comes from the citation, not from styling. ── */
+
+.uce {
+  margin: 0 0 52px;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.uce-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.uce-head h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.uce-head svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.uce-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--silver);
+  margin: 8px 0 20px;
+  max-width: 60ch;
+}
+
+.uce-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.uce-item {
+  padding-left: 16px;
+  border-left: 2px solid color-mix(in srgb, var(--cyan) 40%, transparent);
+}
+
+.uce-claim {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--paper);
+  margin: 0 0 7px;
+  max-width: 78ch;
+}
+
+.uce-src {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--silver);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.uce-src:hover {
+  color: var(--cyan);
+  border-bottom-color: color-mix(in srgb, var(--cyan) 50%, transparent);
+}
+
+.uce-src svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 760px) {
+  .uce {
+    padding: 22px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uce-src {
+    transition: none;
+  }
+}

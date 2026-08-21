@@ -6,6 +6,7 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
+import UseCaseEvidence from '../components/UseCaseEvidence'
 import UseCaseRelated from '../components/UseCaseRelated'
 import { USE_CASE_BY_SLUG } from '../data/useCases'
 import '../styles/outputs-section.css'
@@ -48,6 +49,10 @@ export default function UseCaseCategoryPage() {
           </h1>
           <p className="ucp-deck">{data.deck}</p>
         </motion.header>
+
+        {/* the cost first, then the pitch. renders nothing where we don't
+            have a case that clears the citation bar. */}
+        <UseCaseEvidence items={data.evidence} />
 
         <div className="out-halves ucp-halves">
           {/* teams face: what you capture becomes this function's graphs */}

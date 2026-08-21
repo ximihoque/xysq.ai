@@ -11,6 +11,13 @@
 // today; the rest are empty on purpose and render no block at all, because
 // a "related reading" list padded with a generic post is worse than none.
 // validate-posts.mjs fails the build on an unknown slug.
+//
+// `evidence` holds documented cases, each linking a PRIMARY document (the
+// ruling, the regulator's own page) rather than coverage of it. Every entry
+// here was checked against the source before it went in, and in a couple of
+// places the wording is deliberately narrower than the popular retelling
+// (see the comments). Sales and personal are empty because no case cleared
+// that bar, and a page with no citation beats a page with a soft one.
 
 export const USE_CASE_CATEGORIES = [
   {
@@ -38,6 +45,17 @@ export const USE_CASE_CATEGORIES = [
     },
     seo: 'Marketing context graphs from your campaign retros, brand guidelines, and ad sessions. Your team briefs from them; your marketing agents draft from them.',
     relatedPosts: [],
+    // Keep "fundamentally". CAP's position is bounded: they say disclosure
+    // CAN help in other cases. Dropping the word turns a narrow statement
+    // into an absolute one the regulator did not make.
+    evidence: [
+      {
+        claim:
+          'UK advertising rules put responsibility on the advertiser even where campaigns are “entirely generated or distributed using automated methods”, and the regulator’s position is that disclosure alone is very unlikely to mitigate the harm caused by a fundamentally misleading message. Saying an ad was AI-made does not substantiate the claim it makes.',
+        source: 'CAP, Generative AI & Advertising (2023) and Disclosure of AI in Advertising (2025)',
+        url: 'https://www.asa.org.uk/news/disclosure-of-ai-in-advertising-striking-the-balance-between-creativity-and-responsibility.html',
+      },
+    ],
   },
   {
     slug: 'support',
@@ -64,6 +82,26 @@ export const USE_CASE_CATEGORIES = [
     },
     seo: 'Support context graphs from your policies, product notes, and resolved conversations. Consistent answers for your team; support agents that improve with every correction.',
     relatedPosts: ['customer-support-memory-layer'],
+    // NOTE on the Air Canada wording: the tribunal made no finding that the
+    // chatbot was an LLM (para 14; the exchange predates ChatGPT), so we do
+    // NOT call this an AI hallucination. What the decision does establish is
+    // that one surface contradicted the authoritative page it linked to,
+    // which is the failure we actually fix. Currency is CAD, and the
+    // decision refers to Moffatt as "they".
+    evidence: [
+      {
+        claim:
+          'A Canadian tribunal ordered Air Canada to pay CA$812.02 after its website chatbot told a customer they could claim a bereavement fare after already travelling. The airline’s real policy said the opposite, on a page the chatbot’s own answer linked to. The tribunal rejected the argument that customers should have to check one part of a website against another.',
+        source: 'Moffatt v. Air Canada, 2024 BCCRT 149',
+        url: 'https://decisions.civilresolutionbc.ca/crt/crtd/en/item/525448/index.do',
+      },
+      {
+        claim:
+          'Cursor’s front-line support bot told users that logins were limited to one device per subscription. No such policy existed. Users were posting cancellations within about an hour; the co-founder’s correction landed three hours in.',
+        source: 'Michael Truell, Cursor co-founder, on r/cursor',
+        url: 'https://www.reddit.com/r/cursor/comments/1jyy5am/psa_cursor_now_restricts_logins_to_a_single/mn2vlbr/',
+      },
+    ],
   },
   {
     slug: 'sales',
@@ -90,6 +128,7 @@ export const USE_CASE_CATEGORIES = [
     },
     seo: 'Sales context graphs from your pricing decisions, deals, and objection handling. Full-picture briefs for reps; sales copilots that learn your best practices.',
     relatedPosts: [],
+    evidence: [],
   },
   {
     slug: 'personal',
@@ -116,6 +155,7 @@ export const USE_CASE_CATEGORIES = [
     },
     seo: 'A personal context lake: your AI sessions and files become graphs only you control. Every tool you use starts knowing your context.',
     relatedPosts: [],
+    evidence: [],
   },
   {
     slug: 'teams',
@@ -142,6 +182,16 @@ export const USE_CASE_CATEGORIES = [
     },
     seo: 'One context lake for the whole team: share graphs on your terms, keep control, and keep the context when people move on.',
     relatedPosts: ['when-your-star-employee-quits', 'give-your-ai-team-shared-memory'],
+    // n=1, so this is an incident and never a rate. The hedges ("roughly",
+    // "at least two") are the court's own words, not ours.
+    evidence: [
+      {
+        claim:
+          'A federal special master ordered two law firms to pay $31,100 jointly and severally after an AI-generated research outline was passed from one firm to the other and became a filed brief. Roughly 9 of its 27 citations were defective, and at least two of the authorities cited did not exist at all.',
+        source: 'Lacey v. State Farm, C.D. Cal., order of 6 May 2025',
+        url: 'https://storage.courtlistener.com/recap/gov.uscourts.cacd.930490/gov.uscourts.cacd.930490.119.0.pdf',
+      },
+    ],
   },
 ]
 

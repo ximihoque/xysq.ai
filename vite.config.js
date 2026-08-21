@@ -12,7 +12,7 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 
-// `virtual:blog-meta` — every post's frontmatter, and nothing else.
+// `virtual:blog-meta`: every post's frontmatter, and nothing else.
 //
 // Why this exists: an MDX module is atomic to Rollup. Import *any* export from
 // one (even just `frontmatter`) and the compiled body comes along, because the
