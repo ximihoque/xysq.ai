@@ -51,17 +51,17 @@ export default function SEO({
       {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
       <meta property="og:image:alt" content={imageAlt || title || 'xysq.ai · the trust layer your AI acts on'} />
 
-      {article && (
-        <>
-          {article.publishedTime && <meta property="article:published_time" content={article.publishedTime} />}
-          {article.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime} />}
-          {article.author && <meta property="article:author" content={article.author} />}
-          {article.section && <meta property="article:section" content={article.section} />}
-          {(article.tags ?? []).map((t) => (
-            <meta key={t} property="article:tag" content={t} />
-          ))}
-        </>
-      )}
+      {/* flat, not wrapped in a fragment: react-helmet-async walks its direct
+          children and does NOT descend into <>...</>, so a fragment here
+          silently drops every tag inside it. arrays are fine, which is why
+          the tag list and the schemas below work. */}
+      {article?.publishedTime && <meta property="article:published_time" content={article.publishedTime} />}
+      {article?.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime} />}
+      {article?.author && <meta property="article:author" content={article.author} />}
+      {article?.section && <meta property="article:section" content={article.section} />}
+      {(article?.tags ?? []).map((t) => (
+        <meta key={t} property="article:tag" content={t} />
+      ))}
 
       <meta name="twitter:card" content={twitterCard} />
       {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}

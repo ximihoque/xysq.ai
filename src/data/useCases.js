@@ -127,7 +127,7 @@ export const USE_CASE_CATEGORIES = [
       result: 'Every future pitch leads with the team plan.',
     },
     seo: 'Sales context graphs from your pricing decisions, deals, and objection handling. Full-picture briefs for reps; sales copilots that learn your best practices.',
-    relatedPosts: [],
+    relatedPosts: ['sales-copilot-dead-price'],
     evidence: [],
   },
   {
