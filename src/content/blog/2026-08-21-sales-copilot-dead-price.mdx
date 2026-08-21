@@ -1,0 +1,170 @@
+---
+title: "Case Study: The Copilot That Can't Quote a Dead Price"
+slug: "sales-copilot-dead-price"
+date: "2026-08-21"
+author: "ximi"
+excerpt: "Your index has both prices. That's the bug. A pricing vault where the old number gets closed instead of stacking next to the new one, with the ledger output from a live run."
+category: "Engineering"
+cover: "https://storage.googleapis.com/xysq_public/blogs/sales-copilot-dead-price/hero-v1.png"
+tags: ["case-study", "sales", "supersession", "fact-ledger", "sdk", "context-engineering"]
+featured: false
+draft: true
+readingTimeMinutes: 7
+---
+
+## The problem
+
+Your index has both prices. That's the bug.
+
+Pricing changed in June. The March pricing doc is still sitting in the index, because nobody deletes docs, and why would they. A rep asks the copilot what to quote. Both documents come back, both are excellent matches for "what do we charge", and the model picks one. Sometimes it picks the dead one. Nobody notices until a prospect quotes $49 back during redlines and someone has to decide whether to honour it.
+
+The thing I want to be precise about: this is not a retrieval failure. Retrieval worked perfectly. It found the pricing docs, which is what you asked it to do. Similarity search has no opinion about which of two similar documents is *true right now*, because that isn't a property of the text. Both documents say true things about the past. Only one is true today.
+
+So the usual fixes don't fix it. A better embedding model ranks both higher. A bigger context window sends the model both. More documents makes it worse, not better. You cannot search your way out of a problem where the correct answer requires knowing that one document retired another.
+
+What you want is for the old price to stop being an answer, while staying readable as history. Those are different operations, and most stacks only have the first one (delete) or neither.
+
+## What actually has to happen
+
+Two layers, and the split is the whole trick.
+
+The **logs** are what you pushed, kept verbatim, forever. March's decision stays exactly as written. Nothing is destroyed, so you can always ask what we charged in April and get a real answer.
+
+The **facts** are the distilled, current-truth layer. A fact is keyed on an entity and an attribute, like `starter-plan` and `price_per_seat_per_month`. When a new value arrives for a key that already has one, the old fact is *closed*: it gets an `invalid_at` timestamp and a pointer to the fact that replaced it. Closed facts are dropped from serving. Not deleted from the record, dropped from the answer.
+
+That's it. One key, one live value, and a trail behind it.
+
+Everything below ran against our production API on 21 August 2026. The ledger output is pasted verbatim, including the part that surprised me.
+
+## Setup
+
+Install the SDK, and in the dashboard (app.xysq.ai, under Agents) create a project, copy its id, and mint an agent key with an **admin grant** on it. Creating vaults needs admin; a write key gets a 403 on the first call.
+
+```python
+from xysq import Xysq
+
+PROJECT_ID = "1f2a..."   # from the dashboard
+client = Xysq(api_key="xysq_agent_...")
+
+pricing = client.vaults.create("pricing", project_id=PROJECT_ID)
+```
+
+One vault. That's the whole setup. This post is deliberately smaller than the [support case study](/blog/customer-support-memory-layer), because the mechanism I want to show doesn't need scaffolding to be visible.
+
+## Block 01: the price that will stop being true
+
+```python
+client.vaults.push(
+    pricing.vault_id,
+    "Pricing decision, March 2026. The Starter plan is priced at "
+    "$49 per seat per month.",
+    title="Pricing decision, March 2026",
+)
+```
+
+Give the engine a minute to distill, then look at what it learned. One fact, one key, live:
+
+```text
+--- after March: 1 total / 1 live / 0 closed
+    [LIVE  ] starter-plan price_per_seat_per_month = $49
+```
+
+Note what it did *not* do. It didn't store "the March pricing doc". It pulled out the claim the document was making, and gave it an address: this entity, this attribute, this value. That address is what makes the next step possible.
+
+## Block 02: the correction
+
+```python
+client.vaults.push(
+    pricing.vault_id,
+    "Pricing decision, June 2026. The Starter plan price changes from "
+    "$49 to $59 per seat per month, effective immediately. "
+    "Quote $59 on all new deals.",
+    title="Pricing decision, June 2026",
+)
+```
+
+Same entity, same attribute, new value. Here is the ledger afterwards, verbatim:
+
+```text
+--- after June: 2 total / 1 live / 1 closed
+    [CLOSED] starter-plan price_per_seat_per_month = $49
+             superseded_by=1a8a9058 invalid_at=2026-08-21T13:36:29+00:00
+    [LIVE  ] starter-plan price_per_seat_per_month = $59
+```
+
+That's the post, really. The $49 fact is closed, stamped with the moment it stopped being true and a pointer to what replaced it. Nobody ran a migration. Nobody went and found the March doc to edit or delete it. The March doc is untouched.
+
+## What recall serves
+
+Now ask the question a rep would ask:
+
+```python
+served = client.vaults.pull(
+    pricing.vault_id,
+    query="what is the Starter plan price per seat",
+)
+
+facts = [i for i in served if i.source == "fact"]
+print([i.content for i in facts])
+# ['starter-plan price_per_seat_per_month = $59']
+```
+
+One fact, current. The facts layer is current-truth by construction, because closed facts are dropped at supersede time rather than filtered at query time.
+
+And here's the honest part. The full `pull` returned four items, not one:
+
+```text
+--- recall returned 4 items
+    src=log  :: Pricing decision, March 2026. The Starter plan is priced at $49 ...
+    src=log  :: Pricing decision, June 2026. The Starter plan price changes from ...
+    src=wiki :: Starter Plan Pricing March 2026
+    src=fact :: starter-plan price_per_seat_per_month = $59
+```
+
+The March log is still in there, because it should be. It's history and you asked a question its text answers well. The guarantee is at the fact layer: an agent that grounds its answer on `source == "fact"` cannot quote a dead price, because dead prices are not in that layer. An agent that free-reads the logs can still find $49, and if you're wiring this up, that's the line to be careful about. Ground the number on the fact; use the logs for the story around it.
+
+## The part that surprised me
+
+My first version of this test failed, and I think the failure is more instructive than the success.
+
+I pushed "The Starter plan is discontinued. The Team plan at $99 per seat per month is now the entry tier." I expected that to close the $49 fact. It didn't. Nothing was closed:
+
+```text
+--- ledger: 5 total / 5 live / 0 closed
+    [LIVE] starter-plan.price per_seat_per_month = $49
+    [LIVE] starter-plan status = discontinued
+    [LIVE] team-plan price.per_seat_per_month = $99
+    ...
+```
+
+I stared at this for a while thinking it was a bug, and then realised the engine is right and I was wrong. Nothing in that document contradicts Starter's price. Starter's price *is* $49. It's just that Starter isn't sold any more, which the ledger recorded as its own fact, on its own key. Two true things, held at once.
+
+Supersede fires on a **restated value**, not on a replacement. If you retire something, the useful move is to say what changed about the thing itself ("Starter status: discontinued") rather than only describing its successor, and then the copilot asking "should I quote Starter?" gets `status = discontinued` back and has what it needs.
+
+I'm leaving this in because it's the kind of thing you'd hit on day two and I'd rather you hit it here.
+
+## The checks
+
+The whole thing, as assertions, on the live run:
+
+```text
+PASS  a fact was closed
+PASS  closed fact has superseded_by + invalid_at
+PASS  live facts carry the NEW price ($59)
+PASS  the OLD price ($49) is NOT live
+PASS  recall serves $59
+PASS  the FACTS layer serves only the current price
+PASS  history intact: both decisions still stored
+
+7 passed, 0 failed
+```
+
+The last two are the pair that matters. Only the current price is served, and the old one is still on the record. Most systems make you pick.
+
+## Where this goes
+
+Pricing is the cleanest example because a price is unambiguous and somebody notices when it's wrong. But the shape is general: any fact your team restates over time is the same problem wearing different clothes. Which tier a customer is on. Who owns the account. Whether that integration shipped. Every one of those is a key with a history and exactly one current value, and every one of them is currently sitting in somebody's index in three contradictory versions.
+
+We haven't found a published incident of a sales copilot quoting a dead price, and I looked reasonably hard. My honest read is that it happens constantly and nobody writes it up, because the failure is quiet and the fix is embarrassing. If you have one, I'd genuinely like to hear it.
+
+Good luck out there. Quote the live number.
