@@ -3,7 +3,7 @@ import { loadPostsForBuild } from './load-posts-node.mjs'
 
 const SITE_URL = 'https://xysq.ai'
 const FEED_TITLE = 'xysq blog'
-const FEED_DESC = 'Notes from the team building xysq — a consent-first memory layer for AI agents.'
+const FEED_DESC = 'Notes from the team building xysq, the trust layer for AI agents and teams.'
 
 function escapeXml(s = '') {
   return s
