@@ -37,6 +37,10 @@ const COMPANY_LINKS = [
   { label: 'Privacy', to: '/privacy' },
 ]
 
+const COMPARE_LINKS = [
+  { label: 'vs mem0', to: '/compare/mem0' },
+]
+
 const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/xysq-ai', Icon: GithubIcon },
   { label: 'X',      href: 'https://x.com/xysq_ai',      Icon: XIcon },
@@ -97,6 +101,15 @@ export default function Footer() {
               <h4 className="ft-col-title">Resources</h4>
               <ul>
                 {RESOURCE_LINKS.map((l) => (
+                  <li key={l.label}><FooterLink {...l}>{l.label}</FooterLink></li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="ft-col">
+              <h4 className="ft-col-title">Compare</h4>
+              <ul>
+                {COMPARE_LINKS.map((l) => (
                   <li key={l.label}><FooterLink {...l}>{l.label}</FooterLink></li>
                 ))}
               </ul>

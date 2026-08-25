@@ -10,6 +10,7 @@ const UseCaseCategoryPage = lazy(() => import('./pages/UseCaseCategoryPage'))
 const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
 const WhitepaperPage = lazy(() => import('./pages/WhitepaperPage'))
+const ComparePage = lazy(() => import('./pages/ComparePage'))
 
 export default function App() {
   const location = useLocation()
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/blog" element={<BlogIndexPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/whitepaper" element={<WhitepaperPage />} />
+            <Route path="/compare/:competitor" element={<ComparePage />} />
           </Routes>
         </Suspense>
       </AnimatePresence>
