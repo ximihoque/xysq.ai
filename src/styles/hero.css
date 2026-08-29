@@ -366,6 +366,12 @@ h1.hero-h1 {
   margin-right: 8px;
 }
 
+/* the marquee runs edge to edge, so it needs to escape the centred column */
+.hero-strip {
+  width: 100%;
+  align-self: stretch;
+}
+
 /* quiet scroll cue under the CTAs, straight to the demo window */
 .hero-jump {
   display: inline-flex;

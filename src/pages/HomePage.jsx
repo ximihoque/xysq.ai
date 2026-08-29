@@ -8,6 +8,7 @@ import ThreeColumnCTA from '../components/ThreeColumnCTA'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
+import GridSpot from '../components/GridSpot'
 
 export default function HomePage() {
   return (
@@ -27,6 +28,7 @@ export default function HomePage() {
         }}
       />
       <NeuralBackground />
+      <GridSpot />
       <Nav />
       {/* trust first, then what you get, then the engine as the closing
           argument. the engine used to open the page; it lands last now so

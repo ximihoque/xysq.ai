@@ -382,9 +382,9 @@ export default function HeroStage() {
                         >
                           <FileText size={14} strokeWidth={1.7} className="hs-row-ico" />
                           <span className="hs-row-title">{r.title}</span>
-                          {r.fresh && (s.added || done) && (
-                            <span className="hs-new">just now</span>
-                          )}
+                          <span className={`hs-when ${r.fresh ? 'is-new' : ''}`}>
+                            {r.added}
+                          </span>
                           <span className="hs-by">{r.by}</span>
                         </button>
                       </motion.li>

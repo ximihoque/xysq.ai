@@ -235,19 +235,26 @@
 
 .hs-up-bar { margin-left: 10px; }
 
-/* the row that just landed says so */
-.hs-new {
+/* every row carries when it landed, same vocabulary as the activity rail.
+   The one that just arrived says so in the accent. */
+.hs-when {
   margin-left: auto;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  color: var(--silver);
+  opacity: 0.8;
+}
+
+.hs-when.is-new {
   color: var(--cyan);
+  opacity: 1;
   border: 1px solid color-mix(in srgb, var(--cyan) 40%, transparent);
   border-radius: 999px;
   padding: 2px 8px;
 }
 
-.hs-new + .hs-by { margin-left: 10px; }
+.hs-when + .hs-by { margin-left: 14px; min-width: 92px; text-align: right; }
 
 /* ── page view ── */
 

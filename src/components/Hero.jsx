@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Brain, ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
+import IntegrationMarquee from './IntegrationMarquee'
 import HeroStage from './HeroStage'
 import '../styles/hero.css'
 
@@ -66,7 +67,11 @@ export default function Hero() {
             </motion.a>
           </motion.div>
 
-          <motion.a {...fade(0.35)} href="#demo" className="hero-jump">
+          <motion.div {...fade(0.32)} className="hero-strip">
+            <IntegrationMarquee />
+          </motion.div>
+
+          <motion.a {...fade(0.4)} href="#demo" className="hero-jump">
             See it in action
             <ChevronDown size={15} strokeWidth={2} />
           </motion.a>
