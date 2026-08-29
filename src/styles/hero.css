@@ -377,9 +377,10 @@ h1.hero-h1 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 22px;
+  margin-top: 52px;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.86rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: var(--silver);
   text-decoration: none;
   transition: color 0.2s ease;
