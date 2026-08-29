@@ -1,38 +1,29 @@
-/* One grid cell, lit under the pointer. Sits above the body grid and below
-   every piece of content, so it never intercepts a click or covers text. */
+/* Trail of lit grid cells under the pointer. Sits above the body grid and
+   below every piece of content, so it never intercepts a click. */
 
 .grid-spot {
   position: fixed;
-  left: 0;
-  top: 0;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.grid-cell {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
   opacity: 0;
-  transition: opacity 0.25s ease;
-  will-change: transform;
-
-  /* teal wash with a hairline edge, so the cell reads as filled rather than
-     as a floating square */
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--cyan) 9%, transparent),
-      color-mix(in srgb, var(--cyan) 3%, transparent)
-    );
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cyan) 22%, transparent);
+  will-change: transform, opacity;
+  /* fill only, no outline: a hard teal border on a 72px square reads as a
+     selection rectangle rather than as the grid lighting up */
+  background: color-mix(in srgb, var(--cyan) 17%, transparent);
 }
 
-[data-theme='light'] .grid-spot {
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--cyan) 7%, transparent),
-      color-mix(in srgb, var(--cyan) 2%, transparent)
-    );
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cyan) 18%, transparent);
+[data-theme='light'] .grid-cell {
+  background: color-mix(in srgb, var(--cyan) 12%, transparent);
 }
-
-.grid-spot.is-on { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .grid-spot { display: none; }

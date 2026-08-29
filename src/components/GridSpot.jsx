@@ -1,68 +1,82 @@
 import { useEffect, useRef } from 'react'
 import '../styles/grid-spot.css'
 
-// Lights the single grid cell under the pointer.
+// Lights the grid cell under the pointer and leaves a short trail behind it.
 //
-// The site grid is `body::before`: position fixed, 1px lines at --grid-size,
-// background-position `center top`. So a vertical line falls on the viewport's
-// horizontal centre and every --grid-size px either side of it, and horizontal
-// lines start at the viewport top. Snapping has to use that same phase or the
-// highlight sits half a cell off the lines it is meant to fill.
+// The site grid is `body::before`: fixed, 1px lines, `background-size:
+// var(--grid-size)`, `background-position: center top`. For a repeating
+// background, `center` puts the image's LEFT edge at (W - size) / 2, so the
+// lines land at (W - g) / 2 + k*g. Using W / 2 as the origin instead puts
+// every cell half a cell off, which is what it was doing.
 //
-// Position is written straight to the element in a rAF rather than through
-// React state, because this fires on every mousemove.
+// A ring of nodes is reused rather than mounting one per cell, and positions
+// are written straight to the DOM inside a rAF, because this runs on every
+// mousemove.
+
+const POOL = 16
+const FADE = 900
 
 export default function GridSpot() {
-  const el = useRef(null)
+  const host = useRef(null)
 
   useEffect(() => {
-    // coarse pointers have no hover, and the OS may ask for less motion
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const node = el.current
-    let raf = 0
-    let x = 0
-    let y = 0
-    let live = false
+    const root = host.current
+    const cells = []
+    for (let i = 0; i < POOL; i++) {
+      const d = document.createElement('i')
+      d.className = 'grid-cell'
+      root.appendChild(d)
+      cells.push(d)
+    }
 
-    const size = () =>
+    let next = 0
+    let lastKey = ''
+    let raf = 0
+    let mx = 0
+    let my = 0
+
+    const gridSize = () =>
       parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-size')) || 72
 
     const draw = () => {
       raf = 0
-      const g = size()
-      const originX = window.innerWidth / 2 // where `center` puts a line
-      const cellX = Math.floor((x - originX) / g) * g + originX
-      const cellY = Math.floor(y / g) * g
-      node.style.transform = `translate3d(${cellX}px, ${cellY}px, 0)`
-      node.style.width = `${g}px`
-      node.style.height = `${g}px`
-      if (!live) {
-        live = true
-        node.classList.add('is-on')
-      }
+      const g = gridSize()
+      const originX = (window.innerWidth - g) / 2 // where `center` starts the tile
+      const cx = Math.floor((mx - originX) / g) * g + originX
+      const cy = Math.floor(my / g) * g
+      const key = `${cx},${cy}`
+      if (key === lastKey) return
+      lastKey = key
+
+      const cell = cells[next]
+      next = (next + 1) % POOL
+      cell.style.width = `${g}px`
+      cell.style.height = `${g}px`
+      cell.style.transform = `translate3d(${cx}px, ${cy}px, 0)`
+      // restart the fade: kill the transition, go opaque, reflow, then fade
+      cell.style.transition = 'none'
+      cell.style.opacity = '1'
+      void cell.offsetWidth
+      cell.style.transition = `opacity ${FADE}ms linear`
+      cell.style.opacity = '0'
     }
 
     const onMove = (e) => {
-      x = e.clientX
-      y = e.clientY
+      mx = e.clientX
+      my = e.clientY
       if (!raf) raf = requestAnimationFrame(draw)
     }
 
-    const onLeave = () => {
-      live = false
-      node.classList.remove('is-on')
-    }
-
     window.addEventListener('mousemove', onMove, { passive: true })
-    document.addEventListener('mouseleave', onLeave)
     return () => {
       window.removeEventListener('mousemove', onMove)
-      document.removeEventListener('mouseleave', onLeave)
       if (raf) cancelAnimationFrame(raf)
+      cells.forEach((c) => c.remove())
     }
   }, [])
 
-  return <div ref={el} className="grid-spot" aria-hidden="true" />
+  return <div ref={host} className="grid-spot" aria-hidden="true" />
 }
