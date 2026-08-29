@@ -1,0 +1,701 @@
+/* the illustrative app window under the hero copy. fixed body height so the
+   view swaps never move the page. */
+
+.hs { width: 100%; }
+
+.hs-frame {
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.hs-win { background: var(--surface); will-change: transform; }
+
+/* oversized on purpose: an actual-size arrow disappears at this scale.
+   The tip is the hot spot, so the press pivots there rather than on the
+   box centre. It never fades in or out, it enters and leaves the frame. */
+.hs-cursor {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  margin: -4px 0 0 -6px;
+  z-index: 20;
+  transform-origin: 21% 14%;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  will-change: transform, left, top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-cursor { display: none; }
+}
+
+/* ── window chrome ── */
+
+.hs-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg2);
+}
+
+.hs-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cyan);
+  flex: none;
+}
+
+.hs-ws {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+}
+
+.hs-top-spacer { flex: 1; }
+
+.hs-who {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--silver);
+}
+
+.hs-body {
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr);
+  height: 430px;
+}
+
+/* ── sidebar ── */
+
+.hs-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 10px;
+  border-right: 1px solid var(--line);
+  background: var(--bg2);
+}
+
+.hs-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.83rem;
+  text-align: left;
+  color: var(--silver);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hs-nav:hover { color: var(--paper); background: var(--surface); }
+
+.hs-nav.is-on { background: var(--surface); color: var(--paper); }
+.hs-nav.is-on svg { color: var(--cyan); }
+
+.hs-count {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  color: var(--silver);
+}
+
+/* ── panes ── */
+
+.hs-view { position: relative; min-height: 0; overflow: hidden; }
+
+.hs-pane {
+  position: absolute;
+  inset: 0;
+  padding: 18px 22px;
+  overflow: hidden;
+}
+
+.hs-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin: 0 0 12px;
+}
+
+/* ── sources / pages list ── */
+
+.hs-list {
+  list-style: none;
+  /* li is a bare wrapper; the button inside carries the styling */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hs-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--bg);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.35s ease, background 0.35s ease;
+}
+
+.hs-row:hover { border-color: color-mix(in srgb, var(--silver) 35%, transparent); }
+
+.hs-row-ico { color: var(--silver); flex: none; }
+
+.hs-row-title {
+  font-size: 0.86rem;
+  color: var(--paper);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* authorship, not a category badge: quiet mono, no chip */
+.hs-by {
+  margin-left: auto;
+  flex: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--silver);
+  opacity: 0.85;
+}
+
+.hs-row.is-fresh {
+  border-color: color-mix(in srgb, var(--cyan) 40%, transparent);
+  background: var(--cyan-dim);
+}
+
+/* ── upload ── */
+
+.hs-up {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  margin-bottom: 6px;
+  border: 1px dashed color-mix(in srgb, var(--cyan) 50%, transparent);
+  border-radius: 8px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+}
+
+.hs-up-name { font-size: 0.83rem; color: var(--paper); }
+
+.hs-up-bar {
+  margin-left: auto;
+  width: 92px;
+  height: 3px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--silver) 30%, transparent);
+  overflow: hidden;
+}
+
+.hs-up-bar i {
+  display: block;
+  height: 100%;
+  background: var(--cyan);
+  transition: width 0.08s linear;
+}
+
+.hs-up-pct {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--cyan);
+}
+
+.hs-up-bar { margin-left: 10px; }
+
+/* the row that just landed says so */
+.hs-new {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+  border: 1px solid color-mix(in srgb, var(--cyan) 40%, transparent);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.hs-new + .hs-by { margin-left: 10px; }
+
+/* ── page view ── */
+
+.hs-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 22px;
+  height: 100%;
+}
+
+.hs-doc {
+  min-width: 0;
+  max-width: 660px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* the page's own dated change note, at the foot of the prose */
+.hs-changes {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+
+.hs-changes .hs-eyebrow { margin-bottom: 7px; }
+
+.hs-change {
+  display: flex;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--silver);
+  margin: 0 0 3px;
+}
+
+.hs-change-when {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--silver);
+  opacity: 0.8;
+  flex: none;
+  width: 46px;
+  padding-top: 1px;
+}
+
+.hs-doc-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--paper);
+  margin: 0;
+}
+
+.hs-doc-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin: 6px 0 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hs-block { margin-bottom: 11px; }
+
+.hs-line {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--paper);
+  margin: 0;
+}
+
+/* wikipedia-style marker, same shape the app uses */
+.hs-mark {
+  border: 0;
+  background: transparent;
+  padding: 0 0 0 3px;
+  font-family: inherit;
+  font-size: 0.72em;
+  font-weight: 500;
+  vertical-align: super;
+  line-height: 1;
+  color: var(--cyan);
+  cursor: pointer;
+}
+
+.hs-mark:hover, .hs-mark.is-on { text-decoration: underline; }
+
+.hs-was {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: 0.78rem;
+  color: var(--silver);
+  margin: 3px 0 0;
+}
+
+/* the rule is drawn rather than declared, so the closing reads as an action.
+   text-decoration cannot animate, so it is a pseudo-element bar. */
+.hs-was s {
+  position: relative;
+  text-decoration: none;
+}
+
+.hs-was s::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 52%;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left center;
+  animation: hs-strike 0.55s cubic-bezier(0.33, 0, 0.2, 1) 0.25s both;
+}
+
+@keyframes hs-strike {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-was s::after { animation: none; transform: scaleX(1); }
+}
+
+.hs-closed {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+/* ── citation popover ── */
+
+.hs-pop { overflow: hidden; }
+
+.hs-pop-in {
+  margin-top: 8px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg2);
+}
+
+.hs-pop-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin: 0 0 7px;
+}
+
+.hs-pop-body {
+  font-size: 0.79rem;
+  line-height: 1.55;
+  color: var(--paper);
+  margin: 0 0 8px;
+}
+
+.hs-ctx { color: var(--silver); }
+
+/* the highlight is a background image so its width can be swept left to
+   right; a plain background-color has nothing to animate */
+.hs-pop-body mark {
+  background-color: transparent;
+  /* half-coloured image at double width: slide it, don't resize it.
+     Animating background-size in % stalls on an inline box; position
+     animates cleanly and survives the quote wrapping to two lines. */
+  background-image: linear-gradient(to right, var(--cyan-dim) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  color: var(--paper);
+  padding: 1px 2px;
+  border-radius: 3px;
+  /* CSS rather than framer: a nested motion component inherits
+     initial={false} from the AnimatePresence above it and never runs */
+  animation: hs-sweep 0.7s cubic-bezier(0.33, 0, 0.2, 1) 0.28s both;
+}
+
+@keyframes hs-sweep {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-pop-body mark { animation: none; background-position: 0% 0; }
+}
+
+.hs-pop-from {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--cyan);
+  cursor: pointer;
+}
+
+.hs-pop-from:hover { text-decoration: underline; }
+
+/* ── activity ── */
+
+.hs-log {
+  border-left: 1px solid var(--line);
+  padding-left: 20px;
+  min-width: 0;
+}
+
+.hs-feed { display: flex; flex-direction: column; }
+
+.hs-edit {
+  display: grid;
+  gap: 1px;
+  width: 100%;
+  padding: 8px 6px;
+  margin: 0 -6px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hs-edit:hover { background: var(--bg2); }
+
+.hs-edit:last-child { border-bottom: 0; }
+
+.hs-edit-by {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.hs-edit.is-fresh .hs-edit-by { color: var(--cyan); }
+
+.hs-edit-what { font-size: 0.75rem; color: var(--silver); }
+
+.hs-edit-when {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--silver);
+  opacity: 0.8;
+}
+
+/* ── footer rail ── */
+
+.hs-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.hs-rail {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: none;
+}
+
+.hs-rail li { display: flex; }
+
+/* each segment is a jump target, so it needs a real hit area around the bar */
+.hs-step {
+  display: flex;
+  align-items: center;
+  width: 22px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hs-step i {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 0.3s ease, height 0.15s ease;
+}
+
+.hs-step.is-on i { background: var(--cyan); }
+.hs-step:hover i { height: 5px; background: var(--cyan); }
+.hs-step:focus-visible i { height: 5px; }
+
+.hs-cap {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--paper);
+  flex: 1;
+  min-width: 0;
+}
+
+.hs-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--silver);
+  font-family: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.hs-btn:hover { color: var(--paper); border-color: #3a3a3a; }
+[data-theme='light'] .hs-btn:hover { border-color: #d4d4d4; }
+
+/* ── tablet: activity moves under the page text ── */
+
+@media (max-width: 1024px) {
+  .hs-body { grid-template-columns: 168px minmax(0, 1fr); height: 500px; }
+  .hs-page { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .hs-log { border-left: 0; border-top: 1px solid var(--line); padding: 12px 0 0; }
+  .hs-log .hs-edit:nth-child(n + 4) { display: none; }
+}
+
+/* ── mobile: the sidebar becomes a top row, one surface at a time ── */
+
+@media (max-width: 720px) {
+  .hs-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 520px;
+  }
+
+  .hs-side {
+    flex-direction: row;
+    gap: 4px;
+    padding: 8px 10px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hs-nav { padding: 6px 9px; font-size: 0.78rem; }
+  .hs-count { margin-left: 5px; }
+
+  .hs-pane { padding: 14px 14px; }
+  .hs-doc-title { font-size: 1rem; }
+  .hs-line { font-size: 0.87rem; }
+  .hs-log .hs-edit:nth-child(n + 3) { display: none; }
+
+  .hs-foot { flex-wrap: wrap; gap: 10px; }
+  .hs-cap { order: 3; flex-basis: 100%; font-size: 0.8rem; }
+}
+
+/* ── source detail ── */
+
+.hs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  margin-bottom: 12px;
+  border: 0;
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--silver);
+  cursor: pointer;
+}
+
+.hs-back:hover { color: var(--paper); }
+
+/* a labelled metadata field, same eyebrow as every other section header */
+.hs-field { margin: 16px 0; }
+.hs-field .hs-eyebrow { margin-bottom: 7px; }
+
+.hs-tags { display: flex; gap: 6px; }
+
+.hs-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--silver);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+/* the document as written, which is what we actually keep */
+.hs-raw {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  max-width: 660px;
+}
+
+.hs-raw-line {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--paper);
+  margin: 0 0 7px;
+}
+
+.hs-raw-line:last-child { margin-bottom: 0; }
+
+.hs-masked {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--silver);
+  background: var(--surface2);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.hs-masked-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-left: 6px;
+}
+
+.hs-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: var(--paper);
+  cursor: pointer;
+  transition: border-color 0.18s ease;
+}
+
+.hs-jump svg { color: var(--silver); }
+.hs-jump:hover { border-color: color-mix(in srgb, var(--silver) 35%, transparent); }

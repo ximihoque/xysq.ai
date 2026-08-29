@@ -77,11 +77,27 @@
 h1.hero-h1 {
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
-  font-size: clamp(2rem, 3.5vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.1rem, 5vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
   color: var(--paper);
   margin-bottom: 18px;
+}
+
+/* the noun we own, in the problem/contrast colour so it reads first */
+.hero-h1-lychee {
+  color: var(--lychee);
+}
+
+.hero-mark {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+/* the two nouns carry full text colour: white on dark, near-black on light */
+.hero-h1-strong {
+  color: var(--paper);
 }
 
 /* single flat accent on the differentiator word — no glow */
@@ -246,6 +262,34 @@ h1.hero-h1 {
   width: 100%;
 }
 
+/* copy sits on top of the window now, so the inner is one column and the
+   window gets the full content width underneath it. */
+.hero-inner--stacked {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 1240px;
+  gap: 0;
+}
+
+/* the window below is full width, so the copy is centred over it rather
+   than hugging the left edge of a column that no longer exists */
+.hero-inner--stacked .hero-copy {
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.hero-inner--stacked .hero-sub { max-width: 60ch; }
+.hero-inner--stacked .hero-btns { justify-content: center; }
+
+.hero-stage-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1120px;
+  margin: 52px auto 0;
+}
+
 /* ── Tablet ── */
 @media (max-width: 1024px) {
   #hero {
@@ -313,3 +357,22 @@ h1.hero-h1 {
     width: 100%;
   }
 }
+
+/* quiet scroll cue under the CTAs, straight to the demo window */
+.hero-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 22px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  color: var(--silver);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hero-jump:hover { color: var(--paper); }
+.hero-jump svg { transition: transform 0.2s ease; }
+.hero-jump:hover svg { transform: translateY(2px); }
+
+.hero-stage-wrap { scroll-margin-top: 96px; }

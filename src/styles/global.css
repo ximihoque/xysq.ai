@@ -10,12 +10,22 @@
   /* Near-monochrome, Vercel/Linear discipline: near-black canvas, near-white
      text, greys for hierarchy, hairline borders. Cyan survives only as a rare
      sharp accent (one button, a link) — never as a glow or a fill. */
-  --bg: #0a0a0a;
-  --bg2: #0f0f0f;
-  --surface: #111111;
-  --surface2: #161616;
-  --nav-bg: rgba(10, 10, 10, 0.72);
-  --overlay: rgba(10, 10, 10, 0.75);
+  --bg: #07080c;
+  --bg2: #0a0c11;
+  --surface: #0d0f15;
+  --surface2: #12141b;
+  --nav-bg: rgba(7, 8, 12, 0.72);
+  --overlay: rgba(7, 8, 12, 0.75);
+
+  /* The page canvas. Four soft pools over a navy-black base: one overhead,
+     one off each shoulder, one rising from the floor. Alphas stay under 0.3
+     so the grid and the hairlines still read on top of it. */
+  --page-bg:
+    radial-gradient(1150px 660px at 50% -6%, rgba(48, 96, 205, 0.20), transparent 64%),
+    radial-gradient(880px 600px at 88% 14%, rgba(32, 68, 150, 0.16), transparent 66%),
+    radial-gradient(800px 800px at 5% 58%, rgba(26, 56, 124, 0.13), transparent 70%),
+    radial-gradient(1000px 540px at 50% 106%, rgba(18, 42, 104, 0.22), transparent 68%),
+    #05070e;
   --cyan: #00e5c8;         /* the accent, used sparingly */
   --cyan2: #00b8a2;
   --cyan-dim: rgba(0, 229, 200, 0.10);
@@ -48,6 +58,16 @@
   --surface: #ffffff;
   --surface2: #f5f5f5;
   --nav-bg: rgba(255, 255, 255, 0.72);
+
+  /* Same four pools, cooled right down. Near-white with a breath of blue and
+     a warm corner, so it reads as paper under good light rather than as a
+     coloured background. */
+  --page-bg:
+    radial-gradient(1150px 660px at 50% -10%, rgba(219, 229, 245, 0.85), transparent 62%),
+    radial-gradient(880px 580px at 88% 12%, rgba(241, 234, 243, 0.7), transparent 66%),
+    radial-gradient(800px 800px at 5% 64%, rgba(226, 237, 242, 0.65), transparent 70%),
+    radial-gradient(1000px 540px at 50% 106%, rgba(233, 236, 246, 0.75), transparent 68%),
+    #fbfbfd;
   --overlay: rgba(255, 255, 255, 0.75);
   --cyan: #007a6b;
   --cyan2: #006357;
@@ -104,7 +124,8 @@ body::before {
 }
 
 body {
-  background: var(--bg);
+  background: var(--page-bg);
+  background-attachment: fixed;
   color: var(--paper);
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
