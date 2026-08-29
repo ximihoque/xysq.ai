@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { MotionConfig } from 'framer-motion'
 import { Writable } from 'node:stream'
 import App from './App.jsx'
 import { USE_CASE_CATEGORIES } from './data/useCases.js'
@@ -50,9 +51,11 @@ export function render(url) {
     const tree = (
       <StrictMode>
         <HelmetProvider context={helmetContext}>
-          <StaticRouter location={url}>
-            <App />
-          </StaticRouter>
+          <MotionConfig reducedMotion="user">
+            <StaticRouter location={url}>
+              <App />
+            </StaticRouter>
+          </MotionConfig>
         </HelmetProvider>
       </StrictMode>
     )
