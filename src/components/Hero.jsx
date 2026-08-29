@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { Brain, ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import HeroStage from './HeroStage'
 import '../styles/hero.css'
@@ -39,6 +39,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p {...fade(0.15)} className="hero-sub">
+            <Brain size={17} strokeWidth={1.8} className="hero-sub-ico" aria-hidden="true" />
             Self-improving memory engine that adapts to your domain.
           </motion.p>
 

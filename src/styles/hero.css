@@ -81,7 +81,7 @@ h1.hero-h1 {
   line-height: 1.02;
   letter-spacing: -0.04em;
   color: var(--paper);
-  margin-bottom: 18px;
+  margin-bottom: 34px;
 }
 
 /* the noun we own, in the problem/contrast colour so it reads first */
@@ -356,6 +356,14 @@ h1.hero-h1 {
     justify-content: center;
     width: 100%;
   }
+}
+
+/* sits on the text baseline rather than in its own row, so the line still
+   centres and wraps normally on a phone */
+.hero-sub-ico {
+  color: var(--cyan);
+  vertical-align: -3px;
+  margin-right: 8px;
 }
 
 /* quiet scroll cue under the CTAs, straight to the demo window */
