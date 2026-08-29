@@ -75,8 +75,8 @@
 
 .hs-body {
   display: grid;
-  grid-template-columns: 196px minmax(0, 1fr);
-  height: 430px;
+  grid-template-columns: 214px minmax(0, 1fr);
+  height: 498px;
 }
 
 /* ── sidebar ── */
@@ -267,7 +267,7 @@
 
 .hs-doc {
   min-width: 0;
-  max-width: 660px;
+  max-width: 720px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
