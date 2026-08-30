@@ -48,6 +48,7 @@ const SOURCES = [
     added: '12 days ago',
     tags: ['pricing', 'faq'],
     body: [
+      'Starter and Growth seats are $49 per month.',
       'Pay annually and you get 12 months for the price of 10.',
       'Anything over 50 seats goes through a quote, never the pricing page.',
       'Send escalations to {mask}, not to the shared inbox.',
@@ -74,55 +75,65 @@ const BLOCKS = [
     text: 'Seats are $59 per month.',
     was: '$49 per month',
     closed: 'closed Sept 1',
-    before: 'We reviewed the plan tiers in August.',
+    wasSrc: 's1',
     quote: 'Starter and Growth seats move to $59 on Sept 1.',
-    after: 'Existing annual contracts renew at the old rate.',
     src: 's4',
   },
   {
     id: 'b2',
     n: 2,
     text: 'Annual billing saves two months.',
-    before: 'Customers ask about this constantly.',
     quote: 'Pay annually and you get 12 months for the price of 10.',
-    after: 'The discount is applied at checkout.',
     src: 's1',
   },
   {
     id: 'b3',
     n: 3,
     text: 'Refunds over $500 need manager approval.',
-    before: 'Agents can approve most refunds themselves.',
     quote: 'Anything above $500 needs a manager to sign it off.',
-    after: 'Escalate in the shared queue, not by email.',
     src: 's3',
   },
   {
     id: 'b4',
     n: 4,
     text: 'Enterprise plans are quoted, not listed.',
-    before: 'Above 50 seats the shape of the deal changes.',
     quote: 'Anything over 50 seats goes through a quote, never the pricing page.',
-    after: 'Loop in the account lead before sending numbers.',
     src: 's1',
   },
   {
     id: 'b5',
     n: 5,
     text: 'The Q3 campaign drove most of the upgrades.',
-    before: 'We looked at where the new seats came from.',
     quote: 'Two thirds of Q3 upgrades came in through the campaign landing pages.',
-    after: 'Paid search was flat over the same period.',
     src: 's2',
   },
 ]
 
 const CHANGES = [
   { when: 'Sept 1', what: 'Seat price updated from Sept pricing update' },
-  { when: 'Aug 24', what: 'Refund threshold added from Refund policy' },
+  { when: 'Aug 28', what: 'Refund threshold added from Refund policy' },
 ]
 
 const byId = (id) => SOURCES.find((x) => x.id === id)
+
+const MASKED = '\u2022\u2022\u2022\u2022\u2022\u2022@acme.com'
+const plain = (line) => line.replace('{mask}', MASKED)
+
+// The sentences either side of a quote are read out of the document itself
+// rather than written by hand. They used to be hand-written and two of them
+// quietly described text that was not in the source they pointed at, which
+// is exactly the thing this hero is claiming we do not do.
+function context(srcId, quote) {
+  const body = byId(srcId)?.body ?? []
+  const i = body.findIndex((line) => plain(line) === quote)
+  if (i === -1) {
+    if (import.meta.env.DEV) {
+      console.error(`[HeroStage] quote is not in ${srcId}: ${quote}`)
+    }
+    return { before: '', after: '' }
+  }
+  return { before: i > 0 ? plain(body[i - 1]) : '', after: plain(body[i + 1] ?? '') }
+}
 
 // the walkthrough as a flat table. index 0 is the resting state and is what
 // prerenders, so the static HTML is never an empty box.
@@ -415,7 +426,7 @@ export default function HeroStage() {
                         {line.includes('{mask}') ? (
                           <>
                             {line.split('{mask}')[0]}
-                            <span className="hs-masked">••••••@acme.com</span>
+                            <span className="hs-masked">{MASKED}</span>
                             <span className="hs-masked-tag">masked on the way in</span>
                             {line.split('{mask}')[1]}
                           </>
@@ -489,6 +500,13 @@ export default function HeroStage() {
                             >
                               <s>{b.was}</s>
                               <span className="hs-closed">{b.closed}</span>
+                              <button
+                                type="button"
+                                className="hs-was-src"
+                                onClick={() => go('source', b.wasSrc)}
+                              >
+                                {byId(b.wasSrc).title}
+                              </button>
                             </motion.p>
                           )}
 
@@ -504,9 +522,9 @@ export default function HeroStage() {
                                 <div className="hs-pop-in">
                                   <p className="hs-pop-head">From your source</p>
                                   <p className="hs-pop-body">
-                                    <span className="hs-ctx">{b.before} </span>
+                                    <span className="hs-ctx">{context(b.src, b.quote).before} </span>
                                     <mark>{b.quote}</mark>
-                                    <span className="hs-ctx"> {b.after}</span>
+                                    <span className="hs-ctx"> {context(b.src, b.quote).after}</span>
                                   </p>
                                   <button
                                     type="button"

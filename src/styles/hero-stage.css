@@ -381,6 +381,18 @@
   .hs-was s::after { animation: none; transform: scaleX(1); }
 }
 
+.hs-was-src {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--silver);
+  cursor: pointer;
+}
+
+.hs-was-src:hover { color: var(--cyan); text-decoration: underline; }
+
 .hs-closed {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.58rem;
