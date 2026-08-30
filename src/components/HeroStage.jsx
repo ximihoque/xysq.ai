@@ -21,6 +21,8 @@ const SOURCES = [
     title: 'Sept pricing update',
     by: 'team',
     added: 'just now',
+    date: 'Sept 1',
+    did: 'Seat price updated',
     tags: ['pricing', 'q3'],
     fresh: true,
     body: [
@@ -34,6 +36,8 @@ const SOURCES = [
     title: 'Refund policy',
     by: 'support agent',
     added: '4 days ago',
+    date: 'Aug 28',
+    did: 'Refund threshold added',
     tags: ['policy', 'refunds'],
     body: [
       'Agents can approve most refunds themselves.',
@@ -46,6 +50,8 @@ const SOURCES = [
     title: 'Pricing FAQ v3',
     by: 'sales agent',
     added: '12 days ago',
+    date: 'Aug 20',
+    did: 'Annual billing and enterprise quoting added',
     tags: ['pricing', 'faq'],
     body: [
       'Starter and Growth seats are $49 per month.',
@@ -59,6 +65,8 @@ const SOURCES = [
     title: 'Campaign retro, Q3',
     by: 'marketing agent',
     added: '3 weeks ago',
+    date: 'Aug 11',
+    did: 'Campaign result added',
     tags: ['campaign', 'q3'],
     body: [
       'We looked at where the new seats came from.',
@@ -109,10 +117,13 @@ const BLOCKS = [
   },
 ]
 
-const CHANGES = [
-  { when: 'Sept 1', what: 'Seat price updated from Sept pricing update' },
-  { when: 'Aug 28', what: 'Refund threshold added from Refund policy' },
-]
+// One entry per document that fed the page, newest first, dated to match the
+// activity rail. It used to be a hand-written pair sitting next to four
+// activity rows, which is a count anyone would notice.
+const CHANGES = SOURCES.map((s) => ({
+  when: s.date,
+  what: `${s.did} from ${s.title}`,
+}))
 
 const byId = (id) => SOURCES.find((x) => x.id === id)
 
