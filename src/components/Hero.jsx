@@ -33,9 +33,11 @@ export default function Hero() {
                 stylesheet hides these breaks and lets the line wrap */}
             Build reliable agents{' '}
             <br />
-            on a self-improving{' '}
+            <span className="hero-h1-dim">on a</span>{' '}
+            <span className="hero-h1-lychee">self-improving</span>{' '}
             <br />
-            <span className="hero-accent">context layer you can trust.</span>
+            context layer{' '}
+            <span className="hero-accent">you can trust.</span>
           </motion.h1>
 
 
