@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
-import HeroFlow from './HeroFlow'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroStage from './HeroStage'
 import '../styles/hero.css'
@@ -39,10 +38,6 @@ export default function Hero() {
             <span className="hero-accent">context layer you can trust.</span>
           </motion.h1>
 
-
-          <motion.div {...fade(0.18)}>
-            <HeroFlow />
-          </motion.div>
 
           <motion.div {...fade(0.25)} className="hero-btns">
             <motion.a
