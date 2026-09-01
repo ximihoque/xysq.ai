@@ -31,10 +31,9 @@ export default function Hero() {
           <motion.h1 {...fade(0.05)} className="hero-h1">
             {/* explicit spaces so the words stay apart when the mobile
                 stylesheet hides these breaks and lets the line wrap */}
-            Build reliable agents{' '}
+            <span className="hero-h1-light">Build</span> reliable agents{' '}
             <br />
-            <span className="hero-h1-dim">on a</span>{' '}
-            <span className="hero-h1-lychee">self-improving</span>{' '}
+            <span className="hero-h1-light">on a</span> self-improving{' '}
             <br />
             context layer{' '}
             <span className="hero-accent">you can trust.</span>

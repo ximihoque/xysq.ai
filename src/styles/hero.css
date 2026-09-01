@@ -84,31 +84,21 @@ h1.hero-h1 {
   margin-bottom: 34px;
 }
 
-/* the noun we own, in the problem/contrast colour so it reads first */
-.hero-h1-lychee {
-  color: var(--lychee);
-}
-
 .hero-mark {
   display: flex;
   justify-content: center;
   margin-bottom: 18px;
 }
 
-/* the two nouns carry full text colour: white on dark, near-black on light */
-.hero-h1-strong {
-  color: var(--paper);
+/* the connectives sit a weight below the nouns, so the line has rhythm
+   without a second colour doing the work */
+.hero-h1-light {
+  font-weight: 300;
 }
 
 /* single flat accent on the differentiator word — no glow */
 .hero-accent {
   color: var(--cyan);
-}
-
-/* "your AI acts on." - same size as the rest, just dimmed, so the weight
-   lands on "The trust layer" */
-.hero-h1-dim {
-  color: var(--silver);
 }
 
 /* the engine name pops to full text color (white on dark, near-black on light) */
