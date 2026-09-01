@@ -1,0 +1,74 @@
+/* sources → layer → agents, one quiet row under the headline */
+
+.hf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 34px auto 0;
+}
+
+.hf-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hf-plate {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--silver);
+}
+
+/* the agents are the outcome, so they carry the accent */
+.hf-plate.is-agent { color: var(--cyan); }
+
+/* a hairline that fades toward the middle, so the row reads as flow without
+   drawing an arrowhead */
+.hf-link {
+  width: 46px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--line) 30%, var(--line) 70%, transparent);
+}
+
+.hf-core {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 8px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 32%, transparent);
+  border-radius: 999px;
+  background: var(--cyan-dim);
+}
+
+.hf-core-plate { display: grid; place-items: center; }
+
+.hf-core-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .hf { gap: 8px; margin-top: 28px; }
+  .hf-row { gap: 6px; }
+  .hf-plate { width: 30px; height: 30px; border-radius: 8px; }
+  .hf-plate svg { width: 14px; height: 14px; }
+  /* three a side does not fit 342px of content width; two still reads as
+     "several things in, several agents out" */
+  .hf-row li:nth-child(3) { display: none; }
+  .hf-link { width: 12px; }
+  .hf-core { padding: 5px 10px 5px 6px; gap: 6px; }
+  .hf-core-plate svg { width: 18px; height: 24px; }
+  .hf-core-name { font-size: 0.56rem; letter-spacing: 0.04em; }
+}

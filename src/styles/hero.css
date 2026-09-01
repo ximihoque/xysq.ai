@@ -327,6 +327,16 @@ h1.hero-h1 {
 
 /* ── Mobile ── */
 @media (max-width: 720px) {
+  /* the forced breaks are tuned for the desktop measure; at 390px they push
+     the longest line past the viewport. Let it wrap naturally instead of
+     shrinking the type to fit a break that no longer helps. */
+  h1.hero-h1 br { display: none; }
+
+  h1.hero-h1 {
+    font-size: clamp(1.9rem, 8.4vw, 2.4rem);
+    text-wrap: balance;
+  }
+
   #hero {
     min-height: auto;
     padding-top: 96px;
@@ -363,63 +373,6 @@ h1.hero-h1 {
   color: var(--cyan);
   vertical-align: -3px;
   margin-right: 8px;
-}
-
-/* the headline's three claims. Left-aligned inside a centred row so the
-   text has an edge to sit against; three centred blocks read as a slide. */
-.hero-pillars {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 30px;
-  width: 100%;
-  max-width: 880px;
-  margin: 36px auto 4px;
-  padding: 0;
-  text-align: left;
-}
-
-.hero-pillar {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.hero-pillar-ico {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--cyan);
-}
-
-.hero-pillar-h {
-  display: block;
-  font-size: 0.92rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--paper);
-  margin-bottom: 3px;
-}
-
-.hero-pillar-p {
-  display: block;
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: var(--silver);
-}
-
-@media (max-width: 860px) {
-  .hero-pillars {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    max-width: 420px;
-    margin-top: 28px;
-  }
 }
 
 /* the marquee runs edge to edge, so it needs to escape the centred column */

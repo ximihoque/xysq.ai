@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { ChevronDown, Quote, RefreshCcw, ShieldCheck } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
+import HeroFlow from './HeroFlow'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroStage from './HeroStage'
 import '../styles/hero.css'
@@ -29,39 +30,19 @@ export default function Hero() {
           </motion.div>
 
           <motion.h1 {...fade(0.05)} className="hero-h1">
-            Build reliable agents
+            {/* explicit spaces so the words stay apart when the mobile
+                stylesheet hides these breaks and lets the line wrap */}
+            Build reliable agents{' '}
             <br />
-            on a self-improving
+            on a self-improving{' '}
             <br />
             <span className="hero-accent">context layer you can trust.</span>
           </motion.h1>
 
-          {/* the headline's three claims, each with the one line that backs
-              it. Icon plates use the house idiom: 30px square, hairline
-              border, surface fill, teal glyph. */}
-          <motion.ul {...fade(0.18)} className="hero-pillars">
-            <li className="hero-pillar">
-              <span className="hero-pillar-ico"><Quote size={15} strokeWidth={1.8} /></span>
-              <span>
-                <span className="hero-pillar-h">Grounded</span>
-                <span className="hero-pillar-p">Every answer names its source.</span>
-              </span>
-            </li>
-            <li className="hero-pillar">
-              <span className="hero-pillar-ico"><RefreshCcw size={15} strokeWidth={1.8} /></span>
-              <span>
-                <span className="hero-pillar-h">Self-improving</span>
-                <span className="hero-pillar-p">Correct it once. It holds.</span>
-              </span>
-            </li>
-            <li className="hero-pillar">
-              <span className="hero-pillar-ico"><ShieldCheck size={15} strokeWidth={1.8} /></span>
-              <span>
-                <span className="hero-pillar-h">Governed</span>
-                <span className="hero-pillar-p">You decide what each agent reads.</span>
-              </span>
-            </li>
-          </motion.ul>
+
+          <motion.div {...fade(0.18)}>
+            <HeroFlow />
+          </motion.div>
 
           <motion.div {...fade(0.25)} className="hero-btns">
             <motion.a
