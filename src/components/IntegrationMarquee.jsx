@@ -16,6 +16,8 @@ const ITEMS = [
   { name: 'Hermes Agent' },
   { name: 'Python client', mark: 'python' },
   { name: 'MCP', mark: 'mcp' },
+  { name: 'Shopify', mark: 'shopify' },
+  { name: 'Freshdesk' },
   { name: 'Gmail', mark: 'gmail' },
   { name: 'Slack', mark: 'slack' },
   { name: 'WhatsApp', mark: 'whatsapp' },
@@ -50,7 +52,7 @@ function Mark({ id }) {
 export default function IntegrationMarquee() {
   return (
     <div className="im">
-      <p className="im-label">Integrates with</p>
+      <p className="im-label">Integrates with your existing stack</p>
 
       {/* the row is rendered twice; the track scrolls exactly one copy's width
           so the seam never shows. aria-hidden on the clone keeps it out of the

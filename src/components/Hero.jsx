@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Brain, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroStage from './HeroStage'
@@ -29,20 +29,13 @@ export default function Hero() {
           </motion.div>
 
           <motion.h1 {...fade(0.05)} className="hero-h1">
-            <span className="hero-h1-lychee">Context Layer</span>
+            <span className="hero-h1-strong">Build reliable agents</span>
             <br />
-            <span className="hero-h1-dim">your </span>
-            <span className="hero-h1-strong">AI agents</span>
-            <span className="hero-h1-dim"> and </span>
-            <span className="hero-h1-strong">teams</span>
+            <span className="hero-h1-dim">on a self-improving</span>
             <br />
-            <span className="hero-accent">can trust.</span>
+            <span className="hero-h1-lychee">context layer</span>
+            <span className="hero-accent"> you can trust.</span>
           </motion.h1>
-
-          <motion.p {...fade(0.15)} className="hero-sub">
-            <Brain size={17} strokeWidth={1.8} className="hero-sub-ico" aria-hidden="true" />
-            Self-improving memory engine that adapts to your domain.
-          </motion.p>
 
           <motion.div {...fade(0.25)} className="hero-btns">
             <motion.a
