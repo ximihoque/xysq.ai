@@ -21,12 +21,12 @@
   color: var(--paper);
 }
 
-.as-bolt { color: var(--cyan); fill: var(--cyan); }
+.as-bolt { color: var(--lychee); fill: var(--lychee); }
 
 /* the number is the promise, so it gets the accent and a size up */
 .as-three {
   font-size: 1.6em;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.8;
   margin: 0 2px;
   color: var(--cyan);
