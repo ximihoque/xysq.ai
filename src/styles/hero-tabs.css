@@ -73,7 +73,7 @@
 
 .byo-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr));
   gap: 10px;
   margin: 0 0 22px;
   padding: 0;
@@ -106,44 +106,6 @@
 .byo-mark svg { width: 20px; height: 20px; }
 .byo-mark b { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 500; color: var(--silver); }
 
-.byo-flow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 22px;
-}
-
-.byo-node {
-  flex: none;
-  padding: 9px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--bg);
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: var(--paper);
-}
-.byo-node.is-us { border-color: color-mix(in srgb, var(--cyan) 40%, transparent); background: var(--cyan-dim); }
-
-.byo-arrow {
-  flex: 1;
-  position: relative;
-  height: 1px;
-  background: var(--line);
-  text-align: center;
-}
-.byo-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; border: 3.5px solid transparent; border-left: 6px solid var(--silver); }
-.byo-arrow i {
-  position: relative;
-  top: -0.9em;
-  padding: 0 8px;
-  background: var(--surface);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.06em;
-  font-style: normal;
-  color: var(--silver);
-}
 
 .byo-code {
   margin: 0;
@@ -158,11 +120,48 @@
   overflow-x: auto;
 }
 
+/* push → retrieve → reason, or remember → recall → correct */
+.byo-loop {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.byo-step { position: relative; display: flex; gap: 11px; align-items: flex-start; }
+
+.byo-step-ico {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--cyan);
+}
+
+.byo-step-body { display: flex; flex-direction: column; gap: 3px; padding-right: 18px; }
+.byo-step-body b { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; color: var(--paper); }
+.byo-step-body span { font-size: 0.8rem; line-height: 1.5; color: var(--silver); }
+
+.byo-step-arrow {
+  position: absolute;
+  right: -14px;
+  top: 12px;
+  width: 10px;
+  height: 1px;
+  background: var(--line);
+}
+.byo-step-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; border: 3.5px solid transparent; border-left: 5px solid var(--silver); }
+
 @media (max-width: 1024px) { .byo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 720px) {
   .byo { padding: 16px; }
   .byo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .byo-flow { flex-direction: column; align-items: stretch; gap: 6px; }
-  .byo-arrow { display: none; }
-  .byo-node { text-align: center; }
+  .byo-loop { grid-template-columns: 1fr; gap: 14px; }
+  .byo-step-arrow { display: none; }
 }

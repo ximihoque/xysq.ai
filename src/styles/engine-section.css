@@ -1,4 +1,4 @@
-/* ── Engine section (Section 4): the closing argument ── */
+/* ── Engine section: the closing argument, centred, three cards, a preview ── */
 
 .eng-section {
   position: relative;
@@ -6,8 +6,8 @@
   z-index: 1;
 }
 
-/* it lands last now, so it needs a surface of its own. hairlines top and
-   bottom instead of a fill: a filled band fights the NeuralBackground. */
+/* hairlines top and bottom instead of a fill: a filled band fights the
+   starfield behind it */
 .eng-section--closer {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -15,41 +15,16 @@
 }
 
 @media (max-width: 900px) {
-  .eng-section {
-    padding-top: 56px;
-    padding-bottom: 56px;
-  }
+  .eng-section { padding-top: 56px; padding-bottom: 56px; }
 }
 
 .eng-inner {
   max-width: 1240px;
   width: 100%;
   margin: 0 auto;
-  display: grid;
-  /* visual left, text right */
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: clamp(40px, 6vw, 88px);
-  align-items: center;
-}
-
-@media (max-width: 980px) {
-  .eng-inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 56px;
-  }
-
-  /* text first on small screens */
-  .eng-visual {
-    order: 2;
-  }
-}
-
-/* ── Left: text ── */
-.eng-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 600px;
+  align-items: center;
 }
 
 .eng-headline {
@@ -59,126 +34,146 @@
   line-height: 1.05;
   letter-spacing: -0.025em;
   color: var(--paper);
-  margin-bottom: 18px;
+  margin: 0 0 16px;
+  text-align: center;
+  max-width: 22ch;
 }
 
-.eng-headline em {
-  font-style: normal;
-  color: var(--silver);
-}
+.eng-headline em { font-style: normal; color: var(--silver); }
+[data-theme="light"] .eng-headline em { color: #8f8f8f; }
 
-/* the pivot words: improvement in the accent green, the failure mode in lychee */
-.eng-hl-improves {
-  color: var(--cyan);
-}
-
-.eng-hl-accident {
-  color: var(--lychee);
-}
+.eng-hl-improves { color: var(--cyan); }
+.eng-hl-accident { color: var(--lychee); }
 
 .eng-deck {
   font-family: 'Outfit', sans-serif;
   font-size: clamp(0.95rem, 1.15vw, 1.05rem);
-  font-weight: 400;
   color: var(--silver);
   line-height: 1.62;
-  margin-bottom: 30px;
+  margin: 0 0 40px;
+  text-align: center;
+  max-width: 58ch;
 }
 
-/* ── Capability rows ── */
-.eng-list {
+/* ── the three cards ── */
+
+.eng-cards {
   list-style: none;
-  margin: 0 0 32px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin: 0;
   padding: 0;
+}
+
+@media (max-width: 900px) {
+  .eng-cards { grid-template-columns: 1fr; }
+}
+
+.eng-card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.eng-item {
-  display: flex;
-  align-items: flex-start;
   gap: 12px;
+  padding: 24px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
 }
 
-.eng-item-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  margin-top: 1px;
-  border-radius: 8px;
+.eng-card-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
   border: 1px solid var(--line);
+  border-radius: 8px;
   background: var(--surface);
   color: var(--cyan);
 }
 
-.eng-item-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.eng-item-label {
+.eng-card-label {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.92rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--paper);
 }
 
-.eng-item-text {
+.eng-card-text {
   font-family: 'Outfit', sans-serif;
   font-size: 0.86rem;
   line-height: 1.55;
   color: var(--silver);
 }
 
-/* ── CTA: whitepaper link ── */
-.eng-cta {
+/* ── the two doors ── */
+
+.eng-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.eng-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  min-width: 176px;
+  padding: 11px 20px;
+  border-radius: 8px;
+  border: 0;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
   font-weight: 500;
+  font-size: 0.9rem;
   letter-spacing: -0.01em;
-  color: var(--paper);
   text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.eng-btn--main { background: var(--paper); color: var(--bg); }
+.eng-btn--main:hover { opacity: 0.86; }
+[data-theme="light"] .eng-btn--main { background: #171717; color: #ffffff; }
+
+.eng-btn--alt {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--silver) 60%, transparent);
+}
+.eng-btn--alt:hover { border-color: #3a3a3a; background: var(--surface); }
+[data-theme="light"] .eng-btn--alt:hover { border-color: #d4d4d4; background: var(--surface2); }
+
+.eng-btn-arrow { transition: transform 0.2s ease; }
+.eng-btn--alt:hover .eng-btn-arrow { transform: translateX(2px); }
+
+/* ── the preview ── */
+
+.eng-preview { width: 100%; overflow: hidden; }
+
+.eng-preview-in {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.eng-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 10px 18px;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  color: var(--silver);
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
 }
-
-.eng-cta:hover {
-  border-color: #3a3a3a;
-  background: var(--surface);
-}
-
-[data-theme="light"] .eng-cta:hover {
-  border-color: #d4d4d4;
-  background: var(--surface2);
-}
-
-.eng-cta-arrow {
-  transition: transform 0.2s ease;
-}
-
-.eng-cta:hover .eng-cta-arrow {
-  transform: translateX(2px);
-}
-
-/* ── Right: the correction figure (shared with the whitepaper) ── */
-.eng-visual {
-  display: flex;
-  justify-content: center;
-}
-
-.eng-visual .wp-fig {
-  width: 100%;
-  max-width: 540px;
-  margin: 0;
-}
+.eng-close:hover { color: var(--paper); border-color: #3a3a3a; }
+[data-theme="light"] .eng-close:hover { border-color: #d4d4d4; }

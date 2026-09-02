@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion'
-import { RefreshCw, GitBranch, Layers } from 'lucide-react'
-import CorrectionFigure from './CorrectionFigure'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { RefreshCw, GitBranch, Layers, Play, X } from 'lucide-react'
+import HeroStage from './HeroStage'
 import '../styles/engine-section.css'
 
 const fade = (delay = 0) => ({
@@ -10,84 +11,73 @@ const fade = (delay = 0) => ({
   transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay },
 })
 
-/* the closer names the three words the rest of the page has been earning.
-   they appear here and nowhere else, next to the figure that proves them.
-   one line each: the figure is the argument, the words are the labels. */
-const rows = [
-  {
-    icon: GitBranch,
-    label: 'Provable',
-    body: 'Every fact traces back to the source it came from.',
-  },
-  {
-    icon: Layers,
-    label: 'Reconciled',
-    body: 'Two facts disagree, the old one closes. You never serve both.',
-  },
-  {
-    icon: RefreshCw,
-    label: 'Self-improving',
-    body: 'Every correction is one more thing the next answer gets right.',
-  },
+// the three words the rest of the page has been earning, each as a card
+const CARDS = [
+  { icon: GitBranch, label: 'Provable', body: 'Every fact traces back to the document it came from, and you can open it.' },
+  { icon: Layers, label: 'Reconciled', body: 'Two facts disagree, the old one closes. You never serve both, and the old one stays readable.' },
+  { icon: RefreshCw, label: 'Self-improving', body: 'Every correction is one more thing the next answer gets right. Fix it once.' },
 ]
 
 export default function EngineSection() {
+  const [open, setOpen] = useState(false)
+
   return (
     <section className="eng-section eng-section--closer" id="engine">
       <div className="eng-inner">
-        {/* the correction walked end to end — same figure as the whitepaper */}
-        <motion.div className="eng-visual" {...fade(0.15)}>
-          <CorrectionFigure />
-        </motion.div>
+        <motion.h2 className="eng-headline" {...fade(0)}>
+          Memory that <span className="eng-hl-improves">improves</span> on command,{' '}
+          <em>not by <span className="eng-hl-accident">accident</span>.</em>
+        </motion.h2>
 
-        <motion.div className="eng-text" {...fade(0)}>
-          <h2 className="eng-headline">
-            Memory that <span className="eng-hl-improves">improves</span><br />
-            on command,<br />
-            <em>not by <span className="eng-hl-accident">accident</span>.</em>
-          </h2>
+        <motion.p className="eng-deck" {...fade(0.08)}>
+          Most memory stacks store a correction and hope retrieval sorts it out
+          later. The xysq Memory Engine applies it as an edit with a blast
+          radius, and you see it on the next query.
+        </motion.p>
 
-          <p className="eng-deck">
-            Most memory stacks store a correction and hope retrieval sorts it
-            out later. The xysq Memory Engine applies it as an edit with a
-            blast radius, and you see it on the next query.
-          </p>
+        <ul className="eng-cards">
+          {CARDS.map(({ icon: Icon, label, body }, i) => (
+            <motion.li key={label} className="eng-card" {...fade(0.15 + i * 0.08)}>
+              <span className="eng-card-icon" aria-hidden="true"><Icon size={16} strokeWidth={1.8} /></span>
+              <span className="eng-card-label">{label}</span>
+              <span className="eng-card-text">{body}</span>
+            </motion.li>
+          ))}
+        </ul>
 
-          <ul className="eng-list">
-            {rows.map(({ icon: Icon, label, body }, i) => (
-              <motion.li
-                key={label}
-                className="eng-item"
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.55, ease: 'easeOut', delay: 0.15 + i * 0.08 }}
-              >
-                <span className="eng-item-icon" aria-hidden="true">
-                  <Icon size={15} strokeWidth={1.8} />
-                </span>
-                <span className="eng-item-body">
-                  <span className="eng-item-label">{label}</span>
-                  <span className="eng-item-text">{body}</span>
-                </span>
-              </motion.li>
-            ))}
-          </ul>
-
-          <motion.a
-            href="/whitepaper"
-            className="eng-cta"
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.5 }}
-            whileHover={{ x: 2 }}
-          >
+        <motion.div className="eng-ctas" {...fade(0.4)}>
+          <button type="button" className="eng-btn eng-btn--main" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="engine-preview">
+            {open ? <X size={15} strokeWidth={2} /> : <Play size={15} strokeWidth={2} />}
+            {open ? 'Close preview' : 'Quick preview'}
+          </button>
+          <a href="/whitepaper" className="eng-btn eng-btn--alt">
             Read the whitepaper
-            <span className="eng-cta-arrow">→</span>
-          </motion.a>
+            <span className="eng-btn-arrow">→</span>
+          </a>
         </motion.div>
 
+        {/* the workspace walkthrough, on demand. Keyed on open so a second
+            look starts the walkthrough from the top. */}
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              id="engine-preview"
+              className="eng-preview"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="eng-preview-in">
+                <HeroStage key="preview" />
+                <button type="button" className="eng-close" onClick={() => setOpen(false)}>
+                  <X size={13} strokeWidth={2} />
+                  Close preview
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )

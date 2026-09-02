@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import HeroStage from '../HeroStage'
+import { Upload, Search, Sparkles, BookmarkPlus, History, Wrench } from 'lucide-react'
 import HeroChat from './HeroChat'
 import Scenario from './Scenario'
 import { cx, growth } from './scenarios'
@@ -9,7 +9,7 @@ import '../../styles/hero-tabs.css'
 const TABS = [
   { id: 'cx', label: 'CX' },
   { id: 'growth', label: 'Growth' },
-  { id: 'custom', label: 'Custom' },
+  { id: 'byo', label: 'Bring your own agent' },
 ]
 
 const STACK = [
@@ -19,55 +19,99 @@ const STACK = [
   { name: 'Instagram', mark: 'instagram' },
 ]
 
-const CUSTOM = [
+// Two audiences, kept apart on purpose: people using AI tools together, and
+// builders wiring memory into a workflow. Same layer, different door.
+const BYO = [
   {
-    id: 'byo',
-    title: 'Bring your own agent',
-    blurb: 'Keep the agent you already run. It asks xysq before it answers, and every reply comes back naming the document it came from.',
+    id: 'teams',
+    title: 'Teams',
+    blurb: 'One shared context for the whole team. Save a decision from Claude, ask about it from ChatGPT, get the same answer with the same source.',
   },
   {
-    id: 'core',
-    title: 'Use the core context layer',
-    blurb: 'The workspace itself: documents in, one page out, every line traceable, every change with a name on it.',
+    id: 'flows',
+    title: 'Agentic workflows',
+    blurb: 'Long-term memory for the workflows you already run. Each run picks up where the last one left off, and every fact it carries names its source.',
   },
 ]
 
-const AGENTS = [
+const TOOLS = [
   { name: 'Claude', mark: 'claude' },
   { name: 'ChatGPT' },
   { name: 'Hermes' },
   { name: 'OpenClaw' },
-  { name: 'ADK' },
-  { name: 'CrewAI', mark: 'crewai' },
+]
+
+const FRAMEWORKS = [
   { name: 'n8n', mark: 'n8n' },
+  { name: 'CrewAI', mark: 'crewai' },
+  { name: 'LangChain', mark: 'langchain' },
+  { name: 'LangGraph', mark: 'langgraph' },
+  { name: 'ADK' },
+]
+
+const TEAM_LOOP = [
+  { icon: Upload, label: 'Push', text: 'Save a decision from whichever tool you are in. It lands in the team’s shared context.' },
+  { icon: Search, label: 'Retrieve', text: 'Ask from any other tool. Same answer, same source, nothing re-explained.' },
+  { icon: Sparkles, label: 'Reason', text: 'Every tool reasons over the same facts, so the team stops contradicting itself.' },
+]
+
+const FLOW_LOOP = [
+  { icon: BookmarkPlus, label: 'Remember', text: 'Each run writes what it learned, with the document it learned it from.' },
+  { icon: History, label: 'Recall', text: 'The next run reads it before acting, instead of starting from zero.' },
+  { icon: Wrench, label: 'Correct', text: 'Fix a fact once and every run after gets it right.' },
 ]
 
 const Mark = ({ id }) => (
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d={BRAND_PATHS[id]} fill="currentColor" /></svg>
 )
 
-function BringYourOwn() {
+function Tiles({ items }) {
+  return (
+    <ul className="byo-grid" style={{ '--n': items.length }}>
+      {items.map((a) => (
+        <li key={a.name} className="byo-tile">
+          <span className="byo-mark">{a.mark ? <Mark id={a.mark} /> : <b>{a.name[0]}</b>}</span>
+          {a.name}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function Loop({ steps }) {
+  return (
+    <ol className="byo-loop">
+      {steps.map(({ icon: Icon, label, text }, i) => (
+        <li key={label} className="byo-step">
+          <span className="byo-step-ico"><Icon size={15} strokeWidth={1.8} /></span>
+          <span className="byo-step-body">
+            <b>{label}</b>
+            <span>{text}</span>
+          </span>
+          {i < steps.length - 1 && <span className="byo-step-arrow" aria-hidden="true" />}
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+function TeamsPane() {
   return (
     <div className="hs-frame byo">
       <p className="hs-eyebrow">Works with</p>
-      <ul className="byo-grid">
-        {AGENTS.map((a) => (
-          <li key={a.name} className="byo-tile">
-            <span className="byo-mark">{a.mark ? <Mark id={a.mark} /> : <b>{a.name[0]}</b>}</span>
-            {a.name}
-          </li>
-        ))}
-      </ul>
+      <Tiles items={TOOLS} />
+      <Loop steps={TEAM_LOOP} />
+    </div>
+  )
+}
 
-      <div className="byo-flow" aria-label="Your agent asks xysq, xysq answers with sources">
-        <span className="byo-node">Your agent</span>
-        <span className="byo-arrow"><i>asks</i></span>
-        <span className="byo-node is-us">xysq context layer</span>
-        <span className="byo-arrow"><i>answers, with sources</i></span>
-        <span className="byo-node">Your customer</span>
-      </div>
-
-      <pre className="byo-code"><code>{`ctx = xysq.vaults.pull("acme", "what is our refund window?")
+function FlowsPane() {
+  return (
+    <div className="hs-frame byo">
+      <p className="hs-eyebrow">Works with</p>
+      <Tiles items={FRAMEWORKS} />
+      <Loop steps={FLOW_LOOP} />
+      <pre className="byo-code"><code>{`ctx = xysq.vaults.pull("acme", "what did the last run decide about refunds?")
 for item in ctx:
     print(item.content, "<-", item.source)   # every line names its document`}</code></pre>
     </div>
@@ -76,8 +120,8 @@ for item in ctx:
 
 export default function HeroTabs() {
   const [tab, setTab] = useState('cx')
-  const [custom, setCustom] = useState(0)
-  const agentTab = tab !== 'custom'
+  const [byo, setByo] = useState(0)
+  const agentTab = tab !== 'byo'
 
   return (
     <div className="ht">
@@ -101,14 +145,13 @@ export default function HeroTabs() {
         )}
       </div>
 
-      {/* keyed so a tab switch remounts and starts that tab's own walkthrough */}
       {tab === 'cx' && <HeroChat key="cx" sc={cx} />}
       {tab === 'growth' && <HeroChat key="growth" sc={growth} />}
-      {tab === 'custom' && (
-        <div className="hs hs--split" key="custom">
-          <Scenario items={CUSTOM} active={custom} onPick={setCustom} />
+      {tab === 'byo' && (
+        <div className="hs hs--split" key="byo">
+          <Scenario items={BYO} active={byo} onPick={setByo} />
           <div className="hs-main">
-            {custom === 0 ? <BringYourOwn /> : <HeroStage key="core" />}
+            {byo === 0 ? <TeamsPane /> : <FlowsPane />}
           </div>
         </div>
       )}
