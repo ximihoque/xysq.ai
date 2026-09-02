@@ -23,7 +23,16 @@
 
 .as-bolt { color: var(--lychee); fill: var(--lychee); }
 
-/* the number is the promise, so it gets the accent and a size up */
+/* the old answer, struck in the problem colour, sits right before the new one */
+.as-was {
+  font-weight: 400;
+  color: var(--silver);
+  text-decoration: line-through;
+  text-decoration-color: var(--lychee);
+  text-decoration-thickness: 2px;
+}
+
+/* the number is the promise, so it gets a size up */
 .as-three {
   font-size: 1.25em;
   font-weight: 400;

@@ -21,7 +21,7 @@ export default function AgentSignup() {
     <form className="as" onSubmit={(e) => e.preventDefault()} aria-label="Get your agent">
       <p className="as-title">
         <Zap size={20} strokeWidth={2.2} className="as-bolt" aria-hidden="true" />
-        Get your agent in <b className="as-three">3</b> mins
+        Get your agent in <s className="as-was">30 days</s> <b className="as-three">3</b> mins
       </p>
       <div className="as-pill">
         <label className="as-cc">
