@@ -42,6 +42,7 @@
 .eng-headline em { font-style: normal; color: var(--silver); }
 [data-theme="light"] .eng-headline em { color: #8f8f8f; }
 
+.eng-light { font-weight: 300; }
 .eng-hl-improves { color: var(--cyan); }
 .eng-hl-accident { color: var(--lychee); }
 
@@ -60,14 +61,18 @@
 .eng-cards {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .eng-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
   .eng-cards { grid-template-columns: 1fr; }
 }
 
@@ -75,7 +80,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 24px;
+  padding: 22px;
   border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
   border-radius: 20px;
 }

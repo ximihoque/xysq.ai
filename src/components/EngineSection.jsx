@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { RefreshCw, GitBranch, Layers, Play, X } from 'lucide-react'
+import { RefreshCw, GitBranch, Layers, ShieldCheck, Play, X } from 'lucide-react'
 import HeroStage from './HeroStage'
 import '../styles/engine-section.css'
 
@@ -15,6 +15,7 @@ const fade = (delay = 0) => ({
 const CARDS = [
   { icon: GitBranch, label: 'Provable', body: 'Every fact traces back to the document it came from, and you can open it.' },
   { icon: Layers, label: 'Reconciled', body: 'Two facts disagree, the old one closes. You never serve both, and the old one stays readable.' },
+  { icon: ShieldCheck, label: 'Governed', body: 'You decide which people and which agents can read what. Every answer stays inside those limits.' },
   { icon: RefreshCw, label: 'Self-improving', body: 'Every correction is one more thing the next answer gets right. Fix it once.' },
 ]
 
@@ -25,14 +26,16 @@ export default function EngineSection() {
     <section className="eng-section eng-section--closer" id="engine">
       <div className="eng-inner">
         <motion.h2 className="eng-headline" {...fade(0)}>
-          Memory that <span className="eng-hl-improves">improves</span> on command,{' '}
+          <span className="eng-light">Memory</span>{' '}
+          <span className="eng-hl-improves">improves</span>{' '}
+          <span className="eng-light">on command,</span>{' '}
           <em>not by <span className="eng-hl-accident">accident</span>.</em>
         </motion.h2>
 
         <motion.p className="eng-deck" {...fade(0.08)}>
-          Most memory stacks store a correction and hope retrieval sorts it out
-          later. The xysq Memory Engine applies it as an edit with a blast
-          radius, and you see it on the next query.
+          Fix a fact once and every answer after that uses the fix. The old one
+          is closed, not lost, and you can always see where an answer came
+          from.
         </motion.p>
 
         <ul className="eng-cards">
