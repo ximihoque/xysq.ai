@@ -4,9 +4,11 @@
 .hc {
   position: relative;
   display: grid;
-  grid-template-columns: 250px 340px minmax(0, 1fr);
-  gap: 26px;
-  height: 498px;
+  grid-template-columns: 250px 332px minmax(0, 1fr);
+  gap: 28px;
+  /* a phone is about 1:2.1; the old 340x498 was nearly square and read as a
+     card with a chat in it */
+  height: 720px;
   padding: 20px 22px;
 }
 
@@ -32,21 +34,50 @@
 /* ── the phone ── */
 
 .ph {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  border: 1px solid color-mix(in srgb, var(--silver) 45%, transparent);
-  border-radius: 30px;
+  border: 1px solid color-mix(in srgb, var(--silver) 55%, transparent);
+  border-radius: 44px;
   background: var(--bg);
   overflow: hidden;
-  box-shadow: inset 0 0 0 5px var(--surface);
+  /* bezel: a dark ring inside the outline, like the real thing */
+  box-shadow: inset 0 0 0 7px #0b0d12, inset 0 0 0 8px color-mix(in srgb, var(--silver) 25%, transparent);
+}
+[data-theme='light'] .ph { box-shadow: inset 0 0 0 7px #1a1d24, inset 0 0 0 8px color-mix(in srgb, var(--silver) 25%, transparent); }
+
+/* dynamic island */
+.ph::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  width: 94px;
+  height: 27px;
+  border-radius: 999px;
+  background: #0b0d12;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+/* home indicator */
+.ph::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  width: 118px;
+  height: 4px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+  transform: translateX(-50%);
 }
 
 .ph-status {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 22px 4px;
+  padding: 20px 30px 6px;
   font-size: 0.74rem;
   font-weight: 600;
   color: var(--paper);
@@ -61,7 +92,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 14px 10px;
+  padding: 6px 18px 10px;
   border-bottom: 1px solid var(--line);
 }
 .ph-back { color: var(--cyan); flex: none; }
@@ -85,7 +116,7 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: 12px 12px 10px;
+  padding: 12px 16px 10px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -165,7 +196,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 12px 14px;
+  padding: 8px 16px 26px;
   border-top: 1px solid var(--line);
   color: var(--silver);
 }
@@ -201,7 +232,7 @@
 /* ── tablet: lose the scenario column ── */
 
 @media (max-width: 1024px) {
-  .hc { grid-template-columns: 300px minmax(0, 1fr); gap: 18px; }
+  .hc { grid-template-columns: 300px minmax(0, 1fr); gap: 18px; height: 660px; }
   .hc-scen { display: none; }
 }
 
@@ -213,7 +244,9 @@
   .hc-frame .hs-top { display: none; }
   .hc { display: block; padding: 0; height: 564px; }
   .ph { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .ph::before, .ph::after { display: none; }
   .ph-status { display: none; }
+  .ph-compose { padding-bottom: 12px; }
   .ph-bub { font-size: 0.86rem; }
 
   .hc-why {
