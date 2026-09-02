@@ -4,31 +4,12 @@
 .hc {
   position: relative;
   display: grid;
-  grid-template-columns: 250px 332px minmax(0, 1fr);
+  grid-template-columns: 332px minmax(0, 1fr);
   gap: 28px;
   /* a phone is about 1:2.1; the old 340x498 was nearly square and read as a
      card with a chat in it */
   height: 720px;
   padding: 20px 22px;
-}
-
-/* ── scenario column ── */
-
-.hc-scen { min-width: 0; padding-right: 6px; border-right: 1px solid var(--line); }
-
-.hc-scen-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  color: var(--paper);
-  margin: 0 0 8px;
-}
-
-.hc-scen-blurb {
-  font-size: 0.84rem;
-  line-height: 1.55;
-  color: var(--silver);
-  margin: 0;
 }
 
 /* ── the phone ── */
@@ -233,15 +214,11 @@
 
 @media (max-width: 1024px) {
   .hc { grid-template-columns: 300px minmax(0, 1fr); gap: 18px; height: 660px; }
-  .hc-scen { display: none; }
 }
 
 /* ── mobile: the frame is the phone, reasoning is a sheet ── */
 
 @media (max-width: 720px) {
-  /* the frame IS the phone here, so the window's own header would name the
-     store twice, once above the phone's header */
-  .hc-frame .hs-top { display: none; }
   .hc { display: block; padding: 0; height: 564px; }
   .ph { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
   .ph::before, .ph::after { display: none; }

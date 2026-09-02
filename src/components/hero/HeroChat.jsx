@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { FileText, ShoppingCart, RotateCcw, Pause, Play, ChevronLeft, Plus, Mic, ArrowUp } from 'lucide-react'
 import { MASKED, plain } from './scenarios'
+import Scenario from './Scenario'
 import '../../styles/hero-chat.css'
 
 // A phone on the left, the documents behind the conversation on the right.
@@ -90,22 +91,12 @@ export default function HeroChat({ sc }) {
   const sheetOpen = mobile && (openSrc || selected)
 
   return (
-    <div className="hs">
+    <div className="hs hs--split">
+      <Scenario items={[sc.scenario]} active={0} />
+
+      <div className="hs-main">
       <div className="hs-frame hc-frame">
-        <div className="hs-top">
-          <span className="hs-dot" aria-hidden="true" />
-          <span className="hs-ws">{sc.store}</span>
-          <span className="hs-top-spacer" />
-          <span className="hs-who" aria-hidden="true">{sc.initials}</span>
-        </div>
-
         <div className="hc">
-          <div className="hc-scen">
-            <p className="hs-eyebrow">Scenario</p>
-            <p className="hc-scen-title">{sc.scenario.title}</p>
-            <p className="hc-scen-blurb">{sc.scenario.blurb}</p>
-          </div>
-
           {/* ── the phone, from the shopper's side ── */}
           <div className="ph" onPointerDownCapture={takeOver}>
             <div className="ph-status" aria-hidden="true">
@@ -251,6 +242,7 @@ export default function HeroChat({ sc }) {
             {paused ? <Play size={12} strokeWidth={2} /> : <Pause size={12} strokeWidth={2} />}{paused ? 'Play' : 'Pause'}
           </button>
         )}
+      </div>
       </div>
     </div>
   )

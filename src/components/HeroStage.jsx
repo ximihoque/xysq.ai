@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { FileText, Layers, Activity, RotateCcw, Pause, Play, ChevronLeft } from 'lucide-react'
 import '../styles/hero-stage.css'
@@ -167,26 +167,28 @@ const WIDE = [1, 50, 50]
 // that shows the result: you click Pages while still looking at Sources, and
 // the swap lands after. Putting the target on the beat that already shows the
 // result makes the pointer click a thing that has already happened.
-const OFF = [50, 118]
+// pointer targets are element ids (data-t) plus a fractional offset inside
+// the element. They are measured at render time and projected through the
+// beat's camera, so they survive any width and any zoom.
 
 const STEPS = [
-  { view: 'sources', hold: 2800, cam: WIDE, cur: [58, 40],
+  { view: 'sources', hold: 2800, cam: WIDE, cur: ['list', 0.5, 0.4],
     cap: 'Your documents, kept exactly as they were written.' },
-  { view: 'sources', up: true, hold: 3600, cam: [1.22, 100, 0], cur: [93.7, 19.7],
+  { view: 'sources', up: true, hold: 3600, cam: [1.22, 100, 0], cur: ['up-bar', 0.5, 0.5],
     cap: 'Add one more.' },
-  { view: 'sources', added: true, hold: 3400, cam: WIDE, cur: [8.3, 19.9], tap: true,
+  { view: 'sources', added: true, hold: 3400, cam: WIDE, cur: ['nav-pages', 0.45, 0.5], tap: true,
     cap: 'Stored as written. We never edit your document.' },
-  { view: 'pages', added: true, hold: 3000, cam: WIDE, cur: [58.4, 19.9], tap: true,
+  { view: 'pages', added: true, hold: 3000, cam: WIDE, cur: ['page-row', 0.5, 0.5], tap: true,
     cap: 'It goes onto the page you already have, not a new one.' },
-  { view: 'page', added: true, hold: 3000, cam: WIDE, cur: [31.3, 25.7], tap: true,
+  { view: 'page', added: true, hold: 3000, cam: WIDE, cur: ['mark-b1', 0.5, 0.5], tap: true,
     cap: 'One page, written from four of them.' },
-  { view: 'page', added: true, cite: 'b1', hold: 4600, cam: [1.28, 0, 20], cur: [72, 46],
+  { view: 'page', added: true, cite: 'b1', hold: 4600, cam: [1.28, 0, 20], cur: ['doc', 0.85, 0.6],
     cap: 'Every line points back at the sentence it came from.' },
-  { view: 'page', added: true, log: true, hold: 3800, cam: [1.25, 100, 18], cur: [88.5, 21.7],
+  { view: 'page', added: true, log: true, hold: 3800, cam: [1.25, 100, 18], cur: ['act', 0.5, 0.25],
     cap: 'Every change, and who made it.' },
-  { view: 'page', added: true, log: true, sup: true, hold: 4400, cam: [1.32, 0, 14], cur: [46.6, 26.6],
+  { view: 'page', added: true, log: true, sup: true, hold: 4400, cam: [1.32, 0, 14], cur: ['line-b1', 0.55, 0.5],
     cap: 'The price changed, so the old one was closed. It is still there to read.' },
-  { view: 'page', added: true, log: true, sup: true, hold: null, cam: WIDE, cur: OFF,
+  { view: 'page', added: true, log: true, sup: true, hold: null, cam: WIDE, cur: null,
     cap: 'Your turn. Open anything.' },
 ]
 
@@ -217,7 +219,10 @@ export default function HeroStage() {
   const [nav, setNav] = useState(null)
   const [cite, setCite] = useState(null)
   const [tapping, setTapping] = useState(false)
+  const [cur, setCur] = useState(null) // px in frame space; null = off screen
   const timer = useRef(null)
+  const frameRef = useRef(null)
+  const winRef = useRef(null)
 
   const s = STEPS[step]
   const view = nav?.view ?? s.view
@@ -294,9 +299,35 @@ export default function HeroStage() {
   }
 
   const [scale, ox, oy] = done || reduce || !canZoom ? WIDE : (s.cam ?? WIDE)
-  // the pointer lives inside the zoomed layer so it tracks the content, and
-  // counter-scales so it stays one constant size however far we push in
-  const [cx, cy] = done || reduce ? OFF : (s.cur ?? OFF)
+
+  // Measure the target once the DOM has settled, in the window's UNSCALED
+  // coordinates (divide out whatever scale the previous beat left), then
+  // project through this beat's camera. The pointer then glides to where the
+  // element will be when the zoom lands, and the two arrive together.
+  useLayoutEffect(() => {
+    if (done || reduce || !s.cur) { setCur(null); return }
+    const [id, dx, dy] = s.cur
+    // the pane this target lives in may not be mounted yet: AnimatePresence
+    // waits for the old pane to exit first. Poll for up to ~40 frames rather
+    // than measuring once and leaving the pointer parked on the last beat.
+    let raf, tries = 0
+    const look = () => {
+      const f = frameRef.current, w = winRef.current
+      const t = f?.querySelector(`[data-t="${id}"]`)
+      if (!f || !w) return
+      if (!t) { if (++tries < 40) raf = requestAnimationFrame(look); return }
+      const W = w.getBoundingClientRect(), T = t.getBoundingClientRect()
+      const k = W.width / w.offsetWidth || 1
+      const ux = (T.left - W.left + T.width * dx) / k
+      const uy = (T.top - W.top + T.height * dy) / k
+      setCur({
+        x: ux * scale + ((1 - scale) * ox / 100) * w.offsetWidth,
+        y: uy * scale + ((1 - scale) * oy / 100) * w.offsetHeight,
+      })
+    }
+    raf = requestAnimationFrame(() => { raf = requestAnimationFrame(look) })
+    return () => cancelAnimationFrame(raf)
+  }, [step, done, reduce, scale, ox, oy, s.cur])
 
   const rows = s.added || done ? SOURCES : SOURCES.filter((r) => !r.fresh)
   const showLog = s.log || done
@@ -317,26 +348,16 @@ export default function HeroStage() {
 
   return (
     <div className="hs">
-      <div className="hs-frame">
-        <motion.div
-          className="hs-win"
-          style={{ transformOrigin: '0% 0%' }}
-          animate={{
-            scale,
-            x: `${(1 - scale) * ox}%`,
-            y: `${(1 - scale) * oy}%`,
-          }}
-          transition={{ duration: 1.35, ease: [0.4, 0, 0.2, 1] }}
-        >
+      <div className="hs-frame" ref={frameRef}>
         <motion.svg
           className="hs-cursor"
           viewBox="0 0 24 24"
           aria-hidden="true"
-          initial={{ left: `${OFF[0]}%`, top: `${OFF[1]}%` }}
+          initial={{ left: '50%', top: '118%' }}
           animate={{
-            left: `${cx}%`,
-            top: `${cy}%`,
-            scale: (tapping ? 0.84 : 1) / scale,
+            left: cur ? `${cur.x}px` : '50%',
+            top: cur ? `${cur.y}px` : '118%',
+            scale: tapping ? 0.84 : 1,
           }}
           transition={{
             left: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
@@ -352,6 +373,17 @@ export default function HeroStage() {
             strokeLinejoin="round"
           />
         </motion.svg>
+        <motion.div
+          ref={winRef}
+          className="hs-win"
+          style={{ transformOrigin: '0% 0%' }}
+          animate={{
+            scale,
+            x: `${(1 - scale) * ox}%`,
+            y: `${(1 - scale) * oy}%`,
+          }}
+          transition={{ duration: 1.35, ease: [0.4, 0, 0.2, 1] }}
+        >
 
         <div className="hs-top">
           <span className="hs-dot" aria-hidden="true" />
@@ -373,6 +405,7 @@ export default function HeroStage() {
             </button>
             <button
               type="button"
+              data-t="nav-pages"
               className={`hs-nav ${view === 'pages' || view === 'page' ? 'is-on' : ''}`}
               onClick={() => go('pages')}
             >
@@ -397,7 +430,7 @@ export default function HeroStage() {
                 <Pane key="sources">
                   <p className="hs-eyebrow">Sources</p>
                   {s.up && !done && <UploadRow />}
-                  <ul className="hs-list">
+                  <ul className="hs-list" data-t="list">
                     {rows.map((r) => (
                       <motion.li key={r.id} layout>
                         <button
@@ -465,7 +498,7 @@ export default function HeroStage() {
                   <p className="hs-eyebrow">Pages</p>
                   <ul className="hs-list">
                     <li>
-                      <button type="button" className="hs-row is-fresh" onClick={() => go('page')}>
+                      <button type="button" className="hs-row is-fresh" data-t="page-row" onClick={() => go('page')}>
                         <Layers size={14} strokeWidth={1.7} className="hs-row-ico" />
                         <span className="hs-row-title">Growth plan</span>
                         <span className="hs-by">updated just now</span>
@@ -485,16 +518,17 @@ export default function HeroStage() {
               {view === 'page' && (
                 <Pane key="page">
                   <div className="hs-page">
-                    <div className="hs-doc">
+                    <div className="hs-doc" data-t="doc">
                       <h3 className="hs-doc-title">Growth plan</h3>
                       <p className="hs-doc-meta">Built from 4 documents</p>
 
                       {BLOCKS.map((b) => (
                         <div key={b.id} className="hs-block">
-                          <p className="hs-line">
+                          <p className="hs-line" data-t={`line-${b.id}`}>
                             {b.text}
                             <button
                               type="button"
+                              data-t={`mark-${b.id}`}
                               className={`hs-mark ${openCite === b.id ? 'is-on' : ''}`}
                               onClick={() => {
                                 takeOver()
@@ -568,6 +602,7 @@ export default function HeroStage() {
                     <AnimatePresence initial={false}>
                       {showLog && (
                         <motion.aside
+                          data-t="act"
                           className="hs-log"
                           initial={{ opacity: 0, x: 12 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -663,7 +698,7 @@ function UploadRow() {
       <FileText size={14} strokeWidth={1.8} />
       <span className="hs-up-name">Sept pricing update.md</span>
       <span className="hs-up-pct">{pct}%</span>
-      <span className="hs-up-bar">
+      <span className="hs-up-bar" data-t="up-bar">
         <i style={{ width: `${pct}%` }} />
       </span>
     </motion.div>

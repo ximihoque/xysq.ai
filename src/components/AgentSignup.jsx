@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Zap } from 'lucide-react'
 import { BRAND_PATHS } from './brandPaths'
 import '../styles/agent-signup.css'
 
@@ -19,7 +19,10 @@ export default function AgentSignup() {
 
   return (
     <form className="as" onSubmit={(e) => e.preventDefault()} aria-label="Get your agent">
-      <p className="as-title">Get your agent in 3 mins</p>
+      <p className="as-title">
+        <Zap size={20} strokeWidth={2.2} className="as-bolt" aria-hidden="true" />
+        Get your agent in <b className="as-three">3</b> mins
+      </p>
       <div className="as-pill">
         <label className="as-cc">
           <span className="as-flag" aria-hidden="true">{c[1]}</span>

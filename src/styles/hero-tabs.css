@@ -66,3 +66,103 @@
   .ht-stack { flex-wrap: wrap; gap: 10px; padding-left: 10px; }
   .ht-stack-item { font-size: 0.76rem; }
 }
+
+/* ── Custom: bring your own agent ── */
+
+.byo { padding: 22px 24px 24px; }
+
+.byo-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.byo-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.byo-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--paper);
+}
+.byo-mark svg { width: 20px; height: 20px; }
+.byo-mark b { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 500; color: var(--silver); }
+
+.byo-flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+}
+
+.byo-node {
+  flex: none;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+.byo-node.is-us { border-color: color-mix(in srgb, var(--cyan) 40%, transparent); background: var(--cyan-dim); }
+
+.byo-arrow {
+  flex: 1;
+  position: relative;
+  height: 1px;
+  background: var(--line);
+  text-align: center;
+}
+.byo-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; border: 3.5px solid transparent; border-left: 6px solid var(--silver); }
+.byo-arrow i {
+  position: relative;
+  top: -0.9em;
+  padding: 0 8px;
+  background: var(--surface);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  font-style: normal;
+  color: var(--silver);
+}
+
+.byo-code {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  color: var(--paper);
+  overflow-x: auto;
+}
+
+@media (max-width: 1024px) { .byo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .byo { padding: 16px; }
+  .byo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .byo-flow { flex-direction: column; align-items: stretch; gap: 6px; }
+  .byo-arrow { display: none; }
+  .byo-node { text-align: center; }
+}

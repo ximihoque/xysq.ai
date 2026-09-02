@@ -10,11 +10,26 @@
 }
 
 .as-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   margin: 0;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.98rem;
-  font-weight: 500;
+  font-size: 1.28rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--paper);
+}
+
+.as-bolt { color: var(--cyan); fill: var(--cyan); }
+
+/* the number is the promise, so it gets the accent and a size up */
+.as-three {
+  font-size: 1.6em;
+  font-weight: 700;
+  line-height: 0.8;
+  margin: 0 2px;
+  color: var(--cyan);
 }
 
 .as-pill {
