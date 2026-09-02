@@ -357,7 +357,7 @@ export default function HeroStage() {
 
   return (
     <div className="hs hs--split">
-      <Scenario items={CHAPTERS} active={chapter} onPick={goChapter} />
+      <Scenario label="Walkthrough" items={CHAPTERS} active={chapter} onPick={goChapter} />
 
       <div className="hs-main">
       <div className="hs-frame" ref={frameRef}>
