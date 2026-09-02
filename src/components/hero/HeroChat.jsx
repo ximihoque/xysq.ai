@@ -95,7 +95,7 @@ export default function HeroChat({ sc }) {
 
   return (
     <div className="hs hs--split">
-      <Scenario items={sc.chapters} active={chapter} onPick={goChapter} />
+      <Scenario heading={sc.chapterHeading} items={sc.chapters} active={chapter} onPick={goChapter} />
 
       <div className="hs-main">
       <div className="hs-frame hc-frame">

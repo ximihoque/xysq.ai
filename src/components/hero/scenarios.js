@@ -12,6 +12,9 @@ export const growth = {
     title: 'Abandoned cart',
     blurb: 'A shopper adds to cart and leaves. Bring them back in the shop’s own voice, without inventing a discount.',
   },
+  // named above the chapters here, since "abandoned cart" is the whole story;
+  // CX's three chapters are three different stories and stand on their own
+  chapterHeading: 'Abandoned cart',
   // the three things this thread shows, each pointing at the step it starts on
   chapters: [
     { title: 'The first message', blurb: 'One message in the shop’s voice, with a sizing tip from the staff notes.', at: 0 },
