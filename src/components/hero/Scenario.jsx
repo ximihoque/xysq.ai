@@ -20,7 +20,7 @@ export default function Scenario({ items, active, onPick, heading, label = 'Scen
             disabled={items.length === 1}
           >
             <span className="sc-title">{it.title}</span>
-            {on && <span className="sc-blurb">{it.blurb}</span>}
+            {on && it.blurb && <span className="sc-blurb">{it.blurb}</span>}
           </button>
         )
       })}

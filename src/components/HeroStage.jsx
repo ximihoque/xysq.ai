@@ -189,8 +189,7 @@ const STEPS = [
     cap: 'Every change, and who made it.' },
   { view: 'page', added: true, log: true, sup: true, hold: 4400, cam: [1.32, 0, 14], cur: ['line-b1', 0.55, 0.5],
     cap: 'The price changed, so the old one was closed. It is still there to read.' },
-  { view: 'page', added: true, log: true, sup: true, hold: null, cam: WIDE, cur: null,
-    cap: 'Your turn. Open anything.' },
+  { view: 'page', added: true, log: true, sup: true, hold: null, cam: WIDE, cur: null, cap: null },
 ]
 
 const LAST = STEPS.length - 1
@@ -652,22 +651,24 @@ export default function HeroStage() {
         </motion.div>
       </div>
 
-      <div className="hs-foot">
-
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p
-            key={done ? 'done' : step}
-            className="hs-cap"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {done ? 'Your turn. Open anything.' : s.cap}
-          </motion.p>
-        </AnimatePresence>
-
-      </div>
+      {/* the caption narrates the walkthrough; once it hands over, the
+          chapter column already says everything */}
+      {!done && s.cap && (
+        <div className="hs-foot">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.p
+              key={step}
+              className="hs-cap"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {s.cap}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+      )}
       </div>
     </div>
   )

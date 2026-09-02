@@ -2,7 +2,7 @@ import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import EngineSection from '../components/EngineSection'
-import ThreeColumnCTA from '../components/ThreeColumnCTA'
+import Faq from '../components/Faq'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import NeuralBackground from '../components/NeuralBackground'
@@ -34,7 +34,7 @@ export default function HomePage() {
           has a reason to care. */}
       <Hero />
       <EngineSection />
-      <ThreeColumnCTA />
+      <Faq />
       <Footer />
     </PageTransition>
   )

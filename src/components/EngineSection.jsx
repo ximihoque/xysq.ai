@@ -73,10 +73,6 @@ export default function EngineSection() {
             >
               <div className="eng-preview-in">
                 <HeroStage key="preview" />
-                <button type="button" className="eng-close" onClick={() => setOpen(false)}>
-                  <X size={13} strokeWidth={2} />
-                  Close preview
-                </button>
               </div>
             </motion.div>
           )}

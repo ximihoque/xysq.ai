@@ -1,0 +1,97 @@
+/* ── FAQ: questions down the left, the open answer on the right ── */
+
+.faq-section {
+  position: relative;
+  padding: 96px var(--side-pad) 120px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .faq-section { padding-top: 56px; padding-bottom: 64px; }
+}
+
+.faq-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin: 0 0 48px;
+  text-align: center;
+}
+
+/* the questions are sentences, so the column is wider than the demo's */
+.faq-split {
+  width: 100%;
+  max-width: 1080px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.faq-split .sc { padding-right: 32px; }
+.faq-split .sc-item { padding: 12px 0 13px; }
+.faq-split .sc-item:first-of-type { padding-top: 0; }
+
+.faq-answer { min-width: 0; padding-top: 30px; }
+
+.faq-q {
+  margin: 0 0 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--paper);
+}
+
+.faq-a {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--silver);
+  max-width: 56ch;
+}
+
+.faq-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--paper);
+  text-decoration: none;
+}
+.faq-cta-arrow { transition: transform 0.2s ease; }
+.faq-cta:hover .faq-cta-arrow { transform: translateX(2px); }
+
+/* desktop: the answer lives on the right, so the column shows titles only */
+.faq-split .sc-blurb { display: none; }
+
+@media (max-width: 1024px) {
+  .faq-split { gap: 36px; }
+}
+
+/* phone: an accordion. the answer opens under the tapped question */
+@media (max-width: 720px) {
+  .faq-split { display: block; }
+  .faq-headline { margin-bottom: 28px; }
+  .faq-answer { display: none; }
+  .faq-split .sc { border-bottom: 0; margin-bottom: 0; }
+  .faq-split .sc-item { padding: 12px 0; }
+  .faq-split .sc-blurb { display: block; font-size: 0.92rem; line-height: 1.6; margin-top: 8px; }
+}
