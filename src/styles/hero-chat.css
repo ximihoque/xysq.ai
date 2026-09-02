@@ -12,10 +12,6 @@
   padding: 20px 22px;
 }
 
-/* play / pause / replay, tucked into the frame's corner */
-.hc-ctl { position: absolute; right: 16px; bottom: 16px; z-index: 5; }
-.hc-ctl .hs-btn { background: var(--surface); }
-
 /* ── the phone ── */
 
 .ph {

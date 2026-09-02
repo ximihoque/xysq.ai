@@ -13,6 +13,11 @@
 
 .hs-win { background: var(--surface); will-change: transform; }
 
+/* play / pause / replay, tucked into the frame's corner. Shared by the app
+   window and the phone tabs. */
+.hc-ctl { position: absolute; right: 16px; bottom: 16px; z-index: 30; }
+.hc-ctl .hs-btn { background: var(--surface); }
+
 /* oversized on purpose: an actual-size arrow disappears at this scale.
    The tip is the hot spot, so the press pivots there rather than on the
    box centre. It never fades in or out, it enters and leaves the frame. */

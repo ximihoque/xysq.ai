@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { FileText, Layers, Activity, RotateCcw, Pause, Play, ChevronLeft } from 'lucide-react'
+import Scenario from './hero/Scenario'
 import '../styles/hero-stage.css'
 
 // An illustrative build of the app, not a replica. The chrome is invented;
@@ -194,6 +195,14 @@ const STEPS = [
 
 const LAST = STEPS.length - 1
 
+// what a viewer should take from each stretch of the walkthrough
+const CHAPTERS = [
+  { title: 'Add a document', blurb: 'Drop a file in. It is stored exactly as written, and never edited.', at: 0 },
+  { title: 'It joins a page', blurb: 'It goes onto the page you already have, not a new one.', at: 3 },
+  { title: 'Every line has a source', blurb: 'Click any line and see the sentence it came from.', at: 5 },
+  { title: 'Nothing is lost', blurb: 'Every change with a name on it. The old price closed, still there to read.', at: 6 },
+]
+
 // the push-in needs headroom beside the window; below the tablet breakpoint
 // there is none, so the camera stays wide there. false on the server.
 function useRoomToZoom() {
@@ -278,15 +287,15 @@ export default function HeroStage() {
     if (v !== 'page') setCite(null)
   }
 
-  // the rail is a scrubber: pick any stage, land on it, and stay there until
-  // you press play or click something in the window
-  const jump = (i) => {
+  let chapter = 0
+  for (let i = 0; i < CHAPTERS.length; i++) if (CHAPTERS[i].at <= step) chapter = i
+  const goChapter = (i) => {
     clearTimeout(timer.current)
     setNav(null)
-    setCite(STEPS[i].cite ?? null)
+    setCite(null)
     setDone(false)
-    setPaused(true)
-    setStep(i)
+    setPaused(false)
+    setStep(CHAPTERS[i].at)
   }
 
   const replay = () => {
@@ -347,8 +356,29 @@ export default function HeroStage() {
   ))
 
   return (
-    <div className="hs">
+    <div className="hs hs--split">
+      <Scenario items={CHAPTERS} active={chapter} onPick={goChapter} />
+
+      <div className="hs-main">
       <div className="hs-frame" ref={frameRef}>
+        <div className="hc-ctl">
+          {done ? (
+            <button type="button" className="hs-btn" onClick={replay}>
+              <RotateCcw size={12} strokeWidth={2} />
+              Replay
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="hs-btn"
+              onClick={() => setPaused((p) => !p)}
+              aria-label={paused ? 'Play the walkthrough' : 'Pause the walkthrough'}
+            >
+              {paused ? <Play size={12} strokeWidth={2} /> : <Pause size={12} strokeWidth={2} />}
+              {paused ? 'Play' : 'Pause'}
+            </button>
+          )}
+        </div>
         <motion.svg
           className="hs-cursor"
           viewBox="0 0 24 24"
@@ -623,20 +653,6 @@ export default function HeroStage() {
       </div>
 
       <div className="hs-foot">
-        <ol className="hs-rail">
-          {STEPS.map((st, i) => (
-            <li key={i}>
-              <button
-                type="button"
-                className={`hs-step ${i <= step ? 'is-on' : ''}`}
-                onClick={() => jump(i)}
-                aria-label={`Stage ${i + 1}: ${st.cap}`}
-              >
-                <i />
-              </button>
-            </li>
-          ))}
-        </ol>
 
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
@@ -651,22 +667,7 @@ export default function HeroStage() {
           </motion.p>
         </AnimatePresence>
 
-        {done ? (
-          <button type="button" className="hs-btn" onClick={replay}>
-            <RotateCcw size={12} strokeWidth={2} />
-            Replay
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="hs-btn"
-            onClick={() => setPaused((p) => !p)}
-            aria-label={paused ? 'Play the walkthrough' : 'Pause the walkthrough'}
-          >
-            {paused ? <Play size={12} strokeWidth={2} /> : <Pause size={12} strokeWidth={2} />}
-            {paused ? 'Play' : 'Pause'}
-          </button>
-        )}
+      </div>
       </div>
     </div>
   )
