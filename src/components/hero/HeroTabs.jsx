@@ -36,9 +36,9 @@ const BYO = [
 
 const TOOLS = [
   { name: 'Claude', mark: 'claude' },
-  { name: 'ChatGPT' },
-  { name: 'Hermes' },
-  { name: 'OpenClaw' },
+  { name: 'ChatGPT', mark: 'openai' },
+  { name: 'Hermes', img: '/marks/hermes.png' },
+  { name: 'OpenClaw', mark: 'openclaw' },
 ]
 
 const FRAMEWORKS = [
@@ -46,7 +46,7 @@ const FRAMEWORKS = [
   { name: 'CrewAI', mark: 'crewai' },
   { name: 'LangChain', mark: 'langchain' },
   { name: 'LangGraph', mark: 'langgraph' },
-  { name: 'ADK' },
+  { name: 'ADK', mark: 'adk' },
 ]
 
 const TEAM_LOOP = [
@@ -61,16 +61,20 @@ const FLOW_LOOP = [
   { icon: Wrench, label: 'Correct', text: 'Fix a fact once and every run after gets it right.' },
 ]
 
-const Mark = ({ id }) => (
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d={BRAND_PATHS[id]} fill="currentColor" /></svg>
-)
+const Mark = ({ id, img }) =>
+  img ? (
+    // a raster mark, recoloured through a mask so it takes currentColor like the svgs
+    <span className="mark-img" style={{ maskImage: `url(${img})`, WebkitMaskImage: `url(${img})` }} aria-hidden="true" />
+  ) : (
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d={BRAND_PATHS[id]} fill="currentColor" /></svg>
+  )
 
 function Tiles({ items }) {
   return (
     <ul className="byo-grid" style={{ '--n': items.length }}>
       {items.map((a) => (
         <li key={a.name} className="byo-tile">
-          <span className="byo-mark">{a.mark ? <Mark id={a.mark} /> : <b>{a.name[0]}</b>}</span>
+          <span className="byo-mark"><Mark id={a.mark} img={a.img} /></span>
           {a.name}
         </li>
       ))}

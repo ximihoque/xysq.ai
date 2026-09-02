@@ -2,18 +2,17 @@ import { BRAND_PATHS } from './brandPaths'
 import '../styles/integration-marquee.css'
 
 // Everything that can reach xysq, in the order a reader recognises them.
-// `mark` is a key into BRAND_PATHS; entries without one ride as wordmarks
-// because no official mark is published we can use (OpenAI and Slack pulled
-// theirs from simple-icons over trademark policy; the rest never had one).
+// `mark` is a key into BRAND_PATHS; `img` is a raster mark rendered through a
+// mask so it recolours like the svgs. Only Freshdesk has neither.
 const ITEMS = [
   { name: 'Claude', mark: 'claude' },
-  { name: 'ChatGPT' },
+  { name: 'ChatGPT', mark: 'openai' },
   { name: 'Gemini CLI', mark: 'gemini' },
-  { name: 'ADK' },
+  { name: 'ADK', mark: 'adk' },
   { name: 'LangGraph', mark: 'langgraph' },
   { name: 'CrewAI', mark: 'crewai' },
-  { name: 'OpenClaw' },
-  { name: 'Hermes Agent' },
+  { name: 'OpenClaw', mark: 'openclaw' },
+  { name: 'Hermes Agent', img: '/marks/hermes.png' },
   { name: 'Python client', mark: 'python' },
   { name: 'MCP', mark: 'mcp' },
   { name: 'Shopify', mark: 'shopify' },
@@ -32,7 +31,10 @@ const SLACK = [
   'M15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52Zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313Z',
 ]
 
-function Mark({ id }) {
+function Mark({ id, img }) {
+  if (img) {
+    return <span className="im-mark mark-img" style={{ maskImage: `url(${img})`, WebkitMaskImage: `url(${img})` }} aria-hidden="true" />
+  }
   if (id === 'slack') {
     return (
       <svg className="im-mark" viewBox="0 0 24 24" aria-hidden="true">
@@ -63,7 +65,7 @@ export default function IntegrationMarquee() {
             <ul className="im-row" key={copy} aria-hidden={copy === 1 || undefined}>
               {ITEMS.map((it) => (
                 <li className="im-item" key={it.name}>
-                  {it.mark && <Mark id={it.mark} />}
+                  {(it.mark || it.img) && <Mark id={it.mark} img={it.img} />}
                   {it.name}
                 </li>
               ))}

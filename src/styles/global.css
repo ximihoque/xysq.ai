@@ -252,3 +252,18 @@ h2 em {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* a raster brand mark, recoloured through its alpha so it behaves like the
+   svg marks: currentColor, both themes, no white square on dark */
+.mark-img {
+  display: inline-block;
+  background: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+.byo-mark .mark-img { width: 22px; height: 22px; }
+.im-mark.mark-img { width: 17px; height: 17px; }
