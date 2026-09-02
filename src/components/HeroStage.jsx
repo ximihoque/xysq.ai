@@ -232,13 +232,16 @@ export default function HeroStage() {
   }, [reduce])
 
   useEffect(() => {
-    if (reduce || done || paused) return
+    if (reduce || done) return
     const { hold, cite: c } = STEPS[step]
     if (hold == null) {
+      // resolve the landing even when paused, so a rail jump to the last
+      // stage still hands over and shows Replay
       setCite(c ?? null)
       setDone(true)
       return
     }
+    if (paused) return
     timer.current = setTimeout(() => setStep((n) => n + 1), hold)
     return () => clearTimeout(timer.current)
   }, [step, paused, done, reduce])

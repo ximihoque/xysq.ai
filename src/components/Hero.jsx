@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
-import HeroStage from './HeroStage'
+import HeroTabs from './hero/HeroTabs'
 import '../styles/hero.css'
 
 const fade = (delay = 0) => ({
@@ -77,7 +77,7 @@ export default function Hero() {
 
       {/* the illustrative interface. walks the journey once, then hands over. */}
       <motion.div {...fade(0.3)} id="demo" className="hero-stage-wrap">
-        <HeroStage />
+        <HeroTabs />
       </motion.div>
     </section>
   )
