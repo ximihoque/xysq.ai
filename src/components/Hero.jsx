@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroTabs from './hero/HeroTabs'
+import AgentSignup from './AgentSignup'
 import '../styles/hero.css'
 
 const fade = (delay = 0) => ({
@@ -39,6 +40,10 @@ export default function Hero() {
             <span className="hero-accent">you can trust.</span>
           </motion.h1>
 
+
+          <motion.div {...fade(0.18)} className="hero-signup">
+            <AgentSignup />
+          </motion.div>
 
           <motion.div {...fade(0.25)} className="hero-btns">
             <motion.a

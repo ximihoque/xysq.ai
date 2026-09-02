@@ -365,6 +365,9 @@ h1.hero-h1 {
   margin-right: 8px;
 }
 
+.hero-signup { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
+.hero-inner--stacked .hero-btns { margin-top: 22px; }
+
 /* the marquee runs edge to edge, so it needs to escape the centred column */
 .hero-strip {
   width: 100%;

@@ -1,19 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { FileText, ShoppingCart, RotateCcw, Pause, Play, ChevronLeft } from 'lucide-react'
+import { FileText, ShoppingCart, RotateCcw, Pause, Play, ChevronLeft, Plus, Mic, ArrowUp } from 'lucide-react'
 import { MASKED, plain } from './scenarios'
 import '../../styles/hero-chat.css'
 
-// A conversation on the left, the documents behind it on the right. Plays
-// itself once, then every bubble is a button. Same rail, caption, pointer and
-// pause/replay as the app window; the chrome classes are shared on purpose so
-// the three tabs read as one product.
-//
-// Pointer targets are measured off the real bubbles at render time rather
-// than stored as percentages, because bubbles land and the thread scrolls,
-// so no stored number would survive.
-
-const OFF = { x: '50%', y: '118%' }
+// A phone on the left, the documents behind the conversation on the right.
+// No pointer here: on a phone you watch someone type, so the agent shows a
+// typing indicator and then the message lands, the way a real thread reads.
+// Plays itself once, then every agent bubble is a button.
 
 function useMobile() {
   const [m, setM] = useState(false)
@@ -34,85 +28,62 @@ export default function HeroChat({ sc }) {
   const [step, setStep] = useState(0)
   const [done, setDone] = useState(false)
   const [paused, setPaused] = useState(false)
-  const [sel, setSel] = useState(null)          // visitor's selection once done
-  const [openSrc, setOpenSrc] = useState(null)  // a document opened from the panel
-  const [tapping, setTapping] = useState(false)
-  const [cur, setCur] = useState(OFF)
+  const [typing, setTyping] = useState(false)
+  const [sel, setSel] = useState(null)
+  const [openSrc, setOpenSrc] = useState(null)
   const timer = useRef(null)
-  const frame = useRef(null)
+  const typeTimer = useRef(null)
   const thread = useRef(null)
 
   const s = sc.steps[step]
   const upto = done ? sc.thread.length : s.upto
+  // while the agent is typing, the newest item is held back and a typing
+  // bubble stands in for it
+  const visible = sc.thread.slice(0, typing ? upto - 1 : upto)
   const liveSel = done ? sel : (s.sel ?? null)
-  const visible = sc.thread.slice(0, upto)
   const bySrc = (id) => sc.sources.find((x) => x.id === id)
   const msg = (id) => sc.thread.find((x) => x.id === id)
 
-  // reduced motion: land on the payoff, no walkthrough
   useEffect(() => {
     if (!reduce) return
     setStep(LAST); setDone(true); setSel(mobile ? null : sc.steps[LAST].sel ?? null)
   }, [reduce, mobile, sc, LAST])
 
-  // advance
+  // advance. a landing (hold null) resolves even when paused, so a rail jump
+  // to the last stage does not strand the walkthrough
   useEffect(() => {
     if (reduce || done) return
-    const { hold, sel: landSel } = sc.steps[step]
+    const { hold, sel: landSel, typing: t } = sc.steps[step]
     if (hold == null) {
-      // a landing resolves even when paused, otherwise a rail jump to the last
-      // stage strands the walkthrough: not done, no Replay, and on a phone the
-      // sheet left covering the thread the caption tells you to tap
       setSel(mobile ? null : landSel ?? null)
       setDone(true)
       return
     }
     if (paused) return
+    if (t) {
+      setTyping(true)
+      typeTimer.current = setTimeout(() => setTyping(false), t)
+    }
     timer.current = setTimeout(() => setStep((n) => n + 1), hold)
-    return () => clearTimeout(timer.current)
+    return () => { clearTimeout(timer.current); clearTimeout(typeTimer.current) }
   }, [step, paused, done, reduce, sc, mobile])
 
-  // the tap fires just before the beat flips
-  useEffect(() => {
-    if (reduce || done || paused) return
-    const { tap, hold } = sc.steps[step]
-    if (!tap || hold == null) return
-    const down = setTimeout(() => setTapping(true), hold - 640)
-    const up = setTimeout(() => setTapping(false), hold - 520)
-    return () => { clearTimeout(down); clearTimeout(up) }
-  }, [step, paused, done, reduce, sc])
-
-  // keep the newest bubble in view
+  // keep the newest thing in view, typing bubble included
   useEffect(() => {
     const el = thread.current
-    if (!el) return
-    el.scrollTo({ top: el.scrollHeight, behavior: reduce ? 'auto' : 'smooth' })
-  }, [upto, reduce])
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: reduce ? 'auto' : 'smooth' })
+  }, [upto, typing, reduce])
 
-  // measure the pointer target after the DOM has settled
-  useLayoutEffect(() => {
-    if (done || reduce || !s.cur) { setCur(OFF); return }
-    const [id, dx, dy] = s.cur
-    let raf = requestAnimationFrame(() => {
-      raf = requestAnimationFrame(() => {
-        const f = frame.current, t = f?.querySelector(`[data-t="${id}"]`)
-        if (!f || !t) return
-        const F = f.getBoundingClientRect(), T = t.getBoundingClientRect()
-        setCur({ x: `${T.left - F.left + T.width * dx}px`, y: `${T.top - F.top + T.height * dy}px` })
-      })
-    })
-    return () => cancelAnimationFrame(raf)
-  }, [step, done, reduce, upto, s.cur])
-
+  const stopAll = () => { clearTimeout(timer.current); clearTimeout(typeTimer.current); setTyping(false) }
   const takeOver = () => {
     if (done) return
-    clearTimeout(timer.current)
+    stopAll()
     setSel(mobile ? null : sc.steps[step].sel ?? null)
     setStep(LAST); setDone(true)
   }
   const pick = (id) => { takeOver(); setOpenSrc(null); setSel((c) => (c === id ? null : id)) }
-  const jump = (i) => { clearTimeout(timer.current); setOpenSrc(null); setSel(null); setDone(false); setPaused(true); setStep(i) }
-  const replay = () => { clearTimeout(timer.current); setOpenSrc(null); setSel(null); setDone(false); setPaused(false); setStep(0) }
+  const jump = (i) => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(true); setStep(i) }
+  const replay = () => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(false); setStep(0) }
 
   const selected = liveSel ? msg(liveSel) : null
   const srcCount = (m) => new Set((m.draws ?? []).map(([sid]) => sid)).size
@@ -120,15 +91,7 @@ export default function HeroChat({ sc }) {
 
   return (
     <div className="hs">
-      <div className="hs-frame hc-frame" ref={frame}>
-        <motion.svg className="hs-cursor" viewBox="0 0 24 24" aria-hidden="true"
-          initial={{ left: OFF.x, top: OFF.y }}
-          animate={{ left: cur.x, top: cur.y, scale: tapping ? 0.84 : 1 }}
-          transition={{ left: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }, top: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-                        scale: { duration: tapping ? 0.1 : 0.22 } }}>
-          <path d="M5.5 2.5 19 12.4l-6.1.5-3.2 5.8-4.2-16.2Z" fill="var(--paper)" stroke="var(--bg)" strokeWidth="1.3" strokeLinejoin="round" />
-        </motion.svg>
-
+      <div className="hs-frame hc-frame">
         <div className="hs-top">
           <span className="hs-dot" aria-hidden="true" />
           <span className="hs-ws">{sc.store}</span>
@@ -137,50 +100,81 @@ export default function HeroChat({ sc }) {
         </div>
 
         <div className="hc">
-          {/* ── the scenario ── */}
           <div className="hc-scen">
             <p className="hs-eyebrow">Scenario</p>
             <p className="hc-scen-title">{sc.scenario.title}</p>
             <p className="hc-scen-blurb">{sc.scenario.blurb}</p>
           </div>
 
-          {/* ── the phone ── */}
-          <div className="hc-phone">
-            <div className="hc-thread" ref={thread} onPointerDownCapture={takeOver}>
+          {/* ── the phone, from the shopper's side ── */}
+          <div className="ph" onPointerDownCapture={takeOver}>
+            <div className="ph-status" aria-hidden="true">
+              <span>9:41</span>
+              <span className="ph-status-r">
+                <i className="ph-sig" /><i className="ph-wifi" /><i className="ph-batt" />
+              </span>
+            </div>
+            <div className="ph-head">
+              <ChevronLeft size={18} strokeWidth={2} className="ph-back" aria-hidden="true" />
+              <span className="ph-avatar" aria-hidden="true">{sc.initials}</span>
+              <span className="ph-name">
+                <b>{sc.store}</b>
+                <i>{typing ? 'typing…' : 'online'}</i>
+              </span>
+            </div>
+
+            <div className="ph-thread" ref={thread}>
               {visible.map((m) => {
-                if (m.kind === 'time') return <p key={m.id} className="hc-time" data-t={m.id}>{m.text}</p>
+                if (m.kind === 'time') return <p key={m.id} className="ph-day">{m.text}</p>
                 if (m.kind === 'system') return (
-                  <motion.p key={m.id} className={`hc-sys ${m.tone === 'good' ? 'is-good' : ''}`} data-t={m.id}
+                  <motion.p key={m.id} className={`ph-sys ${m.tone === 'good' ? 'is-good' : ''}`}
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>{m.text}</motion.p>
                 )
                 if (m.kind === 'card') return (
-                  <div key={m.id} className="hc-card" data-t={m.id}>
-                    <ShoppingCart size={14} strokeWidth={1.7} />
+                  <div key={m.id} className="ph-card">
+                    <span className="ph-card-ico"><ShoppingCart size={15} strokeWidth={1.7} /></span>
                     <span><b>{m.title}</b><i>{m.sub}</i></span>
                   </div>
                 )
                 const agent = m.from === 'agent'
                 const n = agent ? srcCount(m) : 0
                 return (
-                  <motion.div key={m.id} className={`hc-row ${agent ? 'is-agent' : 'is-cust'}`}
-                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}>
+                  <motion.div key={m.id} className={`ph-row ${agent ? 'is-agent' : 'is-cust'}`}
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}>
                     {agent ? (
-                      <button type="button" data-t={m.id} className={`hc-bub ${liveSel === m.id ? 'is-on' : ''}`}
+                      <button type="button" className={`ph-bub ${liveSel === m.id ? 'is-on' : ''}`}
                         aria-pressed={liveSel === m.id} onClick={() => pick(m.id)}>
                         {m.text}
-                        <span className="hc-foot">{n} {n === 1 ? 'source' : 'sources'}</span>
                       </button>
                     ) : (
-                      <p data-t={m.id} className="hc-bub">{m.text}</p>
+                      <p className="ph-bub">{m.text}</p>
                     )}
+                    <span className="ph-meta">
+                      {m.at}{agent && <>{' · '}<em>{n} {n === 1 ? 'source' : 'sources'}</em></>}
+                    </span>
                   </motion.div>
                 )
               })}
+              <AnimatePresence>
+                {typing && (
+                  <motion.div key="typing" className="ph-row is-agent" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, transition: { duration: 0.12 } }} transition={{ duration: 0.25 }}>
+                    <span className="ph-bub ph-typing" aria-label="typing"><i /><i /><i /></span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <div className="ph-compose" aria-hidden="true">
+              <Plus size={18} strokeWidth={2} />
+              <span className="ph-input">Message</span>
+              <Mic size={16} strokeWidth={2} />
+              <span className="ph-send"><ArrowUp size={14} strokeWidth={2.4} /></span>
             </div>
           </div>
 
           {/* ── why it said that ── */}
-          <div className={`hc-why ${sheetOpen ? 'is-open' : ''}`} data-t="why">
+          <div className={`hc-why ${sheetOpen ? 'is-open' : ''}`}>
             <AnimatePresence mode="wait" initial={false}>
               {openSrc ? (
                 <motion.div key={`src-${openSrc}`} className="hc-pane" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
@@ -204,15 +198,9 @@ export default function HeroChat({ sc }) {
                     return (
                       <div key={sid} className="hc-cite">
                         <p className="hs-pop-head">From {src.live ? 'the live cart' : 'the store’s documents'}</p>
-                        {/* one passage per document: the window around every used
-                            line, each sentence printed once, used ones marked.
-                            Rendering each line with its own neighbours repeated
-                            the same sentences three times over. */}
                         <p className="hs-pop-body">
                           {passage(src.body, lines).map(([i, used]) =>
-                            used
-                              ? <mark key={i}>{plain(src.body[i])}</mark>
-                              : <span key={i} className="hs-ctx">{plain(src.body[i])}</span>
+                            used ? <mark key={i}>{plain(src.body[i])}</mark> : <span key={i} className="hs-ctx">{plain(src.body[i])}</span>
                           ).reduce((acc, el, k) => (k ? [...acc, ' ', el] : [el]), [])}
                         </p>
                         {src.was && lines.includes(0) && (
@@ -278,7 +266,6 @@ function passage(body, used) {
   return out
 }
 
-// [['voice',0],['voice',1],['cart',0]] -> { voice:[0,1], cart:[0] }, in first-seen order
 function groupDraws(draws = []) {
   const out = {}
   for (const [sid, i] of draws) (out[sid] ||= []).push(i)

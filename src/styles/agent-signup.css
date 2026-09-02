@@ -1,0 +1,83 @@
+/* the pill under the headline: flag, code, number, one button */
+
+.as {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.as-title {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.as-pill {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 560px;
+  padding: 6px 6px 6px 16px;
+  border: 1px solid color-mix(in srgb, var(--silver) 55%, transparent);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.as-cc {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 12px;
+  margin-right: 12px;
+  border-right: 1px solid var(--line);
+  color: var(--silver);
+  cursor: pointer;
+}
+.as-flag { font-size: 1.1rem; line-height: 1; }
+.as-code { font-size: 0.9rem; color: var(--paper); font-variant-numeric: tabular-nums; }
+/* the real control sits on top, invisible, so the native picker still opens */
+.as-cc select { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+
+.as-num {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.98rem;
+  color: var(--paper);
+  outline: none;
+}
+.as-num::placeholder { color: var(--silver); }
+
+.as-go {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.as-go:hover { opacity: 0.86; }
+.as-go svg { width: 16px; height: 16px; }
+[data-theme='light'] .as-go { background: #171717; color: #ffffff; }
+
+@media (max-width: 720px) {
+  .as-pill { max-width: 100%; padding-left: 12px; }
+  .as-cc { padding-right: 8px; margin-right: 8px; }
+  .as-go { padding: 10px 14px; font-size: 0.86rem; }
+}
