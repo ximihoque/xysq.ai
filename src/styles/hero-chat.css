@@ -12,6 +12,10 @@
   padding: 20px 22px;
 }
 
+/* play / pause / replay, tucked into the frame's corner */
+.hc-ctl { position: absolute; right: 16px; bottom: 16px; z-index: 5; }
+.hc-ctl .hs-btn { background: var(--surface); }
+
 /* ── the phone ── */
 
 .ph {
@@ -220,6 +224,7 @@
 
 @media (max-width: 720px) {
   .hc { display: block; padding: 0; height: 564px; }
+  .hc-ctl { right: 12px; bottom: 76px; }
   .ph { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
   .ph::before, .ph::after { display: none; }
   .ph-status { display: none; }

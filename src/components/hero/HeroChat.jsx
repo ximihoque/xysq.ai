@@ -83,19 +83,31 @@ export default function HeroChat({ sc }) {
     setStep(LAST); setDone(true)
   }
   const pick = (id) => { takeOver(); setOpenSrc(null); setSel((c) => (c === id ? null : id)) }
-  const jump = (i) => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(true); setStep(i) }
   const replay = () => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(false); setStep(0) }
 
   const selected = liveSel ? msg(liveSel) : null
+  let chapter = 0
+  for (let i = 0; i < sc.chapters.length; i++) if (sc.chapters[i].at <= step) chapter = i
+  // clicking a chapter plays from its first beat rather than parking there
+  const goChapter = (i) => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(false); setStep(sc.chapters[i].at) }
   const srcCount = (m) => new Set((m.draws ?? []).map(([sid]) => sid)).size
   const sheetOpen = mobile && (openSrc || selected)
 
   return (
     <div className="hs hs--split">
-      <Scenario items={[sc.scenario]} active={0} />
+      <Scenario heading={sc.scenario.title} items={sc.chapters} active={chapter} onPick={goChapter} />
 
       <div className="hs-main">
       <div className="hs-frame hc-frame">
+        <div className="hc-ctl">
+          {done ? (
+            <button type="button" className="hs-btn" onClick={replay}><RotateCcw size={12} strokeWidth={2} />Replay</button>
+          ) : (
+            <button type="button" className="hs-btn" onClick={() => setPaused((p) => !p)} aria-label={paused ? 'Play' : 'Pause'}>
+              {paused ? <Play size={12} strokeWidth={2} /> : <Pause size={12} strokeWidth={2} />}{paused ? 'Play' : 'Pause'}
+            </button>
+          )}
+        </div>
         <div className="hc">
           {/* ── the phone, from the shopper's side ── */}
           <div className="ph" onPointerDownCapture={takeOver}>
@@ -225,23 +237,11 @@ export default function HeroChat({ sc }) {
       </div>
 
       <div className="hs-foot">
-        <ol className="hs-rail">
-          {sc.steps.map((st, i) => (
-            <li key={i}><button type="button" className={`hs-step ${i <= step ? 'is-on' : ''}`} onClick={() => jump(i)} aria-label={`Stage ${i + 1}: ${st.cap}`}><i /></button></li>
-          ))}
-        </ol>
         <AnimatePresence mode="wait" initial={false}>
           <motion.p key={done ? 'done' : step} className="hs-cap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
             {done ? sc.steps[LAST].cap : s.cap}
           </motion.p>
         </AnimatePresence>
-        {done ? (
-          <button type="button" className="hs-btn" onClick={replay}><RotateCcw size={12} strokeWidth={2} />Replay</button>
-        ) : (
-          <button type="button" className="hs-btn" onClick={() => setPaused((p) => !p)} aria-label={paused ? 'Play' : 'Pause'}>
-            {paused ? <Play size={12} strokeWidth={2} /> : <Pause size={12} strokeWidth={2} />}{paused ? 'Play' : 'Pause'}
-          </button>
-        )}
       </div>
       </div>
     </div>

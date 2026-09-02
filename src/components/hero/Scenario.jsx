@@ -3,10 +3,11 @@ import '../../styles/scenario.css'
 // The column beside the screen: one entry per scenario in the tab. The open
 // one shows its line; the rest show only their name. Same shape whether a
 // tab has one scenario or several.
-export default function Scenario({ items, active, onPick }) {
+export default function Scenario({ items, active, onPick, heading }) {
   return (
     <aside className="sc">
       <p className="hs-eyebrow">Scenario</p>
+      {heading && <p className="sc-heading">{heading}</p>}
       {items.map((it, i) => {
         const on = i === active
         return (

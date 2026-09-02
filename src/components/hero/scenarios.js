@@ -12,6 +12,12 @@ export const growth = {
     title: 'Abandoned cart',
     blurb: 'A shopper adds to cart and leaves. Bring them back in the shop’s own voice, without inventing a discount.',
   },
+  // the three things this thread shows, each pointing at the step it starts on
+  chapters: [
+    { title: 'The first message', blurb: 'One message in the shop’s voice, with a sizing tip from the staff notes.', at: 0 },
+    { title: 'A question at 6:31 am', blurb: 'It answers from this shopper’s own order history while the store is asleep.', at: 3 },
+    { title: 'Closing the cart', blurb: 'Free shipping is allowed. A percentage off is not. Recovered at 6:40 am.', at: 6 },
+  ],
   sources: [
     {
       id: 'cart', title: 'Cart, checked at send time', by: 'Shopify', added: 'at send time', live: true,
@@ -78,6 +84,11 @@ export const cx = {
     title: 'Where is my order',
     blurb: 'A late delivery, a product question and a return, in one thread, answered from what the store actually knows.',
   },
+  chapters: [
+    { title: 'Delivery delay', blurb: 'Nine days late. It knows what is holding it up and what it is allowed to promise.', at: 0 },
+    { title: 'Product issue', blurb: 'A strap that pops open, and the fix the support lead wrote down once.', at: 3 },
+    { title: 'Returns', blurb: 'The current window, with last season’s still there to read.', at: 6 },
+  ],
   sources: [
     {
       id: 'ship', title: 'Shipping notice, Sept 1', by: 'warehouse', added: 'yesterday',
