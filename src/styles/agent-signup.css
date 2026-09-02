@@ -23,23 +23,61 @@
 
 .as-bolt { color: var(--lychee); fill: var(--lychee); }
 
-/* the old answer, struck in the problem colour, sits right before the new one */
-.as-was {
-  font-weight: 400;
-  color: var(--silver);
-  text-decoration: line-through;
-  text-decoration-color: var(--lychee);
-  text-decoration-thickness: 2px;
+/* the claim: the old answer struck out, the new one written over it. The
+   strike draws first, then the new figure lands on top. Lychee for what we
+   replace, teal for what we promise. */
+.as-swap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 1;
+  margin-left: 2px;
 }
 
-/* the number is the promise, so it gets a size up */
-.as-three {
-  font-size: 1.25em;
-  font-weight: 400;
-  line-height: 0.8;
-  margin: 0 2px;
+.as-new {
+  font-size: 1.12em;
+  font-weight: 600;
   color: var(--paper);
+  padding-bottom: 2px;
+  border-bottom: 2px solid var(--cyan);
+  animation: as-pop 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
 }
+
+.as-old {
+  position: relative;
+  margin-top: 5px;
+  font-size: 0.66em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--silver);
+  text-decoration: none;
+}
+.as-old::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 50%;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--lychee);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: as-strike 0.45s cubic-bezier(0.33, 0, 0.2, 1) 0.2s both;
+}
+
+@keyframes as-strike { to { transform: scaleX(1); } }
+@keyframes as-pop {
+  from { opacity: 0; transform: translateY(5px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-new, .as-old::after { animation: none; }
+  .as-old::after { transform: none; }
+}
+
 
 .as-pill {
   display: flex;
