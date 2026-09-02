@@ -1,7 +1,6 @@
 import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
-import TrustSection from '../components/TrustSection'
 import EngineSection from '../components/EngineSection'
 import ThreeColumnCTA from '../components/ThreeColumnCTA'
 import Footer from '../components/Footer'
@@ -34,7 +33,6 @@ export default function HomePage() {
           "provable / reconciled / self-improving" arrive after the reader
           has a reason to care. */}
       <Hero />
-      <TrustSection />
       <EngineSection />
       <ThreeColumnCTA />
       <Footer />
