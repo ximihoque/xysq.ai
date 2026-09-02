@@ -12,8 +12,7 @@ export const growth = {
     title: 'Abandoned cart',
     blurb: 'A shopper adds to cart and leaves. Bring them back in the shop’s own voice, without inventing a discount.',
   },
-  // named above the chapters here, since "abandoned cart" is the whole story;
-  // CX's three chapters are three different stories and stand on their own
+  // the moment in the customer's journey; CX names the one after it
   chapterHeading: 'Abandoned cart',
   // the three things this thread shows, each pointing at the step it starts on
   chapters: [
@@ -87,6 +86,7 @@ export const cx = {
     title: 'Where is my order',
     blurb: 'A late delivery, a product question and a return, in one thread, answered from what the store actually knows.',
   },
+  chapterHeading: 'After the sale',
   chapters: [
     { title: 'Delivery delay', blurb: 'Nine days late. It knows what is holding it up and what it is allowed to promise.', at: 0 },
     { title: 'Product issue', blurb: 'A strap that pops open, and the fix the support lead wrote down once.', at: 3 },
