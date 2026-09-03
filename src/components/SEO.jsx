@@ -23,11 +23,9 @@ export default function SEO({
   ogType = 'website',
   article,
 }) {
-  // the h1 and the title tag diverge on purpose: the h1 carries the trust
-  // promise, the title tag keeps the category plus "AI memory", the noun
-  // people actually search, because this string sits next to mem0's in the
-  // result list.
-  const fullTitle = title ? `${title} · xysq.ai` : 'Context engineering platform. AI memory you can trust.'
+  // the home title is the one line the site says everywhere (hero, footer,
+  // og alt), so the result list and the page agree
+  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · Build reliable agents on the most capable context platform'
   const canonical = `${BASE_URL}${path}`
   const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
   const keywordList = Array.isArray(keywords) ? keywords.join(', ') : keywords
@@ -49,7 +47,7 @@ export default function SEO({
       <meta property="og:image" content={image} />
       {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
       {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
-      <meta property="og:image:alt" content={imageAlt || title || 'xysq.ai · the trust layer your AI acts on'} />
+      <meta property="og:image:alt" content={imageAlt || title || 'xysq.ai · Build reliable agents on the most capable context platform'} />
 
       {/* flat, not wrapped in a fragment: react-helmet-async walks its direct
           children and does NOT descend into <>...</>, so a fragment here

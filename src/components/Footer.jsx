@@ -79,8 +79,7 @@ export default function Footer() {
               <span className="ft-logo-word">xysq<span>.ai</span></span>
             </Link>
             <p className="ft-tagline">
-              The trust layer for your AI context. Every fact keeps its source.
-              Consent-first, never trained on.
+              Build reliable agents on the most capable context platform.
             </p>
           </div>
 
@@ -128,7 +127,7 @@ export default function Footer() {
 
         <div className="ft-bar">
           <span className="ft-copy">
-            © {new Date().getFullYear()} xysq.ai · Context engineering, with the source kept on every fact.
+            © {new Date().getFullYear()} xysq.ai
           </span>
           <div className="ft-socials">
             {SOCIALS.map(({ label, href, Icon }) => (

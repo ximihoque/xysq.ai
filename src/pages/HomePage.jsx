@@ -13,14 +13,14 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
-        description="xysq is a context engineering platform for your agents and your teams. Every fact keeps the source it came from, old versions close instead of stacking next to them, and you control who sees what."
+        description="Build reliable agents on the most capable context platform. Every fact keeps its source, old versions close instead of piling up, and you control who sees what."
         schema={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
           name: 'xysq',
           applicationCategory: 'DeveloperApplication',
           url: 'https://xysq.ai',
-          description: 'xysq is a context engineering platform for your agents and your teams. The xysq Memory Engine keeps the source behind every fact, closes the old version when something changes, and leaves you the say on who sees what. Consent-first, never trained on.',
+          description: 'Build reliable agents on the most capable context platform. Every fact keeps the source it came from, the old version closes when something changes, and you decide who sees what. Never trained on.',
           operatingSystem: 'Web',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         }}
