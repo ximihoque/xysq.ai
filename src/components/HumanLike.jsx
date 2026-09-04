@@ -121,7 +121,7 @@ export default function HumanLike() {
     <section className="hl-section" id="human-like">
       <div className="hl-inner">
         <motion.h2 className="hl-headline" {...fade(0)}>
-          What <em>human-like</em> looks like.
+          <span className="hl-light">What</span> <em>human-like</em> <span className="hl-light">looks like.</span>
         </motion.h2>
         <motion.p className="hl-deck" {...fade(0.08)}>
           Four behaviours a conversational agent picks up from the context

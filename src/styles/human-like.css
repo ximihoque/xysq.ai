@@ -29,6 +29,7 @@
   margin: 0 0 16px;
   text-align: center;
 }
+.hl-light { font-weight: 300; }
 /* the light theme's h2 em rule outranks a single class, so say it twice */
 .hl-headline em,
 [data-theme="light"] .hl-headline em { font-style: normal; color: var(--cyan); }
