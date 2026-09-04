@@ -79,7 +79,7 @@ export default function Footer() {
               <span className="ft-logo-word">xysq<span>.ai</span></span>
             </Link>
             <p className="ft-tagline">
-              Build reliable agents on the most capable context platform.
+              The context platform for reliable, human-like agents.
             </p>
           </div>
 

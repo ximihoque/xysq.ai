@@ -25,7 +25,7 @@ export default function SEO({
 }) {
   // the home title is the one line the site says everywhere (hero, footer,
   // og alt), so the result list and the page agree
-  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · Build reliable agents on the most capable context platform'
+  const fullTitle = title ? `${title} · xysq.ai` : 'xysq.ai · The context platform for reliable, human-like agents'
   const canonical = `${BASE_URL}${path}`
   const schemas = Array.isArray(schema) ? schema : schema ? [schema] : []
   const keywordList = Array.isArray(keywords) ? keywords.join(', ') : keywords
@@ -47,7 +47,7 @@ export default function SEO({
       <meta property="og:image" content={image} />
       {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
       {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
-      <meta property="og:image:alt" content={imageAlt || title || 'xysq.ai · Build reliable agents on the most capable context platform'} />
+      <meta property="og:image:alt" content={imageAlt || title || 'xysq.ai · The context platform for reliable, human-like agents'} />
 
       {/* flat, not wrapped in a fragment: react-helmet-async walks its direct
           children and does NOT descend into <>...</>, so a fragment here

@@ -13,14 +13,15 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
-        description="Build reliable agents on the most capable context platform. Every fact keeps its source, old versions close instead of piling up, and you control who sees what."
+        description="The context platform for reliable, human-like agents. Every fact keeps its source, old versions close instead of piling up, and you control who sees what."
+        keywords={['context platform', 'reliable agents', 'human-like agents', 'AI agent memory', 'context engineering', 'AI agents', 'agent memory layer']}
         schema={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
           name: 'xysq',
           applicationCategory: 'DeveloperApplication',
           url: 'https://xysq.ai',
-          description: 'Build reliable agents on the most capable context platform. Every fact keeps the source it came from, the old version closes when something changes, and you decide who sees what. Never trained on.',
+          description: 'The context platform for reliable, human-like agents. Every fact keeps the source it came from, the old version closes when something changes, and you decide who sees what. Never trained on.',
           operatingSystem: 'Web',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         }}
