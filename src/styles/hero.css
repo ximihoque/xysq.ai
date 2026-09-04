@@ -364,6 +364,9 @@ h1.hero-h1 {
   vertical-align: -3px;
   margin-right: 8px;
 }
+/* a stamp is solid: fill the badge, cut the check out of it in white */
+.hero-sub-ico path:first-child { fill: currentColor; }
+.hero-sub-ico path:last-child { stroke: #ffffff; stroke-width: 2.6; }
 
 .hero-signup { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
 .hero-inner--stacked .hero-btns { margin-top: 22px; }
