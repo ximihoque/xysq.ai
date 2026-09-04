@@ -1,0 +1,184 @@
+/* ── Human-like: four behaviours, each with a small mock conversation ── */
+
+.hl-section {
+  position: relative;
+  padding: 96px var(--side-pad) 110px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .hl-section { padding-top: 56px; padding-bottom: 56px; }
+}
+
+.hl-inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hl-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin: 0 0 16px;
+  text-align: center;
+}
+/* the light theme's h2 em rule outranks a single class, so say it twice */
+.hl-headline em,
+[data-theme="light"] .hl-headline em { font-style: normal; color: var(--cyan); }
+
+.hl-deck {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  color: var(--silver);
+  line-height: 1.62;
+  margin: 0 0 40px;
+  text-align: center;
+  max-width: 58ch;
+}
+
+/* ── the cards ── */
+
+.hl-cards {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 800px) {
+  .hl-cards { grid-template-columns: 1fr; }
+}
+
+.hl-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 18px 22px;
+  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
+  border-radius: 20px;
+}
+
+.hl-card-head { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+
+.hl-card-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--cyan);
+}
+
+.hl-card-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.hl-card-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--silver);
+  max-width: 52ch;
+}
+
+/* ── the graphics: a panel with a tiny thread or list in it ── */
+
+.hl-g {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 150px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.hl-g--tone {
+  flex-direction: row;
+  gap: 14px;
+}
+.hl-g--tone > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+
+.hl-tag {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.hl-thread { display: flex; flex-direction: column; gap: 6px; }
+
+.hl-bub {
+  margin: 0;
+  max-width: 88%;
+  padding: 7px 11px;
+  border-radius: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--paper);
+}
+.hl-bub.is-user { align-self: flex-end; background: var(--cyan); color: #06201c; border-bottom-right-radius: 4px; }
+[data-theme='light'] .hl-bub.is-user { color: #ffffff; }
+.hl-bub.is-agent { align-self: flex-start; background: var(--bg2); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+
+.hl-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hl-rows li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: var(--paper);
+}
+.hl-rows li:first-child { border-top: 0; padding-top: 0; }
+.hl-check { color: var(--cyan); flex: none; }
+.hl-row-main { flex: 1; min-width: 0; }
+.hl-row-src {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
+  color: var(--silver);
+  text-align: right;
+}
+.hl-rows--words .hl-row-src { font-family: 'Outfit', sans-serif; font-size: 0.8rem; letter-spacing: 0; text-align: left; margin-left: 0; flex: 1; min-width: 0; }
+.hl-term {
+  flex: none;
+  min-width: 92px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--paper);
+}
+
+@media (max-width: 520px) {
+  .hl-g--tone { flex-direction: column; }
+}
