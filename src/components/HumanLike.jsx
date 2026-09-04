@@ -100,19 +100,19 @@ function VocabGraphic() {
 const CARDS = [
   {
     icon: Ear, label: 'Learning tone', Graphic: ToneGraphic,
-    body: 'The layer keeps a record of how you write, short and terse or long and warm. Your agent answers in that register, and still does next week.',
+    body: 'How you write gets remembered, short and terse or long and warm. Your agent answers in that register, and still does next week.',
   },
   {
     icon: Scale, label: 'Setting tone', Graphic: StanceGraphic,
-    body: 'The layer holds what you need from an agent, not what pleases you. With that, your agent can push back: when the answer is no, it says no, and says why.',
+    body: 'What you need from an agent is on record, not what pleases you. So your agent can push back: when the answer is no, it says no, and says why.',
   },
   {
     icon: SlidersHorizontal, label: 'Understanding preferences', Graphic: PrefsGraphic,
-    body: 'Tell it once and the layer keeps it: the length, the units, the format, the day you want the summary. Every agent reading the layer applies it from then on.',
+    body: 'Say it once: the length, the units, the format, the day you want the summary. Every agent you run applies it from then on.',
   },
   {
     icon: BookOpen, label: 'Learning vocabulary', Graphic: VocabGraphic,
-    body: 'The layer learns what your words mean from how you use them, the names, the acronyms, the nicknames, with the source kept. Your agent uses them the way you do.',
+    body: 'Your names, acronyms and nicknames are picked up from how you use them, with the source kept. Your agent uses them the way you do.',
   },
 ]
 
@@ -124,8 +124,8 @@ export default function HumanLike() {
           <span className="hl-light">What</span> <em>human-like</em> <span className="hl-light">looks like.</span>
         </motion.h2>
         <motion.p className="hl-deck" {...fade(0.08)}>
-          The layer keeps more than static data. It keeps how you write, what
-          you prefer and what your words mean, and hands that to your agent.
+          More than static data. The context layer keeps how you write, what
+          you prefer and what your words mean, so your agent can act on it.
         </motion.p>
 
         <ul className="hl-cards">
