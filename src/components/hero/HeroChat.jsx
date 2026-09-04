@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { FileText, ShoppingCart, RotateCcw, Pause, Play, ChevronLeft, Plus, Mic, ArrowUp } from 'lucide-react'
+import { FileText, ShoppingCart, RotateCcw, Pause, Play, ChevronLeft, ChevronRight, Plus, Mic, ArrowUp } from 'lucide-react'
 import { MASKED, plain } from './scenarios'
 import Scenario from './Scenario'
 import '../../styles/hero-chat.css'
 
-// A phone on the left, the documents behind the conversation on the right.
-// No pointer here: on a phone you watch someone type, so the agent shows a
-// typing indicator and then the message lands, the way a real thread reads.
-// Plays itself once, then every agent bubble is a button.
+// A phone in the middle with a pull tab on its right edge. Pull it and the
+// documents behind the conversation slide out beside it. No pointer here: on
+// a phone you watch someone type, so the agent shows a typing indicator and
+// then the message lands, the way a real thread reads. Plays itself once,
+// then every agent bubble is a button.
 
 function useMobile() {
   const [m, setM] = useState(false)
@@ -32,6 +33,10 @@ export default function HeroChat({ sc }) {
   const [typing, setTyping] = useState(false)
   const [sel, setSel] = useState(null)
   const [openSrc, setOpenSrc] = useState(null)
+  // the reasoning drawer. `wide` keeps the second column until the panel
+  // has finished leaving, so it never collapses mid-fade
+  const [why, setWhy] = useState(false)
+  const [wide, setWide] = useState(false)
   const timer = useRef(null)
   const typeTimer = useRef(null)
   const thread = useRef(null)
@@ -82,7 +87,10 @@ export default function HeroChat({ sc }) {
     setSel(mobile ? null : sc.steps[step].sel ?? null)
     setStep(LAST); setDone(true)
   }
-  const pick = (id) => { takeOver(); setOpenSrc(null); setSel((c) => (c === id ? null : id)) }
+  const openWhy = () => { setWhy(true); setWide(true) }
+  const toggleWhy = () => (why ? setWhy(false) : openWhy())
+  // tapping a bubble is asking why, so it pulls the drawer too
+  const pick = (id) => { takeOver(); setOpenSrc(null); setSel((c) => (c === id ? null : id)); if (!mobile) openWhy() }
   const replay = () => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(false); setStep(0) }
 
   const selected = liveSel ? msg(liveSel) : null
@@ -92,6 +100,10 @@ export default function HeroChat({ sc }) {
   const goChapter = (i) => { stopAll(); setOpenSrc(null); setSel(null); setDone(false); setPaused(false); setStep(sc.chapters[i].at) }
   const srcCount = (m) => new Set((m.draws ?? []).map(([sid]) => sid)).size
   const sheetOpen = mobile && (openSrc || selected)
+  // on a phone the panel is a sheet and always mounted; on desktop it only
+  // exists once pulled
+  const showWhy = mobile || why
+  const panes = <WhyPanes sc={sc} openSrc={openSrc} setOpenSrc={setOpenSrc} selected={selected} setSel={setSel} mobile={mobile} takeOver={takeOver} bySrc={bySrc} />
 
   return (
     <div className="hs hs--split">
@@ -108,8 +120,9 @@ export default function HeroChat({ sc }) {
             </button>
           )}
         </div>
-        <div className="hc">
+        <div className={`hc ${wide && !mobile ? 'is-wide' : ''}`}>
           {/* ── the phone, from the shopper's side ── */}
+          <motion.div className="ph-wrap" layout="position" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
           <div className="ph" onPointerDownCapture={takeOver}>
             <div className="ph-status" aria-hidden="true">
               <span>9:41</span>
@@ -175,9 +188,39 @@ export default function HeroChat({ sc }) {
               <span className="ph-send"><ArrowUp size={14} strokeWidth={2.4} /></span>
             </div>
           </div>
+          <button type="button" className="hc-pull" onClick={toggleWhy} aria-expanded={why} aria-controls="hc-why">
+            <span>{why ? 'Hide the reasoning' : 'Show the reasoning'}</span>
+            {why ? <ChevronLeft size={12} strokeWidth={2} /> : <ChevronRight size={12} strokeWidth={2} />}
+          </button>
+          </motion.div>
 
           {/* ── why it said that ── */}
-          <div className={`hc-why ${sheetOpen ? 'is-open' : ''}`}>
+          <AnimatePresence initial={false} onExitComplete={() => setWide(false)}>
+          {showWhy && (mobile ? (
+            <div id="hc-why" className={`hc-why ${sheetOpen ? 'is-open' : ''}`}>{panes}</div>
+          ) : (
+            <motion.div key="why" id="hc-why" className="hc-why" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}>{panes}</motion.div>
+          ))}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      <div className="hs-foot">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.p key={done ? 'done' : step} className="hs-cap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+            {done ? sc.steps[LAST].cap : s.cap}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+      </div>
+    </div>
+  )
+}
+
+// the three faces of the drawer: the documents, one answer's sources, one
+// document. hoisted so the phone and the sheet share one copy.
+function WhyPanes({ sc, openSrc, setOpenSrc, selected, setSel, mobile, takeOver, bySrc }) {
+  return (
             <AnimatePresence mode="wait" initial={false}>
               {openSrc ? (
                 <motion.div key={`src-${openSrc}`} className="hc-pane" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
@@ -232,19 +275,6 @@ export default function HeroChat({ sc }) {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-        </div>
-      </div>
-
-      <div className="hs-foot">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p key={done ? 'done' : step} className="hs-cap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-            {done ? sc.steps[LAST].cap : s.cap}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-      </div>
-    </div>
   )
 }
 

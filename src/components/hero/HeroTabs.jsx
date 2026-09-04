@@ -7,8 +7,8 @@ import { BRAND_PATHS } from '../brandPaths'
 import '../../styles/hero-tabs.css'
 
 const TABS = [
-  { id: 'cx', label: 'CX' },
   { id: 'growth', label: 'Growth' },
+  { id: 'cx', label: 'CX' },
   { id: 'byo', label: 'Bring your own agent' },
   { id: 'brain', label: 'Company Brain' },
 ]
@@ -193,7 +193,7 @@ function BrainPane() {
 const PANES = [FlowsPane, TeamsPane, PersonalPane]
 
 export default function HeroTabs() {
-  const [tab, setTab] = useState('cx')
+  const [tab, setTab] = useState('growth')
   const [byo, setByo] = useState(0)
   const agentTab = tab === 'cx' || tab === 'growth'
   const Pane = PANES[byo]
@@ -220,8 +220,8 @@ export default function HeroTabs() {
         )}
       </div>
 
-      {tab === 'cx' && <HeroChat key="cx" sc={cx} />}
       {tab === 'growth' && <HeroChat key="growth" sc={growth} />}
+      {tab === 'cx' && <HeroChat key="cx" sc={cx} />}
       {tab === 'byo' && (
         <div className="hs hs--split" key="byo">
           <Scenario items={BYO} active={byo} onPick={setByo} />
