@@ -39,6 +39,11 @@ export default function Hero() {
             <span className="hero-accent">human-like agents.</span>
           </motion.h1>
 
+          {/* the one word in the headline that needs a gloss, glossed */}
+          <motion.p {...fade(0.12)} className="hero-sub">
+            <span className="hero-sub-strong">Human-like:</span> AI agents you can trust.
+          </motion.p>
+
 
           <motion.div {...fade(0.18)} className="hero-signup">
             <AgentSignup />
