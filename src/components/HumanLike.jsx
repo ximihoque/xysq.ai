@@ -124,7 +124,7 @@ export default function HumanLike() {
           <span className="hl-light">What</span> <em>human-like</em> <span className="hl-light">looks like.</span>
         </motion.h2>
         <motion.p className="hl-deck" {...fade(0.08)}>
-          The context layer learns behavioural data, not just static data.
+          The context layer learns behavioural nuances, not just static data.
         </motion.p>
 
         <ul className="hl-cards">
