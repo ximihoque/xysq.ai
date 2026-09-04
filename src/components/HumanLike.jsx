@@ -124,8 +124,7 @@ export default function HumanLike() {
           <span className="hl-light">What</span> <em>human-like</em> <span className="hl-light">looks like.</span>
         </motion.h2>
         <motion.p className="hl-deck" {...fade(0.08)}>
-          Four behaviours a conversational agent picks up from the context
-          layer, and keeps across every session.
+          Four behaviours picked up from the context layer.
         </motion.p>
 
         <ul className="hl-cards">
