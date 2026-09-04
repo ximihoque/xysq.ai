@@ -1,6 +1,7 @@
 import SEO from '../components/SEO'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
+import TrustedBy from '../components/TrustedBy'
 import HumanLike from '../components/HumanLike'
 import EngineSection from '../components/EngineSection'
 import Faq from '../components/Faq'
@@ -35,6 +36,7 @@ export default function HomePage() {
           "provable / reconciled / self-improving" arrive after the reader
           has a reason to care. */}
       <Hero />
+      <TrustedBy />
       <HumanLike />
       <EngineSection />
       <Faq />

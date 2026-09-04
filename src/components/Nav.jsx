@@ -224,13 +224,17 @@ export default function Nav() {
 
       <NavDropdownProvider>
         <div className={`nav-center${isMenuOpen ? ' open' : ''}`}>
-          <NavDropdown
-            label="Use cases"
-            panelClassName="nav-drop-panel--mega"
-            isMobile={isMenuOpen}
-          >
-            {useCasesPanel}
-          </NavDropdown>
+          {/* the landing page tells the story itself; the pages stay reachable
+              by URL and from every other page */}
+          {pathname !== '/' && (
+            <NavDropdown
+              label="Use cases"
+              panelClassName="nav-drop-panel--mega"
+              isMobile={isMenuOpen}
+            >
+              {useCasesPanel}
+            </NavDropdown>
+          )}
 
 
           <SiblingNavLink

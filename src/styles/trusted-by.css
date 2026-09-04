@@ -1,0 +1,60 @@
+/* ── Trusted by: one quiet row of marks between the demo and the story ── */
+
+.tb {
+  position: relative;
+  z-index: 1;
+  padding: 28px var(--side-pad) 0;
+}
+
+.tb-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.tb-label {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.tb-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px 44px;
+}
+
+.tb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--silver);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+.tb-item:hover { color: var(--paper); }
+
+.tb-mark { width: 22px; height: 22px; flex: none; }
+.tb-item.is-wordmark .tb-mark { width: auto; height: 22px; }
+
+@media (max-width: 720px) {
+  .tb { padding-top: 20px; }
+  .tb-row { gap: 12px 26px; }
+  .tb-item { font-size: 0.95rem; }
+  .tb-mark { width: 19px; height: 19px; }
+  .tb-item.is-wordmark .tb-mark { height: 19px; }
+}
