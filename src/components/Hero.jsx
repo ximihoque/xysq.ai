@@ -34,9 +34,10 @@ export default function Hero() {
                 stylesheet hides these breaks and lets the line wrap */}
             <span className="hero-h1-light">The</span> context platform{' '}
             <br />
-            <span className="hero-h1-light">for</span> reliable,{' '}
+            <span className="hero-h1-light">for</span>{' '}
+            <span className="hero-accent">reliable,</span>{' '}
             <br />
-            <span className="hero-accent">human-like agents.</span>
+            human-like <span className="hero-accent">agents.</span>
           </motion.h1>
 
           {/* the one word in the headline that needs a gloss, glossed */}
