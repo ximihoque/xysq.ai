@@ -205,13 +205,6 @@ export default function HeroChat({ sc }) {
         </div>
       </div>
 
-      <div className="hs-foot">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p key={done ? 'done' : step} className="hs-cap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-            {done ? sc.steps[LAST].cap : s.cap}
-          </motion.p>
-        </AnimatePresence>
-      </div>
       </div>
     </div>
   )
