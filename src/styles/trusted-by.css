@@ -50,6 +50,8 @@
 
 .tb-mark { width: 22px; height: 22px; flex: none; }
 .tb-item.is-wordmark .tb-mark { width: auto; height: 22px; }
+/* the Uber wordmark is all cap height, so it needs a step down to sit level with the names */
+.tb-item.is-uber .tb-mark { height: 17px; }
 
 @media (max-width: 720px) {
   .tb { padding-top: 20px; }
