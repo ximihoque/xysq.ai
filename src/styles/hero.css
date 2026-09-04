@@ -357,10 +357,10 @@ h1.hero-h1 {
   }
 }
 
-/* sits on the text baseline rather than in its own row, so the line still
-   centres and wraps normally on a phone */
+/* the verified stamp before the gloss. sits on the text baseline rather
+   than in its own row, so the line still centres and wraps on a phone */
 .hero-sub-ico {
-  color: var(--cyan);
+  color: var(--lychee);
   vertical-align: -3px;
   margin-right: 8px;
 }

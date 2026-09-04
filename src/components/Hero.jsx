@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { BadgeCheck, ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroTabs from './hero/HeroTabs'
@@ -42,7 +42,8 @@ export default function Hero() {
 
           {/* the one word in the headline that needs a gloss, glossed */}
           <motion.p {...fade(0.12)} className="hero-sub">
-            <span className="hero-sub-strong">Human-like:</span> AI agents you can trust.
+            <BadgeCheck size={18} strokeWidth={2.2} className="hero-sub-ico" aria-hidden="true" />
+            <span className="hero-sub-strong">human-like:</span> AI agents you can trust.
           </motion.p>
 
 
