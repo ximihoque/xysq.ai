@@ -1,7 +1,8 @@
 import puppeteer from 'puppeteer-core'
 
-// og-image.png = a real screenshot of the hero (dark theme), right-side
-// carousel hidden, copy centered. Needs the dev server running:
+// og-image.png = a real screenshot of the hero in the dark theme: the mark,
+// the three-line headline, the human-like gloss. Nothing else. Needs the dev
+// server running:
 //   npm run dev   (in another shell)
 //   node scripts/generate-main-og.mjs [url]
 const TARGET = process.argv[2] || 'http://localhost:5173/'
@@ -14,19 +15,19 @@ await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 2 })
 await page.evaluateOnNewDocument(() => localStorage.setItem('theme', 'dark'))
 await page.goto(TARGET, { waitUntil: 'networkidle0', timeout: 30000 })
 
-// card composition: no nav chrome, no right-side visual, centered copy
+// card composition: only the copy block, centred, scaled up for a 1200x630
+// frame (the page's vw-based sizes are tuned for a browser, not a card)
 await page.addStyleTag({
   content: `
-    body { zoom: 1.25; }
-    nav { display: none !important; }
-    .hero-visual { display: none !important; }
-    #hero { min-height: 100vh; padding: 0 64px !important; }
-    .hero-inner { grid-template-columns: 1fr; max-width: 980px; transform: translateY(-61px); }
-    .hero-copy { align-items: center; text-align: center; }
-    .hero-h1 { max-width: none; }
-    .hero-sub { margin-inline: auto; }
-    .hero-points { justify-content: center; padding-bottom: 10px; margin-top: 10px; }
-    .hero-btns { justify-content: center; }
+    nav, .hero-signup, .hero-btns, .hero-strip, .hero-jump, .hero-stage-wrap,
+    #hero ~ * { display: none !important; }
+    #hero { min-height: 100vh; padding: 0 64px !important; justify-content: center; }
+    .hero-inner { transform: translateY(-6px); }
+    .hero-mark { margin-bottom: 26px; }
+    .hero-mark svg { width: 84px; height: auto; }
+    .hero-h1 { font-size: 64px !important; line-height: 1.04 !important; margin-bottom: 34px !important; }
+    .hero-sub { font-size: 21px !important; margin-bottom: 0 !important; }
+    .hero-sub-ico { width: 24px; height: 24px; vertical-align: -4px; margin-right: 10px; }
   `,
 })
 // let the hero entrance animation finish

@@ -36,7 +36,7 @@ export default function PrivacyPage() {
 
           <Section n="1" title="Who We Are">
             <p>
-              xysq ("we", "us", "our") is a trust layer for AI agents and teams. We operate the
+              xysq ("we", "us", "our") is a context platform for AI agents and teams. We operate the
               service at <strong>xysq.ai</strong> and the API at <strong>api.xysq.ai</strong>. To
               contact us about privacy, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>

@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async'
 
 const BASE_URL = 'https://xysq.ai'
-const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`
+// the query is a cache-buster for X, LinkedIn and Slack; bump it when the card changes
+const DEFAULT_IMAGE = `${BASE_URL}/og-image.png?v=2026-09`
 
 export default function SEO({
   title,

@@ -27,7 +27,7 @@ export default function BlogIndexPage() {
     <>
       <SEO
         title="Blog"
-        description="Notes from the team building xysq, the trust layer for AI agents and teams."
+        description="Notes from the team building xysq, the context platform for reliable, human-like agents."
         path="/blog"
         schema={[schema, breadcrumbSchema([
           { name: 'Home', item: '/' },
@@ -39,7 +39,7 @@ export default function BlogIndexPage() {
       <main className="blog-index">
         <header className="blog-index__hero">
           <h1>Blog</h1>
-          <p>Notes from the team building xysq, the trust layer for AI agents and teams.</p>
+          <p>Notes from the team building xysq, the context platform for reliable, human-like agents.</p>
         </header>
         <BlogPostList posts={posts} />
       </main>
