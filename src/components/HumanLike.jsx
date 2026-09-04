@@ -124,8 +124,7 @@ export default function HumanLike() {
           <span className="hl-light">What</span> <em>human-like</em> <span className="hl-light">looks like.</span>
         </motion.h2>
         <motion.p className="hl-deck" {...fade(0.08)}>
-          More than static data. The context layer keeps how you write, what
-          you prefer and what your words mean, so your agent can act on it.
+          The context layer keeps behavioural data, not just static data.
         </motion.p>
 
         <ul className="hl-cards">
