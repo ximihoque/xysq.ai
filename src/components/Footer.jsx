@@ -37,10 +37,6 @@ const COMPANY_LINKS = [
   { label: 'Privacy', to: '/privacy' },
 ]
 
-const COMPARE_LINKS = [
-  { label: 'vs mem0', to: '/compare/mem0' },
-]
-
 const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/xysq-ai', Icon: GithubIcon },
   { label: 'X',      href: 'https://x.com/xysq_ai',      Icon: XIcon },
@@ -68,6 +64,7 @@ function FooterLink({ to, href, external, children }) {
 }
 
 export default function Footer() {
+  const { pathname } = useLocation()
   return (
     <footer className="ft">
       <div className="ft-inner">
@@ -85,30 +82,25 @@ export default function Footer() {
 
           {/* Link columns */}
           <div className="ft-cols">
-            <div className="ft-col">
-              <h4 className="ft-col-title">Use cases</h4>
-              <ul>
-                {USE_CASE_CATEGORIES.map((c) => (
-                  <li key={c.slug}>
-                    <FooterLink to={`/use-cases/${c.slug}`}>{c.title}</FooterLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* the landing page keeps its own story; the pages stay linked
+                from every other page */}
+            {pathname !== '/' && (
+              <div className="ft-col">
+                <h4 className="ft-col-title">Use cases</h4>
+                <ul>
+                  {USE_CASE_CATEGORIES.map((c) => (
+                    <li key={c.slug}>
+                      <FooterLink to={`/use-cases/${c.slug}`}>{c.title}</FooterLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="ft-col">
               <h4 className="ft-col-title">Resources</h4>
               <ul>
                 {RESOURCE_LINKS.map((l) => (
-                  <li key={l.label}><FooterLink {...l}>{l.label}</FooterLink></li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="ft-col">
-              <h4 className="ft-col-title">Compare</h4>
-              <ul>
-                {COMPARE_LINKS.map((l) => (
                   <li key={l.label}><FooterLink {...l}>{l.label}</FooterLink></li>
                 ))}
               </ul>

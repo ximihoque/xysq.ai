@@ -79,7 +79,8 @@
 
 .ft-cols {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* two columns on the landing page, three elsewhere */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 32px;
 }
 
