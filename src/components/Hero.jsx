@@ -95,10 +95,9 @@ export default function Hero() {
             <span className="hero-h1-light">to</span> 10x your business.
           </motion.h1>
 
-          {/* the one word in the headline that needs a gloss, glossed */}
           <motion.p {...fade(0.12)} className="hero-sub">
             <BadgeCheck size={18} strokeWidth={2.2} className="hero-sub-ico" aria-hidden="true" />
-            <span className="hero-sub-strong">human-like:</span> AI agents you can trust.
+            Provide your agents the context they deserve to get the outcome your business needs.
           </motion.p>
 
 
