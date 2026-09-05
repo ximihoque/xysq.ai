@@ -101,6 +101,33 @@ h1.hero-h1 {
   color: var(--cyan);
 }
 
+/* ── the rotating middle line ── */
+.hero-rot {
+  display: block;
+  position: relative;
+}
+
+.hero-rot-word {
+  display: inline-block;
+  position: relative;
+  color: var(--cyan);
+  will-change: transform, opacity, filter;
+}
+
+/* the twinkle: each star scales in and out once, on its own delay */
+.hero-sparks { position: absolute; inset: 0; pointer-events: none; color: var(--cyan); }
+.hero-spark {
+  position: absolute;
+  transform: scale(0);
+  opacity: 0;
+  animation: hero-spark 0.9s ease-out both;
+}
+@keyframes hero-spark {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  40% { transform: scale(1) rotate(20deg); opacity: 1; }
+  100% { transform: scale(0) rotate(45deg); opacity: 0; }
+}
+
 /* the engine name pops to full text color (white on dark, near-black on light) */
 .hero-sub-strong {
   color: var(--paper);

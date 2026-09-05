@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { BadgeCheck, ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
@@ -13,6 +14,63 @@ const fade = (delay = 0) => ({
 })
 
 const tap = { type: 'spring', stiffness: 400, damping: 25 }
+
+// the middle line of the headline, in the order the argument runs
+const ROTATE = ['reliable agents', 'behaviourally consistent agents', 'human-like agents']
+const ROTATE_EVERY = 2800
+
+// five small four-point stars around the phrase, fixed spots so the twinkle
+// is the same every time. x/y in % of the phrase box, delay in ms
+const SPARKS = [
+  [-6, 6, 15, 0], [10, -34, 10, 120], [52, -40, 14, 60], [86, -20, 10, 200], [103, 20, 13, 160],
+]
+
+function Sparkles() {
+  return (
+    <span className="hero-sparks" aria-hidden="true">
+      {SPARKS.map(([x, y, size, delay], i) => (
+        <svg key={i} className="hero-spark" viewBox="0 0 24 24" width={size} height={size}
+          style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${delay}ms` }}>
+          <path d="M12 0c.6 7 5 11.4 12 12-7 .6-11.4 5-12 12-.6-7-5-11.4-12-12 7-.6 11.4-5 12-12z" fill="currentColor" />
+        </svg>
+      ))}
+    </span>
+  )
+}
+
+function RotatingLine() {
+  const reduce = useReducedMotion()
+  const [i, setI] = useState(0)
+
+  useEffect(() => {
+    if (reduce) return
+    const t = setInterval(() => setI((n) => (n + 1) % ROTATE.length), ROTATE_EVERY)
+    return () => clearInterval(t)
+  }, [reduce])
+
+  // reduced motion: no cycling, the brand word stays put
+  const word = reduce ? ROTATE[ROTATE.length - 1] : ROTATE[i]
+
+  return (
+    <span className="hero-rot">
+      {/* popLayout lifts the leaving phrase out of flow, so the new one
+          lands without the line collapsing in between */}
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={word}
+          className="hero-rot-word"
+          initial={{ opacity: 0, y: 16, filter: 'blur(5px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -16, filter: 'blur(5px)' }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {word}
+          {!reduce && <Sparkles />}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
 
 export default function Hero() {
   return (
@@ -30,14 +88,11 @@ export default function Hero() {
           </motion.div>
 
           <motion.h1 {...fade(0.05)} className="hero-h1">
-            {/* explicit spaces so the words stay apart when the mobile
-                stylesheet hides these breaks and lets the line wrap */}
+            {/* the middle line is its own block, so no breaks needed */}
             <span className="hero-h1-light">The</span> context platform{' '}
-            <br />
-            <span className="hero-h1-light">for</span>{' '}
-            <span className="hero-accent">reliable,</span>{' '}
-            <br />
-            human-like <span className="hero-accent">agents.</span>
+            <span className="hero-h1-light">to build</span>
+            <RotatingLine />
+            <span className="hero-h1-light">to</span> 10x your business.
           </motion.h1>
 
           {/* the one word in the headline that needs a gloss, glossed */}
