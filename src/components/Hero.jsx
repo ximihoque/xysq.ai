@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { BadgeCheck, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroTabs from './hero/HeroTabs'
@@ -96,7 +96,6 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p {...fade(0.12)} className="hero-sub">
-            <BadgeCheck size={18} strokeWidth={2.2} className="hero-sub-ico" aria-hidden="true" />
             Provide your agents the context they deserve to get the outcome your business needs.
           </motion.p>
 
