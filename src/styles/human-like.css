@@ -120,40 +120,24 @@
 }
 .hl-g--pair > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 
-/* run logs: one column per run, the new task's column in teal */
-.hl-runs {
+/* three cases, one shape each: month and rule on the left, the exchange on
+   the right. the rows repeat, which is the point */
+.hl-cases { display: flex; flex-direction: column; }
+.hl-case {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 12px;
+  align-items: start;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
 }
-.hl-run { display: flex; flex-direction: column; border-left: 1px solid var(--line); padding-left: 10px; min-width: 0; }
-.hl-run .hl-steps { flex: 1; }
-/* the one line that is the same in every column */
-.hl-outcome {
-  margin: 10px 0 0;
-  padding: 5px 8px;
-  border: 1px solid color-mix(in srgb, var(--cyan) 40%, transparent);
-  border-radius: 6px;
-  background: var(--cyan-dim);
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.76rem;
-  font-weight: 500;
-  color: var(--cyan);
-}
-.hl-steps {
-  margin: 8px 0 0;
-  padding: 0 0 0 1.2em;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
-  line-height: 1.3;
-  color: var(--paper);
-}
-.hl-steps li::marker { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--silver); }
+.hl-case:first-child { border-top: 0; padding-top: 0; }
+.hl-case:last-child { padding-bottom: 0; }
+.hl-case-when { display: flex; flex-direction: column; gap: 4px; padding-top: 7px; }
+.hl-tag.is-month { color: var(--paper); }
 @media (max-width: 520px) {
-  .hl-runs { grid-template-columns: 1fr; row-gap: 14px; }
+  .hl-case { grid-template-columns: 1fr; gap: 6px; }
+  .hl-case-when { flex-direction: row; gap: 8px; padding-top: 0; }
 }
 
 /* the source lines under an answer: the live one ticked, the old one struck */

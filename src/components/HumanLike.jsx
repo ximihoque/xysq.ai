@@ -33,30 +33,33 @@ function ReliableExample() {
   )
 }
 
-// consistent: the same request run three times. the steps differ from run
-// to run; the outcome does not. the outcome sits under each run in teal so
-// the eye lands on the one thing that is identical
-const RUNS = [
-  ['run 1, Mon', ['read order', 'check refund policy', 'verify day 22 of 30']],
-  ['run 2, Wed', ['check refund policy', 'read order', 'verify day 22 of 30']],
-  ['run 3, Fri', ['read customer history', 'read order', 'check refund policy', 'verify day 22 of 30']],
+// consistent: three customers, months apart, and the refund rule changed in
+// between. the outcome follows the rule of the day; the handling is the same
+// line every time, so the rows read as one shape repeated
+const CASES = [
+  ['Jan', '14-day rule', 'bought it 22 days ago, can I get a refund?', 'Day 22 of 14, so no refund', 'Exchange or store credit?'],
+  ['May', '14-day rule', 'refund? it has been 5 days', 'Day 5 of 14, refunded', ''],
+  ['Sept', '30-day rule', '22 days in. refund possible?', 'Day 22 of 30, refunded', ''],
 ]
-const OUTCOME = 'refunded, 30-day window'
 
 function ConsistentExample() {
   return (
     <div className="hl-g">
-      <p className="hl-tag">refund request #4821, run three times</p>
-      <div className="hl-runs">
-        {RUNS.map(([head, steps]) => (
-          <div key={head} className="hl-run">
-            <p className="hl-tag">{head}</p>
-            <ol className="hl-steps">{steps.map((st) => <li key={st}>{st}</li>)}</ol>
-            <p className="hl-outcome">{OUTCOME}</p>
+      <div className="hl-cases">
+        {CASES.map(([month, rule, ask, reply, tail]) => (
+          <div key={month} className="hl-case">
+            <div className="hl-case-when">
+              <p className="hl-tag is-month">{month}</p>
+              <p className="hl-tag">{rule}</p>
+            </div>
+            <Thread
+              user={ask}
+              agent={<>{reply} <span className="hl-src-n">[1]</span>.{tail && ` ${tail}`}</>}
+            />
           </div>
         ))}
       </div>
-      <p className="hl-tag">steps vary. outcome does not.</p>
+      <p className="hl-tag">the rule changed. the behaviour did not.</p>
     </div>
   )
 }
@@ -91,8 +94,8 @@ const PARTS = [
   },
   {
     n: '02', label: 'Behaviourally consistent', Example: ConsistentExample,
-    title: 'Same outcome, every run.',
-    body: 'Steps may vary; the outcome does not. Rules may change; the outcome follows them, in every run. Ask it ten times and it lands in the same place, because what counts as done lives in the context layer, not in the run.',
+    title: 'Same handling, every time.',
+    body: 'Rules change and customers differ. The handling does not: check the rule of the day, count the days, cite the line, then refund or offer the next best thing. Same in January, same in September.',
   },
   {
     n: '03', label: 'Human-like', Example: HumanExample,
