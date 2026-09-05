@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Ear, Scale, SlidersHorizontal, BookOpen, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
 import '../styles/human-like.css'
 
 const fade = (delay = 0) => ({
@@ -9,7 +9,7 @@ const fade = (delay = 0) => ({
   transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay },
 })
 
-// a two-line exchange, the shape every graphic here is built from
+// a two-line exchange, the shape every example here is built from
 function Thread({ user, agent }) {
   return (
     <div className="hl-thread">
@@ -19,100 +19,73 @@ function Thread({ user, agent }) {
   )
 }
 
-// the same fact, answered in the register the person used
-function ToneGraphic() {
-  return (
-    <div className="hl-g hl-g--tone">
-      <div>
-        <p className="hl-tag">casual</p>
-        <Thread user="yo did my order ship" agent="yep. went out tue, lands thu." />
-      </div>
-      <div>
-        <p className="hl-tag">formal</p>
-        <Thread user="Could you confirm dispatch?" agent="Dispatched Tuesday. Delivery is expected Thursday." />
-      </div>
-    </div>
-  )
-}
-
-// helping is not pleasing: a no, with the reason
-function StanceGraphic() {
+// reliable: the answer, the line it came from, and the value it replaced
+function ReliableExample() {
   return (
     <div className="hl-g">
-      <Thread
-        user="Ship the refund flow tonight?"
-        agent="No. Partial refunds and split payments both fail. Fix those two first, then ship."
-      />
-      <p className="hl-tag">said no, with the reason</p>
-    </div>
-  )
-}
-
-const PREFS = [
-  ['Short answers', 'from 4 chats'],
-  ['Metric units', 'told once'],
-  ['No emojis', 'told once'],
-  ['Summary on Mondays, 9 am', 'from calendar'],
-]
-
-function PrefsGraphic() {
-  return (
-    <div className="hl-g">
-      <p className="hl-tag">preferences, learned</p>
-      <ul className="hl-rows">
-        {PREFS.map(([what, from]) => (
-          <li key={what}>
-            <Check size={13} strokeWidth={2.4} className="hl-check" aria-hidden="true" />
-            <span className="hl-row-main">{what}</span>
-            <span className="hl-row-src">{from}</span>
-          </li>
-        ))}
+      <Thread user="Is the refund window 14 or 30 days?" agent="30 days, since Sept 1. It was 14 before that." />
+      <ul className="hl-srcs">
+        <li><span className="hl-src-n">[1]</span> Refund policy v2, line 4 <Check size={12} strokeWidth={2.6} className="hl-check" aria-hidden="true" /></li>
+        <li className="is-closed"><span className="hl-src-n">[1]</span> <s>14 days</s> closed Sept 1, Refund policy v1</li>
       </ul>
+      <p className="hl-tag">one answer, one source, the old value closed</p>
     </div>
   )
 }
 
-const WORDS = [
-  ['the drop', 'the next launch, Oct 3'],
-  ['the big one', 'the Acme renewal, $180k'],
-  ['Q3 deck', 'the board deck, Sept 12'],
-  ['PP', 'Pines & Pines, wholesale account'],
+// consistent: the same rule, on a different day and a different channel
+function ConsistentExample() {
+  return (
+    <div className="hl-g hl-g--pair">
+      <div>
+        <p className="hl-tag">Monday, WhatsApp</p>
+        <Thread user="Can I get 10% off this one?" agent="No discounts on rare pieces. I can hold it for you for 24 hours, though." />
+      </div>
+      <div>
+        <p className="hl-tag">Friday, email</p>
+        <Thread user="Any chance of a deal on the Argentina 2022?" agent="No discounts on rare pieces. I can hold it till Saturday night if that helps." />
+      </div>
+    </div>
+  )
+}
+
+const LEARNED = [
+  ['tone', 'casual, lowercase'],
+  ['prefers', 'short answers, no emojis'],
+  ['“the drop”', 'the next launch, Oct 3'],
 ]
 
-function VocabGraphic() {
+// human-like: your register, your words, and a no when a no is what helps
+function HumanExample() {
   return (
     <div className="hl-g">
-      <p className="hl-tag">vocabulary, yours</p>
+      <Thread user="yo can we ship the drop page tonight" agent="no. checkout still fails on split payments. fix that first, then ship." />
       <ul className="hl-rows hl-rows--words">
-        {WORDS.map(([term, means]) => (
-          <li key={term}>
-            <span className="hl-term">{term}</span>
-            <span className="hl-row-src">{means}</span>
-          </li>
+        {LEARNED.map(([k, v]) => (
+          <li key={k}><span className="hl-term">{k}</span><span className="hl-row-src">{v}</span></li>
         ))}
       </ul>
+      <p className="hl-tag">your tone, your words, and a no with the reason</p>
     </div>
   )
 }
 
-// four behaviours a conversational agent picks up from the layer, in the
-// order they show up in a real relationship
-const CARDS = [
+// one part per word in the headline, in the order the headline cycles
+const PARTS = [
   {
-    icon: Ear, label: 'Learning tone', Graphic: ToneGraphic,
-    body: 'How you write gets remembered, short and terse or long and warm. Your agent answers in that register, and still does next week.',
+    n: '01', label: 'Reliable', Example: ReliableExample,
+    title: 'Every answer has a source.',
+    body: 'Facts come from your documents, and each one points at the line it came from. When two disagree, the newer one wins and the older one closes with a date. Your agent never serves both, and never invents a third.',
   },
   {
-    icon: Scale, label: 'Setting tone', Graphic: StanceGraphic,
-    body: 'What you need from an agent is on record, not what pleases you. So your agent can push back: when the answer is no, it says no, and says why.',
+    n: '02', label: 'Behaviourally consistent', Example: ConsistentExample,
+    title: 'The same agent on Monday and on Friday.',
+    body: 'Tone, rules and preferences are recorded once and applied every session, on every channel. No drift between a good day and a bad one, and no explaining yourself again after a restart.',
   },
   {
-    icon: SlidersHorizontal, label: 'Understanding preferences', Graphic: PrefsGraphic,
-    body: 'Say it once: the length, the units, the format, the day you want the summary. Every agent you run applies it from then on.',
-  },
-  {
-    icon: BookOpen, label: 'Learning vocabulary', Graphic: VocabGraphic,
-    body: 'Your names, acronyms and nicknames are picked up from how you use them, with the source kept. Your agent uses them the way you do.',
+    n: '03', label: 'Human-like', Example: HumanExample,
+    title: 'It knows you, and it can say no.',
+    body: 'It writes in your register, uses your words, and remembers what you prefer. And it pushes back when that is what helps, because helping is not pleasing.',
   },
 ]
 
@@ -121,24 +94,24 @@ export default function HumanLike() {
     <section className="hl-section" id="human-like">
       <div className="hl-inner">
         <motion.h2 className="hl-headline" {...fade(0)}>
-          <span className="hl-light">What</span> <em>human-like</em> <span className="hl-light">looks like.</span>
+          Reliable. Consistent. <em>Human-like.</em>
         </motion.h2>
         <motion.p className="hl-deck" {...fade(0.08)}>
           The context layer learns behavioural nuances, not just static data.
         </motion.p>
 
-        <ul className="hl-cards">
-          {CARDS.map(({ icon: Icon, label, body, Graphic }, i) => (
-            <motion.li key={label} className="hl-card" {...fade(0.15 + i * 0.08)}>
-              <Graphic />
-              <span className="hl-card-head">
-                <span className="hl-card-icon" aria-hidden="true"><Icon size={16} strokeWidth={1.8} /></span>
-                <span className="hl-card-label">{label}</span>
-              </span>
-              <span className="hl-card-text">{body}</span>
-            </motion.li>
+        <div className="hl-parts">
+          {PARTS.map(({ n, label, title, body, Example }, i) => (
+            <motion.div key={n} className="hl-part" {...fade(0.1 + i * 0.06)}>
+              <div className="hl-part-copy">
+                <p className="hl-part-label"><span>{n}</span>{label}</p>
+                <h3 className="hl-part-title">{title}</h3>
+                <p className="hl-part-body">{body}</p>
+              </div>
+              <Example />
+            </motion.div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   )

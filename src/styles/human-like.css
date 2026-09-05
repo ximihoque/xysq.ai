@@ -44,59 +44,62 @@
   max-width: 58ch;
 }
 
-/* ── the cards ── */
+/* ── the three parts: copy left, one example right ── */
 
-.hl-cards {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+.hl-parts {
   width: 100%;
   max-width: 1080px;
-  margin: 0;
-  padding: 0;
-}
-
-@media (max-width: 800px) {
-  .hl-cards { grid-template-columns: 1fr; }
-}
-
-.hl-card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px 18px 22px;
-  border: 1px solid color-mix(in srgb, var(--silver) 40%, transparent);
-  border-radius: 20px;
 }
 
-.hl-card-head { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
-
-.hl-card-icon {
+.hl-part {
   display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px;
+  align-items: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+.hl-part:first-child { border-top: 0; padding-top: 8px; }
+.hl-part:last-child { padding-bottom: 8px; }
+
+.hl-part-copy { display: flex; flex-direction: column; gap: 12px; }
+
+.hl-part-label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--cyan);
 }
+.hl-part-label span { color: var(--silver); }
 
-.hl-card-label {
+.hl-part-title {
+  margin: 0;
   font-family: 'Outfit', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.55rem;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--paper);
 }
 
-.hl-card-text {
+.hl-part-body {
+  margin: 0;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.95rem;
+  line-height: 1.6;
   color: var(--silver);
-  max-width: 52ch;
+  max-width: 46ch;
+}
+
+@media (max-width: 800px) {
+  .hl-part { grid-template-columns: 1fr; gap: 20px; padding: 32px 0; }
 }
 
 /* ── the graphics: a panel with a tiny thread or list in it ── */
@@ -105,18 +108,35 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 150px;
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--surface);
 }
 
-.hl-g--tone {
+.hl-g--pair {
   flex-direction: row;
   gap: 14px;
 }
-.hl-g--tone > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.hl-g--pair > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+
+/* the source lines under an answer: the live one ticked, the old one struck */
+.hl-srcs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+}
+.hl-srcs li { display: flex; align-items: center; gap: 6px; }
+.hl-srcs .is-closed { color: var(--silver); }
+.hl-src-n { color: var(--cyan); }
+.hl-srcs .hl-check { margin-left: 2px; }
 
 .hl-tag {
   margin: 0;
@@ -181,5 +201,5 @@
 }
 
 @media (max-width: 520px) {
-  .hl-g--tone { flex-direction: column; }
+  .hl-g--pair { flex-direction: column; }
 }
