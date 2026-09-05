@@ -66,4 +66,9 @@
   .sc .hs-eyebrow { display: none; }
   .sc-item { padding: 8px 0; }
   .sc-blurb { font-size: 0.8rem; }
+  /* in the use-case stage the chapter titles stay tappable, but the note
+     under the live chapter is hidden on a phone: it moved as the thread
+     played and shoved the phone around. the faq keeps its blurbs (its own
+     rule, faq.css) because there the blurb is the answer */
+  .hero-stage-wrap .sc-blurb { display: none; }
 }
