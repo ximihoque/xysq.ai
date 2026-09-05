@@ -132,6 +132,13 @@ h1.hero-h1 {
 .hero-sub-strong {
   color: var(--paper);
   font-weight: 500;
+  /* a hand-drawn arc under the phrase, in lychee (#ff6b7a, same in both
+     themes; a data uri cannot read the token). clone keeps the arc under
+     each fragment when the phrase wraps on a phone */
+  padding-bottom: 4px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M1.5 6C26 1.5 52 8.5 98.5 3' fill='none' stroke='%23ff6b7a' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 100% 7px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* ── Sub: engine intro + governance line ── */
