@@ -137,9 +137,10 @@ h1.hero-h1 {
 /* ── Sub: engine intro + governance line ── */
 .hero-sub {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-size: clamp(1.1rem, 1.45vw, 1.35rem);
   font-weight: 400;
-  color: var(--silver);
+  /* a step up from silver: this line has to be read, not skimmed */
+  color: color-mix(in srgb, var(--paper) 62%, var(--silver));
   line-height: 1.62;
   margin-bottom: 18px;
   max-width: 52ch;
