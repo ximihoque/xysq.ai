@@ -33,31 +33,30 @@ function ReliableExample() {
   )
 }
 
-// consistent: one task run three times takes the same path, step for step;
-// a different task takes the same strategy. shown as run logs, not chat,
-// because the point is the steps, not the words
-const REFUND_PATH = ['read order', 'check refund policy', 'verify 30-day window', 'approve, notify']
-const EXCHANGE_PATH = ['read order', 'check exchange policy', 'verify 30-day window', 'approve, notify']
-const RUNS = [['run 1', 'Mon'], ['run 2', 'Wed'], ['run 3', 'Fri']]
-
-function Run({ head, steps, fresh }) {
-  return (
-    <div className={`hl-run ${fresh ? 'is-new' : ''}`}>
-      <p className="hl-tag">{head}</p>
-      <ol className="hl-steps">{steps.map((s) => <li key={s}>{s}</li>)}</ol>
-    </div>
-  )
-}
+// consistent: the same request run three times. the steps differ from run
+// to run; the outcome does not. the outcome sits under each run in teal so
+// the eye lands on the one thing that is identical
+const RUNS = [
+  ['run 1, Mon', ['read order', 'check refund policy', 'verify day 22 of 30']],
+  ['run 2, Wed', ['check refund policy', 'read order', 'verify day 22 of 30']],
+  ['run 3, Fri', ['read customer history', 'read order', 'check refund policy', 'verify day 22 of 30']],
+]
+const OUTCOME = 'refunded, 30-day window'
 
 function ConsistentExample() {
   return (
     <div className="hl-g">
       <p className="hl-tag">refund request #4821, run three times</p>
       <div className="hl-runs">
-        {RUNS.map(([r, d]) => <Run key={r} head={`${r}, ${d}`} steps={REFUND_PATH} />)}
-        <Run head="new task, exchange" steps={EXCHANGE_PATH} fresh />
+        {RUNS.map(([head, steps]) => (
+          <div key={head} className="hl-run">
+            <p className="hl-tag">{head}</p>
+            <ol className="hl-steps">{steps.map((st) => <li key={st}>{st}</li>)}</ol>
+            <p className="hl-outcome">{OUTCOME}</p>
+          </div>
+        ))}
       </div>
-      <p className="hl-tag">same task, same path. new task, same strategy.</p>
+      <p className="hl-tag">steps vary. outcome does not.</p>
     </div>
   )
 }
@@ -92,8 +91,8 @@ const PARTS = [
   },
   {
     n: '02', label: 'Behaviourally consistent', Example: ConsistentExample,
-    title: 'Same task, same path, every run.',
-    body: 'Same steps, same tool calls, same decision, run after run. A new task gets the same strategy, not a new invention. The steps come from your playbook in the context layer, so the model does not improvise them.',
+    title: 'Same outcome, every run.',
+    body: 'Steps may vary; the outcome does not. Rules may change; the outcome follows them, in every run. Ask it ten times and it lands in the same place, because what counts as done lives in the context layer, not in the run.',
   },
   {
     n: '03', label: 'Human-like', Example: HumanExample,
