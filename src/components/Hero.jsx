@@ -96,7 +96,8 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p {...fade(0.12)} className="hero-sub">
-            Provide your agents the context they deserve to get the outcome your business needs.
+            Provide your agents <span className="hero-sub-strong">the context they deserve</span> to get the{' '}
+            <span className="hero-sub-strong">outcome your business needs</span>.
           </motion.p>
 
 
