@@ -3,8 +3,16 @@ import { ChevronDown, Zap } from 'lucide-react'
 import { BRAND_PATHS } from './brandPaths'
 import '../styles/agent-signup.css'
 
-// "Take the test drive with our agent": country code, number, one button. The button is
-// a placeholder for now and does nothing on purpose.
+// "Take the test drive with our agent": country code, number, one button.
+// The number is a lead, nothing more: we cannot message first, and the deep
+// link opens whatever WhatsApp account the person actually holds, which is
+// the number we learn when their message arrives (backend spec 2026-09-06,
+// section 1). So: post the lead (best effort, never awaited), then open
+// WhatsApp with the drafted message the backend recognises.
+
+const API = 'https://api.xysq.ai'
+const WA_NUMBER = '918197647888'
+const WA_MESSAGE = 'Hi xysq, I want my agent.'
 
 const COUNTRIES = [
   ['IN', '🇮🇳', '+91'], ['US', '🇺🇸', '+1'], ['GB', '🇬🇧', '+44'], ['AE', '🇦🇪', '+971'],
@@ -17,8 +25,22 @@ export default function AgentSignup() {
   const [num, setNum] = useState('')
   const c = COUNTRIES.find((x) => x[0] === cc)
 
+  function onSubmit(e) {
+    e.preventDefault()
+    const digits = (c[2] + num).replace(/\D/g, '')
+    if (digits.length >= 8 && digits.length <= 15) {
+      fetch(`${API}/api/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: digits, source: 'website' }),
+        keepalive: true,
+      }).catch(() => {})
+    }
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`, '_blank', 'noopener')
+  }
+
   return (
-    <form className="as" onSubmit={(e) => e.preventDefault()} aria-label="Take the test drive">
+    <form className="as" onSubmit={onSubmit} aria-label="Take the test drive">
       <p className="as-title">
         <Zap size={20} strokeWidth={2.2} className="as-bolt" aria-hidden="true" />
         Take the test drive with our agent.
