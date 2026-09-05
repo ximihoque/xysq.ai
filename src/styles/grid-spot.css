@@ -18,11 +18,11 @@
   will-change: transform, opacity;
   /* fill only, no outline: a hard teal border on a 72px square reads as a
      selection rectangle rather than as the grid lighting up */
-  background: color-mix(in srgb, var(--cyan) 17%, transparent);
+  background: color-mix(in srgb, var(--cyan) 9%, transparent);
 }
 
 [data-theme='light'] .grid-cell {
-  background: color-mix(in srgb, var(--cyan) 12%, transparent);
+  background: color-mix(in srgb, var(--cyan) 6%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

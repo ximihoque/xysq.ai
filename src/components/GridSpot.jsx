@@ -14,7 +14,7 @@ import '../styles/grid-spot.css'
 // mousemove.
 
 const POOL = 16
-const FADE = 900
+const FADE = 630
 
 export default function GridSpot() {
   const host = useRef(null)
