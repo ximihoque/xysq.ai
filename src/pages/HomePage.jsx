@@ -15,6 +15,7 @@ export default function HomePage() {
     <PageTransition>
       <SEO
         path="/"
+        imageAlt="xysq.ai · The context platform to build reliable agents to 10x your business."
         description="The context platform for reliable, human-like agents. Every fact keeps its source, old versions close instead of piling up, and you control who sees what."
         keywords={['context platform', 'reliable agents', 'human-like agents', 'AI agent memory', 'context engineering', 'AI agents', 'agent memory layer']}
         schema={{

@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer-core'
 
 // og-image.png = a real screenshot of the hero in the dark theme: the mark,
-// the three-line headline, the human-like gloss. Nothing else. Needs the dev
+// the three-line headline with "reliable agents" held, the subtext. Nothing else. Needs the dev
 // server running:
 //   npm run dev   (in another shell)
 //   node scripts/generate-main-og.mjs [url]
@@ -13,6 +13,9 @@ const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'shel
 const page = await browser.newPage()
 await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 2 })
 await page.evaluateOnNewDocument(() => localStorage.setItem('theme', 'dark'))
+// freeze the rotating middle line on its first word ("reliable agents"):
+// the rotation is a setInterval, so a no-op interval never advances it
+await page.evaluateOnNewDocument(() => { window.setInterval = () => 0 })
 await page.goto(TARGET, { waitUntil: 'networkidle0', timeout: 30000 })
 
 // card composition: only the copy block, centred, scaled up for a 1200x630
@@ -20,7 +23,7 @@ await page.goto(TARGET, { waitUntil: 'networkidle0', timeout: 30000 })
 await page.addStyleTag({
   content: `
     nav, .hero-signup, .hero-btns, .hero-strip, .hero-jump, .hero-stage-wrap,
-    #hero ~ * { display: none !important; }
+    #hero ~ *, .hero-sparks { display: none !important; }
     #hero { min-height: 100vh; padding: 0 64px !important; justify-content: center; }
     .hero-inner { transform: translateY(-6px); }
     .hero-mark { margin-bottom: 26px; }
