@@ -120,6 +120,31 @@
 }
 .hl-g--pair > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 
+/* run logs: one column per run, the new task's column in teal */
+.hl-runs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.hl-run { border-left: 1px solid var(--line); padding-left: 10px; min-width: 0; }
+.hl-run.is-new { border-left-color: color-mix(in srgb, var(--cyan) 55%, transparent); }
+.hl-run.is-new .hl-tag { color: var(--cyan); }
+.hl-steps {
+  margin: 8px 0 0;
+  padding: 0 0 0 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: var(--paper);
+}
+.hl-steps li::marker { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--silver); }
+@media (max-width: 520px) {
+  .hl-runs { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 16px; }
+}
+
 /* the source lines under an answer: the live one ticked, the old one struck */
 .hl-srcs {
   list-style: none;

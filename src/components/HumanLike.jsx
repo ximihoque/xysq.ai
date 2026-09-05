@@ -33,18 +33,31 @@ function ReliableExample() {
   )
 }
 
-// consistent: the same rule, on a different day and a different channel
+// consistent: one task run three times takes the same path, step for step;
+// a different task takes the same strategy. shown as run logs, not chat,
+// because the point is the steps, not the words
+const REFUND_PATH = ['read order', 'check refund policy', 'verify 30-day window', 'approve, notify']
+const EXCHANGE_PATH = ['read order', 'check exchange policy', 'verify 30-day window', 'approve, notify']
+const RUNS = [['run 1', 'Mon'], ['run 2', 'Wed'], ['run 3', 'Fri']]
+
+function Run({ head, steps, fresh }) {
+  return (
+    <div className={`hl-run ${fresh ? 'is-new' : ''}`}>
+      <p className="hl-tag">{head}</p>
+      <ol className="hl-steps">{steps.map((s) => <li key={s}>{s}</li>)}</ol>
+    </div>
+  )
+}
+
 function ConsistentExample() {
   return (
-    <div className="hl-g hl-g--pair">
-      <div>
-        <p className="hl-tag">Monday, WhatsApp</p>
-        <Thread user="Can I get 10% off this one?" agent="No discounts on rare pieces. I can hold it for you for 24 hours." />
+    <div className="hl-g">
+      <p className="hl-tag">refund request #4821, run three times</p>
+      <div className="hl-runs">
+        {RUNS.map(([r, d]) => <Run key={r} head={`${r}, ${d}`} steps={REFUND_PATH} />)}
+        <Run head="new task, exchange" steps={EXCHANGE_PATH} fresh />
       </div>
-      <div>
-        <p className="hl-tag">Friday, email</p>
-        <Thread user="Any chance of a deal on the Argentina 2022?" agent="No discounts on rare pieces. I can hold it for you for 24 hours." />
-      </div>
+      <p className="hl-tag">same task, same path. new task, same strategy.</p>
     </div>
   )
 }
@@ -79,8 +92,8 @@ const PARTS = [
   },
   {
     n: '02', label: 'Behaviourally consistent', Example: ConsistentExample,
-    title: 'Same situation, same call, every time.',
-    body: 'Rules, tone and preferences live in the context layer, not in one session’s prompt. Ask ten ways, on any channel, any day: same answer.',
+    title: 'Same task, same path, every run.',
+    body: 'Same steps, same tool calls, same decision, run after run. A new task gets the same strategy, not a new invention. The steps come from your playbook in the context layer, so the model does not improvise them.',
   },
   {
     n: '03', label: 'Human-like', Example: HumanExample,
