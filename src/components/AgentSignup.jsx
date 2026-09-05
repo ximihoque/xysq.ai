@@ -3,7 +3,7 @@ import { ChevronDown, Zap } from 'lucide-react'
 import { BRAND_PATHS } from './brandPaths'
 import '../styles/agent-signup.css'
 
-// "Get your agent in 3 mins": country code, number, one button. The button is
+// "Take the test drive with our agent": country code, number, one button. The button is
 // a placeholder for now and does nothing on purpose.
 
 const COUNTRIES = [
@@ -18,14 +18,10 @@ export default function AgentSignup() {
   const c = COUNTRIES.find((x) => x[0] === cc)
 
   return (
-    <form className="as" onSubmit={(e) => e.preventDefault()} aria-label="Get your agent">
+    <form className="as" onSubmit={(e) => e.preventDefault()} aria-label="Take the test drive">
       <p className="as-title">
         <Zap size={20} strokeWidth={2.2} className="as-bolt" aria-hidden="true" />
-        Get your agent in{' '}
-        <span className="as-swap" aria-label="3 minutes, not 30 days">
-          <b className="as-new">3 mins</b>
-          <s className="as-old">30 days</s>
-        </span>
+        Take the test drive with our agent.
       </p>
       <div className="as-pill">
         <label className="as-cc">
