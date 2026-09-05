@@ -76,7 +76,7 @@ export default function Footer() {
               <span className="ft-logo-word">xysq<span>.ai</span></span>
             </Link>
             <p className="ft-tagline">
-              The context platform for reliable, human-like agents.
+              The most capable context platform to build reliable AI agents for your business.
             </p>
           </div>
 
