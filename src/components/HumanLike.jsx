@@ -28,7 +28,7 @@ function ReliableExample() {
         <li><span className="hl-src-n">[1]</span> Refund policy v2, line 4 <Check size={12} strokeWidth={2.6} className="hl-check" aria-hidden="true" /></li>
         <li className="is-closed"><span className="hl-src-n">[1]</span> <s>14 days</s> closed Sept 1, Refund policy v1</li>
       </ul>
-      <p className="hl-tag">one answer, one source, the old value closed</p>
+      <p className="hl-tag">one source, old value closed</p>
     </div>
   )
 }
@@ -39,11 +39,11 @@ function ConsistentExample() {
     <div className="hl-g hl-g--pair">
       <div>
         <p className="hl-tag">Monday, WhatsApp</p>
-        <Thread user="Can I get 10% off this one?" agent="No discounts on rare pieces. I can hold it for you for 24 hours, though." />
+        <Thread user="Can I get 10% off this one?" agent="No discounts on rare pieces. I can hold it for you for 24 hours." />
       </div>
       <div>
         <p className="hl-tag">Friday, email</p>
-        <Thread user="Any chance of a deal on the Argentina 2022?" agent="No discounts on rare pieces. I can hold it till Saturday night if that helps." />
+        <Thread user="Any chance of a deal on the Argentina 2022?" agent="No discounts on rare pieces. I can hold it for you for 24 hours." />
       </div>
     </div>
   )
@@ -65,7 +65,7 @@ function HumanExample() {
           <li key={k}><span className="hl-term">{k}</span><span className="hl-row-src">{v}</span></li>
         ))}
       </ul>
-      <p className="hl-tag">your tone, your words, and a no with the reason</p>
+      <p className="hl-tag">a no, with the reason</p>
     </div>
   )
 }
@@ -74,18 +74,18 @@ function HumanExample() {
 const PARTS = [
   {
     n: '01', label: 'Reliable', Example: ReliableExample,
-    title: 'Every answer has a source.',
-    body: 'Facts come from your documents, and each one points at the line it came from. When two disagree, the newer one wins and the older one closes with a date. Your agent never serves both, and never invents a third.',
+    title: 'Right, and provable.',
+    body: 'Every fact has a source line. When facts conflict, the newer one wins and the old one closes.',
   },
   {
     n: '02', label: 'Behaviourally consistent', Example: ConsistentExample,
-    title: 'The same agent on Monday and on Friday.',
-    body: 'Tone, rules and preferences are recorded once and applied every session, on every channel. No drift between a good day and a bad one, and no explaining yourself again after a restart.',
+    title: 'Same situation, same call, every time.',
+    body: 'Rules, tone and preferences live in the context layer, not in one session’s prompt. Ask ten ways, on any channel, any day: same answer.',
   },
   {
     n: '03', label: 'Human-like', Example: HumanExample,
-    title: 'It knows you, and it can say no.',
-    body: 'It writes in your register, uses your words, and remembers what you prefer. And it pushes back when that is what helps, because helping is not pleasing.',
+    title: 'Knows you. Can say no.',
+    body: 'Your tone, your words, your preferences, and pushback when that is what helps.',
   },
 ]
 
@@ -96,9 +96,6 @@ export default function HumanLike() {
         <motion.h2 className="hl-headline" {...fade(0)}>
           Reliable. Consistent. <em>Human-like.</em>
         </motion.h2>
-        <motion.p className="hl-deck" {...fade(0.08)}>
-          The context layer learns behavioural nuances, not just static data.
-        </motion.p>
 
         <div className="hl-parts">
           {PARTS.map(({ n, label, title, body, Example }, i) => (
