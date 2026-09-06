@@ -263,8 +263,11 @@
   .hc { display: block; padding: 0; height: 564px; }
   .ph-wrap { height: 100%; }
   .hc-pull { display: none; }
-  .hc-ctl { right: 12px; bottom: 76px; }
-  .ph { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  /* the play/replay control sits in the chat header's empty right side,
+     where a call icon would be; at the bottom it landed on the composer */
+  .hc-frame .hc-ctl { top: 13px; right: 14px; bottom: auto; }
+  /* the light theme's bezel rule outranks a lone class, so say it twice */
+  .ph, [data-theme='light'] .ph { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
   .ph::before, .ph::after { display: none; }
   .ph-status { display: none; }
   .ph-compose { padding-bottom: 12px; }
