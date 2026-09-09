@@ -68,6 +68,11 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  /* a grid item's automatic minimum is its content's min-content, and in
+     WebKit the signup pill (code + a tel input's intrinsic width + button)
+     comes to ~415px, so on an iPhone the whole column grew past the screen
+     and the right edge was cut off. Chrome happened to cap the track */
+  min-width: 0;
 }
 
 /* ── Headline (carries the whole hero — no body paragraph) ──
