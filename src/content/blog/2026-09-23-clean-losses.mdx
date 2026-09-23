@@ -1,0 +1,96 @@
+---
+title: "Clean Losses: 178 of 210 Agent Failures Had No Error in Them"
+slug: "clean-losses"
+date: "2026-09-23"
+author: "ximi"
+excerpt: "We ran a customer-service agent through 443 conversations on τ²-bench. When it failed, it almost never broke. It just didn't finish the job."
+category: "Engineering"
+cover: "https://storage.googleapis.com/xysq_public/blogs/clean-losses/cover-v1.png"
+tags: ["agents", "evaluation", "tau-bench", "observability", "failure-analysis"]
+featured: false
+draft: false
+readingTimeMinutes: 6
+---
+
+import { Figure } from '../../components/mdx/Figure'
+
+The failures that bother us aren't the ones that crash. A crash is easy: there's a stack trace, an alert fires, somebody fixes it. The ones that bother us look like this. A customer asks to return some items. The agent finds the account, pulls up the order, checks the items... and then the conversation just ends. No error, no refusal, no handoff to a human. The transcript reads fine. The return never happened.
+
+We've started calling these **clean losses**: conversations that failed with nothing visibly wrong in them. We wanted to know how common they are, so we counted.
+
+## The setup
+
+[τ²-bench](https://github.com/sierra-research/tau2-bench) is Sierra's public benchmark for customer-service agents. An LLM agent handles a simulated customer (returns, exchanges, cancellations, address changes) against a written policy and a real database. At the end, the benchmark checks whether the database landed in the right state. Pass or fail.
+
+We used the retail domain, and only its 74 tasks that are graded purely on the database and the required actions. (The other 40 use an LLM as the judge, and we wanted ground truth we didn't have to trust.) The agent was gpt-oss-120b. Every task ran 6 times: 443 usable conversations, $4.99 all in.
+
+## The number
+
+233 conversations succeeded and 210 failed. Of the failures, 32 had a tool error somewhere in them: a timeout, a malformed argument, a "user not found". The other 178 had nothing. No exception, no failed call.
+
+> If your monitoring alerts on errors, it sees 32 of 210.
+
+<Figure
+  src="https://storage.googleapis.com/xysq_public/blogs/clean-losses/fig-funnel-v1.png"
+  alt="Four stacked bars narrowing 443 conversations: 233 won and 210 failed; of the 210, 32 had a tool error and 178 were clean losses; of the 178, 108 have a twin that passed and 70 are on tasks that never passed."
+  caption="Bar widths are to scale, all out of 443. Infrastructure failures (1 run) are dropped before anything is counted."
+/>
+
+## Most losses have a twin
+
+Here's the part we like. τ²-bench runs each task more than once, and the agent isn't consistent: 43 of the 74 tasks passed on some tries and failed on others.
+
+So we don't have to find a *similar* conversation that went well and then argue the two are comparable (which is where this kind of analysis usually falls apart). We can open the **same** task, same customer, same instructions, same agent, on a try where it won. 108 of the 178 clean losses have a twin like that.
+
+The other 70 come from 13 tasks the agent never passed on any try. It didn't so much lose those as never have them, so they sit in their own bucket and stay out of everything below. Counting them would make the rest look worse than it is.
+
+## Where they split
+
+Put a loss next to its twin and walk both forward, one tool call at a time, until they do something different. That first difference is where the conversation was lost.
+
+<Figure
+  src="https://storage.googleapis.com/xysq_public/blogs/clean-losses/fig-twin-v1.png"
+  alt="Two tool-call sequences side by side for the same task. Both runs make the same four lookups. At step five the losing run stops, while its twin calls return_delivered_order_items twice."
+  caption="One real pair, arguments left out. Four identical lookups, then the losing run ends the conversation where its twin issues the return."
+/>
+
+Across all 108:
+
+<Figure
+  src="https://storage.googleapis.com/xysq_public/blogs/clean-losses/fig-patterns-v1.png"
+  alt="Horizontal bars of where the 108 losses left their twin: stopped one step short 39, acted before looking it up 22, right action wrong details 14, looked up the wrong thing 11, escalated or calculated instead 10, took the wrong action 5, kept looking instead of acting 4, kept going after the winner had finished 3."
+  caption="Each loss is counted once, at its first difference from the twin. Labels are built from the tool names in the runs themselves, so a pattern can't claim something its members don't show."
+/>
+
+- **Stopped one step short:** looked everything up, then never issued the return, exchange or change.
+- **Acted before looking it up:** issued a return, cancellation or change at the point where its twin was still checking the order.
+- **Right action, wrong details:** same tool as the twin, different arguments.
+- **Escalated or calculated instead:** one run handed off to a human or ran a calculation where the other didn't.
+
+The biggest pattern is the one we opened with. In 39 of 108, the agent looked everything up and then stopped, at the exact point where its twin went on and issued the return or the exchange.
+
+"Right action, wrong details" is the one we'd show a support lead, because the examples need no explaining. It cancelled an order giving the reason "ordered by mistake" where the twin said "no longer needed". It returned four items where the twin returned one. It exchanged an item for itself.
+
+## The agent knows how
+
+This is the part we keep coming back to. In a clean loss with a twin, nothing is missing. It's the same agent, reading the same policy, that got this exact task right on another try. It knows how. It just doesn't do it every time.
+
+That's a different failure from "the agent didn't know the refund policy". The [τ-bench authors](https://arxiv.org/abs/2406.12045) saw it early: their pass^k metric asks whether an agent succeeds on every one of k tries, and they found even gpt-4o got a retail task right on all 8 tries less than a quarter of the time. Clean losses are what that looks like from inside a single transcript.
+
+## Three ways we fooled ourselves first
+
+Worth writing down, because anyone building this will hit them.
+
+- **Compare actions, not words.** Our first version diffed what the two agents said. Two LLM runs word their greeting differently, so it found the "divergence" at the greeting 91 times out of 108, and confidently reported that agents lose because they don't use bullet points.
+- **Don't let a model name the patterns.** One LLM-written label said losing agents never call `get_product_details`, while its own top example showed both runs calling it. Now every label is built from tool names that actually appear in its members, and a test fails if one doesn't.
+- **Drop dead runs before counting.** A run killed by a rate limit looks exactly like a clean loss: failed, no tool error. In one batch, 575 of 592 runs died on throttling, and the 17 survivors produced a tidy "5 of 6 failures are clean". That number meant nothing.
+
+## What this doesn't show
+
+- One model, one domain, 74 of 114 tasks. The 40 judge-graded tasks lean toward softer, conversational failures, so if anything this undercounts.
+- "No error" means no tool error. τ²-bench doesn't log policy breaches separately, so we can't claim "no policy breach" as well.
+- The customer is an LLM too. Real customers ramble more, change their minds, and leave halfway through.
+
+Every count above traces to a run id we can open. The tool that produced them is about 700 lines of Python (the part that finds clean losses is 19 of them), and it runs on your own machine with no API key.
+
+Your dashboard is probably green. **Go read the transcripts.**
