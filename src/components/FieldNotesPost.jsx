@@ -3,6 +3,11 @@ import { formatDate } from '../lib/blog'
 import { mdxComponents } from '../lib/mdxComponents'
 import '../styles/field-notes.css'
 
+// css text-transform uppercases greek too, and a capital tau reads as a latin
+// T ("T²-BENCH"). free text a writer types gets latin-only caps in js instead,
+// with css uppercasing switched off for it (.fn-caps)
+const latinCaps = (s) => s.replace(/[a-z]/g, (c) => c.toUpperCase())
+
 // `==phrase==` renders the phrase in coral. validate-posts keeps the markers
 // balanced, so every odd piece of the split is a highlight
 function Headline({ text }) {
@@ -23,14 +28,14 @@ export default function FieldNotesPost({ post }) {
     <main className="field-notes">
       <article className="fn-frame">
         <header>
-          {post.eyebrow && <p className="fn-eyebrow fn-mono">{post.eyebrow}</p>}
+          {post.eyebrow && <p className="fn-eyebrow fn-mono fn-caps">{latinCaps(post.eyebrow)}</p>}
           <Headline text={post.headline ?? post.title} />
           {dek && <p className="fn-dek">{dek}</p>}
-          <div className="fn-byline fn-mono">
-            <span>{post.author.name}</span>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span>{post.readingTime.text}</span>
-            {post.facts.map((fact) => <span key={fact}>{fact}</span>)}
+          <div className="fn-byline fn-mono fn-caps">
+            <span>{latinCaps(post.author.name)}</span>
+            <time dateTime={post.date}>{latinCaps(formatDate(post.date))}</time>
+            <span>{latinCaps(post.readingTime.text)}</span>
+            {post.facts.map((fact) => <span key={fact}>{latinCaps(fact)}</span>)}
           </div>
         </header>
         <div className="fn-prose">

@@ -76,6 +76,11 @@
   text-transform: uppercase;
 }
 
+/* already upper-cased in js, latin only; see latinCaps in FieldNotesPost */
+.field-notes .fn-caps {
+  text-transform: none;
+}
+
 /* ── header ── */
 .field-notes .fn-eyebrow {
   display: flex;
