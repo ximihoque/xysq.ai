@@ -35,6 +35,12 @@ function buildPost(path, mod) {
     draft: Boolean(fm.draft),
     featured: Boolean(fm.featured),
     related: fm.related ?? [],
+    // layout: "field-notes" opts into FieldNotesPost; the rest only matter there
+    layout: fm.layout ?? null,
+    eyebrow: fm.eyebrow ?? null,
+    headline: fm.headline ?? null,
+    dek: fm.dek ?? null,
+    facts: fm.facts ?? [],
     author,
     readingTime: { minutes: estimatedMinutes, text: `${estimatedMinutes} min read` },
     Body,

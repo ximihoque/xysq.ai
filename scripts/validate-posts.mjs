@@ -59,6 +59,21 @@ function validate() {
     if (fm.category && !categories.has(fm.category)) {
       fail(`${file}: unknown category "${fm.category}". Allowed: ${[...categories].join(', ')}`)
     }
+    // field notes layout (see src/components/FieldNotesPost.jsx)
+    if (fm.layout !== undefined && fm.layout !== 'field-notes') {
+      fail(`${file}: unknown layout "${fm.layout}". Allowed: field-notes (or leave it out)`)
+    }
+    if (fm.headline !== undefined) {
+      if (typeof fm.headline !== 'string') {
+        fail(`${file}: headline must be a string`)
+      } else if ((fm.headline.match(/==/g) ?? []).length % 2 !== 0) {
+        // an odd count would paint the rest of the headline coral
+        fail(`${file}: headline has an unbalanced "==" highlight marker`)
+      }
+    }
+    if (fm.facts !== undefined && !(Array.isArray(fm.facts) && fm.facts.every((f) => typeof f === 'string'))) {
+      fail(`${file}: facts must be an array of strings`)
+    }
     if (fm.featured === true && !fm.draft) featuredCount++
     if (fm.slug && !fm.draft) publishedSlugs.add(fm.slug)
   }

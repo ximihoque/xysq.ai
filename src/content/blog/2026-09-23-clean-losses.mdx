@@ -10,9 +10,12 @@ tags: ["agents", "evaluation", "tau-bench", "observability", "failure-analysis"]
 featured: false
 draft: false
 readingTimeMinutes: 6
+layout: "field-notes"
+eyebrow: "Field notes · τ²-bench retail"
+headline: "178 of 210 agent failures had ==no error== in them."
+dek: "We ran a customer-service agent through 443 conversations. When it failed, it almost never broke. It just didn't finish the job."
+facts: ["443 conversations", "$4.99 of compute"]
 ---
-
-import { Figure } from '../../components/mdx/Figure'
 
 The failures that bother us aren't the ones that crash. A crash is easy: there's a stack trace, an alert fires, somebody fixes it. The ones that bother us look like this. A customer asks to return some items. The agent finds the account, pulls up the order, checks the items... and then the conversation just ends. No error, no refusal, no handoff to a human. The transcript reads fine. The return never happened.
 
@@ -28,12 +31,38 @@ We used the retail domain, and only its 74 tasks that are graded purely on the d
 
 233 conversations succeeded and 210 failed. Of the failures, 32 had a tool error somewhere in them: a timeout, a malformed argument, a "user not found". The other 178 had nothing. No exception, no failed call.
 
-> If your monitoring alerts on errors, it sees 32 of 210.
+<PullQuote>If your monitoring alerts on errors, it sees 32 of 210.</PullQuote>
 
-<Figure
-  src="https://storage.googleapis.com/xysq_public/blogs/clean-losses/fig-funnel-v1.png"
-  alt="Four stacked bars narrowing 443 conversations: 233 won and 210 failed; of the 210, 32 had a tool error and 178 were clean losses; of the 178, 108 have a twin that passed and 70 are on tasks that never passed."
+<StepBars
+  title="443 runs, narrowed step by step"
   caption="Bar widths are to scale, all out of 443. Infrastructure failures (1 run) are dropped before anything is counted."
+  total={443}
+  rows={[
+    { label: "Every run", segments: [{ value: 443, kind: "all", label: "conversations" }] },
+    {
+      label: "Did it pass? (the database decides)",
+      segments: [
+        { value: 233, kind: "won", label: "won" },
+        { value: 210, kind: "lost", label: "failed" },
+      ],
+    },
+    {
+      label: "Of the failures, was there a tool error?",
+      offset: 233,
+      segments: [
+        { value: 32, kind: "err", label: "had an error, the part your logs see" },
+        { value: 178, kind: "lost", label: "clean losses" },
+      ],
+    },
+    {
+      label: "Did the same task pass on another try?",
+      offset: 265,
+      segments: [
+        { value: 108, kind: "won", label: "have a winning twin" },
+        { value: 70, kind: "never", label: "on tasks never passed" },
+      ],
+    },
+  ]}
 />
 
 ## Most losses have a twin
@@ -48,18 +77,36 @@ The other 70 come from 13 tasks the agent never passed on any try. It didn't so 
 
 Put a loss next to its twin and walk both forward, one tool call at a time, until they do something different. That first difference is where the conversation was lost.
 
-<Figure
-  src="https://storage.googleapis.com/xysq_public/blogs/clean-losses/fig-twin-v1.png"
-  alt="Two tool-call sequences side by side for the same task. Both runs make the same four lookups. At step five the losing run stops, while its twin calls return_delivered_order_items twice."
-  caption="One real pair, arguments left out. Four identical lookups, then the losing run ends the conversation where its twin issues the return."
+<Twin
+  title="One real pair, same task, same customer"
+  caption="Tool calls in order, arguments left out. Four identical lookups, then the losing run ends the conversation where its twin issues the return."
+  columns={["This run (lost)", "Its twin (won)"]}
+  split={5}
+  rows={[
+    ["find_user_id_by_email", "find_user_id_by_email"],
+    ["get_user_details", "get_user_details"],
+    ["get_order_details", "get_order_details"],
+    ["get_order_details", "get_order_details"],
+    ["(stopped)", "return_delivered_order_items"],
+    ["", "return_delivered_order_items"],
+  ]}
 />
 
 Across all 108:
 
-<Figure
-  src="https://storage.googleapis.com/xysq_public/blogs/clean-losses/fig-patterns-v1.png"
-  alt="Horizontal bars of where the 108 losses left their twin: stopped one step short 39, acted before looking it up 22, right action wrong details 14, looked up the wrong thing 11, escalated or calculated instead 10, took the wrong action 5, kept looking instead of acting 4, kept going after the winner had finished 3."
+<RankBars
+  title="Where the 108 losses left their twin"
   caption="Each loss is counted once, at its first difference from the twin. Labels are built from the tool names in the runs themselves, so a pattern can't claim something its members don't show."
+  items={[
+    { count: 39, label: "stopped one step short", note: "Looked everything up, then never issued the return, exchange or change." },
+    { count: 22, label: "acted before looking it up", note: "Issued a return, cancellation or change at the point where its twin was still checking the order." },
+    { count: 14, label: "right action, wrong details", note: "Same tool as the twin, different arguments." },
+    { count: 11, label: "looked up the wrong thing" },
+    { count: 10, label: "escalated or calculated instead", note: "One run handed off to a human or ran a calculation where the other didn't." },
+    { count: 5, label: "took the wrong action" },
+    { count: 4, label: "kept looking instead of acting" },
+    { count: 3, label: "kept going after the winner had finished" },
+  ]}
 />
 
 - **Stopped one step short:** looked everything up, then never issued the return, exchange or change.
@@ -93,4 +140,4 @@ Worth writing down, because anyone building this will hit them.
 
 Every count above traces to a run id we can open. The tool that produced them is about 700 lines of Python (the part that finds clean losses is 19 of them), and it runs on your own machine with no API key.
 
-Your dashboard is probably green. **Go read the transcripts.**
+<Verdict>Your dashboard is probably green. **Go read the transcripts.**</Verdict>

@@ -7,6 +7,7 @@ import SEO, { breadcrumbSchema } from '../components/SEO'
 import BlogPostHeader from '../components/BlogPostHeader'
 import BlogAuthorCard from '../components/BlogAuthorCard'
 import BlogTOC from '../components/BlogTOC'
+import FieldNotesPost from '../components/FieldNotesPost'
 import { getPostBySlug } from '../lib/blog'
 import { mdxComponents } from '../lib/mdxComponents'
 import '../styles/blog-fonts.css'
@@ -92,18 +93,23 @@ export default function BlogPostPage() {
         extraLinks={[{ rel: 'alternate', type: 'application/rss+xml', title: 'xysq blog', href: '/blog/rss.xml' }]}
       />
       <Nav />
-      <main className="blog-post blog-post--with-toc">
-        <BlogTOC articleRef={articleRef} />
-        <article className="blog-post__article" ref={articleRef}>
-          <BlogPostHeader post={post} />
-          <div className="blog-post__body">
-            <MDXProvider components={mdxComponents}>
-              <Body />
-            </MDXProvider>
-          </div>
-          <BlogAuthorCard author={post.author} />
-        </article>
-      </main>
+      {/* one SEO block above, two bodies: `layout: "field-notes"` opts in */}
+      {post.layout === 'field-notes' ? (
+        <FieldNotesPost post={post} />
+      ) : (
+        <main className="blog-post blog-post--with-toc">
+          <BlogTOC articleRef={articleRef} />
+          <article className="blog-post__article" ref={articleRef}>
+            <BlogPostHeader post={post} />
+            <div className="blog-post__body">
+              <MDXProvider components={mdxComponents}>
+                <Body />
+              </MDXProvider>
+            </div>
+            <BlogAuthorCard author={post.author} />
+          </article>
+        </main>
+      )}
       <Footer />
     </>
   )

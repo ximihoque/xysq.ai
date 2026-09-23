@@ -1,0 +1,417 @@
+/* field notes: the opt-in blog layout for frontmatter `layout: "field-notes"`.
+   the xysq design language on paper: dashed blueprint frame, Montserrat for
+   text, Chivo Mono for labels, teal = us, coral = the problem, zero radius,
+   zero shadows. every selector hangs off .field-notes so none of this can
+   reach another post or page. dark tokens are the default because the site's
+   CSS is dark-first; light tokens swap in under [data-theme="light"].
+   self-hosted like blog-fonts.css (no Google Fonts), weights 400 + 700 only */
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/700.css';
+@import '@fontsource/chivo-mono/400.css';
+@import '@fontsource/chivo-mono/700.css';
+
+.field-notes {
+  --fn-paper: #0F1413;
+  --fn-ink: #E8ECEB;
+  --fn-muted: #9BA5A3;
+  --fn-teal: #3BB0A1;
+  --fn-teal-wash: #13302C;
+  --fn-on-teal: #0F1413;
+  --fn-coral: #FF7A8B;
+  --fn-coral-ink: #FF8FA0;
+  --fn-coral-wash: #3A1D23;
+  --fn-frame: #56605E;
+  --fn-rule: #252C2B;
+  --fn-track: #1E2524;
+  --fn-quiet-bar: #4A5351;
+  --fn-display: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --fn-mono: "Chivo Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+}
+
+[data-theme="light"] .field-notes {
+  --fn-paper: #FAFAFA;
+  --fn-ink: #171717;
+  --fn-muted: #545B5A;
+  --fn-teal: #0B8A7D;
+  --fn-teal-wash: #E7F1F0;
+  --fn-on-teal: #FAFAFA;
+  --fn-coral: #FF6478;
+  --fn-coral-ink: #D63A55;
+  --fn-coral-wash: #FAEBED;
+  --fn-frame: #A6A6A6;
+  --fn-rule: #E4E6E5;
+  --fn-track: #ECECEC;
+  --fn-quiet-bar: #C9CECD;
+  color-scheme: light;
+}
+
+.field-notes {
+  /* positioned so the paper paints over the fixed site grid on body::before */
+  position: relative;
+  z-index: 1;
+  background: var(--fn-paper);
+  color: var(--fn-ink);
+  font-family: var(--fn-display);
+  font-size: 17px;
+  line-height: 1.68;
+  /* 64px clears the fixed nav. 24px sides = the reference's 8px default body
+     margin + its 16px padding, so the phone column is the same width */
+  padding: 64px 24px 0;
+  /* keeps the frame's bottom margin inside the paper instead of collapsing out */
+  display: flow-root;
+}
+
+.field-notes .fn-frame {
+  max-width: 860px;
+  margin: 40px auto 56px;
+  border: 1px dashed var(--fn-frame);
+  padding: 56px clamp(22px, 6vw, 72px) 40px;
+}
+
+.field-notes .fn-mono {
+  font-family: var(--fn-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── header ── */
+.field-notes .fn-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--fn-coral-ink);
+  margin: 0 0 20px;
+}
+
+.field-notes .fn-eyebrow::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  background: var(--fn-coral-ink);
+  flex: none;
+}
+
+.field-notes .fn-headline {
+  font-family: var(--fn-display);
+  font-weight: 400;
+  font-size: clamp(34px, 5.4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+  color: var(--fn-ink);
+  margin: 0 0 22px;
+  max-width: 17ch;
+}
+
+.field-notes .fn-hl { color: var(--fn-coral); }
+
+.field-notes .fn-dek {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--fn-muted);
+  max-width: 44ch;
+  margin: 0 0 40px;
+}
+
+.field-notes .fn-byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  color: var(--fn-muted);
+  padding-block: 14px;
+  border-top: 1px solid var(--fn-rule);
+  border-bottom: 1px solid var(--fn-rule);
+  margin-bottom: 44px;
+}
+
+/* ── prose ── */
+.field-notes .fn-prose > p,
+.field-notes .fn-prose > ul,
+.field-notes .fn-prose > h2 { max-width: 64ch; }
+
+.field-notes .fn-prose > p { margin: 0 0 20px; }
+
+/* the site styles every h2 as a big Outfit section title; reset all of it */
+.field-notes h2 {
+  font-family: var(--fn-display);
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  text-wrap: balance;
+  color: var(--fn-ink);
+  margin: 52px 0 16px;
+}
+
+.field-notes a { color: var(--fn-teal); text-underline-offset: 3px; }
+.field-notes a:focus-visible { outline: 2px solid var(--fn-teal); outline-offset: 2px; }
+.field-notes b,
+.field-notes strong { font-weight: 700; }
+
+.field-notes code {
+  font-family: var(--fn-mono);
+  font-size: 0.84em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* the "#" rehype-autolink-headings appends to every h2; hidden until wanted */
+.field-notes .heading-anchor {
+  margin-left: 8px;
+  color: var(--fn-muted);
+  text-decoration: none;
+  opacity: 0;
+}
+
+.field-notes h2:hover .heading-anchor,
+.field-notes .heading-anchor:focus-visible { opacity: 1; }
+
+.field-notes .fn-prose > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.field-notes .fn-prose > ul > li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.field-notes .fn-prose > ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  background: var(--fn-teal);
+}
+
+.field-notes .fn-pull {
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  margin: 28px 0;
+  padding-left: 18px;
+  border-left: 3px solid var(--fn-coral-ink);
+  max-width: 34ch;
+}
+
+.field-notes .fn-pull p { margin: 0; }
+
+/* ── figures ── */
+.field-notes .fn-figure {
+  margin: 36px 0 40px;
+  border: 1px solid var(--fn-rule);
+  padding: 26px clamp(16px, 3.5vw, 30px) 20px;
+}
+
+.field-notes .fn-figure figcaption {
+  color: var(--fn-muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--fn-rule);
+}
+
+.field-notes .fn-figure__title { color: var(--fn-ink); margin: 0 0 20px; }
+
+/* StepBars: stacked bars, every width out of the same total */
+.field-notes .fn-steps { display: grid; gap: 22px; }
+.field-notes .fn-step__label { color: var(--fn-muted); margin-bottom: 8px; }
+
+.field-notes .fn-bar {
+  display: flex;
+  height: 30px;
+}
+
+.field-notes .fn-seg { flex: 0 0 var(--w); min-width: 0; }
+/* a paper-coloured seam between two filled segments, never after the offset */
+.field-notes .fn-seg:not(.fn-seg--gap) + .fn-seg { border-left: 2px solid var(--fn-paper); }
+.field-notes .fn-seg--all { background: var(--fn-teal-wash); }
+.field-notes .fn-seg--won { background: var(--fn-teal); }
+.field-notes .fn-seg--lost { background: var(--fn-coral-ink); }
+.field-notes .fn-seg--err { background: var(--fn-quiet-bar); }
+.field-notes .fn-seg--never { background: var(--fn-track); }
+
+.field-notes .fn-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.field-notes .fn-legend > span { display: inline-flex; align-items: baseline; gap: 7px; }
+.field-notes .fn-legend b { font-family: var(--fn-mono); font-size: 14px; }
+
+.field-notes .fn-sw {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  align-self: center;
+}
+
+.field-notes .fn-sw--won { background: var(--fn-teal); }
+.field-notes .fn-sw--lost { background: var(--fn-coral-ink); }
+.field-notes .fn-sw--err { background: var(--fn-quiet-bar); }
+.field-notes .fn-sw--never { background: var(--fn-track); outline: 1px solid var(--fn-quiet-bar); outline-offset: -1px; }
+
+.field-notes .fn-step__note,
+.field-notes .fn-rank__note {
+  color: var(--fn-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+/* Twin: two runs side by side; the table scrolls inside its own box so the
+   page never scrolls sideways on a phone */
+.field-notes .fn-scroll { overflow-x: auto; }
+
+.field-notes .fn-twin {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 520px;
+  font-variant-numeric: tabular-nums;
+  /* the design reference renders in quirks mode (no doctype), where tables
+     get line-height: normal; this keeps its 35px rows instead of 42px */
+  line-height: normal;
+}
+
+.field-notes .fn-twin th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--fn-muted);
+  padding: 0 12px 10px 0;
+  border-bottom: 1px solid var(--fn-rule);
+}
+
+.field-notes .fn-twin th.fn-twin__lost { color: var(--fn-coral-ink); }
+.field-notes .fn-twin th.fn-twin__won { color: var(--fn-teal); }
+
+.field-notes .fn-twin td {
+  font-family: var(--fn-mono);
+  font-size: 13.5px;
+  padding: 9px 12px 9px 0;
+  border-bottom: 1px solid var(--fn-rule);
+  white-space: nowrap;
+}
+
+.field-notes .fn-twin td.fn-twin__n { color: var(--fn-muted); width: 2.5em; }
+.field-notes .fn-twin__same td:not(.fn-twin__n) { color: var(--fn-muted); }
+.field-notes .fn-twin__split td { font-weight: 700; }
+.field-notes .fn-twin__split td.fn-twin__l { color: var(--fn-coral-ink); background: var(--fn-coral-wash); padding-left: 10px; }
+.field-notes .fn-twin__split td.fn-twin__w { color: var(--fn-teal); background: var(--fn-teal-wash); padding-left: 10px; }
+.field-notes .fn-twin__after td.fn-twin__w { color: var(--fn-teal); }
+.field-notes .fn-twin__after td.fn-twin__l { color: var(--fn-muted); }
+
+.field-notes .fn-flag {
+  display: inline-block;
+  margin-left: 10px;
+  font-family: var(--fn-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--fn-ink);
+}
+
+/* RankBars: bars scale to the largest count */
+.field-notes .fn-rank {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.field-notes .fn-rank__item {
+  display: grid;
+  grid-template-columns: 2.4em 1fr;
+  column-gap: 12px;
+  align-items: baseline;
+}
+
+.field-notes .fn-rank__count {
+  font-family: var(--fn-mono);
+  font-weight: 700;
+  font-size: 15px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.field-notes .fn-rank__label { font-size: 15.5px; line-height: 1.4; }
+
+.field-notes .fn-rank__track {
+  display: block;
+  grid-column: 2;
+  height: 8px;
+  background: var(--fn-track);
+  margin-top: 6px;
+}
+
+.field-notes .fn-rank__fill {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  background: var(--fn-coral-ink);
+}
+
+.field-notes .fn-rank__note { grid-column: 2; }
+
+/* ── close ── */
+.field-notes .fn-verdict {
+  margin: 48px 0 28px;
+  background: var(--fn-teal);
+  color: var(--fn-on-teal);
+  padding: 20px 22px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.field-notes .fn-verdict::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  background: var(--fn-on-teal);
+  flex: none;
+  align-self: center;
+}
+
+.field-notes .fn-verdict p { margin: 0; }
+
+/* responsive.css restyles every <footer> under 980px; pin this one back */
+.field-notes .fn-foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  text-align: left;
+  color: var(--fn-muted);
+  padding: 18px 0 0;
+  border-top: 1px solid var(--fn-rule);
+}
+
+@media (max-width: 620px) {
+  .field-notes { font-size: 16.5px; }
+  .field-notes .fn-frame {
+    border-left: 0;
+    border-right: 0;
+    padding-inline: 0;
+    margin-top: 20px;
+  }
+  .field-notes .fn-dek { font-size: 17.5px; }
+  .field-notes .fn-pull { font-size: 19px; }
+}
