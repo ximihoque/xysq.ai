@@ -69,6 +69,69 @@
   padding: 56px clamp(22px, 6vw, 72px) 40px;
 }
 
+/* ── contents ──
+   the site's own BlogTOC (headings, scroll-spy, back link) in this palette.
+   blog-toc.css hides it at 1100px and below, same as every other post, so
+   it is a desktop sidebar. 1101px, not 1100: at exactly 1100 blog-toc.css
+   has already hidden it and the grid would leave an empty column */
+@media (min-width: 1101px) {
+  .field-notes {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 860px);
+    column-gap: 56px;
+    justify-content: center;
+    align-items: start;
+  }
+  .field-notes .fn-frame { margin-inline: 0; }
+}
+.field-notes .blog-toc {
+  font-family: var(--fn-display);
+  color: var(--fn-muted);
+  gap: 28px;
+  /* lines the back link up with the frame's top edge */
+  margin-top: 40px;
+  top: 104px;
+}
+.field-notes .blog-toc__back {
+  font-family: var(--fn-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fn-muted);
+}
+.field-notes .blog-toc__back:hover { color: var(--fn-ink); }
+.field-notes .blog-toc__label {
+  font-family: var(--fn-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fn-ink);
+}
+.field-notes .blog-toc__nav ul {
+  gap: 2px;
+  border-left: 1px solid var(--fn-rule);
+}
+.field-notes .blog-toc__item a {
+  padding: 5px 0 5px 14px;
+  /* the active bar sits on top of the hairline, not beside it */
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  color: var(--fn-muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.field-notes .blog-toc__item--h3 a { padding-left: 28px; }
+.field-notes .blog-toc__item a:hover { color: var(--fn-ink); }
+.field-notes .blog-toc__item.is-active a {
+  color: var(--fn-ink);
+  border-left-color: var(--fn-teal);
+}
+.field-notes .blog-toc a:focus-visible {
+  outline: 2px solid var(--fn-teal);
+  outline-offset: 2px;
+}
+
 .field-notes .fn-mono {
   font-family: var(--fn-mono);
   font-size: 12px;

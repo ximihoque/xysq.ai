@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import { MDXProvider } from '@mdx-js/react'
+import BlogTOC from './BlogTOC'
 import { formatDate } from '../lib/blog'
 import { mdxComponents } from '../lib/mdxComponents'
 import '../styles/field-notes.css'
@@ -19,14 +21,17 @@ function Headline({ text }) {
 }
 
 // the `layout: "field-notes"` post body. BlogPostPage still owns the SEO,
-// Nav and Footer; this replaces only the TOC + cover header + author card.
-// the byline carries the author, so there is no author card at the bottom
+// Nav and Footer; this replaces the cover header + author card and dresses
+// the site's own BlogTOC in the field-notes palette. the byline carries the
+// author, so there is no author card at the bottom
 export default function FieldNotesPost({ post }) {
   const Body = post.Body
   const dek = post.dek ?? post.excerpt
+  const articleRef = useRef(null)
   return (
     <main className="field-notes">
-      <article className="fn-frame">
+      <BlogTOC articleRef={articleRef} />
+      <article className="fn-frame" ref={articleRef}>
         <header>
           {post.eyebrow && <p className="fn-eyebrow fn-mono fn-caps">{latinCaps(post.eyebrow)}</p>}
           <Headline text={post.headline ?? post.title} />
