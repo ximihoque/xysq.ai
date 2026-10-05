@@ -1,7 +1,7 @@
 import SEO, { breadcrumbSchema } from '../components/SEO'
 import '../styles/privacy.css'
 
-const EFFECTIVE_DATE = 'April 6, 2026'
+const EFFECTIVE_DATE = 'October 5, 2026'
 const CONTACT_EMAIL = 'privacy@xysq.ai'
 
 export default function PrivacyPage() {
@@ -36,8 +36,9 @@ export default function PrivacyPage() {
 
           <Section n="1" title="Who We Are">
             <p>
-              xysq ("we", "us", "our") is a context platform for AI agents and teams. We operate the
-              service at <strong>xysq.ai</strong> and the API at <strong>api.xysq.ai</strong>. To
+              xysq ("we", "us", "our") is a context platform for AI agents and teams. We run the
+              website at <strong>xysq.ai</strong>, the app at <strong>app.xysq.ai</strong>, and the
+              API at <strong>api.xysq.ai</strong>. To
               contact us about privacy, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>
           </Section>
@@ -46,8 +47,12 @@ export default function PrivacyPage() {
             <Subsection title="Information you provide">
               <ul>
                 <li><strong>Memories</strong>, the text content you or your AI agents store through xysq.</li>
-                <li><strong>Account information</strong>, your email address and display name, provided via Auth0 login (email/password or Google).</li>
-                <li><strong>Profile data</strong>, optional fields you choose to fill in: occupation, location, bio, and social links.</li>
+                <li><strong>Files and images</strong> you upload, and images you attach in a chat.</li>
+                <li><strong>WhatsApp messages and your phone number</strong>, if you use the WhatsApp agent, including any chat history you choose to import.</li>
+                <li><strong>Email and calendar content</strong>, only if you connect Gmail or Google Calendar.</li>
+                <li><strong>Public LinkedIn, X, and website content</strong> you choose to import.</li>
+                <li><strong>Account information</strong>, your email address and display name, provided when you sign in through Auth0 (for example with Google).</li>
+                <li><strong>Profile data</strong>, optional fields you choose to fill in: your role, company, focus, location, and preferences.</li>
               </ul>
             </Subsection>
             <Subsection title="Information generated automatically">
@@ -55,12 +60,13 @@ export default function PrivacyPage() {
                 <li><strong>Activity logs</strong>, which agents accessed which memories and when (used for your dashboard, not for advertising).</li>
                 <li><strong>API tokens</strong>, stored as one-way SHA-256 hashes; the raw token is shown to you once and never stored in plain text.</li>
                 <li><strong>Usage metadata</strong>, memory counts, timestamps, and tags attached to memories.</li>
+                <li><strong>Request logs</strong>, the time, the action called, your user ID, and your IP address for each request to our API.</li>
+                <li><strong>Website analytics</strong>, our marketing site (xysq.ai) uses Google Analytics and the Apollo.io website tracker to understand visits to the site. The xysq app (app.xysq.ai) loads no analytics trackers.</li>
               </ul>
             </Subsection>
             <Subsection title="What we do NOT collect">
               <ul>
-                <li>We do not use cookies for tracking or advertising.</li>
-                <li>We do not collect payment information directly (Stripe handles billing if applicable).</li>
+                <li>We do not take payments today, so we hold no payment information.</li>
                 <li>We do not read or analyse your memory content for advertising purposes.</li>
               </ul>
             </Subsection>
@@ -72,8 +78,7 @@ export default function PrivacyPage() {
               <li>Storing, indexing, and retrieving your memories on demand.</li>
               <li>Authenticating you and your connected AI agents.</li>
               <li>Displaying activity and usage statistics on your dashboard.</li>
-              <li>Enforcing memory quotas and plan limits.</li>
-              <li>Sending transactional emails (account-related only, no marketing without explicit opt-in).</li>
+              <li>Sending account emails (such as invites and contact requests) and occasional product emails. Every product email has an unsubscribe link.</li>
               <li>Diagnosing errors and improving reliability.</li>
             </ul>
             <p className="pp-strong">We never sell your data, share it with advertisers, or use your memories to train AI models.</p>
@@ -86,27 +91,35 @@ export default function PrivacyPage() {
                 <tr><th>Provider</th><th>Purpose</th><th>Data shared</th></tr>
               </thead>
               <tbody>
-                <tr><td>Auth0 (Okta)</td><td>Authentication &amp; identity</td><td>Email, name</td></tr>
-                <tr><td>Supabase</td><td>Database (sessions, profiles, logs)</td><td>User ID, activity metadata</td></tr>
-                <tr><td>Google Cloud Platform</td><td>Hosting &amp; infrastructure</td><td>All data at rest (encrypted)</td></tr>
-                <tr><td>OpenAI (ChatGPT)</td><td>Optional GPT integration</td><td>Memory content you store via the GPT</td></tr>
+                <tr><td>Amazon Web Services (AWS)</td><td>Our main host: servers, search index, and your wiki files (EC2); the AI models that read your content (Bedrock); daily backups of your vault and uploads (S3)</td><td>All of your content</td></tr>
+                <tr><td>Supabase</td><td>Database</td><td>Your account and profile, the text you save and upload, your wiki's facts and quotes, chats, WhatsApp history, and request logs (with IP address)</td></tr>
+                <tr><td>Google Cloud</td><td>Hosts the app's web pages (Cloud Run); reads images you attach in a chat and indexes your text for search (Vertex AI)</td><td>Web requests to the app (with IP address), images you attach, and the text of your memories</td></tr>
+                <tr><td>Auth0 (Okta)</td><td>Sign-in and identity, including Sign in with Google</td><td>Email, name, and the identity of the account you sign in with</td></tr>
+                <tr><td>Meta (WhatsApp Cloud API)</td><td>The WhatsApp agent, if you use it</td><td>Your phone number, messages, media you send, and chat history you import</td></tr>
+                <tr><td>Composio</td><td>Gmail and Google Calendar actions, only if you connect them</td><td>Access to your Gmail and Calendar, and the email and calendar content the agent reads or writes</td></tr>
+                <tr><td>LlamaIndex (LlamaParse)</td><td>Reads the text in PDFs you upload</td><td>The full PDF file</td></tr>
+                <tr><td>Resend</td><td>Sends our emails</td><td>Email addresses, names, and the content of the email</td></tr>
+                <tr><td>Mindcase</td><td>Imports public LinkedIn and X profiles and posts you ask us to import</td><td>Profile URLs and handles</td></tr>
+                <tr><td>Google Analytics</td><td>Visit statistics for xysq.ai (marketing site only)</td><td>Pages you view and details about your browser and device</td></tr>
+                <tr><td>Apollo.io</td><td>Website visitor tracker on xysq.ai (marketing site only)</td><td>Pages you view and your IP address</td></tr>
               </tbody>
             </table>
             <p>
-              When you use xysq via the ChatGPT Custom GPT, your conversation passes through OpenAI's
-              systems. Please review{' '}
-              <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noreferrer">
-                OpenAI's Privacy Policy
-              </a>{' '}
-              for how they handle conversation data.
+              Your data is stored mainly in the USA (AWS, us-east-1) and Japan (Supabase, Tokyo).
+              Google's Vertex AI processing runs in US regions. A few AI requests on AWS Bedrock use
+              AWS global routing and can be processed in another AWS region.
+            </p>
+            <p>
+              If you connect your own AI client (ChatGPT, Claude, or another) to xysq over MCP, what
+              that client sends and receives is also governed by that provider's privacy policy.
             </p>
           </Section>
 
           <Section n="5" title="Data Retention">
             <ul>
-              <li><strong>Memories</strong>, retained until you delete them or close your account.</li>
-              <li><strong>Activity logs</strong>, retained for 12 months, then automatically purged.</li>
-              <li><strong>Device sessions</strong>, expired sessions are pruned hourly.</li>
+              <li><strong>Memories</strong>, kept until you delete them or close your account. Deleting a source removes it and the lines drawn from it, but earlier copies can remain in your vault's version history and in our backups. Email us to erase those too.</li>
+              <li><strong>Activity logs</strong>, kept as long as your vault exists.</li>
+              <li><strong>Request logs</strong> (including IP address), deleted after 30 days. Error logs are deleted after 90 days.</li>
               <li><strong>Account data</strong>, deleted within 30 days of account closure.</li>
             </ul>
           </Section>
@@ -115,11 +128,11 @@ export default function PrivacyPage() {
             <p>You have full control over your data at all times:</p>
             <ul>
               <li><strong>Access</strong>, view all stored memories from your dashboard.</li>
-              <li><strong>Edit</strong>, update or correct any memory at any time.</li>
-              <li><strong>Delete</strong>, remove individual memories or all memories at once.</li>
+              <li><strong>Edit</strong>, update or correct the text you saved. Files such as PDFs can't be edited, but you can delete them and upload a new version.</li>
+              <li><strong>Delete</strong>, remove any source you saved from your vault. To wipe your whole vault, email us.</li>
               <li><strong>Export</strong>, request a full export of your data by emailing us.</li>
-              <li><strong>Revoke agent access</strong>, disconnect any AI agent from the Connected Agents page; that agent immediately loses access to your memory.</li>
-              <li><strong>Close account</strong>, permanently delete your account and all associated data from Settings.</li>
+              <li><strong>Revoke access</strong>, delete a key on the Keys page and it stops working. Disconnect Gmail or Google Calendar on the Apps page and the agent can no longer act through them.</li>
+              <li><strong>Close account</strong>, email us and we will delete your account and all associated data.</li>
             </ul>
             <p>
               If you are in the European Economic Area (EEA) or the UK, you also have rights under GDPR
@@ -134,7 +147,7 @@ export default function PrivacyPage() {
               We apply industry-standard security measures to protect your data:
             </p>
             <ul>
-              <li>All data is encrypted in transit (TLS 1.2+) and at rest (AES-256 via GCP).</li>
+              <li>All data is encrypted in transit (TLS). Data held by Supabase and our backups on AWS S3 are encrypted at rest by those providers.</li>
               <li>API tokens are stored as one-way SHA-256 hashes, we cannot recover your raw token.</li>
               <li>Authentication is handled by Auth0 with RS256-signed JWTs.</li>
               <li>Access to production systems is restricted to authorised personnel only.</li>

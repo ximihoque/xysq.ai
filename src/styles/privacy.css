@@ -235,6 +235,12 @@
   .pp-table td {
     padding: 8px 10px;
   }
+  /* the processor rows are a sentence long, so cells wrap inside a min width
+     instead of turning one row into a ~1000px line */
+  .pp-table td {
+    white-space: normal;
+    min-width: 150px;
+  }
   .pp-footer {
     flex-direction: column;
     gap: 10px;
