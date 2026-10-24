@@ -16,7 +16,6 @@ const TABS = [
 const STACK = [
   { name: 'Shopify', mark: 'shopify' },
   { name: 'Gmail', mark: 'gmail' },
-  { name: 'WhatsApp', mark: 'whatsapp' },
   { name: 'Instagram', mark: 'instagram' },
 ]
 

@@ -4,7 +4,6 @@ import { ChevronDown } from 'lucide-react'
 import XysqLogo from './XysqLogo'
 import IntegrationMarquee from './IntegrationMarquee'
 import HeroTabs from './hero/HeroTabs'
-import AgentSignup from './AgentSignup'
 import '../styles/hero.css'
 
 const fade = (delay = 0) => ({
@@ -99,11 +98,6 @@ export default function Hero() {
             Provide your agents <span className="hero-sub-strong">the context they deserve</span> to get the{' '}
             <span className="hero-sub-strong">outcome your business needs</span>.
           </motion.p>
-
-
-          <motion.div {...fade(0.18)} className="hero-signup">
-            <AgentSignup />
-          </motion.div>
 
           <motion.div {...fade(0.25)} className="hero-btns">
             <motion.a
