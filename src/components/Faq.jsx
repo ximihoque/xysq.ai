@@ -35,7 +35,7 @@ const QA = [
   },
   {
     q: 'Does it work with what we already run?',
-    a: 'Yes. Shopify, Gmail, WhatsApp, Instagram, Slack and the rest of the row above. If you already have an agent, point it at the layer and it keeps its memory there. No rewrite.',
+    a: 'Yes. Shopify, Gmail, Instagram, Slack and the rest of the row above. If you already have an agent, point it at the layer and it keeps its memory there. No rewrite.',
   },
   {
     q: 'Is my data used to train models?',
@@ -43,7 +43,7 @@ const QA = [
   },
   {
     q: 'How long does it take to get started?',
-    a: 'An agent on our stack takes minutes. Leave your number above and we set it up with you on WhatsApp. Bringing your own agent takes about an afternoon, and most of that is deciding what it should be allowed to read.',
+    a: 'An agent on our stack takes minutes. Bringing your own agent takes about an afternoon, and most of that is deciding what it should be allowed to read.',
   },
   {
     q: 'What does it cost?',

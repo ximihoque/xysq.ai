@@ -19,7 +19,6 @@ const ITEMS = [
   { name: 'Freshdesk' },
   { name: 'Gmail', mark: 'gmail' },
   { name: 'Slack', mark: 'slack' },
-  { name: 'WhatsApp', mark: 'whatsapp' },
   { name: 'Telegram', mark: 'telegram' },
 ]
 
